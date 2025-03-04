@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "proto:generate": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. --ts_proto_opt=importSuffix=.js ./contrib/livekit-protocol/protobufs/livekit_models.proto ./contrib/livekit-protocol/protobufs/livekit_egress.proto",
+    "proto:generate": "./compile-protobufs.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Camron Flanders <me@camronflanders.com>",

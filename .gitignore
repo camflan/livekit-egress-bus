@@ -1,9 +1,11 @@
 # -- ignore everything by default --------------------------------------
 /*
+.DS_Store
 
 # -- include these files -----------------------------------------------
 !.gitignore
 !README.md
+!compile-protobufs.sh
 !package-lock.json
 !package.json
 !src/
