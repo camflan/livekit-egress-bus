@@ -16,6 +16,7 @@ mkdir -p $output_directory
 protoc \
     --plugin=./node_modules/.bin/protoc-gen-ts_proto \
     --ts_proto_out=$output_directory \
+    --ts_proto_opt=env=node \
     --ts_proto_opt=fileSuffix=.proto \
     --ts_proto_opt=enumsAsLiterals=true \
     --ts_proto_opt=useJsonName=true \

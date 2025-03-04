@@ -1,11 +1,4 @@
-// import { remember } from "@epic-web/remember";
-// import { safeJoin } from "@uplift-ltd/strings";
 import Valkey, { RedisOptions as ValkeyOptions } from "iovalkey";
-// import { type PeerCertificate, checkServerIdentity } from "tls";
-
-// import { env } from "@/constants/env";
-
-// export const getValkey = () => remember("valkey", () => getValkeyClient({ lazyConnect: true }));
 
 type GetValkeyClientOptions = Omit<ValkeyOptions, "tls"> & { ssl?: boolean };
 
@@ -16,10 +9,10 @@ export function getValkeyClient(options: GetValkeyClientOptions) {
 
 export function getValkeyClientConfig({
   db = 0,
-  host = "redis://localhost",
+  host = "127.0.0.1",
   keyPrefix,
   password,
-  port = "6380",
+  port = 6380,
   ssl,
   username,
   ...options

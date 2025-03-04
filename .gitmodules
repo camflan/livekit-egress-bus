@@ -1,3 +1,6 @@
 [submodule "contrib/livekit-protocol"]
 	path = contrib/livekit-protocol
 	url = git@github.com:camflan/livekit-protocol.git
+[submodule "contrib/livekit-psrpc"]
+	path = contrib/livekit-psrpc
+	url = git@github.com:livekit/psrpc.git

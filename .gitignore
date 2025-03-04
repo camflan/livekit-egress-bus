@@ -6,6 +6,7 @@
 !.gitignore
 !README.md
 !compile-protobufs.sh
+!contrib/
 !package-lock.json
 !package.json
 !src/
