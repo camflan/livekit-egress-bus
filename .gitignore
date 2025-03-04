@@ -1,0 +1,10 @@
+# -- ignore everything by default --------------------------------------
+/*
+
+# -- include these files -----------------------------------------------
+!.gitignore
+!README.md
+!package-lock.json
+!package.json
+!src/
+!tsconfig.json

@@ -1,0 +1,3 @@
+[submodule "contrib/livekit-protocol"]
+	path = contrib/livekit-protocol
+	url = git@github.com:camflan/livekit-protocol.git
