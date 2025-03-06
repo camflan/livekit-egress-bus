@@ -3,7 +3,6 @@ import { getValkeyClient } from "./valkey";
 import {
   EgressInfo,
   EncodingOptionsPreset,
-  StreamProtocol,
 } from "./generated/livekit_egress.proto";
 import { Msg } from "./generated/internal.proto";
 import { StartEgressRequest } from "./generated/rpc/egress.proto";
