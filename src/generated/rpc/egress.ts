@@ -6,20 +6,22 @@
 
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
+import { FileDescriptorProto as FileDescriptorProto1 } from "ts-proto-descriptors";
 import {
-  EgressInfo,
   ParticipantEgressRequest,
+  protoMetadata as protoMetadata2,
   RoomCompositeEgressRequest,
-  StopEgressRequest,
   TrackCompositeEgressRequest,
   TrackEgressRequest,
-  UpdateStreamRequest,
   WebEgressRequest,
-} from "../livekit_egress.proto";
+} from "../livekit_egress";
+import { Options, protoMetadata as protoMetadata1 } from "../options";
+import { messageTypeRegistry } from "../typeRegistry";
 
 export const protobufPackage = "rpc";
 
 export interface StartEgressRequest {
+  $type: "rpc.StartEgressRequest";
   /** request metadata */
   egressId: string;
   roomComposite?: RoomCompositeEgressRequest | undefined;
@@ -39,14 +41,17 @@ export interface StartEgressRequest {
 }
 
 export interface ListActiveEgressRequest {
+  $type: "rpc.ListActiveEgressRequest";
 }
 
 export interface ListActiveEgressResponse {
+  $type: "rpc.ListActiveEgressResponse";
   egressIds: string[];
 }
 
 function createBaseStartEgressRequest(): StartEgressRequest {
   return {
+    $type: "rpc.StartEgressRequest",
     egressId: "",
     roomComposite: undefined,
     web: undefined,
@@ -61,7 +66,9 @@ function createBaseStartEgressRequest(): StartEgressRequest {
   };
 }
 
-export const StartEgressRequest: MessageFns<StartEgressRequest> = {
+export const StartEgressRequest: MessageFns<StartEgressRequest, "rpc.StartEgressRequest"> = {
+  $type: "rpc.StartEgressRequest" as const,
+
   encode(message: StartEgressRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.egressId !== "") {
       writer.uint32(10).string(message.egressId);
@@ -205,6 +212,7 @@ export const StartEgressRequest: MessageFns<StartEgressRequest> = {
 
   fromJSON(object: any): StartEgressRequest {
     return {
+      $type: StartEgressRequest.$type,
       egressId: isSet(object.egressId) ? globalThis.String(object.egressId) : "",
       roomComposite: isSet(object.roomComposite)
         ? RoomCompositeEgressRequest.fromJSON(object.roomComposite)
@@ -291,11 +299,15 @@ export const StartEgressRequest: MessageFns<StartEgressRequest> = {
   },
 };
 
+messageTypeRegistry.set(StartEgressRequest.$type, StartEgressRequest);
+
 function createBaseListActiveEgressRequest(): ListActiveEgressRequest {
-  return {};
+  return { $type: "rpc.ListActiveEgressRequest" };
 }
 
-export const ListActiveEgressRequest: MessageFns<ListActiveEgressRequest> = {
+export const ListActiveEgressRequest: MessageFns<ListActiveEgressRequest, "rpc.ListActiveEgressRequest"> = {
+  $type: "rpc.ListActiveEgressRequest" as const,
+
   encode(_: ListActiveEgressRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     return writer;
   },
@@ -317,7 +329,7 @@ export const ListActiveEgressRequest: MessageFns<ListActiveEgressRequest> = {
   },
 
   fromJSON(_: any): ListActiveEgressRequest {
-    return {};
+    return { $type: ListActiveEgressRequest.$type };
   },
 
   toJSON(_: ListActiveEgressRequest): unknown {
@@ -334,11 +346,15 @@ export const ListActiveEgressRequest: MessageFns<ListActiveEgressRequest> = {
   },
 };
 
+messageTypeRegistry.set(ListActiveEgressRequest.$type, ListActiveEgressRequest);
+
 function createBaseListActiveEgressResponse(): ListActiveEgressResponse {
-  return { egressIds: [] };
+  return { $type: "rpc.ListActiveEgressResponse", egressIds: [] };
 }
 
-export const ListActiveEgressResponse: MessageFns<ListActiveEgressResponse> = {
+export const ListActiveEgressResponse: MessageFns<ListActiveEgressResponse, "rpc.ListActiveEgressResponse"> = {
+  $type: "rpc.ListActiveEgressResponse" as const,
+
   encode(message: ListActiveEgressResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.egressIds) {
       writer.uint32(10).string(v!);
@@ -372,6 +388,7 @@ export const ListActiveEgressResponse: MessageFns<ListActiveEgressResponse> = {
 
   fromJSON(object: any): ListActiveEgressResponse {
     return {
+      $type: ListActiveEgressResponse.$type,
       egressIds: globalThis.Array.isArray(object?.egressIds)
         ? object.egressIds.map((e: any) => globalThis.String(e))
         : [],
@@ -396,83 +413,347 @@ export const ListActiveEgressResponse: MessageFns<ListActiveEgressResponse> = {
   },
 };
 
-export interface EgressInternal {
-  StartEgress(request: StartEgressRequest): Promise<EgressInfo>;
-  ListActiveEgress(request: ListActiveEgressRequest): Promise<ListActiveEgressResponse>;
+messageTypeRegistry.set(ListActiveEgressResponse.$type, ListActiveEgressResponse);
+
+type ProtoMetaMessageOptions = {
+  options?: { [key: string]: any };
+  fields?: { [key: string]: { [key: string]: any } };
+  oneof?: { [key: string]: { [key: string]: any } };
+  nested?: { [key: string]: ProtoMetaMessageOptions };
+};
+
+export interface ProtoMetadata {
+  fileDescriptor: FileDescriptorProto1;
+  references: { [key: string]: any };
+  dependencies?: ProtoMetadata[];
+  options?: {
+    options?: { [key: string]: any };
+    services?: {
+      [key: string]: { options?: { [key: string]: any }; methods?: { [key: string]: { [key: string]: any } } };
+    };
+    messages?: { [key: string]: ProtoMetaMessageOptions };
+    enums?: { [key: string]: { options?: { [key: string]: any }; values?: { [key: string]: { [key: string]: any } } } };
+  };
 }
 
-export const EgressInternalServiceName = "rpc.EgressInternal";
-export class EgressInternalClientImpl implements EgressInternal {
-  private readonly rpc: Rpc;
-  private readonly service: string;
-  constructor(rpc: Rpc, opts?: { service?: string }) {
-    this.service = opts?.service || EgressInternalServiceName;
-    this.rpc = rpc;
-    this.StartEgress = this.StartEgress.bind(this);
-    this.ListActiveEgress = this.ListActiveEgress.bind(this);
-  }
-  StartEgress(request: StartEgressRequest): Promise<EgressInfo> {
-    const data = StartEgressRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "StartEgress", data);
-    return promise.then((data) => EgressInfo.decode(new BinaryReader(data)));
-  }
+export const protoMetadata = {
+  fileDescriptor: {
+    "name": "rpc/egress.proto",
+    "package": "rpc",
+    "dependency": ["options.proto", "livekit_egress.proto"],
+    "publicDependency": [],
+    "weakDependency": [],
+    "messageType": [{
+      "name": "StartEgressRequest",
+      "field": [{
+        "name": "egress_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "egressId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "room_composite",
+        "number": 5,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.RoomCompositeEgressRequest",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "roomComposite",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "web",
+        "number": 11,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.WebEgressRequest",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "web",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "participant",
+        "number": 13,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.ParticipantEgressRequest",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "participant",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "track_composite",
+        "number": 6,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.TrackCompositeEgressRequest",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "trackComposite",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "track",
+        "number": 7,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.TrackEgressRequest",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "track",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "room_id",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "roomId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "token",
+        "number": 8,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "token",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ws_url",
+        "number": 9,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "wsUrl",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "cloud_backup_enabled",
+        "number": 10,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "cloudBackupEnabled",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "estimated_cpu",
+        "number": 14,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "estimatedCpu",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "request", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ListActiveEgressRequest",
+      "field": [],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ListActiveEgressResponse",
+      "field": [{
+        "name": "egress_ids",
+        "number": 1,
+        "label": 3,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "egressIds",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }],
+    "enumType": [],
+    "service": [{
+      "name": "EgressInternal",
+      "method": [{
+        "name": "StartEgress",
+        "inputType": ".rpc.StartEgressRequest",
+        "outputType": ".livekit.EgressInfo",
+        "options": { "deprecated": false, "idempotencyLevel": 0, "uninterpretedOption": [] },
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }, {
+        "name": "ListActiveEgress",
+        "inputType": ".rpc.ListActiveEgressRequest",
+        "outputType": ".rpc.ListActiveEgressResponse",
+        "options": { "deprecated": false, "idempotencyLevel": 0, "uninterpretedOption": [] },
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }],
+      "options": undefined,
+    }, {
+      "name": "EgressHandler",
+      "method": [{
+        "name": "UpdateStream",
+        "inputType": ".livekit.UpdateStreamRequest",
+        "outputType": ".livekit.EgressInfo",
+        "options": { "deprecated": false, "idempotencyLevel": 0, "uninterpretedOption": [] },
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }, {
+        "name": "StopEgress",
+        "inputType": ".livekit.StopEgressRequest",
+        "outputType": ".livekit.EgressInfo",
+        "options": { "deprecated": false, "idempotencyLevel": 0, "uninterpretedOption": [] },
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }],
+      "options": undefined,
+    }],
+    "extension": [],
+    "options": {
+      "javaPackage": "",
+      "javaOuterClassname": "",
+      "javaMultipleFiles": false,
+      "javaGenerateEqualsAndHash": false,
+      "javaStringCheckUtf8": false,
+      "optimizeFor": 1,
+      "goPackage": "github.com/livekit/protocol/rpc",
+      "ccGenericServices": false,
+      "javaGenericServices": false,
+      "pyGenericServices": false,
+      "phpGenericServices": false,
+      "deprecated": false,
+      "ccEnableArenas": true,
+      "objcClassPrefix": "",
+      "csharpNamespace": "",
+      "swiftPrefix": "",
+      "phpClassPrefix": "",
+      "phpNamespace": "",
+      "phpMetadataNamespace": "",
+      "rubyPackage": "",
+      "uninterpretedOption": [],
+    },
+    "sourceCodeInfo": {
+      "location": [{
+        "path": [4, 0, 2, 0],
+        "span": [45, 2, 23],
+        "leadingComments": " request metadata\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 8, 0],
+        "span": [48, 2, 54, 3],
+        "leadingComments": " request\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 6],
+        "span": [57, 2, 21],
+        "leadingComments": " connection info\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 9],
+        "span": [62, 2, 33],
+        "leadingComments": " cloud only\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }],
+    },
+    "syntax": "proto3",
+  },
+  references: {
+    ".rpc.StartEgressRequest": StartEgressRequest,
+    ".rpc.ListActiveEgressRequest": ListActiveEgressRequest,
+    ".rpc.ListActiveEgressResponse": ListActiveEgressResponse,
+  },
+  dependencies: [protoMetadata1, protoMetadata2],
+  options: {
+    services: {
+      "EgressInternal": {
+        methods: {
+          "StartEgress": { "options": Options.decode(Buffer.from("EAEwAQ==", "base64")) },
+          "ListActiveEgress": { "options": Options.decode(Buffer.from("EAEoAQ==", "base64")) },
+        },
+      },
+      "EgressHandler": {
+        methods: {
+          "UpdateStream": { "options": Options.decode(Buffer.from("EAE=", "base64")) },
+          "StopEgress": { "options": Options.decode(Buffer.from("EAE=", "base64")) },
+        },
+      },
+    },
+  },
+} as const satisfies ProtoMetadata;
 
-  ListActiveEgress(request: ListActiveEgressRequest): Promise<ListActiveEgressResponse> {
-    const data = ListActiveEgressRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "ListActiveEgress", data);
-    return promise.then((data) => ListActiveEgressResponse.decode(new BinaryReader(data)));
-  }
-}
-
-export interface EgressHandler {
-  UpdateStream(request: UpdateStreamRequest): Promise<EgressInfo>;
-  StopEgress(request: StopEgressRequest): Promise<EgressInfo>;
-}
-
-export const EgressHandlerServiceName = "rpc.EgressHandler";
-export class EgressHandlerClientImpl implements EgressHandler {
-  private readonly rpc: Rpc;
-  private readonly service: string;
-  constructor(rpc: Rpc, opts?: { service?: string }) {
-    this.service = opts?.service || EgressHandlerServiceName;
-    this.rpc = rpc;
-    this.UpdateStream = this.UpdateStream.bind(this);
-    this.StopEgress = this.StopEgress.bind(this);
-  }
-  UpdateStream(request: UpdateStreamRequest): Promise<EgressInfo> {
-    const data = UpdateStreamRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "UpdateStream", data);
-    return promise.then((data) => EgressInfo.decode(new BinaryReader(data)));
-  }
-
-  StopEgress(request: StopEgressRequest): Promise<EgressInfo> {
-    const data = StopEgressRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "StopEgress", data);
-    return promise.then((data) => EgressInfo.decode(new BinaryReader(data)));
-  }
-}
-
-interface Rpc {
-  request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | bigint | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
   : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : T extends {} ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
 }
 
-export interface MessageFns<T> {
+export interface MessageFns<T, V extends string> {
+  readonly $type: V;
   encode(message: T, writer?: BinaryWriter): BinaryWriter;
   decode(input: BinaryReader | Uint8Array, length?: number): T;
   fromJSON(object: any): T;

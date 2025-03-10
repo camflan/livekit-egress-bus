@@ -6,6 +6,7 @@
 
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
+import { FileDescriptorProto as FileDescriptorProto1 } from "ts-proto-descriptors";
 import {
   AudioCodec,
   audioCodecFromJSON,
@@ -13,10 +14,12 @@ import {
   ImageCodec,
   imageCodecFromJSON,
   imageCodecToJSON,
+  protoMetadata as protoMetadata1,
   VideoCodec,
   videoCodecFromJSON,
   videoCodecToJSON,
-} from "./livekit_models.proto";
+} from "./livekit_models";
+import { messageTypeRegistry } from "./typeRegistry";
 
 export const protobufPackage = "livekit";
 
@@ -486,6 +489,7 @@ export function egressSourceTypeToJSON(object: EgressSourceType): string {
 
 /** composite using a web browser */
 export interface RoomCompositeEgressRequest {
+  $type: "livekit.RoomCompositeEgressRequest";
   /** required */
   roomName: string;
   /** (optional) */
@@ -524,6 +528,7 @@ export interface RoomCompositeEgressRequest {
 
 /** record any website */
 export interface WebEgressRequest {
+  $type: "livekit.WebEgressRequest";
   url: string;
   audioOnly: boolean;
   videoOnly: boolean;
@@ -548,6 +553,7 @@ export interface WebEgressRequest {
 
 /** record audio and video from a single participant */
 export interface ParticipantEgressRequest {
+  $type: "livekit.ParticipantEgressRequest";
   /** required */
   roomName: string;
   /** required */
@@ -568,6 +574,7 @@ export interface ParticipantEgressRequest {
 
 /** containerize up to one audio and one video track */
 export interface TrackCompositeEgressRequest {
+  $type: "livekit.TrackCompositeEgressRequest";
   /** required */
   roomName: string;
   /** (optional) */
@@ -600,6 +607,7 @@ export interface TrackCompositeEgressRequest {
 
 /** record tracks individually, without transcoding */
 export interface TrackEgressRequest {
+  $type: "livekit.TrackEgressRequest";
   /** required */
   roomName: string;
   /** required */
@@ -609,6 +617,7 @@ export interface TrackEgressRequest {
 }
 
 export interface EncodedFileOutput {
+  $type: "livekit.EncodedFileOutput";
   /** (optional) */
   fileType: EncodedFileType;
   /** see egress docs for templating (default {room_name}-{time}) */
@@ -623,6 +632,7 @@ export interface EncodedFileOutput {
 
 /** Used to generate HLS segments or other kind of segmented output */
 export interface SegmentedFileOutput {
+  $type: "livekit.SegmentedFileOutput";
   /** (optional) */
   protocol: SegmentedFileProtocol;
   /** (optional) */
@@ -644,6 +654,7 @@ export interface SegmentedFileOutput {
 }
 
 export interface DirectFileOutput {
+  $type: "livekit.DirectFileOutput";
   /** see egress docs for templating (default {track_id}-{time}) */
   filepath: string;
   /** disable upload of manifest file (default false) */
@@ -655,6 +666,7 @@ export interface DirectFileOutput {
 }
 
 export interface ImageOutput {
+  $type: "livekit.ImageOutput";
   /** in seconds (required) */
   captureInterval: number;
   /** (optional, defaults to track width) */
@@ -676,6 +688,7 @@ export interface ImageOutput {
 }
 
 export interface S3Upload {
+  $type: "livekit.S3Upload";
   accessKey: string;
   secret: string;
   sessionToken: string;
@@ -691,11 +704,13 @@ export interface S3Upload {
 }
 
 export interface S3Upload_MetadataEntry {
+  $type: "livekit.S3Upload.MetadataEntry";
   key: string;
   value: string;
 }
 
 export interface GCPUpload {
+  $type: "livekit.GCPUpload";
   /** service account credentials serialized in JSON "credentials.json" */
   credentials: string;
   bucket: string;
@@ -703,12 +718,14 @@ export interface GCPUpload {
 }
 
 export interface AzureBlobUpload {
+  $type: "livekit.AzureBlobUpload";
   accountName: string;
   accountKey: string;
   containerName: string;
 }
 
 export interface AliOSSUpload {
+  $type: "livekit.AliOSSUpload";
   accessKey: string;
   secret: string;
   region: string;
@@ -717,12 +734,14 @@ export interface AliOSSUpload {
 }
 
 export interface ProxyConfig {
+  $type: "livekit.ProxyConfig";
   url: string;
   username: string;
   password: string;
 }
 
 export interface StreamOutput {
+  $type: "livekit.StreamOutput";
   /** required */
   protocol: StreamProtocol;
   /** required */
@@ -730,6 +749,7 @@ export interface StreamOutput {
 }
 
 export interface EncodingOptions {
+  $type: "livekit.EncodingOptions";
   /** (default 1920) */
   width: number;
   /** (default 1080) */
@@ -757,17 +777,20 @@ export interface EncodingOptions {
 }
 
 export interface UpdateLayoutRequest {
+  $type: "livekit.UpdateLayoutRequest";
   egressId: string;
   layout: string;
 }
 
 export interface UpdateStreamRequest {
+  $type: "livekit.UpdateStreamRequest";
   egressId: string;
   addOutputUrls: string[];
   removeOutputUrls: string[];
 }
 
 export interface ListEgressRequest {
+  $type: "livekit.ListEgressRequest";
   /** (optional, filter by room name) */
   roomName: string;
   /** (optional, filter by egress ID) */
@@ -777,22 +800,25 @@ export interface ListEgressRequest {
 }
 
 export interface ListEgressResponse {
+  $type: "livekit.ListEgressResponse";
   items: EgressInfo[];
 }
 
 export interface StopEgressRequest {
+  $type: "livekit.StopEgressRequest";
   egressId: string;
 }
 
 export interface EgressInfo {
+  $type: "livekit.EgressInfo";
   egressId: string;
   roomId: string;
   roomName: string;
   sourceType: EgressSourceType;
   status: EgressStatus;
-  startedAt: number;
-  endedAt: number;
-  updatedAt: number;
+  startedAt: bigint;
+  endedAt: bigint;
+  updatedAt: bigint;
   details: string;
   error: string;
   errorCode: number;
@@ -824,14 +850,16 @@ export interface EgressInfo {
 
 /** @deprecated */
 export interface StreamInfoList {
+  $type: "livekit.StreamInfoList";
   info: StreamInfo[];
 }
 
 export interface StreamInfo {
+  $type: "livekit.StreamInfo";
   url: string;
-  startedAt: number;
-  endedAt: number;
-  duration: number;
+  startedAt: bigint;
+  endedAt: bigint;
+  duration: bigint;
   status: StreamInfo_Status;
   error: string;
 }
@@ -880,34 +908,38 @@ export function streamInfo_StatusToJSON(object: StreamInfo_Status): string {
 }
 
 export interface FileInfo {
+  $type: "livekit.FileInfo";
   filename: string;
-  startedAt: number;
-  endedAt: number;
-  duration: number;
-  size: number;
+  startedAt: bigint;
+  endedAt: bigint;
+  duration: bigint;
+  size: bigint;
   location: string;
 }
 
 export interface SegmentsInfo {
+  $type: "livekit.SegmentsInfo";
   playlistName: string;
   livePlaylistName: string;
-  duration: number;
-  size: number;
+  duration: bigint;
+  size: bigint;
   playlistLocation: string;
   livePlaylistLocation: string;
-  segmentCount: number;
-  startedAt: number;
-  endedAt: number;
+  segmentCount: bigint;
+  startedAt: bigint;
+  endedAt: bigint;
 }
 
 export interface ImagesInfo {
+  $type: "livekit.ImagesInfo";
   filenamePrefix: string;
-  imageCount: number;
-  startedAt: number;
-  endedAt: number;
+  imageCount: bigint;
+  startedAt: bigint;
+  endedAt: bigint;
 }
 
 export interface AutoParticipantEgress {
+  $type: "livekit.AutoParticipantEgress";
   /** (default H264_720P_30) */
   preset?:
     | EncodingOptionsPreset
@@ -919,6 +951,7 @@ export interface AutoParticipantEgress {
 }
 
 export interface AutoTrackEgress {
+  $type: "livekit.AutoTrackEgress";
   /** see docs for templating (default {track_id}-{time}) */
   filepath: string;
   /** disables upload of json manifest file (default false) */
@@ -931,6 +964,7 @@ export interface AutoTrackEgress {
 
 function createBaseRoomCompositeEgressRequest(): RoomCompositeEgressRequest {
   return {
+    $type: "livekit.RoomCompositeEgressRequest",
     roomName: "",
     layout: "",
     audioOnly: false,
@@ -949,304 +983,311 @@ function createBaseRoomCompositeEgressRequest(): RoomCompositeEgressRequest {
   };
 }
 
-export const RoomCompositeEgressRequest: MessageFns<RoomCompositeEgressRequest> = {
-  encode(message: RoomCompositeEgressRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.roomName !== "") {
-      writer.uint32(10).string(message.roomName);
-    }
-    if (message.layout !== "") {
-      writer.uint32(18).string(message.layout);
-    }
-    if (message.audioOnly !== false) {
-      writer.uint32(24).bool(message.audioOnly);
-    }
-    if (message.audioMixing !== 0) {
-      writer.uint32(120).int32(message.audioMixing);
-    }
-    if (message.videoOnly !== false) {
-      writer.uint32(32).bool(message.videoOnly);
-    }
-    if (message.customBaseUrl !== "") {
-      writer.uint32(42).string(message.customBaseUrl);
-    }
-    if (message.file !== undefined) {
-      EncodedFileOutput.encode(message.file, writer.uint32(50).fork()).join();
-    }
-    if (message.stream !== undefined) {
-      StreamOutput.encode(message.stream, writer.uint32(58).fork()).join();
-    }
-    if (message.segments !== undefined) {
-      SegmentedFileOutput.encode(message.segments, writer.uint32(82).fork()).join();
-    }
-    if (message.preset !== undefined) {
-      writer.uint32(64).int32(message.preset);
-    }
-    if (message.advanced !== undefined) {
-      EncodingOptions.encode(message.advanced, writer.uint32(74).fork()).join();
-    }
-    for (const v of message.fileOutputs) {
-      EncodedFileOutput.encode(v!, writer.uint32(90).fork()).join();
-    }
-    for (const v of message.streamOutputs) {
-      StreamOutput.encode(v!, writer.uint32(98).fork()).join();
-    }
-    for (const v of message.segmentOutputs) {
-      SegmentedFileOutput.encode(v!, writer.uint32(106).fork()).join();
-    }
-    for (const v of message.imageOutputs) {
-      ImageOutput.encode(v!, writer.uint32(114).fork()).join();
-    }
-    return writer;
-  },
+export const RoomCompositeEgressRequest: MessageFns<RoomCompositeEgressRequest, "livekit.RoomCompositeEgressRequest"> =
+  {
+    $type: "livekit.RoomCompositeEgressRequest" as const,
 
-  decode(input: BinaryReader | Uint8Array, length?: number): RoomCompositeEgressRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseRoomCompositeEgressRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
-          }
-
-          message.roomName = reader.string();
-          continue;
-        }
-        case 2: {
-          if (tag !== 18) {
-            break;
-          }
-
-          message.layout = reader.string();
-          continue;
-        }
-        case 3: {
-          if (tag !== 24) {
-            break;
-          }
-
-          message.audioOnly = reader.bool();
-          continue;
-        }
-        case 15: {
-          if (tag !== 120) {
-            break;
-          }
-
-          message.audioMixing = reader.int32() as any;
-          continue;
-        }
-        case 4: {
-          if (tag !== 32) {
-            break;
-          }
-
-          message.videoOnly = reader.bool();
-          continue;
-        }
-        case 5: {
-          if (tag !== 42) {
-            break;
-          }
-
-          message.customBaseUrl = reader.string();
-          continue;
-        }
-        case 6: {
-          if (tag !== 50) {
-            break;
-          }
-
-          message.file = EncodedFileOutput.decode(reader, reader.uint32());
-          continue;
-        }
-        case 7: {
-          if (tag !== 58) {
-            break;
-          }
-
-          message.stream = StreamOutput.decode(reader, reader.uint32());
-          continue;
-        }
-        case 10: {
-          if (tag !== 82) {
-            break;
-          }
-
-          message.segments = SegmentedFileOutput.decode(reader, reader.uint32());
-          continue;
-        }
-        case 8: {
-          if (tag !== 64) {
-            break;
-          }
-
-          message.preset = reader.int32() as any;
-          continue;
-        }
-        case 9: {
-          if (tag !== 74) {
-            break;
-          }
-
-          message.advanced = EncodingOptions.decode(reader, reader.uint32());
-          continue;
-        }
-        case 11: {
-          if (tag !== 90) {
-            break;
-          }
-
-          message.fileOutputs.push(EncodedFileOutput.decode(reader, reader.uint32()));
-          continue;
-        }
-        case 12: {
-          if (tag !== 98) {
-            break;
-          }
-
-          message.streamOutputs.push(StreamOutput.decode(reader, reader.uint32()));
-          continue;
-        }
-        case 13: {
-          if (tag !== 106) {
-            break;
-          }
-
-          message.segmentOutputs.push(SegmentedFileOutput.decode(reader, reader.uint32()));
-          continue;
-        }
-        case 14: {
-          if (tag !== 114) {
-            break;
-          }
-
-          message.imageOutputs.push(ImageOutput.decode(reader, reader.uint32()));
-          continue;
-        }
+    encode(message: RoomCompositeEgressRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+      if (message.roomName !== "") {
+        writer.uint32(10).string(message.roomName);
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      if (message.layout !== "") {
+        writer.uint32(18).string(message.layout);
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      if (message.audioOnly !== false) {
+        writer.uint32(24).bool(message.audioOnly);
+      }
+      if (message.audioMixing !== 0) {
+        writer.uint32(120).int32(message.audioMixing);
+      }
+      if (message.videoOnly !== false) {
+        writer.uint32(32).bool(message.videoOnly);
+      }
+      if (message.customBaseUrl !== "") {
+        writer.uint32(42).string(message.customBaseUrl);
+      }
+      if (message.file !== undefined) {
+        EncodedFileOutput.encode(message.file, writer.uint32(50).fork()).join();
+      }
+      if (message.stream !== undefined) {
+        StreamOutput.encode(message.stream, writer.uint32(58).fork()).join();
+      }
+      if (message.segments !== undefined) {
+        SegmentedFileOutput.encode(message.segments, writer.uint32(82).fork()).join();
+      }
+      if (message.preset !== undefined) {
+        writer.uint32(64).int32(message.preset);
+      }
+      if (message.advanced !== undefined) {
+        EncodingOptions.encode(message.advanced, writer.uint32(74).fork()).join();
+      }
+      for (const v of message.fileOutputs) {
+        EncodedFileOutput.encode(v!, writer.uint32(90).fork()).join();
+      }
+      for (const v of message.streamOutputs) {
+        StreamOutput.encode(v!, writer.uint32(98).fork()).join();
+      }
+      for (const v of message.segmentOutputs) {
+        SegmentedFileOutput.encode(v!, writer.uint32(106).fork()).join();
+      }
+      for (const v of message.imageOutputs) {
+        ImageOutput.encode(v!, writer.uint32(114).fork()).join();
+      }
+      return writer;
+    },
 
-  fromJSON(object: any): RoomCompositeEgressRequest {
-    return {
-      roomName: isSet(object.roomName) ? globalThis.String(object.roomName) : "",
-      layout: isSet(object.layout) ? globalThis.String(object.layout) : "",
-      audioOnly: isSet(object.audioOnly) ? globalThis.Boolean(object.audioOnly) : false,
-      audioMixing: isSet(object.audioMixing) ? audioMixingFromJSON(object.audioMixing) : 0,
-      videoOnly: isSet(object.videoOnly) ? globalThis.Boolean(object.videoOnly) : false,
-      customBaseUrl: isSet(object.customBaseUrl) ? globalThis.String(object.customBaseUrl) : "",
-      file: isSet(object.file) ? EncodedFileOutput.fromJSON(object.file) : undefined,
-      stream: isSet(object.stream) ? StreamOutput.fromJSON(object.stream) : undefined,
-      segments: isSet(object.segments) ? SegmentedFileOutput.fromJSON(object.segments) : undefined,
-      preset: isSet(object.preset) ? encodingOptionsPresetFromJSON(object.preset) : undefined,
-      advanced: isSet(object.advanced) ? EncodingOptions.fromJSON(object.advanced) : undefined,
-      fileOutputs: globalThis.Array.isArray(object?.fileOutputs)
-        ? object.fileOutputs.map((e: any) => EncodedFileOutput.fromJSON(e))
-        : [],
-      streamOutputs: globalThis.Array.isArray(object?.streamOutputs)
-        ? object.streamOutputs.map((e: any) => StreamOutput.fromJSON(e))
-        : [],
-      segmentOutputs: globalThis.Array.isArray(object?.segmentOutputs)
-        ? object.segmentOutputs.map((e: any) => SegmentedFileOutput.fromJSON(e))
-        : [],
-      imageOutputs: globalThis.Array.isArray(object?.imageOutputs)
-        ? object.imageOutputs.map((e: any) => ImageOutput.fromJSON(e))
-        : [],
-    };
-  },
+    decode(input: BinaryReader | Uint8Array, length?: number): RoomCompositeEgressRequest {
+      const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+      let end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseRoomCompositeEgressRequest();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
 
-  toJSON(message: RoomCompositeEgressRequest): unknown {
-    const obj: any = {};
-    if (message.roomName !== "") {
-      obj.roomName = message.roomName;
-    }
-    if (message.layout !== "") {
-      obj.layout = message.layout;
-    }
-    if (message.audioOnly !== false) {
-      obj.audioOnly = message.audioOnly;
-    }
-    if (message.audioMixing !== 0) {
-      obj.audioMixing = audioMixingToJSON(message.audioMixing);
-    }
-    if (message.videoOnly !== false) {
-      obj.videoOnly = message.videoOnly;
-    }
-    if (message.customBaseUrl !== "") {
-      obj.customBaseUrl = message.customBaseUrl;
-    }
-    if (message.file !== undefined) {
-      obj.file = EncodedFileOutput.toJSON(message.file);
-    }
-    if (message.stream !== undefined) {
-      obj.stream = StreamOutput.toJSON(message.stream);
-    }
-    if (message.segments !== undefined) {
-      obj.segments = SegmentedFileOutput.toJSON(message.segments);
-    }
-    if (message.preset !== undefined) {
-      obj.preset = encodingOptionsPresetToJSON(message.preset);
-    }
-    if (message.advanced !== undefined) {
-      obj.advanced = EncodingOptions.toJSON(message.advanced);
-    }
-    if (message.fileOutputs?.length) {
-      obj.fileOutputs = message.fileOutputs.map((e) => EncodedFileOutput.toJSON(e));
-    }
-    if (message.streamOutputs?.length) {
-      obj.streamOutputs = message.streamOutputs.map((e) => StreamOutput.toJSON(e));
-    }
-    if (message.segmentOutputs?.length) {
-      obj.segmentOutputs = message.segmentOutputs.map((e) => SegmentedFileOutput.toJSON(e));
-    }
-    if (message.imageOutputs?.length) {
-      obj.imageOutputs = message.imageOutputs.map((e) => ImageOutput.toJSON(e));
-    }
-    return obj;
-  },
+            message.roomName = reader.string();
+            continue;
+          }
+          case 2: {
+            if (tag !== 18) {
+              break;
+            }
 
-  create<I extends Exact<DeepPartial<RoomCompositeEgressRequest>, I>>(base?: I): RoomCompositeEgressRequest {
-    return RoomCompositeEgressRequest.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<RoomCompositeEgressRequest>, I>>(object: I): RoomCompositeEgressRequest {
-    const message = createBaseRoomCompositeEgressRequest();
-    message.roomName = object.roomName ?? "";
-    message.layout = object.layout ?? "";
-    message.audioOnly = object.audioOnly ?? false;
-    message.audioMixing = object.audioMixing ?? 0;
-    message.videoOnly = object.videoOnly ?? false;
-    message.customBaseUrl = object.customBaseUrl ?? "";
-    message.file = (object.file !== undefined && object.file !== null)
-      ? EncodedFileOutput.fromPartial(object.file)
-      : undefined;
-    message.stream = (object.stream !== undefined && object.stream !== null)
-      ? StreamOutput.fromPartial(object.stream)
-      : undefined;
-    message.segments = (object.segments !== undefined && object.segments !== null)
-      ? SegmentedFileOutput.fromPartial(object.segments)
-      : undefined;
-    message.preset = object.preset ?? undefined;
-    message.advanced = (object.advanced !== undefined && object.advanced !== null)
-      ? EncodingOptions.fromPartial(object.advanced)
-      : undefined;
-    message.fileOutputs = object.fileOutputs?.map((e) => EncodedFileOutput.fromPartial(e)) || [];
-    message.streamOutputs = object.streamOutputs?.map((e) => StreamOutput.fromPartial(e)) || [];
-    message.segmentOutputs = object.segmentOutputs?.map((e) => SegmentedFileOutput.fromPartial(e)) || [];
-    message.imageOutputs = object.imageOutputs?.map((e) => ImageOutput.fromPartial(e)) || [];
-    return message;
-  },
-};
+            message.layout = reader.string();
+            continue;
+          }
+          case 3: {
+            if (tag !== 24) {
+              break;
+            }
+
+            message.audioOnly = reader.bool();
+            continue;
+          }
+          case 15: {
+            if (tag !== 120) {
+              break;
+            }
+
+            message.audioMixing = reader.int32() as any;
+            continue;
+          }
+          case 4: {
+            if (tag !== 32) {
+              break;
+            }
+
+            message.videoOnly = reader.bool();
+            continue;
+          }
+          case 5: {
+            if (tag !== 42) {
+              break;
+            }
+
+            message.customBaseUrl = reader.string();
+            continue;
+          }
+          case 6: {
+            if (tag !== 50) {
+              break;
+            }
+
+            message.file = EncodedFileOutput.decode(reader, reader.uint32());
+            continue;
+          }
+          case 7: {
+            if (tag !== 58) {
+              break;
+            }
+
+            message.stream = StreamOutput.decode(reader, reader.uint32());
+            continue;
+          }
+          case 10: {
+            if (tag !== 82) {
+              break;
+            }
+
+            message.segments = SegmentedFileOutput.decode(reader, reader.uint32());
+            continue;
+          }
+          case 8: {
+            if (tag !== 64) {
+              break;
+            }
+
+            message.preset = reader.int32() as any;
+            continue;
+          }
+          case 9: {
+            if (tag !== 74) {
+              break;
+            }
+
+            message.advanced = EncodingOptions.decode(reader, reader.uint32());
+            continue;
+          }
+          case 11: {
+            if (tag !== 90) {
+              break;
+            }
+
+            message.fileOutputs.push(EncodedFileOutput.decode(reader, reader.uint32()));
+            continue;
+          }
+          case 12: {
+            if (tag !== 98) {
+              break;
+            }
+
+            message.streamOutputs.push(StreamOutput.decode(reader, reader.uint32()));
+            continue;
+          }
+          case 13: {
+            if (tag !== 106) {
+              break;
+            }
+
+            message.segmentOutputs.push(SegmentedFileOutput.decode(reader, reader.uint32()));
+            continue;
+          }
+          case 14: {
+            if (tag !== 114) {
+              break;
+            }
+
+            message.imageOutputs.push(ImageOutput.decode(reader, reader.uint32()));
+            continue;
+          }
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
+
+    fromJSON(object: any): RoomCompositeEgressRequest {
+      return {
+        $type: RoomCompositeEgressRequest.$type,
+        roomName: isSet(object.roomName) ? globalThis.String(object.roomName) : "",
+        layout: isSet(object.layout) ? globalThis.String(object.layout) : "",
+        audioOnly: isSet(object.audioOnly) ? globalThis.Boolean(object.audioOnly) : false,
+        audioMixing: isSet(object.audioMixing) ? audioMixingFromJSON(object.audioMixing) : 0,
+        videoOnly: isSet(object.videoOnly) ? globalThis.Boolean(object.videoOnly) : false,
+        customBaseUrl: isSet(object.customBaseUrl) ? globalThis.String(object.customBaseUrl) : "",
+        file: isSet(object.file) ? EncodedFileOutput.fromJSON(object.file) : undefined,
+        stream: isSet(object.stream) ? StreamOutput.fromJSON(object.stream) : undefined,
+        segments: isSet(object.segments) ? SegmentedFileOutput.fromJSON(object.segments) : undefined,
+        preset: isSet(object.preset) ? encodingOptionsPresetFromJSON(object.preset) : undefined,
+        advanced: isSet(object.advanced) ? EncodingOptions.fromJSON(object.advanced) : undefined,
+        fileOutputs: globalThis.Array.isArray(object?.fileOutputs)
+          ? object.fileOutputs.map((e: any) => EncodedFileOutput.fromJSON(e))
+          : [],
+        streamOutputs: globalThis.Array.isArray(object?.streamOutputs)
+          ? object.streamOutputs.map((e: any) => StreamOutput.fromJSON(e))
+          : [],
+        segmentOutputs: globalThis.Array.isArray(object?.segmentOutputs)
+          ? object.segmentOutputs.map((e: any) => SegmentedFileOutput.fromJSON(e))
+          : [],
+        imageOutputs: globalThis.Array.isArray(object?.imageOutputs)
+          ? object.imageOutputs.map((e: any) => ImageOutput.fromJSON(e))
+          : [],
+      };
+    },
+
+    toJSON(message: RoomCompositeEgressRequest): unknown {
+      const obj: any = {};
+      if (message.roomName !== "") {
+        obj.roomName = message.roomName;
+      }
+      if (message.layout !== "") {
+        obj.layout = message.layout;
+      }
+      if (message.audioOnly !== false) {
+        obj.audioOnly = message.audioOnly;
+      }
+      if (message.audioMixing !== 0) {
+        obj.audioMixing = audioMixingToJSON(message.audioMixing);
+      }
+      if (message.videoOnly !== false) {
+        obj.videoOnly = message.videoOnly;
+      }
+      if (message.customBaseUrl !== "") {
+        obj.customBaseUrl = message.customBaseUrl;
+      }
+      if (message.file !== undefined) {
+        obj.file = EncodedFileOutput.toJSON(message.file);
+      }
+      if (message.stream !== undefined) {
+        obj.stream = StreamOutput.toJSON(message.stream);
+      }
+      if (message.segments !== undefined) {
+        obj.segments = SegmentedFileOutput.toJSON(message.segments);
+      }
+      if (message.preset !== undefined) {
+        obj.preset = encodingOptionsPresetToJSON(message.preset);
+      }
+      if (message.advanced !== undefined) {
+        obj.advanced = EncodingOptions.toJSON(message.advanced);
+      }
+      if (message.fileOutputs?.length) {
+        obj.fileOutputs = message.fileOutputs.map((e) => EncodedFileOutput.toJSON(e));
+      }
+      if (message.streamOutputs?.length) {
+        obj.streamOutputs = message.streamOutputs.map((e) => StreamOutput.toJSON(e));
+      }
+      if (message.segmentOutputs?.length) {
+        obj.segmentOutputs = message.segmentOutputs.map((e) => SegmentedFileOutput.toJSON(e));
+      }
+      if (message.imageOutputs?.length) {
+        obj.imageOutputs = message.imageOutputs.map((e) => ImageOutput.toJSON(e));
+      }
+      return obj;
+    },
+
+    create<I extends Exact<DeepPartial<RoomCompositeEgressRequest>, I>>(base?: I): RoomCompositeEgressRequest {
+      return RoomCompositeEgressRequest.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<RoomCompositeEgressRequest>, I>>(object: I): RoomCompositeEgressRequest {
+      const message = createBaseRoomCompositeEgressRequest();
+      message.roomName = object.roomName ?? "";
+      message.layout = object.layout ?? "";
+      message.audioOnly = object.audioOnly ?? false;
+      message.audioMixing = object.audioMixing ?? 0;
+      message.videoOnly = object.videoOnly ?? false;
+      message.customBaseUrl = object.customBaseUrl ?? "";
+      message.file = (object.file !== undefined && object.file !== null)
+        ? EncodedFileOutput.fromPartial(object.file)
+        : undefined;
+      message.stream = (object.stream !== undefined && object.stream !== null)
+        ? StreamOutput.fromPartial(object.stream)
+        : undefined;
+      message.segments = (object.segments !== undefined && object.segments !== null)
+        ? SegmentedFileOutput.fromPartial(object.segments)
+        : undefined;
+      message.preset = object.preset ?? undefined;
+      message.advanced = (object.advanced !== undefined && object.advanced !== null)
+        ? EncodingOptions.fromPartial(object.advanced)
+        : undefined;
+      message.fileOutputs = object.fileOutputs?.map((e) => EncodedFileOutput.fromPartial(e)) || [];
+      message.streamOutputs = object.streamOutputs?.map((e) => StreamOutput.fromPartial(e)) || [];
+      message.segmentOutputs = object.segmentOutputs?.map((e) => SegmentedFileOutput.fromPartial(e)) || [];
+      message.imageOutputs = object.imageOutputs?.map((e) => ImageOutput.fromPartial(e)) || [];
+      return message;
+    },
+  };
+
+messageTypeRegistry.set(RoomCompositeEgressRequest.$type, RoomCompositeEgressRequest);
 
 function createBaseWebEgressRequest(): WebEgressRequest {
   return {
+    $type: "livekit.WebEgressRequest",
     url: "",
     audioOnly: false,
     videoOnly: false,
@@ -1263,7 +1304,9 @@ function createBaseWebEgressRequest(): WebEgressRequest {
   };
 }
 
-export const WebEgressRequest: MessageFns<WebEgressRequest> = {
+export const WebEgressRequest: MessageFns<WebEgressRequest, "livekit.WebEgressRequest"> = {
+  $type: "livekit.WebEgressRequest" as const,
+
   encode(message: WebEgressRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.url !== "") {
       writer.uint32(10).string(message.url);
@@ -1429,6 +1472,7 @@ export const WebEgressRequest: MessageFns<WebEgressRequest> = {
 
   fromJSON(object: any): WebEgressRequest {
     return {
+      $type: WebEgressRequest.$type,
       url: isSet(object.url) ? globalThis.String(object.url) : "",
       audioOnly: isSet(object.audioOnly) ? globalThis.Boolean(object.audioOnly) : false,
       videoOnly: isSet(object.videoOnly) ? globalThis.Boolean(object.videoOnly) : false,
@@ -1527,8 +1571,11 @@ export const WebEgressRequest: MessageFns<WebEgressRequest> = {
   },
 };
 
+messageTypeRegistry.set(WebEgressRequest.$type, WebEgressRequest);
+
 function createBaseParticipantEgressRequest(): ParticipantEgressRequest {
   return {
+    $type: "livekit.ParticipantEgressRequest",
     roomName: "",
     identity: "",
     screenShare: false,
@@ -1541,7 +1588,9 @@ function createBaseParticipantEgressRequest(): ParticipantEgressRequest {
   };
 }
 
-export const ParticipantEgressRequest: MessageFns<ParticipantEgressRequest> = {
+export const ParticipantEgressRequest: MessageFns<ParticipantEgressRequest, "livekit.ParticipantEgressRequest"> = {
+  $type: "livekit.ParticipantEgressRequest" as const,
+
   encode(message: ParticipantEgressRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.roomName !== "") {
       writer.uint32(10).string(message.roomName);
@@ -1663,6 +1712,7 @@ export const ParticipantEgressRequest: MessageFns<ParticipantEgressRequest> = {
 
   fromJSON(object: any): ParticipantEgressRequest {
     return {
+      $type: ParticipantEgressRequest.$type,
       roomName: isSet(object.roomName) ? globalThis.String(object.roomName) : "",
       identity: isSet(object.identity) ? globalThis.String(object.identity) : "",
       screenShare: isSet(object.screenShare) ? globalThis.Boolean(object.screenShare) : false,
@@ -1735,8 +1785,11 @@ export const ParticipantEgressRequest: MessageFns<ParticipantEgressRequest> = {
   },
 };
 
+messageTypeRegistry.set(ParticipantEgressRequest.$type, ParticipantEgressRequest);
+
 function createBaseTrackCompositeEgressRequest(): TrackCompositeEgressRequest {
   return {
+    $type: "livekit.TrackCompositeEgressRequest",
     roomName: "",
     audioTrackId: "",
     videoTrackId: "",
@@ -1752,7 +1805,12 @@ function createBaseTrackCompositeEgressRequest(): TrackCompositeEgressRequest {
   };
 }
 
-export const TrackCompositeEgressRequest: MessageFns<TrackCompositeEgressRequest> = {
+export const TrackCompositeEgressRequest: MessageFns<
+  TrackCompositeEgressRequest,
+  "livekit.TrackCompositeEgressRequest"
+> = {
+  $type: "livekit.TrackCompositeEgressRequest" as const,
+
   encode(message: TrackCompositeEgressRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.roomName !== "") {
       writer.uint32(10).string(message.roomName);
@@ -1907,6 +1965,7 @@ export const TrackCompositeEgressRequest: MessageFns<TrackCompositeEgressRequest
 
   fromJSON(object: any): TrackCompositeEgressRequest {
     return {
+      $type: TrackCompositeEgressRequest.$type,
       roomName: isSet(object.roomName) ? globalThis.String(object.roomName) : "",
       audioTrackId: isSet(object.audioTrackId) ? globalThis.String(object.audioTrackId) : "",
       videoTrackId: isSet(object.videoTrackId) ? globalThis.String(object.videoTrackId) : "",
@@ -2000,11 +2059,15 @@ export const TrackCompositeEgressRequest: MessageFns<TrackCompositeEgressRequest
   },
 };
 
+messageTypeRegistry.set(TrackCompositeEgressRequest.$type, TrackCompositeEgressRequest);
+
 function createBaseTrackEgressRequest(): TrackEgressRequest {
-  return { roomName: "", trackId: "", file: undefined, websocketUrl: undefined };
+  return { $type: "livekit.TrackEgressRequest", roomName: "", trackId: "", file: undefined, websocketUrl: undefined };
 }
 
-export const TrackEgressRequest: MessageFns<TrackEgressRequest> = {
+export const TrackEgressRequest: MessageFns<TrackEgressRequest, "livekit.TrackEgressRequest"> = {
+  $type: "livekit.TrackEgressRequest" as const,
+
   encode(message: TrackEgressRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.roomName !== "") {
       writer.uint32(10).string(message.roomName);
@@ -2071,6 +2134,7 @@ export const TrackEgressRequest: MessageFns<TrackEgressRequest> = {
 
   fromJSON(object: any): TrackEgressRequest {
     return {
+      $type: TrackEgressRequest.$type,
       roomName: isSet(object.roomName) ? globalThis.String(object.roomName) : "",
       trackId: isSet(object.trackId) ? globalThis.String(object.trackId) : "",
       file: isSet(object.file) ? DirectFileOutput.fromJSON(object.file) : undefined,
@@ -2110,8 +2174,11 @@ export const TrackEgressRequest: MessageFns<TrackEgressRequest> = {
   },
 };
 
+messageTypeRegistry.set(TrackEgressRequest.$type, TrackEgressRequest);
+
 function createBaseEncodedFileOutput(): EncodedFileOutput {
   return {
+    $type: "livekit.EncodedFileOutput",
     fileType: 0,
     filepath: "",
     disableManifest: false,
@@ -2122,7 +2189,9 @@ function createBaseEncodedFileOutput(): EncodedFileOutput {
   };
 }
 
-export const EncodedFileOutput: MessageFns<EncodedFileOutput> = {
+export const EncodedFileOutput: MessageFns<EncodedFileOutput, "livekit.EncodedFileOutput"> = {
+  $type: "livekit.EncodedFileOutput" as const,
+
   encode(message: EncodedFileOutput, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.fileType !== 0) {
       writer.uint32(8).int32(message.fileType);
@@ -2222,6 +2291,7 @@ export const EncodedFileOutput: MessageFns<EncodedFileOutput> = {
 
   fromJSON(object: any): EncodedFileOutput {
     return {
+      $type: EncodedFileOutput.$type,
       fileType: isSet(object.fileType) ? encodedFileTypeFromJSON(object.fileType) : 0,
       filepath: isSet(object.filepath) ? globalThis.String(object.filepath) : "",
       disableManifest: isSet(object.disableManifest) ? globalThis.Boolean(object.disableManifest) : false,
@@ -2278,8 +2348,11 @@ export const EncodedFileOutput: MessageFns<EncodedFileOutput> = {
   },
 };
 
+messageTypeRegistry.set(EncodedFileOutput.$type, EncodedFileOutput);
+
 function createBaseSegmentedFileOutput(): SegmentedFileOutput {
   return {
+    $type: "livekit.SegmentedFileOutput",
     protocol: 0,
     filenamePrefix: "",
     playlistName: "",
@@ -2294,7 +2367,9 @@ function createBaseSegmentedFileOutput(): SegmentedFileOutput {
   };
 }
 
-export const SegmentedFileOutput: MessageFns<SegmentedFileOutput> = {
+export const SegmentedFileOutput: MessageFns<SegmentedFileOutput, "livekit.SegmentedFileOutput"> = {
+  $type: "livekit.SegmentedFileOutput" as const,
+
   encode(message: SegmentedFileOutput, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.protocol !== 0) {
       writer.uint32(8).int32(message.protocol);
@@ -2438,6 +2513,7 @@ export const SegmentedFileOutput: MessageFns<SegmentedFileOutput> = {
 
   fromJSON(object: any): SegmentedFileOutput {
     return {
+      $type: SegmentedFileOutput.$type,
       protocol: isSet(object.protocol) ? segmentedFileProtocolFromJSON(object.protocol) : 0,
       filenamePrefix: isSet(object.filenamePrefix) ? globalThis.String(object.filenamePrefix) : "",
       playlistName: isSet(object.playlistName) ? globalThis.String(object.playlistName) : "",
@@ -2514,11 +2590,23 @@ export const SegmentedFileOutput: MessageFns<SegmentedFileOutput> = {
   },
 };
 
+messageTypeRegistry.set(SegmentedFileOutput.$type, SegmentedFileOutput);
+
 function createBaseDirectFileOutput(): DirectFileOutput {
-  return { filepath: "", disableManifest: false, s3: undefined, gcp: undefined, azure: undefined, aliOSS: undefined };
+  return {
+    $type: "livekit.DirectFileOutput",
+    filepath: "",
+    disableManifest: false,
+    s3: undefined,
+    gcp: undefined,
+    azure: undefined,
+    aliOSS: undefined,
+  };
 }
 
-export const DirectFileOutput: MessageFns<DirectFileOutput> = {
+export const DirectFileOutput: MessageFns<DirectFileOutput, "livekit.DirectFileOutput"> = {
+  $type: "livekit.DirectFileOutput" as const,
+
   encode(message: DirectFileOutput, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.filepath !== "") {
       writer.uint32(10).string(message.filepath);
@@ -2607,6 +2695,7 @@ export const DirectFileOutput: MessageFns<DirectFileOutput> = {
 
   fromJSON(object: any): DirectFileOutput {
     return {
+      $type: DirectFileOutput.$type,
       filepath: isSet(object.filepath) ? globalThis.String(object.filepath) : "",
       disableManifest: isSet(object.disableManifest) ? globalThis.Boolean(object.disableManifest) : false,
       s3: isSet(object.s3) ? S3Upload.fromJSON(object.s3) : undefined,
@@ -2658,8 +2747,11 @@ export const DirectFileOutput: MessageFns<DirectFileOutput> = {
   },
 };
 
+messageTypeRegistry.set(DirectFileOutput.$type, DirectFileOutput);
+
 function createBaseImageOutput(): ImageOutput {
   return {
+    $type: "livekit.ImageOutput",
     captureInterval: 0,
     width: 0,
     height: 0,
@@ -2674,7 +2766,9 @@ function createBaseImageOutput(): ImageOutput {
   };
 }
 
-export const ImageOutput: MessageFns<ImageOutput> = {
+export const ImageOutput: MessageFns<ImageOutput, "livekit.ImageOutput"> = {
+  $type: "livekit.ImageOutput" as const,
+
   encode(message: ImageOutput, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.captureInterval !== 0) {
       writer.uint32(8).uint32(message.captureInterval);
@@ -2818,6 +2912,7 @@ export const ImageOutput: MessageFns<ImageOutput> = {
 
   fromJSON(object: any): ImageOutput {
     return {
+      $type: ImageOutput.$type,
       captureInterval: isSet(object.captureInterval) ? globalThis.Number(object.captureInterval) : 0,
       width: isSet(object.width) ? globalThis.Number(object.width) : 0,
       height: isSet(object.height) ? globalThis.Number(object.height) : 0,
@@ -2894,8 +2989,11 @@ export const ImageOutput: MessageFns<ImageOutput> = {
   },
 };
 
+messageTypeRegistry.set(ImageOutput.$type, ImageOutput);
+
 function createBaseS3Upload(): S3Upload {
   return {
+    $type: "livekit.S3Upload",
     accessKey: "",
     secret: "",
     sessionToken: "",
@@ -2910,7 +3008,9 @@ function createBaseS3Upload(): S3Upload {
   };
 }
 
-export const S3Upload: MessageFns<S3Upload> = {
+export const S3Upload: MessageFns<S3Upload, "livekit.S3Upload"> = {
+  $type: "livekit.S3Upload" as const,
+
   encode(message: S3Upload, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.accessKey !== "") {
       writer.uint32(10).string(message.accessKey);
@@ -2934,7 +3034,10 @@ export const S3Upload: MessageFns<S3Upload> = {
       writer.uint32(48).bool(message.forcePathStyle);
     }
     Object.entries(message.metadata).forEach(([key, value]) => {
-      S3Upload_MetadataEntry.encode({ key: key as any, value }, writer.uint32(58).fork()).join();
+      S3Upload_MetadataEntry.encode(
+        { $type: "livekit.S3Upload.MetadataEntry", key: key as any, value },
+        writer.uint32(58).fork(),
+      ).join();
     });
     if (message.tagging !== "") {
       writer.uint32(66).string(message.tagging);
@@ -3057,6 +3160,7 @@ export const S3Upload: MessageFns<S3Upload> = {
 
   fromJSON(object: any): S3Upload {
     return {
+      $type: S3Upload.$type,
       accessKey: isSet(object.accessKey) ? globalThis.String(object.accessKey) : "",
       secret: isSet(object.secret) ? globalThis.String(object.secret) : "",
       sessionToken: isSet(object.sessionToken) ? globalThis.String(object.sessionToken) : "",
@@ -3147,11 +3251,15 @@ export const S3Upload: MessageFns<S3Upload> = {
   },
 };
 
+messageTypeRegistry.set(S3Upload.$type, S3Upload);
+
 function createBaseS3Upload_MetadataEntry(): S3Upload_MetadataEntry {
-  return { key: "", value: "" };
+  return { $type: "livekit.S3Upload.MetadataEntry", key: "", value: "" };
 }
 
-export const S3Upload_MetadataEntry: MessageFns<S3Upload_MetadataEntry> = {
+export const S3Upload_MetadataEntry: MessageFns<S3Upload_MetadataEntry, "livekit.S3Upload.MetadataEntry"> = {
+  $type: "livekit.S3Upload.MetadataEntry" as const,
+
   encode(message: S3Upload_MetadataEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
@@ -3196,6 +3304,7 @@ export const S3Upload_MetadataEntry: MessageFns<S3Upload_MetadataEntry> = {
 
   fromJSON(object: any): S3Upload_MetadataEntry {
     return {
+      $type: S3Upload_MetadataEntry.$type,
       key: isSet(object.key) ? globalThis.String(object.key) : "",
       value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
@@ -3223,11 +3332,15 @@ export const S3Upload_MetadataEntry: MessageFns<S3Upload_MetadataEntry> = {
   },
 };
 
+messageTypeRegistry.set(S3Upload_MetadataEntry.$type, S3Upload_MetadataEntry);
+
 function createBaseGCPUpload(): GCPUpload {
-  return { credentials: "", bucket: "", proxy: undefined };
+  return { $type: "livekit.GCPUpload", credentials: "", bucket: "", proxy: undefined };
 }
 
-export const GCPUpload: MessageFns<GCPUpload> = {
+export const GCPUpload: MessageFns<GCPUpload, "livekit.GCPUpload"> = {
+  $type: "livekit.GCPUpload" as const,
+
   encode(message: GCPUpload, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.credentials !== "") {
       writer.uint32(10).string(message.credentials);
@@ -3283,6 +3396,7 @@ export const GCPUpload: MessageFns<GCPUpload> = {
 
   fromJSON(object: any): GCPUpload {
     return {
+      $type: GCPUpload.$type,
       credentials: isSet(object.credentials) ? globalThis.String(object.credentials) : "",
       bucket: isSet(object.bucket) ? globalThis.String(object.bucket) : "",
       proxy: isSet(object.proxy) ? ProxyConfig.fromJSON(object.proxy) : undefined,
@@ -3317,11 +3431,15 @@ export const GCPUpload: MessageFns<GCPUpload> = {
   },
 };
 
+messageTypeRegistry.set(GCPUpload.$type, GCPUpload);
+
 function createBaseAzureBlobUpload(): AzureBlobUpload {
-  return { accountName: "", accountKey: "", containerName: "" };
+  return { $type: "livekit.AzureBlobUpload", accountName: "", accountKey: "", containerName: "" };
 }
 
-export const AzureBlobUpload: MessageFns<AzureBlobUpload> = {
+export const AzureBlobUpload: MessageFns<AzureBlobUpload, "livekit.AzureBlobUpload"> = {
+  $type: "livekit.AzureBlobUpload" as const,
+
   encode(message: AzureBlobUpload, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.accountName !== "") {
       writer.uint32(10).string(message.accountName);
@@ -3377,6 +3495,7 @@ export const AzureBlobUpload: MessageFns<AzureBlobUpload> = {
 
   fromJSON(object: any): AzureBlobUpload {
     return {
+      $type: AzureBlobUpload.$type,
       accountName: isSet(object.accountName) ? globalThis.String(object.accountName) : "",
       accountKey: isSet(object.accountKey) ? globalThis.String(object.accountKey) : "",
       containerName: isSet(object.containerName) ? globalThis.String(object.containerName) : "",
@@ -3409,11 +3528,15 @@ export const AzureBlobUpload: MessageFns<AzureBlobUpload> = {
   },
 };
 
+messageTypeRegistry.set(AzureBlobUpload.$type, AzureBlobUpload);
+
 function createBaseAliOSSUpload(): AliOSSUpload {
-  return { accessKey: "", secret: "", region: "", endpoint: "", bucket: "" };
+  return { $type: "livekit.AliOSSUpload", accessKey: "", secret: "", region: "", endpoint: "", bucket: "" };
 }
 
-export const AliOSSUpload: MessageFns<AliOSSUpload> = {
+export const AliOSSUpload: MessageFns<AliOSSUpload, "livekit.AliOSSUpload"> = {
+  $type: "livekit.AliOSSUpload" as const,
+
   encode(message: AliOSSUpload, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.accessKey !== "") {
       writer.uint32(10).string(message.accessKey);
@@ -3491,6 +3614,7 @@ export const AliOSSUpload: MessageFns<AliOSSUpload> = {
 
   fromJSON(object: any): AliOSSUpload {
     return {
+      $type: AliOSSUpload.$type,
       accessKey: isSet(object.accessKey) ? globalThis.String(object.accessKey) : "",
       secret: isSet(object.secret) ? globalThis.String(object.secret) : "",
       region: isSet(object.region) ? globalThis.String(object.region) : "",
@@ -3533,11 +3657,15 @@ export const AliOSSUpload: MessageFns<AliOSSUpload> = {
   },
 };
 
+messageTypeRegistry.set(AliOSSUpload.$type, AliOSSUpload);
+
 function createBaseProxyConfig(): ProxyConfig {
-  return { url: "", username: "", password: "" };
+  return { $type: "livekit.ProxyConfig", url: "", username: "", password: "" };
 }
 
-export const ProxyConfig: MessageFns<ProxyConfig> = {
+export const ProxyConfig: MessageFns<ProxyConfig, "livekit.ProxyConfig"> = {
+  $type: "livekit.ProxyConfig" as const,
+
   encode(message: ProxyConfig, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.url !== "") {
       writer.uint32(10).string(message.url);
@@ -3593,6 +3721,7 @@ export const ProxyConfig: MessageFns<ProxyConfig> = {
 
   fromJSON(object: any): ProxyConfig {
     return {
+      $type: ProxyConfig.$type,
       url: isSet(object.url) ? globalThis.String(object.url) : "",
       username: isSet(object.username) ? globalThis.String(object.username) : "",
       password: isSet(object.password) ? globalThis.String(object.password) : "",
@@ -3625,11 +3754,15 @@ export const ProxyConfig: MessageFns<ProxyConfig> = {
   },
 };
 
+messageTypeRegistry.set(ProxyConfig.$type, ProxyConfig);
+
 function createBaseStreamOutput(): StreamOutput {
-  return { protocol: 0, urls: [] };
+  return { $type: "livekit.StreamOutput", protocol: 0, urls: [] };
 }
 
-export const StreamOutput: MessageFns<StreamOutput> = {
+export const StreamOutput: MessageFns<StreamOutput, "livekit.StreamOutput"> = {
+  $type: "livekit.StreamOutput" as const,
+
   encode(message: StreamOutput, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.protocol !== 0) {
       writer.uint32(8).int32(message.protocol);
@@ -3674,6 +3807,7 @@ export const StreamOutput: MessageFns<StreamOutput> = {
 
   fromJSON(object: any): StreamOutput {
     return {
+      $type: StreamOutput.$type,
       protocol: isSet(object.protocol) ? streamProtocolFromJSON(object.protocol) : 0,
       urls: globalThis.Array.isArray(object?.urls) ? object.urls.map((e: any) => globalThis.String(e)) : [],
     };
@@ -3701,8 +3835,11 @@ export const StreamOutput: MessageFns<StreamOutput> = {
   },
 };
 
+messageTypeRegistry.set(StreamOutput.$type, StreamOutput);
+
 function createBaseEncodingOptions(): EncodingOptions {
   return {
+    $type: "livekit.EncodingOptions",
     width: 0,
     height: 0,
     depth: 0,
@@ -3718,7 +3855,9 @@ function createBaseEncodingOptions(): EncodingOptions {
   };
 }
 
-export const EncodingOptions: MessageFns<EncodingOptions> = {
+export const EncodingOptions: MessageFns<EncodingOptions, "livekit.EncodingOptions"> = {
+  $type: "livekit.EncodingOptions" as const,
+
   encode(message: EncodingOptions, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.width !== 0) {
       writer.uint32(8).int32(message.width);
@@ -3873,6 +4012,7 @@ export const EncodingOptions: MessageFns<EncodingOptions> = {
 
   fromJSON(object: any): EncodingOptions {
     return {
+      $type: EncodingOptions.$type,
       width: isSet(object.width) ? globalThis.Number(object.width) : 0,
       height: isSet(object.height) ? globalThis.Number(object.height) : 0,
       depth: isSet(object.depth) ? globalThis.Number(object.depth) : 0,
@@ -3950,11 +4090,15 @@ export const EncodingOptions: MessageFns<EncodingOptions> = {
   },
 };
 
+messageTypeRegistry.set(EncodingOptions.$type, EncodingOptions);
+
 function createBaseUpdateLayoutRequest(): UpdateLayoutRequest {
-  return { egressId: "", layout: "" };
+  return { $type: "livekit.UpdateLayoutRequest", egressId: "", layout: "" };
 }
 
-export const UpdateLayoutRequest: MessageFns<UpdateLayoutRequest> = {
+export const UpdateLayoutRequest: MessageFns<UpdateLayoutRequest, "livekit.UpdateLayoutRequest"> = {
+  $type: "livekit.UpdateLayoutRequest" as const,
+
   encode(message: UpdateLayoutRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.egressId !== "") {
       writer.uint32(10).string(message.egressId);
@@ -3999,6 +4143,7 @@ export const UpdateLayoutRequest: MessageFns<UpdateLayoutRequest> = {
 
   fromJSON(object: any): UpdateLayoutRequest {
     return {
+      $type: UpdateLayoutRequest.$type,
       egressId: isSet(object.egressId) ? globalThis.String(object.egressId) : "",
       layout: isSet(object.layout) ? globalThis.String(object.layout) : "",
     };
@@ -4026,11 +4171,15 @@ export const UpdateLayoutRequest: MessageFns<UpdateLayoutRequest> = {
   },
 };
 
+messageTypeRegistry.set(UpdateLayoutRequest.$type, UpdateLayoutRequest);
+
 function createBaseUpdateStreamRequest(): UpdateStreamRequest {
-  return { egressId: "", addOutputUrls: [], removeOutputUrls: [] };
+  return { $type: "livekit.UpdateStreamRequest", egressId: "", addOutputUrls: [], removeOutputUrls: [] };
 }
 
-export const UpdateStreamRequest: MessageFns<UpdateStreamRequest> = {
+export const UpdateStreamRequest: MessageFns<UpdateStreamRequest, "livekit.UpdateStreamRequest"> = {
+  $type: "livekit.UpdateStreamRequest" as const,
+
   encode(message: UpdateStreamRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.egressId !== "") {
       writer.uint32(10).string(message.egressId);
@@ -4086,6 +4235,7 @@ export const UpdateStreamRequest: MessageFns<UpdateStreamRequest> = {
 
   fromJSON(object: any): UpdateStreamRequest {
     return {
+      $type: UpdateStreamRequest.$type,
       egressId: isSet(object.egressId) ? globalThis.String(object.egressId) : "",
       addOutputUrls: globalThis.Array.isArray(object?.addOutputUrls)
         ? object.addOutputUrls.map((e: any) => globalThis.String(e))
@@ -4122,11 +4272,15 @@ export const UpdateStreamRequest: MessageFns<UpdateStreamRequest> = {
   },
 };
 
+messageTypeRegistry.set(UpdateStreamRequest.$type, UpdateStreamRequest);
+
 function createBaseListEgressRequest(): ListEgressRequest {
-  return { roomName: "", egressId: "", active: false };
+  return { $type: "livekit.ListEgressRequest", roomName: "", egressId: "", active: false };
 }
 
-export const ListEgressRequest: MessageFns<ListEgressRequest> = {
+export const ListEgressRequest: MessageFns<ListEgressRequest, "livekit.ListEgressRequest"> = {
+  $type: "livekit.ListEgressRequest" as const,
+
   encode(message: ListEgressRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.roomName !== "") {
       writer.uint32(10).string(message.roomName);
@@ -4182,6 +4336,7 @@ export const ListEgressRequest: MessageFns<ListEgressRequest> = {
 
   fromJSON(object: any): ListEgressRequest {
     return {
+      $type: ListEgressRequest.$type,
       roomName: isSet(object.roomName) ? globalThis.String(object.roomName) : "",
       egressId: isSet(object.egressId) ? globalThis.String(object.egressId) : "",
       active: isSet(object.active) ? globalThis.Boolean(object.active) : false,
@@ -4214,11 +4369,15 @@ export const ListEgressRequest: MessageFns<ListEgressRequest> = {
   },
 };
 
+messageTypeRegistry.set(ListEgressRequest.$type, ListEgressRequest);
+
 function createBaseListEgressResponse(): ListEgressResponse {
-  return { items: [] };
+  return { $type: "livekit.ListEgressResponse", items: [] };
 }
 
-export const ListEgressResponse: MessageFns<ListEgressResponse> = {
+export const ListEgressResponse: MessageFns<ListEgressResponse, "livekit.ListEgressResponse"> = {
+  $type: "livekit.ListEgressResponse" as const,
+
   encode(message: ListEgressResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.items) {
       EgressInfo.encode(v!, writer.uint32(10).fork()).join();
@@ -4252,6 +4411,7 @@ export const ListEgressResponse: MessageFns<ListEgressResponse> = {
 
   fromJSON(object: any): ListEgressResponse {
     return {
+      $type: ListEgressResponse.$type,
       items: globalThis.Array.isArray(object?.items) ? object.items.map((e: any) => EgressInfo.fromJSON(e)) : [],
     };
   },
@@ -4274,11 +4434,15 @@ export const ListEgressResponse: MessageFns<ListEgressResponse> = {
   },
 };
 
+messageTypeRegistry.set(ListEgressResponse.$type, ListEgressResponse);
+
 function createBaseStopEgressRequest(): StopEgressRequest {
-  return { egressId: "" };
+  return { $type: "livekit.StopEgressRequest", egressId: "" };
 }
 
-export const StopEgressRequest: MessageFns<StopEgressRequest> = {
+export const StopEgressRequest: MessageFns<StopEgressRequest, "livekit.StopEgressRequest"> = {
+  $type: "livekit.StopEgressRequest" as const,
+
   encode(message: StopEgressRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.egressId !== "") {
       writer.uint32(10).string(message.egressId);
@@ -4311,7 +4475,10 @@ export const StopEgressRequest: MessageFns<StopEgressRequest> = {
   },
 
   fromJSON(object: any): StopEgressRequest {
-    return { egressId: isSet(object.egressId) ? globalThis.String(object.egressId) : "" };
+    return {
+      $type: StopEgressRequest.$type,
+      egressId: isSet(object.egressId) ? globalThis.String(object.egressId) : "",
+    };
   },
 
   toJSON(message: StopEgressRequest): unknown {
@@ -4332,16 +4499,19 @@ export const StopEgressRequest: MessageFns<StopEgressRequest> = {
   },
 };
 
+messageTypeRegistry.set(StopEgressRequest.$type, StopEgressRequest);
+
 function createBaseEgressInfo(): EgressInfo {
   return {
+    $type: "livekit.EgressInfo",
     egressId: "",
     roomId: "",
     roomName: "",
     sourceType: 0,
     status: 0,
-    startedAt: 0,
-    endedAt: 0,
-    updatedAt: 0,
+    startedAt: 0n,
+    endedAt: 0n,
+    updatedAt: 0n,
     details: "",
     error: "",
     errorCode: 0,
@@ -4362,7 +4532,9 @@ function createBaseEgressInfo(): EgressInfo {
   };
 }
 
-export const EgressInfo: MessageFns<EgressInfo> = {
+export const EgressInfo: MessageFns<EgressInfo, "livekit.EgressInfo"> = {
+  $type: "livekit.EgressInfo" as const,
+
   encode(message: EgressInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.egressId !== "") {
       writer.uint32(10).string(message.egressId);
@@ -4379,13 +4551,22 @@ export const EgressInfo: MessageFns<EgressInfo> = {
     if (message.status !== 0) {
       writer.uint32(24).int32(message.status);
     }
-    if (message.startedAt !== 0) {
+    if (message.startedAt !== 0n) {
+      if (BigInt.asIntN(64, message.startedAt) !== message.startedAt) {
+        throw new globalThis.Error("value provided for field message.startedAt of type int64 too large");
+      }
       writer.uint32(80).int64(message.startedAt);
     }
-    if (message.endedAt !== 0) {
+    if (message.endedAt !== 0n) {
+      if (BigInt.asIntN(64, message.endedAt) !== message.endedAt) {
+        throw new globalThis.Error("value provided for field message.endedAt of type int64 too large");
+      }
       writer.uint32(88).int64(message.endedAt);
     }
-    if (message.updatedAt !== 0) {
+    if (message.updatedAt !== 0n) {
+      if (BigInt.asIntN(64, message.updatedAt) !== message.updatedAt) {
+        throw new globalThis.Error("value provided for field message.updatedAt of type int64 too large");
+      }
       writer.uint32(144).int64(message.updatedAt);
     }
     if (message.details !== "") {
@@ -4494,7 +4675,7 @@ export const EgressInfo: MessageFns<EgressInfo> = {
             break;
           }
 
-          message.startedAt = longToNumber(reader.int64());
+          message.startedAt = reader.int64() as bigint;
           continue;
         }
         case 11: {
@@ -4502,7 +4683,7 @@ export const EgressInfo: MessageFns<EgressInfo> = {
             break;
           }
 
-          message.endedAt = longToNumber(reader.int64());
+          message.endedAt = reader.int64() as bigint;
           continue;
         }
         case 18: {
@@ -4510,7 +4691,7 @@ export const EgressInfo: MessageFns<EgressInfo> = {
             break;
           }
 
-          message.updatedAt = longToNumber(reader.int64());
+          message.updatedAt = reader.int64() as bigint;
           continue;
         }
         case 21: {
@@ -4660,14 +4841,15 @@ export const EgressInfo: MessageFns<EgressInfo> = {
 
   fromJSON(object: any): EgressInfo {
     return {
+      $type: EgressInfo.$type,
       egressId: isSet(object.egressId) ? globalThis.String(object.egressId) : "",
       roomId: isSet(object.roomId) ? globalThis.String(object.roomId) : "",
       roomName: isSet(object.roomName) ? globalThis.String(object.roomName) : "",
       sourceType: isSet(object.sourceType) ? egressSourceTypeFromJSON(object.sourceType) : 0,
       status: isSet(object.status) ? egressStatusFromJSON(object.status) : 0,
-      startedAt: isSet(object.startedAt) ? globalThis.Number(object.startedAt) : 0,
-      endedAt: isSet(object.endedAt) ? globalThis.Number(object.endedAt) : 0,
-      updatedAt: isSet(object.updatedAt) ? globalThis.Number(object.updatedAt) : 0,
+      startedAt: isSet(object.startedAt) ? BigInt(object.startedAt) : 0n,
+      endedAt: isSet(object.endedAt) ? BigInt(object.endedAt) : 0n,
+      updatedAt: isSet(object.updatedAt) ? BigInt(object.updatedAt) : 0n,
       details: isSet(object.details) ? globalThis.String(object.details) : "",
       error: isSet(object.error) ? globalThis.String(object.error) : "",
       errorCode: isSet(object.errorCode) ? globalThis.Number(object.errorCode) : 0,
@@ -4717,14 +4899,14 @@ export const EgressInfo: MessageFns<EgressInfo> = {
     if (message.status !== 0) {
       obj.status = egressStatusToJSON(message.status);
     }
-    if (message.startedAt !== 0) {
-      obj.startedAt = Math.round(message.startedAt);
+    if (message.startedAt !== 0n) {
+      obj.startedAt = message.startedAt.toString();
     }
-    if (message.endedAt !== 0) {
-      obj.endedAt = Math.round(message.endedAt);
+    if (message.endedAt !== 0n) {
+      obj.endedAt = message.endedAt.toString();
     }
-    if (message.updatedAt !== 0) {
-      obj.updatedAt = Math.round(message.updatedAt);
+    if (message.updatedAt !== 0n) {
+      obj.updatedAt = message.updatedAt.toString();
     }
     if (message.details !== "") {
       obj.details = message.details;
@@ -4790,9 +4972,9 @@ export const EgressInfo: MessageFns<EgressInfo> = {
     message.roomName = object.roomName ?? "";
     message.sourceType = object.sourceType ?? 0;
     message.status = object.status ?? 0;
-    message.startedAt = object.startedAt ?? 0;
-    message.endedAt = object.endedAt ?? 0;
-    message.updatedAt = object.updatedAt ?? 0;
+    message.startedAt = object.startedAt ?? 0n;
+    message.endedAt = object.endedAt ?? 0n;
+    message.updatedAt = object.updatedAt ?? 0n;
     message.details = object.details ?? "";
     message.error = object.error ?? "";
     message.errorCode = object.errorCode ?? 0;
@@ -4828,11 +5010,15 @@ export const EgressInfo: MessageFns<EgressInfo> = {
   },
 };
 
+messageTypeRegistry.set(EgressInfo.$type, EgressInfo);
+
 function createBaseStreamInfoList(): StreamInfoList {
-  return { info: [] };
+  return { $type: "livekit.StreamInfoList", info: [] };
 }
 
-export const StreamInfoList: MessageFns<StreamInfoList> = {
+export const StreamInfoList: MessageFns<StreamInfoList, "livekit.StreamInfoList"> = {
+  $type: "livekit.StreamInfoList" as const,
+
   encode(message: StreamInfoList, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.info) {
       StreamInfo.encode(v!, writer.uint32(10).fork()).join();
@@ -4865,7 +5051,10 @@ export const StreamInfoList: MessageFns<StreamInfoList> = {
   },
 
   fromJSON(object: any): StreamInfoList {
-    return { info: globalThis.Array.isArray(object?.info) ? object.info.map((e: any) => StreamInfo.fromJSON(e)) : [] };
+    return {
+      $type: StreamInfoList.$type,
+      info: globalThis.Array.isArray(object?.info) ? object.info.map((e: any) => StreamInfo.fromJSON(e)) : [],
+    };
   },
 
   toJSON(message: StreamInfoList): unknown {
@@ -4886,22 +5075,35 @@ export const StreamInfoList: MessageFns<StreamInfoList> = {
   },
 };
 
+messageTypeRegistry.set(StreamInfoList.$type, StreamInfoList);
+
 function createBaseStreamInfo(): StreamInfo {
-  return { url: "", startedAt: 0, endedAt: 0, duration: 0, status: 0, error: "" };
+  return { $type: "livekit.StreamInfo", url: "", startedAt: 0n, endedAt: 0n, duration: 0n, status: 0, error: "" };
 }
 
-export const StreamInfo: MessageFns<StreamInfo> = {
+export const StreamInfo: MessageFns<StreamInfo, "livekit.StreamInfo"> = {
+  $type: "livekit.StreamInfo" as const,
+
   encode(message: StreamInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.url !== "") {
       writer.uint32(10).string(message.url);
     }
-    if (message.startedAt !== 0) {
+    if (message.startedAt !== 0n) {
+      if (BigInt.asIntN(64, message.startedAt) !== message.startedAt) {
+        throw new globalThis.Error("value provided for field message.startedAt of type int64 too large");
+      }
       writer.uint32(16).int64(message.startedAt);
     }
-    if (message.endedAt !== 0) {
+    if (message.endedAt !== 0n) {
+      if (BigInt.asIntN(64, message.endedAt) !== message.endedAt) {
+        throw new globalThis.Error("value provided for field message.endedAt of type int64 too large");
+      }
       writer.uint32(24).int64(message.endedAt);
     }
-    if (message.duration !== 0) {
+    if (message.duration !== 0n) {
+      if (BigInt.asIntN(64, message.duration) !== message.duration) {
+        throw new globalThis.Error("value provided for field message.duration of type int64 too large");
+      }
       writer.uint32(32).int64(message.duration);
     }
     if (message.status !== 0) {
@@ -4933,7 +5135,7 @@ export const StreamInfo: MessageFns<StreamInfo> = {
             break;
           }
 
-          message.startedAt = longToNumber(reader.int64());
+          message.startedAt = reader.int64() as bigint;
           continue;
         }
         case 3: {
@@ -4941,7 +5143,7 @@ export const StreamInfo: MessageFns<StreamInfo> = {
             break;
           }
 
-          message.endedAt = longToNumber(reader.int64());
+          message.endedAt = reader.int64() as bigint;
           continue;
         }
         case 4: {
@@ -4949,7 +5151,7 @@ export const StreamInfo: MessageFns<StreamInfo> = {
             break;
           }
 
-          message.duration = longToNumber(reader.int64());
+          message.duration = reader.int64() as bigint;
           continue;
         }
         case 5: {
@@ -4979,10 +5181,11 @@ export const StreamInfo: MessageFns<StreamInfo> = {
 
   fromJSON(object: any): StreamInfo {
     return {
+      $type: StreamInfo.$type,
       url: isSet(object.url) ? globalThis.String(object.url) : "",
-      startedAt: isSet(object.startedAt) ? globalThis.Number(object.startedAt) : 0,
-      endedAt: isSet(object.endedAt) ? globalThis.Number(object.endedAt) : 0,
-      duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
+      startedAt: isSet(object.startedAt) ? BigInt(object.startedAt) : 0n,
+      endedAt: isSet(object.endedAt) ? BigInt(object.endedAt) : 0n,
+      duration: isSet(object.duration) ? BigInt(object.duration) : 0n,
       status: isSet(object.status) ? streamInfo_StatusFromJSON(object.status) : 0,
       error: isSet(object.error) ? globalThis.String(object.error) : "",
     };
@@ -4993,14 +5196,14 @@ export const StreamInfo: MessageFns<StreamInfo> = {
     if (message.url !== "") {
       obj.url = message.url;
     }
-    if (message.startedAt !== 0) {
-      obj.startedAt = Math.round(message.startedAt);
+    if (message.startedAt !== 0n) {
+      obj.startedAt = message.startedAt.toString();
     }
-    if (message.endedAt !== 0) {
-      obj.endedAt = Math.round(message.endedAt);
+    if (message.endedAt !== 0n) {
+      obj.endedAt = message.endedAt.toString();
     }
-    if (message.duration !== 0) {
-      obj.duration = Math.round(message.duration);
+    if (message.duration !== 0n) {
+      obj.duration = message.duration.toString();
     }
     if (message.status !== 0) {
       obj.status = streamInfo_StatusToJSON(message.status);
@@ -5017,34 +5220,50 @@ export const StreamInfo: MessageFns<StreamInfo> = {
   fromPartial<I extends Exact<DeepPartial<StreamInfo>, I>>(object: I): StreamInfo {
     const message = createBaseStreamInfo();
     message.url = object.url ?? "";
-    message.startedAt = object.startedAt ?? 0;
-    message.endedAt = object.endedAt ?? 0;
-    message.duration = object.duration ?? 0;
+    message.startedAt = object.startedAt ?? 0n;
+    message.endedAt = object.endedAt ?? 0n;
+    message.duration = object.duration ?? 0n;
     message.status = object.status ?? 0;
     message.error = object.error ?? "";
     return message;
   },
 };
 
+messageTypeRegistry.set(StreamInfo.$type, StreamInfo);
+
 function createBaseFileInfo(): FileInfo {
-  return { filename: "", startedAt: 0, endedAt: 0, duration: 0, size: 0, location: "" };
+  return { $type: "livekit.FileInfo", filename: "", startedAt: 0n, endedAt: 0n, duration: 0n, size: 0n, location: "" };
 }
 
-export const FileInfo: MessageFns<FileInfo> = {
+export const FileInfo: MessageFns<FileInfo, "livekit.FileInfo"> = {
+  $type: "livekit.FileInfo" as const,
+
   encode(message: FileInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.filename !== "") {
       writer.uint32(10).string(message.filename);
     }
-    if (message.startedAt !== 0) {
+    if (message.startedAt !== 0n) {
+      if (BigInt.asIntN(64, message.startedAt) !== message.startedAt) {
+        throw new globalThis.Error("value provided for field message.startedAt of type int64 too large");
+      }
       writer.uint32(16).int64(message.startedAt);
     }
-    if (message.endedAt !== 0) {
+    if (message.endedAt !== 0n) {
+      if (BigInt.asIntN(64, message.endedAt) !== message.endedAt) {
+        throw new globalThis.Error("value provided for field message.endedAt of type int64 too large");
+      }
       writer.uint32(24).int64(message.endedAt);
     }
-    if (message.duration !== 0) {
+    if (message.duration !== 0n) {
+      if (BigInt.asIntN(64, message.duration) !== message.duration) {
+        throw new globalThis.Error("value provided for field message.duration of type int64 too large");
+      }
       writer.uint32(48).int64(message.duration);
     }
-    if (message.size !== 0) {
+    if (message.size !== 0n) {
+      if (BigInt.asIntN(64, message.size) !== message.size) {
+        throw new globalThis.Error("value provided for field message.size of type int64 too large");
+      }
       writer.uint32(32).int64(message.size);
     }
     if (message.location !== "") {
@@ -5073,7 +5292,7 @@ export const FileInfo: MessageFns<FileInfo> = {
             break;
           }
 
-          message.startedAt = longToNumber(reader.int64());
+          message.startedAt = reader.int64() as bigint;
           continue;
         }
         case 3: {
@@ -5081,7 +5300,7 @@ export const FileInfo: MessageFns<FileInfo> = {
             break;
           }
 
-          message.endedAt = longToNumber(reader.int64());
+          message.endedAt = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -5089,7 +5308,7 @@ export const FileInfo: MessageFns<FileInfo> = {
             break;
           }
 
-          message.duration = longToNumber(reader.int64());
+          message.duration = reader.int64() as bigint;
           continue;
         }
         case 4: {
@@ -5097,7 +5316,7 @@ export const FileInfo: MessageFns<FileInfo> = {
             break;
           }
 
-          message.size = longToNumber(reader.int64());
+          message.size = reader.int64() as bigint;
           continue;
         }
         case 5: {
@@ -5119,11 +5338,12 @@ export const FileInfo: MessageFns<FileInfo> = {
 
   fromJSON(object: any): FileInfo {
     return {
+      $type: FileInfo.$type,
       filename: isSet(object.filename) ? globalThis.String(object.filename) : "",
-      startedAt: isSet(object.startedAt) ? globalThis.Number(object.startedAt) : 0,
-      endedAt: isSet(object.endedAt) ? globalThis.Number(object.endedAt) : 0,
-      duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
-      size: isSet(object.size) ? globalThis.Number(object.size) : 0,
+      startedAt: isSet(object.startedAt) ? BigInt(object.startedAt) : 0n,
+      endedAt: isSet(object.endedAt) ? BigInt(object.endedAt) : 0n,
+      duration: isSet(object.duration) ? BigInt(object.duration) : 0n,
+      size: isSet(object.size) ? BigInt(object.size) : 0n,
       location: isSet(object.location) ? globalThis.String(object.location) : "",
     };
   },
@@ -5133,17 +5353,17 @@ export const FileInfo: MessageFns<FileInfo> = {
     if (message.filename !== "") {
       obj.filename = message.filename;
     }
-    if (message.startedAt !== 0) {
-      obj.startedAt = Math.round(message.startedAt);
+    if (message.startedAt !== 0n) {
+      obj.startedAt = message.startedAt.toString();
     }
-    if (message.endedAt !== 0) {
-      obj.endedAt = Math.round(message.endedAt);
+    if (message.endedAt !== 0n) {
+      obj.endedAt = message.endedAt.toString();
     }
-    if (message.duration !== 0) {
-      obj.duration = Math.round(message.duration);
+    if (message.duration !== 0n) {
+      obj.duration = message.duration.toString();
     }
-    if (message.size !== 0) {
-      obj.size = Math.round(message.size);
+    if (message.size !== 0n) {
+      obj.size = message.size.toString();
     }
     if (message.location !== "") {
       obj.location = message.location;
@@ -5157,30 +5377,35 @@ export const FileInfo: MessageFns<FileInfo> = {
   fromPartial<I extends Exact<DeepPartial<FileInfo>, I>>(object: I): FileInfo {
     const message = createBaseFileInfo();
     message.filename = object.filename ?? "";
-    message.startedAt = object.startedAt ?? 0;
-    message.endedAt = object.endedAt ?? 0;
-    message.duration = object.duration ?? 0;
-    message.size = object.size ?? 0;
+    message.startedAt = object.startedAt ?? 0n;
+    message.endedAt = object.endedAt ?? 0n;
+    message.duration = object.duration ?? 0n;
+    message.size = object.size ?? 0n;
     message.location = object.location ?? "";
     return message;
   },
 };
 
+messageTypeRegistry.set(FileInfo.$type, FileInfo);
+
 function createBaseSegmentsInfo(): SegmentsInfo {
   return {
+    $type: "livekit.SegmentsInfo",
     playlistName: "",
     livePlaylistName: "",
-    duration: 0,
-    size: 0,
+    duration: 0n,
+    size: 0n,
     playlistLocation: "",
     livePlaylistLocation: "",
-    segmentCount: 0,
-    startedAt: 0,
-    endedAt: 0,
+    segmentCount: 0n,
+    startedAt: 0n,
+    endedAt: 0n,
   };
 }
 
-export const SegmentsInfo: MessageFns<SegmentsInfo> = {
+export const SegmentsInfo: MessageFns<SegmentsInfo, "livekit.SegmentsInfo"> = {
+  $type: "livekit.SegmentsInfo" as const,
+
   encode(message: SegmentsInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.playlistName !== "") {
       writer.uint32(10).string(message.playlistName);
@@ -5188,10 +5413,16 @@ export const SegmentsInfo: MessageFns<SegmentsInfo> = {
     if (message.livePlaylistName !== "") {
       writer.uint32(66).string(message.livePlaylistName);
     }
-    if (message.duration !== 0) {
+    if (message.duration !== 0n) {
+      if (BigInt.asIntN(64, message.duration) !== message.duration) {
+        throw new globalThis.Error("value provided for field message.duration of type int64 too large");
+      }
       writer.uint32(16).int64(message.duration);
     }
-    if (message.size !== 0) {
+    if (message.size !== 0n) {
+      if (BigInt.asIntN(64, message.size) !== message.size) {
+        throw new globalThis.Error("value provided for field message.size of type int64 too large");
+      }
       writer.uint32(24).int64(message.size);
     }
     if (message.playlistLocation !== "") {
@@ -5200,13 +5431,22 @@ export const SegmentsInfo: MessageFns<SegmentsInfo> = {
     if (message.livePlaylistLocation !== "") {
       writer.uint32(74).string(message.livePlaylistLocation);
     }
-    if (message.segmentCount !== 0) {
+    if (message.segmentCount !== 0n) {
+      if (BigInt.asIntN(64, message.segmentCount) !== message.segmentCount) {
+        throw new globalThis.Error("value provided for field message.segmentCount of type int64 too large");
+      }
       writer.uint32(40).int64(message.segmentCount);
     }
-    if (message.startedAt !== 0) {
+    if (message.startedAt !== 0n) {
+      if (BigInt.asIntN(64, message.startedAt) !== message.startedAt) {
+        throw new globalThis.Error("value provided for field message.startedAt of type int64 too large");
+      }
       writer.uint32(48).int64(message.startedAt);
     }
-    if (message.endedAt !== 0) {
+    if (message.endedAt !== 0n) {
+      if (BigInt.asIntN(64, message.endedAt) !== message.endedAt) {
+        throw new globalThis.Error("value provided for field message.endedAt of type int64 too large");
+      }
       writer.uint32(56).int64(message.endedAt);
     }
     return writer;
@@ -5240,7 +5480,7 @@ export const SegmentsInfo: MessageFns<SegmentsInfo> = {
             break;
           }
 
-          message.duration = longToNumber(reader.int64());
+          message.duration = reader.int64() as bigint;
           continue;
         }
         case 3: {
@@ -5248,7 +5488,7 @@ export const SegmentsInfo: MessageFns<SegmentsInfo> = {
             break;
           }
 
-          message.size = longToNumber(reader.int64());
+          message.size = reader.int64() as bigint;
           continue;
         }
         case 4: {
@@ -5272,7 +5512,7 @@ export const SegmentsInfo: MessageFns<SegmentsInfo> = {
             break;
           }
 
-          message.segmentCount = longToNumber(reader.int64());
+          message.segmentCount = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -5280,7 +5520,7 @@ export const SegmentsInfo: MessageFns<SegmentsInfo> = {
             break;
           }
 
-          message.startedAt = longToNumber(reader.int64());
+          message.startedAt = reader.int64() as bigint;
           continue;
         }
         case 7: {
@@ -5288,7 +5528,7 @@ export const SegmentsInfo: MessageFns<SegmentsInfo> = {
             break;
           }
 
-          message.endedAt = longToNumber(reader.int64());
+          message.endedAt = reader.int64() as bigint;
           continue;
         }
       }
@@ -5302,15 +5542,16 @@ export const SegmentsInfo: MessageFns<SegmentsInfo> = {
 
   fromJSON(object: any): SegmentsInfo {
     return {
+      $type: SegmentsInfo.$type,
       playlistName: isSet(object.playlistName) ? globalThis.String(object.playlistName) : "",
       livePlaylistName: isSet(object.livePlaylistName) ? globalThis.String(object.livePlaylistName) : "",
-      duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
-      size: isSet(object.size) ? globalThis.Number(object.size) : 0,
+      duration: isSet(object.duration) ? BigInt(object.duration) : 0n,
+      size: isSet(object.size) ? BigInt(object.size) : 0n,
       playlistLocation: isSet(object.playlistLocation) ? globalThis.String(object.playlistLocation) : "",
       livePlaylistLocation: isSet(object.livePlaylistLocation) ? globalThis.String(object.livePlaylistLocation) : "",
-      segmentCount: isSet(object.segmentCount) ? globalThis.Number(object.segmentCount) : 0,
-      startedAt: isSet(object.startedAt) ? globalThis.Number(object.startedAt) : 0,
-      endedAt: isSet(object.endedAt) ? globalThis.Number(object.endedAt) : 0,
+      segmentCount: isSet(object.segmentCount) ? BigInt(object.segmentCount) : 0n,
+      startedAt: isSet(object.startedAt) ? BigInt(object.startedAt) : 0n,
+      endedAt: isSet(object.endedAt) ? BigInt(object.endedAt) : 0n,
     };
   },
 
@@ -5322,11 +5563,11 @@ export const SegmentsInfo: MessageFns<SegmentsInfo> = {
     if (message.livePlaylistName !== "") {
       obj.livePlaylistName = message.livePlaylistName;
     }
-    if (message.duration !== 0) {
-      obj.duration = Math.round(message.duration);
+    if (message.duration !== 0n) {
+      obj.duration = message.duration.toString();
     }
-    if (message.size !== 0) {
-      obj.size = Math.round(message.size);
+    if (message.size !== 0n) {
+      obj.size = message.size.toString();
     }
     if (message.playlistLocation !== "") {
       obj.playlistLocation = message.playlistLocation;
@@ -5334,14 +5575,14 @@ export const SegmentsInfo: MessageFns<SegmentsInfo> = {
     if (message.livePlaylistLocation !== "") {
       obj.livePlaylistLocation = message.livePlaylistLocation;
     }
-    if (message.segmentCount !== 0) {
-      obj.segmentCount = Math.round(message.segmentCount);
+    if (message.segmentCount !== 0n) {
+      obj.segmentCount = message.segmentCount.toString();
     }
-    if (message.startedAt !== 0) {
-      obj.startedAt = Math.round(message.startedAt);
+    if (message.startedAt !== 0n) {
+      obj.startedAt = message.startedAt.toString();
     }
-    if (message.endedAt !== 0) {
-      obj.endedAt = Math.round(message.endedAt);
+    if (message.endedAt !== 0n) {
+      obj.endedAt = message.endedAt.toString();
     }
     return obj;
   },
@@ -5353,33 +5594,46 @@ export const SegmentsInfo: MessageFns<SegmentsInfo> = {
     const message = createBaseSegmentsInfo();
     message.playlistName = object.playlistName ?? "";
     message.livePlaylistName = object.livePlaylistName ?? "";
-    message.duration = object.duration ?? 0;
-    message.size = object.size ?? 0;
+    message.duration = object.duration ?? 0n;
+    message.size = object.size ?? 0n;
     message.playlistLocation = object.playlistLocation ?? "";
     message.livePlaylistLocation = object.livePlaylistLocation ?? "";
-    message.segmentCount = object.segmentCount ?? 0;
-    message.startedAt = object.startedAt ?? 0;
-    message.endedAt = object.endedAt ?? 0;
+    message.segmentCount = object.segmentCount ?? 0n;
+    message.startedAt = object.startedAt ?? 0n;
+    message.endedAt = object.endedAt ?? 0n;
     return message;
   },
 };
 
+messageTypeRegistry.set(SegmentsInfo.$type, SegmentsInfo);
+
 function createBaseImagesInfo(): ImagesInfo {
-  return { filenamePrefix: "", imageCount: 0, startedAt: 0, endedAt: 0 };
+  return { $type: "livekit.ImagesInfo", filenamePrefix: "", imageCount: 0n, startedAt: 0n, endedAt: 0n };
 }
 
-export const ImagesInfo: MessageFns<ImagesInfo> = {
+export const ImagesInfo: MessageFns<ImagesInfo, "livekit.ImagesInfo"> = {
+  $type: "livekit.ImagesInfo" as const,
+
   encode(message: ImagesInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.filenamePrefix !== "") {
       writer.uint32(34).string(message.filenamePrefix);
     }
-    if (message.imageCount !== 0) {
+    if (message.imageCount !== 0n) {
+      if (BigInt.asIntN(64, message.imageCount) !== message.imageCount) {
+        throw new globalThis.Error("value provided for field message.imageCount of type int64 too large");
+      }
       writer.uint32(8).int64(message.imageCount);
     }
-    if (message.startedAt !== 0) {
+    if (message.startedAt !== 0n) {
+      if (BigInt.asIntN(64, message.startedAt) !== message.startedAt) {
+        throw new globalThis.Error("value provided for field message.startedAt of type int64 too large");
+      }
       writer.uint32(16).int64(message.startedAt);
     }
-    if (message.endedAt !== 0) {
+    if (message.endedAt !== 0n) {
+      if (BigInt.asIntN(64, message.endedAt) !== message.endedAt) {
+        throw new globalThis.Error("value provided for field message.endedAt of type int64 too large");
+      }
       writer.uint32(24).int64(message.endedAt);
     }
     return writer;
@@ -5405,7 +5659,7 @@ export const ImagesInfo: MessageFns<ImagesInfo> = {
             break;
           }
 
-          message.imageCount = longToNumber(reader.int64());
+          message.imageCount = reader.int64() as bigint;
           continue;
         }
         case 2: {
@@ -5413,7 +5667,7 @@ export const ImagesInfo: MessageFns<ImagesInfo> = {
             break;
           }
 
-          message.startedAt = longToNumber(reader.int64());
+          message.startedAt = reader.int64() as bigint;
           continue;
         }
         case 3: {
@@ -5421,7 +5675,7 @@ export const ImagesInfo: MessageFns<ImagesInfo> = {
             break;
           }
 
-          message.endedAt = longToNumber(reader.int64());
+          message.endedAt = reader.int64() as bigint;
           continue;
         }
       }
@@ -5435,10 +5689,11 @@ export const ImagesInfo: MessageFns<ImagesInfo> = {
 
   fromJSON(object: any): ImagesInfo {
     return {
+      $type: ImagesInfo.$type,
       filenamePrefix: isSet(object.filenamePrefix) ? globalThis.String(object.filenamePrefix) : "",
-      imageCount: isSet(object.imageCount) ? globalThis.Number(object.imageCount) : 0,
-      startedAt: isSet(object.startedAt) ? globalThis.Number(object.startedAt) : 0,
-      endedAt: isSet(object.endedAt) ? globalThis.Number(object.endedAt) : 0,
+      imageCount: isSet(object.imageCount) ? BigInt(object.imageCount) : 0n,
+      startedAt: isSet(object.startedAt) ? BigInt(object.startedAt) : 0n,
+      endedAt: isSet(object.endedAt) ? BigInt(object.endedAt) : 0n,
     };
   },
 
@@ -5447,14 +5702,14 @@ export const ImagesInfo: MessageFns<ImagesInfo> = {
     if (message.filenamePrefix !== "") {
       obj.filenamePrefix = message.filenamePrefix;
     }
-    if (message.imageCount !== 0) {
-      obj.imageCount = Math.round(message.imageCount);
+    if (message.imageCount !== 0n) {
+      obj.imageCount = message.imageCount.toString();
     }
-    if (message.startedAt !== 0) {
-      obj.startedAt = Math.round(message.startedAt);
+    if (message.startedAt !== 0n) {
+      obj.startedAt = message.startedAt.toString();
     }
-    if (message.endedAt !== 0) {
-      obj.endedAt = Math.round(message.endedAt);
+    if (message.endedAt !== 0n) {
+      obj.endedAt = message.endedAt.toString();
     }
     return obj;
   },
@@ -5465,18 +5720,28 @@ export const ImagesInfo: MessageFns<ImagesInfo> = {
   fromPartial<I extends Exact<DeepPartial<ImagesInfo>, I>>(object: I): ImagesInfo {
     const message = createBaseImagesInfo();
     message.filenamePrefix = object.filenamePrefix ?? "";
-    message.imageCount = object.imageCount ?? 0;
-    message.startedAt = object.startedAt ?? 0;
-    message.endedAt = object.endedAt ?? 0;
+    message.imageCount = object.imageCount ?? 0n;
+    message.startedAt = object.startedAt ?? 0n;
+    message.endedAt = object.endedAt ?? 0n;
     return message;
   },
 };
 
+messageTypeRegistry.set(ImagesInfo.$type, ImagesInfo);
+
 function createBaseAutoParticipantEgress(): AutoParticipantEgress {
-  return { preset: undefined, advanced: undefined, fileOutputs: [], segmentOutputs: [] };
+  return {
+    $type: "livekit.AutoParticipantEgress",
+    preset: undefined,
+    advanced: undefined,
+    fileOutputs: [],
+    segmentOutputs: [],
+  };
 }
 
-export const AutoParticipantEgress: MessageFns<AutoParticipantEgress> = {
+export const AutoParticipantEgress: MessageFns<AutoParticipantEgress, "livekit.AutoParticipantEgress"> = {
+  $type: "livekit.AutoParticipantEgress" as const,
+
   encode(message: AutoParticipantEgress, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.preset !== undefined) {
       writer.uint32(8).int32(message.preset);
@@ -5543,6 +5808,7 @@ export const AutoParticipantEgress: MessageFns<AutoParticipantEgress> = {
 
   fromJSON(object: any): AutoParticipantEgress {
     return {
+      $type: AutoParticipantEgress.$type,
       preset: isSet(object.preset) ? encodingOptionsPresetFromJSON(object.preset) : undefined,
       advanced: isSet(object.advanced) ? EncodingOptions.fromJSON(object.advanced) : undefined,
       fileOutputs: globalThis.Array.isArray(object?.fileOutputs)
@@ -5586,11 +5852,23 @@ export const AutoParticipantEgress: MessageFns<AutoParticipantEgress> = {
   },
 };
 
+messageTypeRegistry.set(AutoParticipantEgress.$type, AutoParticipantEgress);
+
 function createBaseAutoTrackEgress(): AutoTrackEgress {
-  return { filepath: "", disableManifest: false, s3: undefined, gcp: undefined, azure: undefined, aliOSS: undefined };
+  return {
+    $type: "livekit.AutoTrackEgress",
+    filepath: "",
+    disableManifest: false,
+    s3: undefined,
+    gcp: undefined,
+    azure: undefined,
+    aliOSS: undefined,
+  };
 }
 
-export const AutoTrackEgress: MessageFns<AutoTrackEgress> = {
+export const AutoTrackEgress: MessageFns<AutoTrackEgress, "livekit.AutoTrackEgress"> = {
+  $type: "livekit.AutoTrackEgress" as const,
+
   encode(message: AutoTrackEgress, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.filepath !== "") {
       writer.uint32(10).string(message.filepath);
@@ -5679,6 +5957,7 @@ export const AutoTrackEgress: MessageFns<AutoTrackEgress> = {
 
   fromJSON(object: any): AutoTrackEgress {
     return {
+      $type: AutoTrackEgress.$type,
       filepath: isSet(object.filepath) ? globalThis.String(object.filepath) : "",
       disableManifest: isSet(object.disableManifest) ? globalThis.Boolean(object.disableManifest) : false,
       s3: isSet(object.s3) ? S3Upload.fromJSON(object.s3) : undefined,
@@ -5730,121 +6009,3703 @@ export const AutoTrackEgress: MessageFns<AutoTrackEgress> = {
   },
 };
 
-export interface Egress {
-  /** start recording or streaming a room, participant, or tracks */
-  StartRoomCompositeEgress(request: RoomCompositeEgressRequest): Promise<EgressInfo>;
-  StartWebEgress(request: WebEgressRequest): Promise<EgressInfo>;
-  StartParticipantEgress(request: ParticipantEgressRequest): Promise<EgressInfo>;
-  StartTrackCompositeEgress(request: TrackCompositeEgressRequest): Promise<EgressInfo>;
-  StartTrackEgress(request: TrackEgressRequest): Promise<EgressInfo>;
-  /** update web composite layout */
-  UpdateLayout(request: UpdateLayoutRequest): Promise<EgressInfo>;
-  /** add or remove stream endpoints */
-  UpdateStream(request: UpdateStreamRequest): Promise<EgressInfo>;
-  /** list available egress */
-  ListEgress(request: ListEgressRequest): Promise<ListEgressResponse>;
-  /** stop a recording or stream */
-  StopEgress(request: StopEgressRequest): Promise<EgressInfo>;
+messageTypeRegistry.set(AutoTrackEgress.$type, AutoTrackEgress);
+
+type ProtoMetaMessageOptions = {
+  options?: { [key: string]: any };
+  fields?: { [key: string]: { [key: string]: any } };
+  oneof?: { [key: string]: { [key: string]: any } };
+  nested?: { [key: string]: ProtoMetaMessageOptions };
+};
+
+export interface ProtoMetadata {
+  fileDescriptor: FileDescriptorProto1;
+  references: { [key: string]: any };
+  dependencies?: ProtoMetadata[];
+  options?: {
+    options?: { [key: string]: any };
+    services?: {
+      [key: string]: { options?: { [key: string]: any }; methods?: { [key: string]: { [key: string]: any } } };
+    };
+    messages?: { [key: string]: ProtoMetaMessageOptions };
+    enums?: { [key: string]: { options?: { [key: string]: any }; values?: { [key: string]: { [key: string]: any } } } };
+  };
 }
 
-export const EgressServiceName = "livekit.Egress";
-export class EgressClientImpl implements Egress {
-  private readonly rpc: Rpc;
-  private readonly service: string;
-  constructor(rpc: Rpc, opts?: { service?: string }) {
-    this.service = opts?.service || EgressServiceName;
-    this.rpc = rpc;
-    this.StartRoomCompositeEgress = this.StartRoomCompositeEgress.bind(this);
-    this.StartWebEgress = this.StartWebEgress.bind(this);
-    this.StartParticipantEgress = this.StartParticipantEgress.bind(this);
-    this.StartTrackCompositeEgress = this.StartTrackCompositeEgress.bind(this);
-    this.StartTrackEgress = this.StartTrackEgress.bind(this);
-    this.UpdateLayout = this.UpdateLayout.bind(this);
-    this.UpdateStream = this.UpdateStream.bind(this);
-    this.ListEgress = this.ListEgress.bind(this);
-    this.StopEgress = this.StopEgress.bind(this);
-  }
-  StartRoomCompositeEgress(request: RoomCompositeEgressRequest): Promise<EgressInfo> {
-    const data = RoomCompositeEgressRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "StartRoomCompositeEgress", data);
-    return promise.then((data) => EgressInfo.decode(new BinaryReader(data)));
-  }
+export const protoMetadata = {
+  fileDescriptor: {
+    "name": "livekit_egress.proto",
+    "package": "livekit",
+    "dependency": ["livekit_models.proto"],
+    "publicDependency": [],
+    "weakDependency": [],
+    "messageType": [{
+      "name": "RoomCompositeEgressRequest",
+      "field": [{
+        "name": "room_name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "roomName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "layout",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "layout",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "audio_only",
+        "number": 3,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "audioOnly",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "audio_mixing",
+        "number": 15,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.AudioMixing",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "audioMixing",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "video_only",
+        "number": 4,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "videoOnly",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "custom_base_url",
+        "number": 5,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "customBaseUrl",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "file",
+        "number": 6,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.EncodedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "file",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "stream",
+        "number": 7,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.StreamOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "stream",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "segments",
+        "number": 10,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.SegmentedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "segments",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "preset",
+        "number": 8,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.EncodingOptionsPreset",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 1,
+        "jsonName": "preset",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "advanced",
+        "number": 9,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.EncodingOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 1,
+        "jsonName": "advanced",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "file_outputs",
+        "number": 11,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.EncodedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "fileOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "stream_outputs",
+        "number": 12,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.StreamOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "streamOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "segment_outputs",
+        "number": 13,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.SegmentedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "segmentOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "image_outputs",
+        "number": 14,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.ImageOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "imageOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "output", "options": undefined }, { "name": "options", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "WebEgressRequest",
+      "field": [{
+        "name": "url",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "url",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "audio_only",
+        "number": 2,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "audioOnly",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "video_only",
+        "number": 3,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "videoOnly",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "await_start_signal",
+        "number": 12,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "awaitStartSignal",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "file",
+        "number": 4,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.EncodedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "file",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "stream",
+        "number": 5,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.StreamOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "stream",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "segments",
+        "number": 6,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.SegmentedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "segments",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "preset",
+        "number": 7,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.EncodingOptionsPreset",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 1,
+        "jsonName": "preset",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "advanced",
+        "number": 8,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.EncodingOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 1,
+        "jsonName": "advanced",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "file_outputs",
+        "number": 9,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.EncodedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "fileOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "stream_outputs",
+        "number": 10,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.StreamOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "streamOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "segment_outputs",
+        "number": 11,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.SegmentedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "segmentOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "image_outputs",
+        "number": 13,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.ImageOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "imageOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "output", "options": undefined }, { "name": "options", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ParticipantEgressRequest",
+      "field": [{
+        "name": "room_name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "roomName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "identity",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "identity",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "screen_share",
+        "number": 3,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "screenShare",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "preset",
+        "number": 4,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.EncodingOptionsPreset",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "preset",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "advanced",
+        "number": 5,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.EncodingOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "advanced",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "file_outputs",
+        "number": 6,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.EncodedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "fileOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "stream_outputs",
+        "number": 7,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.StreamOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "streamOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "segment_outputs",
+        "number": 8,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.SegmentedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "segmentOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "image_outputs",
+        "number": 9,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.ImageOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "imageOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "options", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "TrackCompositeEgressRequest",
+      "field": [{
+        "name": "room_name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "roomName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "audio_track_id",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "audioTrackId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "video_track_id",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "videoTrackId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "file",
+        "number": 4,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.EncodedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "file",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "stream",
+        "number": 5,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.StreamOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "stream",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "segments",
+        "number": 8,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.SegmentedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "segments",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "preset",
+        "number": 6,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.EncodingOptionsPreset",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 1,
+        "jsonName": "preset",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "advanced",
+        "number": 7,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.EncodingOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 1,
+        "jsonName": "advanced",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "file_outputs",
+        "number": 11,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.EncodedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "fileOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "stream_outputs",
+        "number": 12,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.StreamOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "streamOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "segment_outputs",
+        "number": 13,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.SegmentedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "segmentOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "image_outputs",
+        "number": 14,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.ImageOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "imageOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "output", "options": undefined }, { "name": "options", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "TrackEgressRequest",
+      "field": [{
+        "name": "room_name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "roomName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "track_id",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "trackId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "file",
+        "number": 3,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.DirectFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "file",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "websocket_url",
+        "number": 4,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "websocketUrl",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "output", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "EncodedFileOutput",
+      "field": [{
+        "name": "file_type",
+        "number": 1,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.EncodedFileType",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "fileType",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "filepath",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "filepath",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "disable_manifest",
+        "number": 6,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "disableManifest",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "s3",
+        "number": 3,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.S3Upload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "s3",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "gcp",
+        "number": 4,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.GCPUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "gcp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "azure",
+        "number": 5,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.AzureBlobUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "azure",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "aliOSS",
+        "number": 7,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.AliOSSUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "aliOSS",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "output", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "SegmentedFileOutput",
+      "field": [{
+        "name": "protocol",
+        "number": 1,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.SegmentedFileProtocol",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "protocol",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "filename_prefix",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "filenamePrefix",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "playlist_name",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "playlistName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "live_playlist_name",
+        "number": 11,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "livePlaylistName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "segment_duration",
+        "number": 4,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "segmentDuration",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "filename_suffix",
+        "number": 10,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.SegmentedFileSuffix",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "filenameSuffix",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "disable_manifest",
+        "number": 8,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "disableManifest",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "s3",
+        "number": 5,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.S3Upload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "s3",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "gcp",
+        "number": 6,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.GCPUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "gcp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "azure",
+        "number": 7,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.AzureBlobUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "azure",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "aliOSS",
+        "number": 9,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.AliOSSUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "aliOSS",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "output", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "DirectFileOutput",
+      "field": [{
+        "name": "filepath",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "filepath",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "disable_manifest",
+        "number": 5,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "disableManifest",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "s3",
+        "number": 2,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.S3Upload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "s3",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "gcp",
+        "number": 3,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.GCPUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "gcp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "azure",
+        "number": 4,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.AzureBlobUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "azure",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "aliOSS",
+        "number": 6,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.AliOSSUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "aliOSS",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "output", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ImageOutput",
+      "field": [{
+        "name": "capture_interval",
+        "number": 1,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "captureInterval",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "width",
+        "number": 2,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "width",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "height",
+        "number": 3,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "height",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "filename_prefix",
+        "number": 4,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "filenamePrefix",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "filename_suffix",
+        "number": 5,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.ImageFileSuffix",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "filenameSuffix",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "image_codec",
+        "number": 6,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.ImageCodec",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "imageCodec",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "disable_manifest",
+        "number": 7,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "disableManifest",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "s3",
+        "number": 8,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.S3Upload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "s3",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "gcp",
+        "number": 9,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.GCPUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "gcp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "azure",
+        "number": 10,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.AzureBlobUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "azure",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "aliOSS",
+        "number": 11,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.AliOSSUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "aliOSS",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "output", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "S3Upload",
+      "field": [{
+        "name": "access_key",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "accessKey",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "secret",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "secret",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "session_token",
+        "number": 11,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "sessionToken",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "region",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "region",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "endpoint",
+        "number": 4,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "endpoint",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "bucket",
+        "number": 5,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "bucket",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "force_path_style",
+        "number": 6,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "forcePathStyle",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "metadata",
+        "number": 7,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.S3Upload.MetadataEntry",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "metadata",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "tagging",
+        "number": 8,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "tagging",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "content_disposition",
+        "number": 9,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "contentDisposition",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "proxy",
+        "number": 10,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.ProxyConfig",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "proxy",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "MetadataEntry",
+        "field": [{
+          "name": "key",
+          "number": 1,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "key",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "value",
+          "number": 2,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "value",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": {
+          "messageSetWireFormat": false,
+          "noStandardDescriptorAccessor": false,
+          "deprecated": false,
+          "mapEntry": true,
+          "uninterpretedOption": [],
+        },
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "GCPUpload",
+      "field": [{
+        "name": "credentials",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "credentials",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "bucket",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "bucket",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "proxy",
+        "number": 3,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.ProxyConfig",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "proxy",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "AzureBlobUpload",
+      "field": [{
+        "name": "account_name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "accountName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "account_key",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "accountKey",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "container_name",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "containerName",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "AliOSSUpload",
+      "field": [{
+        "name": "access_key",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "accessKey",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "secret",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "secret",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "region",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "region",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "endpoint",
+        "number": 4,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "endpoint",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "bucket",
+        "number": 5,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "bucket",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ProxyConfig",
+      "field": [{
+        "name": "url",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "url",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "username",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "username",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "password",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "password",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "StreamOutput",
+      "field": [{
+        "name": "protocol",
+        "number": 1,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.StreamProtocol",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "protocol",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "urls",
+        "number": 2,
+        "label": 3,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "urls",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "EncodingOptions",
+      "field": [{
+        "name": "width",
+        "number": 1,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "width",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "height",
+        "number": 2,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "height",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "depth",
+        "number": 3,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "depth",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "framerate",
+        "number": 4,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "framerate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "audio_codec",
+        "number": 5,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.AudioCodec",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "audioCodec",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "audio_bitrate",
+        "number": 6,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "audioBitrate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "audio_quality",
+        "number": 11,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "audioQuality",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "audio_frequency",
+        "number": 7,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "audioFrequency",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "video_codec",
+        "number": 8,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.VideoCodec",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "videoCodec",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "video_bitrate",
+        "number": 9,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "videoBitrate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "video_quality",
+        "number": 12,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "videoQuality",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "key_frame_interval",
+        "number": 10,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "keyFrameInterval",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "UpdateLayoutRequest",
+      "field": [{
+        "name": "egress_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "egressId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "layout",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "layout",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "UpdateStreamRequest",
+      "field": [{
+        "name": "egress_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "egressId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "add_output_urls",
+        "number": 2,
+        "label": 3,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "addOutputUrls",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "remove_output_urls",
+        "number": 3,
+        "label": 3,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "removeOutputUrls",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ListEgressRequest",
+      "field": [{
+        "name": "room_name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "roomName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "egress_id",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "egressId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "active",
+        "number": 3,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "active",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ListEgressResponse",
+      "field": [{
+        "name": "items",
+        "number": 1,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.EgressInfo",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "items",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "StopEgressRequest",
+      "field": [{
+        "name": "egress_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "egressId",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "EgressInfo",
+      "field": [{
+        "name": "egress_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "egressId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "room_id",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "roomId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "room_name",
+        "number": 13,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "roomName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "source_type",
+        "number": 26,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.EgressSourceType",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "sourceType",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "status",
+        "number": 3,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.EgressStatus",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "status",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "started_at",
+        "number": 10,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "startedAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ended_at",
+        "number": 11,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "endedAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "updated_at",
+        "number": 18,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "updatedAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "details",
+        "number": 21,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "details",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "error",
+        "number": 9,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "error",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "error_code",
+        "number": 22,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "errorCode",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "room_composite",
+        "number": 4,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.RoomCompositeEgressRequest",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "roomComposite",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "web",
+        "number": 14,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.WebEgressRequest",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "web",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "participant",
+        "number": 19,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.ParticipantEgressRequest",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "participant",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "track_composite",
+        "number": 5,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.TrackCompositeEgressRequest",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "trackComposite",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "track",
+        "number": 6,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.TrackEgressRequest",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "track",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "stream",
+        "number": 7,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.StreamInfoList",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 1,
+        "jsonName": "stream",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "file",
+        "number": 8,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.FileInfo",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 1,
+        "jsonName": "file",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "segments",
+        "number": 12,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.SegmentsInfo",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 1,
+        "jsonName": "segments",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "stream_results",
+        "number": 15,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.StreamInfo",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "streamResults",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "file_results",
+        "number": 16,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.FileInfo",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "fileResults",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "segment_results",
+        "number": 17,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.SegmentsInfo",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "segmentResults",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "image_results",
+        "number": 20,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.ImagesInfo",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "imageResults",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "manifest_location",
+        "number": 23,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "manifestLocation",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "backup_storage_used",
+        "number": 25,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "backupStorageUsed",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "request", "options": undefined }, { "name": "result", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "StreamInfoList",
+      "field": [{
+        "name": "info",
+        "number": 1,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.StreamInfo",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "info",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": {
+        "messageSetWireFormat": false,
+        "noStandardDescriptorAccessor": false,
+        "deprecated": true,
+        "mapEntry": false,
+        "uninterpretedOption": [],
+      },
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "StreamInfo",
+      "field": [{
+        "name": "url",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "url",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "started_at",
+        "number": 2,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "startedAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ended_at",
+        "number": 3,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "endedAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "duration",
+        "number": 4,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "duration",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "status",
+        "number": 5,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.StreamInfo.Status",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "status",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "error",
+        "number": 6,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "error",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [{
+        "name": "Status",
+        "value": [{ "name": "ACTIVE", "number": 0, "options": undefined }, {
+          "name": "FINISHED",
+          "number": 1,
+          "options": undefined,
+        }, { "name": "FAILED", "number": 2, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "FileInfo",
+      "field": [{
+        "name": "filename",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "filename",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "started_at",
+        "number": 2,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "startedAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ended_at",
+        "number": 3,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "endedAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "duration",
+        "number": 6,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "duration",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "size",
+        "number": 4,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "size",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "location",
+        "number": 5,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "location",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "SegmentsInfo",
+      "field": [{
+        "name": "playlist_name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "playlistName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "live_playlist_name",
+        "number": 8,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "livePlaylistName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "duration",
+        "number": 2,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "duration",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "size",
+        "number": 3,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "size",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "playlist_location",
+        "number": 4,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "playlistLocation",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "live_playlist_location",
+        "number": 9,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "livePlaylistLocation",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "segment_count",
+        "number": 5,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "segmentCount",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "started_at",
+        "number": 6,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "startedAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ended_at",
+        "number": 7,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "endedAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ImagesInfo",
+      "field": [{
+        "name": "filename_prefix",
+        "number": 4,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "filenamePrefix",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "image_count",
+        "number": 1,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "imageCount",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "started_at",
+        "number": 2,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "startedAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ended_at",
+        "number": 3,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "endedAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "AutoParticipantEgress",
+      "field": [{
+        "name": "preset",
+        "number": 1,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.EncodingOptionsPreset",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "preset",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "advanced",
+        "number": 2,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.EncodingOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "advanced",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "file_outputs",
+        "number": 3,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.EncodedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "fileOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "segment_outputs",
+        "number": 4,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.SegmentedFileOutput",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "segmentOutputs",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "options", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "AutoTrackEgress",
+      "field": [{
+        "name": "filepath",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "filepath",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "disable_manifest",
+        "number": 5,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "disableManifest",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "s3",
+        "number": 2,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.S3Upload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "s3",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "gcp",
+        "number": 3,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.GCPUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "gcp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "azure",
+        "number": 4,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.AzureBlobUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "azure",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "aliOSS",
+        "number": 6,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.AliOSSUpload",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "aliOSS",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "output", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }],
+    "enumType": [{
+      "name": "EncodedFileType",
+      "value": [{ "name": "DEFAULT_FILETYPE", "number": 0, "options": undefined }, {
+        "name": "MP4",
+        "number": 1,
+        "options": undefined,
+      }, { "name": "OGG", "number": 2, "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "SegmentedFileProtocol",
+      "value": [{ "name": "DEFAULT_SEGMENTED_FILE_PROTOCOL", "number": 0, "options": undefined }, {
+        "name": "HLS_PROTOCOL",
+        "number": 1,
+        "options": undefined,
+      }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "SegmentedFileSuffix",
+      "value": [{ "name": "INDEX", "number": 0, "options": undefined }, {
+        "name": "TIMESTAMP",
+        "number": 1,
+        "options": undefined,
+      }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ImageFileSuffix",
+      "value": [{ "name": "IMAGE_SUFFIX_INDEX", "number": 0, "options": undefined }, {
+        "name": "IMAGE_SUFFIX_TIMESTAMP",
+        "number": 1,
+        "options": undefined,
+      }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "StreamProtocol",
+      "value": [{ "name": "DEFAULT_PROTOCOL", "number": 0, "options": undefined }, {
+        "name": "RTMP",
+        "number": 1,
+        "options": undefined,
+      }, { "name": "SRT", "number": 2, "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "AudioMixing",
+      "value": [{ "name": "DEFAULT_MIXING", "number": 0, "options": undefined }, {
+        "name": "DUAL_CHANNEL_AGENT",
+        "number": 1,
+        "options": undefined,
+      }, { "name": "DUAL_CHANNEL_ALTERNATE", "number": 2, "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "EncodingOptionsPreset",
+      "value": [
+        { "name": "H264_720P_30", "number": 0, "options": undefined },
+        { "name": "H264_720P_60", "number": 1, "options": undefined },
+        { "name": "H264_1080P_30", "number": 2, "options": undefined },
+        { "name": "H264_1080P_60", "number": 3, "options": undefined },
+        { "name": "PORTRAIT_H264_720P_30", "number": 4, "options": undefined },
+        { "name": "PORTRAIT_H264_720P_60", "number": 5, "options": undefined },
+        { "name": "PORTRAIT_H264_1080P_30", "number": 6, "options": undefined },
+        { "name": "PORTRAIT_H264_1080P_60", "number": 7, "options": undefined },
+      ],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "EgressStatus",
+      "value": [
+        { "name": "EGRESS_STARTING", "number": 0, "options": undefined },
+        { "name": "EGRESS_ACTIVE", "number": 1, "options": undefined },
+        { "name": "EGRESS_ENDING", "number": 2, "options": undefined },
+        { "name": "EGRESS_COMPLETE", "number": 3, "options": undefined },
+        { "name": "EGRESS_FAILED", "number": 4, "options": undefined },
+        { "name": "EGRESS_ABORTED", "number": 5, "options": undefined },
+        { "name": "EGRESS_LIMIT_REACHED", "number": 6, "options": undefined },
+      ],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "EgressSourceType",
+      "value": [{ "name": "EGRESS_SOURCE_TYPE_WEB", "number": 0, "options": undefined }, {
+        "name": "EGRESS_SOURCE_TYPE_SDK",
+        "number": 1,
+        "options": undefined,
+      }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }],
+    "service": [{
+      "name": "Egress",
+      "method": [{
+        "name": "StartRoomCompositeEgress",
+        "inputType": ".livekit.RoomCompositeEgressRequest",
+        "outputType": ".livekit.EgressInfo",
+        "options": undefined,
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }, {
+        "name": "StartWebEgress",
+        "inputType": ".livekit.WebEgressRequest",
+        "outputType": ".livekit.EgressInfo",
+        "options": undefined,
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }, {
+        "name": "StartParticipantEgress",
+        "inputType": ".livekit.ParticipantEgressRequest",
+        "outputType": ".livekit.EgressInfo",
+        "options": undefined,
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }, {
+        "name": "StartTrackCompositeEgress",
+        "inputType": ".livekit.TrackCompositeEgressRequest",
+        "outputType": ".livekit.EgressInfo",
+        "options": undefined,
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }, {
+        "name": "StartTrackEgress",
+        "inputType": ".livekit.TrackEgressRequest",
+        "outputType": ".livekit.EgressInfo",
+        "options": undefined,
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }, {
+        "name": "UpdateLayout",
+        "inputType": ".livekit.UpdateLayoutRequest",
+        "outputType": ".livekit.EgressInfo",
+        "options": undefined,
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }, {
+        "name": "UpdateStream",
+        "inputType": ".livekit.UpdateStreamRequest",
+        "outputType": ".livekit.EgressInfo",
+        "options": undefined,
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }, {
+        "name": "ListEgress",
+        "inputType": ".livekit.ListEgressRequest",
+        "outputType": ".livekit.ListEgressResponse",
+        "options": undefined,
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }, {
+        "name": "StopEgress",
+        "inputType": ".livekit.StopEgressRequest",
+        "outputType": ".livekit.EgressInfo",
+        "options": undefined,
+        "clientStreaming": false,
+        "serverStreaming": false,
+      }],
+      "options": undefined,
+    }],
+    "extension": [],
+    "options": {
+      "javaPackage": "",
+      "javaOuterClassname": "",
+      "javaMultipleFiles": false,
+      "javaGenerateEqualsAndHash": false,
+      "javaStringCheckUtf8": false,
+      "optimizeFor": 1,
+      "goPackage": "github.com/livekit/protocol/livekit",
+      "ccGenericServices": false,
+      "javaGenericServices": false,
+      "pyGenericServices": false,
+      "phpGenericServices": false,
+      "deprecated": false,
+      "ccEnableArenas": true,
+      "objcClassPrefix": "",
+      "csharpNamespace": "LiveKit.Proto",
+      "swiftPrefix": "",
+      "phpClassPrefix": "",
+      "phpNamespace": "",
+      "phpMetadataNamespace": "",
+      "rubyPackage": "LiveKit::Proto",
+      "uninterpretedOption": [],
+    },
+    "sourceCodeInfo": {
+      "location": [{
+        "path": [6, 0, 2, 0],
+        "span": [26, 2, 80],
+        "leadingComments": " start recording or streaming a room, participant, or tracks\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [6, 0, 2, 5],
+        "span": [33, 2, 61],
+        "leadingComments": " update web composite layout\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [6, 0, 2, 6],
+        "span": [36, 2, 61],
+        "leadingComments": " add or remove stream endpoints\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [6, 0, 2, 7],
+        "span": [39, 2, 65],
+        "leadingComments": " list available egress\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [6, 0, 2, 8],
+        "span": [42, 2, 57],
+        "leadingComments": " stop a recording or stream\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0],
+        "span": [46, 0, 66, 1],
+        "leadingComments": " composite using a web browser\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 0],
+        "span": [47, 2, 23],
+        "leadingComments": "",
+        "trailingComments": " required\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 1],
+        "span": [48, 2, 20],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 2],
+        "span": [49, 2, 22],
+        "leadingComments": "",
+        "trailingComments": " (default false)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 3],
+        "span": [50, 2, 32],
+        "leadingComments": "",
+        "trailingComments": " only applies to audio_only egress (default DEFAULT_MIXING)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 4],
+        "span": [51, 2, 22],
+        "leadingComments": "",
+        "trailingComments": " (default false)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 5],
+        "span": [52, 2, 29],
+        "leadingComments": "",
+        "trailingComments": " template base url (default https://recorder.livekit.io)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 8, 0],
+        "span": [53, 2, 57, 3],
+        "leadingComments": "",
+        "trailingComments": " deprecated (use _output fields)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 9],
+        "span": [59, 4, 37],
+        "leadingComments": "",
+        "trailingComments": " (default H264_720P_30)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 10],
+        "span": [60, 4, 33],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1],
+        "span": [69, 0, 87, 1],
+        "leadingComments": " record any website\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 8, 0],
+        "span": [74, 2, 78, 3],
+        "leadingComments": "",
+        "trailingComments": " deprecated (use _output fields)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2],
+        "span": [90, 0, 102, 1],
+        "leadingComments": " record audio and video from a single participant\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2, 2, 0],
+        "span": [91, 2, 23],
+        "leadingComments": "",
+        "trailingComments": " required\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2, 2, 1],
+        "span": [92, 2, 22],
+        "leadingComments": "",
+        "trailingComments": " required\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2, 2, 2],
+        "span": [93, 2, 24],
+        "leadingComments": "",
+        "trailingComments": " (default false)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2, 2, 3],
+        "span": [95, 4, 37],
+        "leadingComments": "",
+        "trailingComments": " (default H264_720P_30)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2, 2, 4],
+        "span": [96, 4, 33],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3],
+        "span": [105, 0, 122, 1],
+        "leadingComments": " containerize up to one audio and one video track\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 2, 0],
+        "span": [106, 2, 23],
+        "leadingComments": "",
+        "trailingComments": " required\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 2, 1],
+        "span": [107, 2, 28],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 2, 2],
+        "span": [108, 2, 28],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 8, 0],
+        "span": [109, 2, 113, 3],
+        "leadingComments": "",
+        "trailingComments": " deprecated (use _output fields)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 2, 6],
+        "span": [115, 4, 37],
+        "leadingComments": "",
+        "trailingComments": " (default H264_720P_30)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 2, 7],
+        "span": [116, 4, 33],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4],
+        "span": [125, 0, 132, 1],
+        "leadingComments": " record tracks individually, without transcoding\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 0],
+        "span": [126, 2, 23],
+        "leadingComments": "",
+        "trailingComments": " required\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 1],
+        "span": [127, 2, 22],
+        "leadingComments": "",
+        "trailingComments": " required\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 8, 0],
+        "span": [128, 2, 131, 3],
+        "leadingComments": "",
+        "trailingComments": " required\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 0, 2, 0],
+        "span": [135, 2, 23],
+        "leadingComments": "",
+        "trailingComments": " file type chosen based on codecs\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 2, 0],
+        "span": [141, 2, 32],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 2, 1],
+        "span": [142, 2, 22],
+        "leadingComments": "",
+        "trailingComments": " see egress docs for templating (default {room_name}-{time})\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 2, 2],
+        "span": [143, 2, 28],
+        "leadingComments": "",
+        "trailingComments": " disable upload of manifest file (default false)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6],
+        "span": [163, 0, 177, 1],
+        "leadingComments": " Used to generate HLS segments or other kind of segmented output\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 2, 0],
+        "span": [164, 2, 37],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 2, 1],
+        "span": [165, 2, 29],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 2, 2],
+        "span": [166, 2, 27],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 2, 3],
+        "span": [167, 2, 33],
+        "leadingComments": "",
+        "trailingComments": " (optional, disabled if not provided). Path of a live playlist\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 2, 4],
+        "span": [168, 2, 30],
+        "leadingComments": "",
+        "trailingComments": " in seconds (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 2, 5],
+        "span": [169, 2, 43],
+        "leadingComments": "",
+        "trailingComments": " (optional, default INDEX)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 2, 6],
+        "span": [170, 2, 28],
+        "leadingComments": "",
+        "trailingComments": " disable upload of manifest file (default false)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 8, 0],
+        "span": [171, 2, 176, 3],
+        "leadingComments": "",
+        "trailingComments": " required\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 7, 2, 0],
+        "span": [180, 2, 22],
+        "leadingComments": "",
+        "trailingComments": " see egress docs for templating (default {track_id}-{time})\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 7, 2, 1],
+        "span": [181, 2, 28],
+        "leadingComments": "",
+        "trailingComments": " disable upload of manifest file (default false)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 0],
+        "span": [196, 2, 30],
+        "leadingComments": "",
+        "trailingComments": " in seconds (required)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 1],
+        "span": [197, 2, 18],
+        "leadingComments": "",
+        "trailingComments": " (optional, defaults to track width)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 2],
+        "span": [198, 2, 19],
+        "leadingComments": "",
+        "trailingComments": " (optional, defaults to track height)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 3],
+        "span": [199, 2, 29],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 4],
+        "span": [200, 2, 38],
+        "leadingComments": "",
+        "trailingComments": " (optional, default INDEX)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 5],
+        "span": [201, 2, 29],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 6],
+        "span": [202, 2, 28],
+        "leadingComments": "",
+        "trailingComments": " disable upload of manifest file (default false)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 8, 0],
+        "span": [203, 2, 208, 3],
+        "leadingComments": "",
+        "trailingComments": " required\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 9, 2, 9],
+        "span": [221, 2, 33],
+        "leadingComments": "",
+        "trailingComments": " Content-Disposition header\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 0],
+        "span": [227, 2, 25],
+        "leadingComments": ' service account credentials serialized in JSON "credentials.json"\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 4, 2, 0],
+        "span": [253, 2, 23],
+        "leadingComments": "",
+        "trailingComments": " protocol chosen based on urls\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 14, 2, 0],
+        "span": [259, 2, 30],
+        "leadingComments": "",
+        "trailingComments": " required\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 14, 2, 1],
+        "span": [260, 2, 27],
+        "leadingComments": "",
+        "trailingComments": " required\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 5, 2, 0],
+        "span": [264, 2, 21],
+        "leadingComments": "",
+        "trailingComments": " all users are mixed together\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 5, 2, 1],
+        "span": [265, 2, 25],
+        "leadingComments": "",
+        "trailingComments": " agent audio in the left channel, all other audio in the right channel\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 5, 2, 2],
+        "span": [266, 2, 29],
+        "leadingComments": "",
+        "trailingComments": " each new audio track alternates between left and right channels\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 0],
+        "span": [270, 2, 18],
+        "leadingComments": "",
+        "trailingComments": " (default 1920)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 1],
+        "span": [271, 2, 19],
+        "leadingComments": "",
+        "trailingComments": " (default 1080)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 2],
+        "span": [272, 2, 18],
+        "leadingComments": "",
+        "trailingComments": " (default 24)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 3],
+        "span": [273, 2, 22],
+        "leadingComments": "",
+        "trailingComments": " (default 30)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 4],
+        "span": [274, 2, 29],
+        "leadingComments": "",
+        "trailingComments": " (default OPUS)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 5],
+        "span": [275, 2, 26],
+        "leadingComments": "",
+        "trailingComments": " (default 128)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 6],
+        "span": [276, 2, 27],
+        "leadingComments": "",
+        "trailingComments": " quality setting on audio encoder\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 7],
+        "span": [277, 2, 28],
+        "leadingComments": "",
+        "trailingComments": " (default 44100)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 8],
+        "span": [278, 2, 29],
+        "leadingComments": "",
+        "trailingComments": " (default H264_MAIN)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 9],
+        "span": [279, 2, 26],
+        "leadingComments": "",
+        "trailingComments": " (default 4500)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 10],
+        "span": [280, 2, 27],
+        "leadingComments": "",
+        "trailingComments": " quality setting on video encoder\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 11],
+        "span": [281, 2, 33],
+        "leadingComments": "",
+        "trailingComments":
+          " in seconds (default 4s for streaming, segment duration for segmented output, encoder default for files)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 6, 2, 0],
+        "span": [285, 2, 19],
+        "leadingComments": "",
+        "trailingComments": "  1280x720, 30fps, 3000kpbs, H.264_MAIN / OPUS\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 6, 2, 1],
+        "span": [286, 2, 19],
+        "leadingComments": "",
+        "trailingComments": "  1280x720, 60fps, 4500kbps, H.264_MAIN / OPUS\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 6, 2, 2],
+        "span": [287, 2, 20],
+        "leadingComments": "",
+        "trailingComments": " 1920x1080, 30fps, 4500kbps, H.264_MAIN / OPUS\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 6, 2, 3],
+        "span": [288, 2, 20],
+        "leadingComments": "",
+        "trailingComments": " 1920x1080, 60fps, 6000kbps, H.264_MAIN / OPUS\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 6, 2, 4],
+        "span": [289, 2, 28],
+        "leadingComments": "",
+        "trailingComments": "  720x1280, 30fps, 3000kpbs, H.264_MAIN / OPUS\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 6, 2, 5],
+        "span": [290, 2, 28],
+        "leadingComments": "",
+        "trailingComments": "  720x1280, 60fps, 4500kbps, H.264_MAIN / OPUS\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 6, 2, 6],
+        "span": [291, 2, 29],
+        "leadingComments": "",
+        "trailingComments": " 1080x1920, 30fps, 4500kbps, H.264_MAIN / OPUS\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 6, 2, 7],
+        "span": [292, 2, 29],
+        "leadingComments": "",
+        "trailingComments": " 1080x1920, 60fps, 6000kbps, H.264_MAIN / OPUS\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 18, 2, 0],
+        "span": [307, 2, 23],
+        "leadingComments": "",
+        "trailingComments": " (optional, filter by room name)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 18, 2, 1],
+        "span": [308, 2, 23],
+        "leadingComments": "",
+        "trailingComments": " (optional, filter by egress ID)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 18, 2, 2],
+        "span": [309, 2, 18],
+        "leadingComments": "",
+        "trailingComments": " (optional, list active egress only)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 21, 8, 1],
+        "span": [354, 2, 358, 3],
+        "leadingComments": "",
+        "trailingComments": " deprecated (use _result fields)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 21, 2, 24],
+        "span": [364, 2, 32],
+        "leadingComments": "",
+        "trailingComments": " next ID: 27\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 27, 2, 0],
+        "span": [418, 4, 37],
+        "leadingComments": "",
+        "trailingComments": " (default H264_720P_30)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 27, 2, 1],
+        "span": [419, 4, 33],
+        "leadingComments": "",
+        "trailingComments": " (optional)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 28, 2, 0],
+        "span": [426, 2, 22],
+        "leadingComments": "",
+        "trailingComments": " see docs for templating (default {track_id}-{time})\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 28, 2, 1],
+        "span": [427, 2, 28],
+        "leadingComments": "",
+        "trailingComments": " disables upload of json manifest file (default false)\n",
+        "leadingDetachedComments": [],
+      }],
+    },
+    "syntax": "proto3",
+  },
+  references: {
+    ".livekit.EncodedFileType": EncodedFileType,
+    ".livekit.SegmentedFileProtocol": SegmentedFileProtocol,
+    ".livekit.SegmentedFileSuffix": SegmentedFileSuffix,
+    ".livekit.ImageFileSuffix": ImageFileSuffix,
+    ".livekit.StreamProtocol": StreamProtocol,
+    ".livekit.AudioMixing": AudioMixing,
+    ".livekit.EncodingOptionsPreset": EncodingOptionsPreset,
+    ".livekit.EgressStatus": EgressStatus,
+    ".livekit.EgressSourceType": EgressSourceType,
+    ".livekit.RoomCompositeEgressRequest": RoomCompositeEgressRequest,
+    ".livekit.WebEgressRequest": WebEgressRequest,
+    ".livekit.ParticipantEgressRequest": ParticipantEgressRequest,
+    ".livekit.TrackCompositeEgressRequest": TrackCompositeEgressRequest,
+    ".livekit.TrackEgressRequest": TrackEgressRequest,
+    ".livekit.EncodedFileOutput": EncodedFileOutput,
+    ".livekit.SegmentedFileOutput": SegmentedFileOutput,
+    ".livekit.DirectFileOutput": DirectFileOutput,
+    ".livekit.ImageOutput": ImageOutput,
+    ".livekit.S3Upload": S3Upload,
+    ".livekit.S3Upload.MetadataEntry": S3Upload_MetadataEntry,
+    ".livekit.GCPUpload": GCPUpload,
+    ".livekit.AzureBlobUpload": AzureBlobUpload,
+    ".livekit.AliOSSUpload": AliOSSUpload,
+    ".livekit.ProxyConfig": ProxyConfig,
+    ".livekit.StreamOutput": StreamOutput,
+    ".livekit.EncodingOptions": EncodingOptions,
+    ".livekit.UpdateLayoutRequest": UpdateLayoutRequest,
+    ".livekit.UpdateStreamRequest": UpdateStreamRequest,
+    ".livekit.ListEgressRequest": ListEgressRequest,
+    ".livekit.ListEgressResponse": ListEgressResponse,
+    ".livekit.StopEgressRequest": StopEgressRequest,
+    ".livekit.EgressInfo": EgressInfo,
+    ".livekit.StreamInfoList": StreamInfoList,
+    ".livekit.StreamInfo": StreamInfo,
+    ".livekit.StreamInfo.Status": StreamInfo_Status,
+    ".livekit.FileInfo": FileInfo,
+    ".livekit.SegmentsInfo": SegmentsInfo,
+    ".livekit.ImagesInfo": ImagesInfo,
+    ".livekit.AutoParticipantEgress": AutoParticipantEgress,
+    ".livekit.AutoTrackEgress": AutoTrackEgress,
+  },
+  dependencies: [protoMetadata1],
+} as const satisfies ProtoMetadata;
 
-  StartWebEgress(request: WebEgressRequest): Promise<EgressInfo> {
-    const data = WebEgressRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "StartWebEgress", data);
-    return promise.then((data) => EgressInfo.decode(new BinaryReader(data)));
-  }
-
-  StartParticipantEgress(request: ParticipantEgressRequest): Promise<EgressInfo> {
-    const data = ParticipantEgressRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "StartParticipantEgress", data);
-    return promise.then((data) => EgressInfo.decode(new BinaryReader(data)));
-  }
-
-  StartTrackCompositeEgress(request: TrackCompositeEgressRequest): Promise<EgressInfo> {
-    const data = TrackCompositeEgressRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "StartTrackCompositeEgress", data);
-    return promise.then((data) => EgressInfo.decode(new BinaryReader(data)));
-  }
-
-  StartTrackEgress(request: TrackEgressRequest): Promise<EgressInfo> {
-    const data = TrackEgressRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "StartTrackEgress", data);
-    return promise.then((data) => EgressInfo.decode(new BinaryReader(data)));
-  }
-
-  UpdateLayout(request: UpdateLayoutRequest): Promise<EgressInfo> {
-    const data = UpdateLayoutRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "UpdateLayout", data);
-    return promise.then((data) => EgressInfo.decode(new BinaryReader(data)));
-  }
-
-  UpdateStream(request: UpdateStreamRequest): Promise<EgressInfo> {
-    const data = UpdateStreamRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "UpdateStream", data);
-    return promise.then((data) => EgressInfo.decode(new BinaryReader(data)));
-  }
-
-  ListEgress(request: ListEgressRequest): Promise<ListEgressResponse> {
-    const data = ListEgressRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "ListEgress", data);
-    return promise.then((data) => ListEgressResponse.decode(new BinaryReader(data)));
-  }
-
-  StopEgress(request: StopEgressRequest): Promise<EgressInfo> {
-    const data = StopEgressRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "StopEgress", data);
-    return promise.then((data) => EgressInfo.decode(new BinaryReader(data)));
-  }
-}
-
-interface Rpc {
-  request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | bigint | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
   : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : T extends {} ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never };
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;
@@ -5854,7 +9715,8 @@ function isSet(value: any): boolean {
   return value !== null && value !== undefined;
 }
 
-export interface MessageFns<T> {
+export interface MessageFns<T, V extends string> {
+  readonly $type: V;
   encode(message: T, writer?: BinaryWriter): BinaryWriter;
   decode(input: BinaryReader | Uint8Array, length?: number): T;
   fromJSON(object: any): T;

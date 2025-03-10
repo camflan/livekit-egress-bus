@@ -1,6 +1,29 @@
-import { Msg } from "./generated/internal.proto";
-import { StartEgressRequest } from "./generated/rpc/egress.proto";
+import {
+  ClaimRequest,
+  ClaimResponse,
+  Msg,
+  Request,
+  Response,
+  Stream,
+  StreamOpen,
+} from "./generated/internal";
+import { StartEgressRequest } from "./generated/rpc/egress";
 import { getValkeyClient } from "./valkey";
+import { startEgressRequestChannel } from "./helpers/channels";
+import { decodeMsg, decodeProtobuf } from "./serdes";
+import {
+  EgressInfo,
+  StopEgressRequest,
+  StreamOutput,
+  WebEgressRequest,
+} from "./generated/livekit_egress";
+import { KeepalivePing } from "./generated/rpc/keepalive";
+
+const DEFAULT_PATTERNS = [
+  // "Keepalive|Ping*",
+  "*Egress*",
+  "*IO*",
+];
 
 process.once("SIGINT", function () {
   console.log("SIGINT received…");
@@ -12,7 +35,7 @@ main().catch((err) => {
   process.exit(1);
 });
 
-async function main(patterns = ["*Egress*"]) {
+async function main(patterns = DEFAULT_PATTERNS) {
   const valkey = getValkeyClient({ name: "LK_test_subscriber" });
   console.info("Subscribing to patterns: ", patterns);
 
@@ -60,24 +83,83 @@ function handlePMessageBuffer(
 ) {
   const channel = channelBuffer.toString("utf-8");
   console.group(`pmessagebuffer (${pattern}) [${channel}]`);
-  // console.info(`raw msg: ${msgBuffer.toString("utf-8")}`);
 
-  const { value, ...decoded } = Msg.decode(msgBuffer);
-  console.log("decoded msg: ", { ...decoded, value: "DECODED BELOW" });
-  console.log("");
-  // console.log("decoded value: ", value.toString("utf-8"));
-  // console.log("");
-  const valueDecodedFromProtobuf = StartEgressRequest.decode(value);
-  console.log("decoded as proto: ", valueDecodedFromProtobuf);
-  console.log("");
+  const decodedRequest = decodeMsg(msgBuffer);
+  console.log("file: subscriber.ts~line: 87~decodedRequest", decodedRequest);
 
-  if ("token" in valueDecodedFromProtobuf) {
-    console.log(
-      "Token as buffer?: ",
-      Buffer.from(valueDecodedFromProtobuf.token).toString("utf-8"),
+  if (decodedRequest.$type === "internal.Request") {
+    const decodedRequestRawRequest = decodeProtobuf(
+      getMessageTypeForChannel(channel),
+      decodedRequest.rawRequest,
     );
-    console.log("");
+
+    console.log("DECODED VALUE: ", decodedRequestRawRequest);
   }
 
   console.groupEnd();
+}
+
+function getMessageTypeForChannel(channel: string) {
+  if (channel === startEgressRequestChannel) {
+    return StartEgressRequest;
+  }
+
+  if (channel.endsWith("CLAIM")) {
+    return ClaimRequest;
+  }
+
+  throw new Error(`Unknown channel: ${channel}`);
+}
+
+const ALL_PROTOS = {
+  ClaimRequest,
+  ClaimResponse,
+  EgressInfo,
+  Msg,
+  KeepalivePing,
+  Request,
+  Response,
+  StartEgressRequest,
+  StopEgressRequest,
+  Stream,
+  StreamOpen,
+  StreamOutput,
+  WebEgressRequest,
+};
+
+export function parseMsgFromAllTypes(msg: Buffer, type?: string) {
+  const results = {};
+
+  for (const [key, proto] of Object.entries(ALL_PROTOS)) {
+    try {
+      if (type && !type.includes(key)) {
+        continue;
+      }
+
+      let decoded = proto.decode(msg);
+
+      // if ("token" in decoded) {
+      //   decoded.token = parseMsgFromAllTypes(
+      //     typeof decoded.token === "string"
+      //       ? Buffer.from(decoded.token)
+      //       : decoded.token,
+      //   );
+      // }
+      //
+      // if ("value" in decoded && typeof decoded.value !== "string") {
+      //   decoded.value = parseMsgFromAllTypes(decoded.value);
+      // }
+      //
+      // if ("rawRequest" in decoded && typeof decoded.rawRequest !== "string") {
+      //   decoded.rawRequestString = decoded.rawRequest.toString("utf-8");
+      //   // decoded.rawRequest = parseMsgFromAllTypes(decoded.rawRequest);
+      // }
+
+      results[key] = decoded;
+    } catch (err) {
+      results[key] = err instanceof Error ? err.message : String(err);
+    }
+  }
+
+  return results;
 }

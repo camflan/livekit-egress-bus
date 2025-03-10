@@ -6,6 +6,9 @@
 
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
+import { FileDescriptorProto as FileDescriptorProto1 } from "ts-proto-descriptors";
+import { protoMetadata as protoMetadata1 } from "./google/protobuf/descriptor";
+import { messageTypeRegistry } from "./typeRegistry";
 
 export const protobufPackage = "psrpc";
 
@@ -62,6 +65,7 @@ export function routingToJSON(object: Routing): string {
 }
 
 export interface Options {
+  $type: "psrpc.Options";
   /** This method is a pub/sub. */
   subscription: boolean;
   /** This method uses topics. */
@@ -89,6 +93,7 @@ export interface Options {
 }
 
 export interface TopicParamOptions {
+  $type: "psrpc.TopicParamOptions";
   /** The rpc can be registered/deregistered atomically with other group members */
   group: string;
   /** The topic is composed of one or more string-like parameters. */
@@ -101,6 +106,7 @@ export interface TopicParamOptions {
 
 function createBaseOptions(): Options {
   return {
+    $type: "psrpc.Options",
     subscription: false,
     topics: false,
     topicParams: undefined,
@@ -112,7 +118,9 @@ function createBaseOptions(): Options {
   };
 }
 
-export const Options: MessageFns<Options> = {
+export const Options: MessageFns<Options, "psrpc.Options"> = {
+  $type: "psrpc.Options" as const,
+
   encode(message: Options, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.subscription !== false) {
       writer.uint32(8).bool(message.subscription);
@@ -223,6 +231,7 @@ export const Options: MessageFns<Options> = {
 
   fromJSON(object: any): Options {
     return {
+      $type: Options.$type,
       subscription: isSet(object.subscription) ? globalThis.Boolean(object.subscription) : false,
       topics: isSet(object.topics) ? globalThis.Boolean(object.topics) : false,
       topicParams: isSet(object.topicParams) ? TopicParamOptions.fromJSON(object.topicParams) : undefined,
@@ -282,11 +291,15 @@ export const Options: MessageFns<Options> = {
   },
 };
 
+messageTypeRegistry.set(Options.$type, Options);
+
 function createBaseTopicParamOptions(): TopicParamOptions {
-  return { group: "", names: [], typed: false, singleServer: false };
+  return { $type: "psrpc.TopicParamOptions", group: "", names: [], typed: false, singleServer: false };
 }
 
-export const TopicParamOptions: MessageFns<TopicParamOptions> = {
+export const TopicParamOptions: MessageFns<TopicParamOptions, "psrpc.TopicParamOptions"> = {
+  $type: "psrpc.TopicParamOptions" as const,
+
   encode(message: TopicParamOptions, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.group !== "") {
       writer.uint32(10).string(message.group);
@@ -353,6 +366,7 @@ export const TopicParamOptions: MessageFns<TopicParamOptions> = {
 
   fromJSON(object: any): TopicParamOptions {
     return {
+      $type: TopicParamOptions.$type,
       group: isSet(object.group) ? globalThis.String(object.group) : "",
       names: globalThis.Array.isArray(object?.names) ? object.names.map((e: any) => globalThis.String(e)) : [],
       typed: isSet(object.typed) ? globalThis.Boolean(object.typed) : false,
@@ -390,23 +404,376 @@ export const TopicParamOptions: MessageFns<TopicParamOptions> = {
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+messageTypeRegistry.set(TopicParamOptions.$type, TopicParamOptions);
+
+type ProtoMetaMessageOptions = {
+  options?: { [key: string]: any };
+  fields?: { [key: string]: { [key: string]: any } };
+  oneof?: { [key: string]: { [key: string]: any } };
+  nested?: { [key: string]: ProtoMetaMessageOptions };
+};
+
+export interface ProtoMetadata {
+  fileDescriptor: FileDescriptorProto1;
+  references: { [key: string]: any };
+  dependencies?: ProtoMetadata[];
+  options?: {
+    options?: { [key: string]: any };
+    services?: {
+      [key: string]: { options?: { [key: string]: any }; methods?: { [key: string]: { [key: string]: any } } };
+    };
+    messages?: { [key: string]: ProtoMetaMessageOptions };
+    enums?: { [key: string]: { options?: { [key: string]: any }; values?: { [key: string]: { [key: string]: any } } } };
+  };
+}
+
+export const protoMetadata = {
+  fileDescriptor: {
+    "name": "options.proto",
+    "package": "psrpc",
+    "dependency": ["google/protobuf/descriptor.proto"],
+    "publicDependency": [],
+    "weakDependency": [],
+    "messageType": [{
+      "name": "Options",
+      "field": [{
+        "name": "subscription",
+        "number": 1,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "subscription",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "topics",
+        "number": 2,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "topics",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "topic_params",
+        "number": 3,
+        "label": 1,
+        "type": 11,
+        "typeName": ".psrpc.TopicParamOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "topicParams",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "stream",
+        "number": 4,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "stream",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "type",
+        "number": 8,
+        "label": 1,
+        "type": 14,
+        "typeName": ".psrpc.Routing",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "type",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "multi",
+        "number": 5,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "multi",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "affinity_func",
+        "number": 6,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "affinityFunc",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "queue",
+        "number": 7,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "queue",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "routing", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "TopicParamOptions",
+      "field": [{
+        "name": "group",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "group",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "names",
+        "number": 2,
+        "label": 3,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "names",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "typed",
+        "number": 3,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "typed",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "single_server",
+        "number": 4,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "singleServer",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }],
+    "enumType": [{
+      "name": "Routing",
+      "value": [{ "name": "QUEUE", "number": 0, "options": undefined }, {
+        "name": "AFFINITY",
+        "number": 1,
+        "options": undefined,
+      }, { "name": "MULTI", "number": 2, "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }],
+    "service": [],
+    "extension": [{
+      "name": "options",
+      "number": 2198,
+      "label": 1,
+      "type": 11,
+      "typeName": ".psrpc.Options",
+      "extendee": ".google.protobuf.MethodOptions",
+      "defaultValue": "",
+      "oneofIndex": 0,
+      "jsonName": "options",
+      "options": undefined,
+      "proto3Optional": true,
+    }],
+    "options": {
+      "javaPackage": "",
+      "javaOuterClassname": "",
+      "javaMultipleFiles": false,
+      "javaGenerateEqualsAndHash": false,
+      "javaStringCheckUtf8": false,
+      "optimizeFor": 1,
+      "goPackage": "github.com/livekit/psrpc/protoc-gen-psrpc/options",
+      "ccGenericServices": false,
+      "javaGenericServices": false,
+      "pyGenericServices": false,
+      "phpGenericServices": false,
+      "deprecated": false,
+      "ccEnableArenas": true,
+      "objcClassPrefix": "",
+      "csharpNamespace": "",
+      "swiftPrefix": "",
+      "phpClassPrefix": "",
+      "phpNamespace": "",
+      "phpMetadataNamespace": "",
+      "rubyPackage": "",
+      "uninterpretedOption": [],
+    },
+    "sourceCodeInfo": {
+      "location": [{
+        "path": [5, 0],
+        "span": [26, 0, 30, 1],
+        "leadingComments": " RPC types\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 0, 2, 0],
+        "span": [27, 2, 12],
+        "leadingComments": "",
+        "trailingComments": " Servers will join a queue, and only one will receive each request\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 0, 2, 1],
+        "span": [28, 2, 15],
+        "leadingComments": "",
+        "trailingComments": " Servers will implement an affinity function for handler selection\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 0, 2, 2],
+        "span": [29, 2, 12],
+        "leadingComments": "",
+        "trailingComments":
+          " Every server will respond to every request (for subscriptions, all clients will receive every message)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 0],
+        "span": [34, 2, 24],
+        "leadingComments": " This method is a pub/sub.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 1],
+        "span": [37, 2, 18],
+        "leadingComments": " This method uses topics.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 3],
+        "span": [42, 2, 18],
+        "leadingComments": " The method uses bidirectional streaming.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 4],
+        "span": [45, 2, 19],
+        "leadingComments": " RPC type\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 8, 0],
+        "span": [48, 2, 58, 3],
+        "leadingComments": " deprecated\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 5],
+        "span": [51, 4, 19],
+        "leadingComments":
+          " For RPCs, each client request will receive a response from every server.\n For subscriptions, every client will receive every update.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 6],
+        "span": [54, 4, 27],
+        "leadingComments": " Your service will supply an affinity function for handler selection.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0, 2, 7],
+        "span": [57, 4, 19],
+        "leadingComments": " Requests load balancing is provided by a pub/sub server queue\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 0],
+        "span": [63, 2, 19],
+        "leadingComments": " The rpc can be registered/deregistered atomically with other group members\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 1],
+        "span": [66, 2, 28],
+        "leadingComments": " The topic is composed of one or more string-like parameters.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 2],
+        "span": [69, 2, 17],
+        "leadingComments": " The topic parameters have associated string-like type parameters\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 3],
+        "span": [72, 2, 25],
+        "leadingComments": " At most one server will be registered for each topic\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }],
+    },
+    "syntax": "proto3",
+  },
+  references: { ".psrpc.Routing": Routing, ".psrpc.Options": Options, ".psrpc.TopicParamOptions": TopicParamOptions },
+  dependencies: [protoMetadata1],
+} as const satisfies ProtoMetadata;
+
+type Builtin = Date | Function | Uint8Array | string | number | boolean | bigint | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
   : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : T extends {} ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
 }
 
-export interface MessageFns<T> {
+export interface MessageFns<T, V extends string> {
+  readonly $type: V;
   encode(message: T, writer?: BinaryWriter): BinaryWriter;
   decode(input: BinaryReader | Uint8Array, length?: number): T;
   fromJSON(object: any): T;

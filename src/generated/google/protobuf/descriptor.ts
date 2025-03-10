@@ -6,6 +6,8 @@
 
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
+import { FileDescriptorProto as FileDescriptorProto1 } from "ts-proto-descriptors";
+import { messageTypeRegistry } from "../../typeRegistry";
 
 export const protobufPackage = "google.protobuf";
 
@@ -121,11 +123,13 @@ export function editionToJSON(object: Edition): string {
  * files it parses.
  */
 export interface FileDescriptorSet {
+  $type: "google.protobuf.FileDescriptorSet";
   file: FileDescriptorProto[];
 }
 
 /** Describes a complete .proto file. */
 export interface FileDescriptorProto {
+  $type: "google.protobuf.FileDescriptorProto";
   /** file name, relative to root of source tree */
   name?:
     | string
@@ -175,6 +179,7 @@ export interface FileDescriptorProto {
 
 /** Describes a message type. */
 export interface DescriptorProto {
+  $type: "google.protobuf.DescriptorProto";
   name?: string | undefined;
   field: FieldDescriptorProto[];
   extension: FieldDescriptorProto[];
@@ -192,6 +197,7 @@ export interface DescriptorProto {
 }
 
 export interface DescriptorProto_ExtensionRange {
+  $type: "google.protobuf.DescriptorProto.ExtensionRange";
   /** Inclusive. */
   start?:
     | number
@@ -207,6 +213,7 @@ export interface DescriptorProto_ExtensionRange {
  * not overlap.
  */
 export interface DescriptorProto_ReservedRange {
+  $type: "google.protobuf.DescriptorProto.ReservedRange";
   /** Inclusive. */
   start?:
     | number
@@ -216,6 +223,7 @@ export interface DescriptorProto_ReservedRange {
 }
 
 export interface ExtensionRangeOptions {
+  $type: "google.protobuf.ExtensionRangeOptions";
   /** The parser stores options it doesn't recognize here. See above. */
   uninterpretedOption: UninterpretedOption[];
   /**
@@ -281,6 +289,7 @@ export function extensionRangeOptions_VerificationStateToJSON(object: ExtensionR
 }
 
 export interface ExtensionRangeOptions_Declaration {
+  $type: "google.protobuf.ExtensionRangeOptions.Declaration";
   /** The extension number declared within the extension range. */
   number?:
     | number
@@ -317,6 +326,7 @@ export interface ExtensionRangeOptions_Declaration {
 
 /** Describes a field within a message. */
 export interface FieldDescriptorProto {
+  $type: "google.protobuf.FieldDescriptorProto";
   name?: string | undefined;
   number?: number | undefined;
   label?:
@@ -630,12 +640,14 @@ export function fieldDescriptorProto_LabelToJSON(object: FieldDescriptorProto_La
 
 /** Describes a oneof. */
 export interface OneofDescriptorProto {
+  $type: "google.protobuf.OneofDescriptorProto";
   name?: string | undefined;
   options?: OneofOptions | undefined;
 }
 
 /** Describes an enum type. */
 export interface EnumDescriptorProto {
+  $type: "google.protobuf.EnumDescriptorProto";
   name?: string | undefined;
   value: EnumValueDescriptorProto[];
   options?:
@@ -663,6 +675,7 @@ export interface EnumDescriptorProto {
  * domain.
  */
 export interface EnumDescriptorProto_EnumReservedRange {
+  $type: "google.protobuf.EnumDescriptorProto.EnumReservedRange";
   /** Inclusive. */
   start?:
     | number
@@ -673,6 +686,7 @@ export interface EnumDescriptorProto_EnumReservedRange {
 
 /** Describes a value within an enum. */
 export interface EnumValueDescriptorProto {
+  $type: "google.protobuf.EnumValueDescriptorProto";
   name?: string | undefined;
   number?: number | undefined;
   options?: EnumValueOptions | undefined;
@@ -680,6 +694,7 @@ export interface EnumValueDescriptorProto {
 
 /** Describes a service. */
 export interface ServiceDescriptorProto {
+  $type: "google.protobuf.ServiceDescriptorProto";
   name?: string | undefined;
   method: MethodDescriptorProto[];
   options?: ServiceOptions | undefined;
@@ -687,6 +702,7 @@ export interface ServiceDescriptorProto {
 
 /** Describes a method of a service. */
 export interface MethodDescriptorProto {
+  $type: "google.protobuf.MethodDescriptorProto";
   name?:
     | string
     | undefined;
@@ -708,6 +724,7 @@ export interface MethodDescriptorProto {
 }
 
 export interface FileOptions {
+  $type: "google.protobuf.FileOptions";
   /**
    * Sets the Java package where classes generated from this .proto will be
    * placed.  By default, the proto package is used, but this is often
@@ -917,6 +934,7 @@ export function fileOptions_OptimizeModeToJSON(object: FileOptions_OptimizeMode)
 }
 
 export interface MessageOptions {
+  $type: "google.protobuf.MessageOptions";
   /**
    * Set true to use the old proto1 MessageSet wire format for extensions.
    * This is provided for backwards-compatibility with the MessageSet wire
@@ -1009,6 +1027,7 @@ export interface MessageOptions {
 }
 
 export interface FieldOptions {
+  $type: "google.protobuf.FieldOptions";
   /**
    * The ctype option instructs the C++ code generator to use a different
    * representation of the field than it normally would.  See the specific
@@ -1387,6 +1406,7 @@ export function fieldOptions_OptionTargetTypeToJSON(object: FieldOptions_OptionT
 }
 
 export interface FieldOptions_EditionDefault {
+  $type: "google.protobuf.FieldOptions.EditionDefault";
   edition?:
     | Edition
     | undefined;
@@ -1395,6 +1415,7 @@ export interface FieldOptions_EditionDefault {
 }
 
 export interface OneofOptions {
+  $type: "google.protobuf.OneofOptions";
   /** Any features defined in the specific edition. */
   features?:
     | FeatureSet
@@ -1404,6 +1425,7 @@ export interface OneofOptions {
 }
 
 export interface EnumOptions {
+  $type: "google.protobuf.EnumOptions";
   /**
    * Set this option to true to allow mapping different tag names to the same
    * value.
@@ -1442,6 +1464,7 @@ export interface EnumOptions {
 }
 
 export interface EnumValueOptions {
+  $type: "google.protobuf.EnumValueOptions";
   /**
    * Is this enum value deprecated?
    * Depending on the target platform, this can emit Deprecated annotations
@@ -1468,6 +1491,7 @@ export interface EnumValueOptions {
 }
 
 export interface ServiceOptions {
+  $type: "google.protobuf.ServiceOptions";
   /** Any features defined in the specific edition. */
   features?:
     | FeatureSet
@@ -1486,6 +1510,7 @@ export interface ServiceOptions {
 }
 
 export interface MethodOptions {
+  $type: "google.protobuf.MethodOptions";
   /**
    * Is this method deprecated?
    * Depending on the target platform, this can emit Deprecated annotations
@@ -1569,14 +1594,15 @@ export function methodOptions_IdempotencyLevelToJSON(object: MethodOptions_Idemp
  * in them.
  */
 export interface UninterpretedOption {
+  $type: "google.protobuf.UninterpretedOption";
   name: UninterpretedOption_NamePart[];
   /**
    * The value of the uninterpreted option, in whatever type the tokenizer
    * identified it as during parsing. Exactly one of these should be set.
    */
   identifierValue?: string | undefined;
-  positiveIntValue?: number | undefined;
-  negativeIntValue?: number | undefined;
+  positiveIntValue?: bigint | undefined;
+  negativeIntValue?: bigint | undefined;
   doubleValue?: number | undefined;
   stringValue?: Buffer | undefined;
   aggregateValue?: string | undefined;
@@ -1590,6 +1616,7 @@ export interface UninterpretedOption {
  * "foo.(bar.baz).moo".
  */
 export interface UninterpretedOption_NamePart {
+  $type: "google.protobuf.UninterpretedOption.NamePart";
   namePart: string;
   isExtension: boolean;
 }
@@ -1603,6 +1630,7 @@ export interface UninterpretedOption_NamePart {
  * conflict here.
  */
 export interface FeatureSet {
+  $type: "google.protobuf.FeatureSet";
   fieldPresence?: FeatureSet_FieldPresence | undefined;
   enumType?: FeatureSet_EnumType | undefined;
   repeatedFieldEncoding?: FeatureSet_RepeatedFieldEncoding | undefined;
@@ -1904,6 +1932,7 @@ export function featureSet_JsonFormatToJSON(object: FeatureSet_JsonFormat): stri
  * for the closest matching edition, followed by proto merges.
  */
 export interface FeatureSetDefaults {
+  $type: "google.protobuf.FeatureSetDefaults";
   defaults: FeatureSetDefaults_FeatureSetEditionDefault[];
   /**
    * The minimum supported edition (inclusive) when this was constructed.
@@ -1926,6 +1955,7 @@ export interface FeatureSetDefaults {
  * be used.  This field must be in strict ascending order by edition.
  */
 export interface FeatureSetDefaults_FeatureSetEditionDefault {
+  $type: "google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault";
   edition?: Edition | undefined;
   features?: FeatureSet | undefined;
 }
@@ -1935,6 +1965,7 @@ export interface FeatureSetDefaults_FeatureSetEditionDefault {
  * FileDescriptorProto was generated.
  */
 export interface SourceCodeInfo {
+  $type: "google.protobuf.SourceCodeInfo";
   /**
    * A Location identifies a piece of source code in a .proto file which
    * corresponds to a particular definition.  This information is intended
@@ -1984,6 +2015,7 @@ export interface SourceCodeInfo {
 }
 
 export interface SourceCodeInfo_Location {
+  $type: "google.protobuf.SourceCodeInfo.Location";
   /**
    * Identifies which part of the FileDescriptorProto was defined at this
    * location.
@@ -2078,6 +2110,7 @@ export interface SourceCodeInfo_Location {
  * source file, but may contain references to different source .proto files.
  */
 export interface GeneratedCodeInfo {
+  $type: "google.protobuf.GeneratedCodeInfo";
   /**
    * An Annotation connects some span of text in generated code to an element
    * of its generating .proto file.
@@ -2086,6 +2119,7 @@ export interface GeneratedCodeInfo {
 }
 
 export interface GeneratedCodeInfo_Annotation {
+  $type: "google.protobuf.GeneratedCodeInfo.Annotation";
   /**
    * Identifies the element in the original source .proto file. This field
    * is formatted the same as SourceCodeInfo.Location.path.
@@ -2168,10 +2202,12 @@ export function generatedCodeInfo_Annotation_SemanticToJSON(object: GeneratedCod
 }
 
 function createBaseFileDescriptorSet(): FileDescriptorSet {
-  return { file: [] };
+  return { $type: "google.protobuf.FileDescriptorSet", file: [] };
 }
 
-export const FileDescriptorSet: MessageFns<FileDescriptorSet> = {
+export const FileDescriptorSet: MessageFns<FileDescriptorSet, "google.protobuf.FileDescriptorSet"> = {
+  $type: "google.protobuf.FileDescriptorSet" as const,
+
   encode(message: FileDescriptorSet, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.file) {
       FileDescriptorProto.encode(v!, writer.uint32(10).fork()).join();
@@ -2205,6 +2241,7 @@ export const FileDescriptorSet: MessageFns<FileDescriptorSet> = {
 
   fromJSON(object: any): FileDescriptorSet {
     return {
+      $type: FileDescriptorSet.$type,
       file: globalThis.Array.isArray(object?.file) ? object.file.map((e: any) => FileDescriptorProto.fromJSON(e)) : [],
     };
   },
@@ -2227,8 +2264,11 @@ export const FileDescriptorSet: MessageFns<FileDescriptorSet> = {
   },
 };
 
+messageTypeRegistry.set(FileDescriptorSet.$type, FileDescriptorSet);
+
 function createBaseFileDescriptorProto(): FileDescriptorProto {
   return {
+    $type: "google.protobuf.FileDescriptorProto",
     name: "",
     package: "",
     dependency: [],
@@ -2245,7 +2285,9 @@ function createBaseFileDescriptorProto(): FileDescriptorProto {
   };
 }
 
-export const FileDescriptorProto: MessageFns<FileDescriptorProto> = {
+export const FileDescriptorProto: MessageFns<FileDescriptorProto, "google.protobuf.FileDescriptorProto"> = {
+  $type: "google.protobuf.FileDescriptorProto" as const,
+
   encode(message: FileDescriptorProto, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.name !== undefined && message.name !== "") {
       writer.uint32(10).string(message.name);
@@ -2435,6 +2477,7 @@ export const FileDescriptorProto: MessageFns<FileDescriptorProto> = {
 
   fromJSON(object: any): FileDescriptorProto {
     return {
+      $type: FileDescriptorProto.$type,
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       package: isSet(object.package) ? globalThis.String(object.package) : "",
       dependency: globalThis.Array.isArray(object?.dependency)
@@ -2535,8 +2578,11 @@ export const FileDescriptorProto: MessageFns<FileDescriptorProto> = {
   },
 };
 
+messageTypeRegistry.set(FileDescriptorProto.$type, FileDescriptorProto);
+
 function createBaseDescriptorProto(): DescriptorProto {
   return {
+    $type: "google.protobuf.DescriptorProto",
     name: "",
     field: [],
     extension: [],
@@ -2550,7 +2596,9 @@ function createBaseDescriptorProto(): DescriptorProto {
   };
 }
 
-export const DescriptorProto: MessageFns<DescriptorProto> = {
+export const DescriptorProto: MessageFns<DescriptorProto, "google.protobuf.DescriptorProto"> = {
+  $type: "google.protobuf.DescriptorProto" as const,
+
   encode(message: DescriptorProto, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.name !== undefined && message.name !== "") {
       writer.uint32(10).string(message.name);
@@ -2683,6 +2731,7 @@ export const DescriptorProto: MessageFns<DescriptorProto> = {
 
   fromJSON(object: any): DescriptorProto {
     return {
+      $type: DescriptorProto.$type,
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       field: globalThis.Array.isArray(object?.field)
         ? object.field.map((e: any) => FieldDescriptorProto.fromJSON(e))
@@ -2768,11 +2817,18 @@ export const DescriptorProto: MessageFns<DescriptorProto> = {
   },
 };
 
+messageTypeRegistry.set(DescriptorProto.$type, DescriptorProto);
+
 function createBaseDescriptorProto_ExtensionRange(): DescriptorProto_ExtensionRange {
-  return { start: 0, end: 0, options: undefined };
+  return { $type: "google.protobuf.DescriptorProto.ExtensionRange", start: 0, end: 0, options: undefined };
 }
 
-export const DescriptorProto_ExtensionRange: MessageFns<DescriptorProto_ExtensionRange> = {
+export const DescriptorProto_ExtensionRange: MessageFns<
+  DescriptorProto_ExtensionRange,
+  "google.protobuf.DescriptorProto.ExtensionRange"
+> = {
+  $type: "google.protobuf.DescriptorProto.ExtensionRange" as const,
+
   encode(message: DescriptorProto_ExtensionRange, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.start !== undefined && message.start !== 0) {
       writer.uint32(8).int32(message.start);
@@ -2828,6 +2884,7 @@ export const DescriptorProto_ExtensionRange: MessageFns<DescriptorProto_Extensio
 
   fromJSON(object: any): DescriptorProto_ExtensionRange {
     return {
+      $type: DescriptorProto_ExtensionRange.$type,
       start: isSet(object.start) ? globalThis.Number(object.start) : 0,
       end: isSet(object.end) ? globalThis.Number(object.end) : 0,
       options: isSet(object.options) ? ExtensionRangeOptions.fromJSON(object.options) : undefined,
@@ -2864,11 +2921,18 @@ export const DescriptorProto_ExtensionRange: MessageFns<DescriptorProto_Extensio
   },
 };
 
+messageTypeRegistry.set(DescriptorProto_ExtensionRange.$type, DescriptorProto_ExtensionRange);
+
 function createBaseDescriptorProto_ReservedRange(): DescriptorProto_ReservedRange {
-  return { start: 0, end: 0 };
+  return { $type: "google.protobuf.DescriptorProto.ReservedRange", start: 0, end: 0 };
 }
 
-export const DescriptorProto_ReservedRange: MessageFns<DescriptorProto_ReservedRange> = {
+export const DescriptorProto_ReservedRange: MessageFns<
+  DescriptorProto_ReservedRange,
+  "google.protobuf.DescriptorProto.ReservedRange"
+> = {
+  $type: "google.protobuf.DescriptorProto.ReservedRange" as const,
+
   encode(message: DescriptorProto_ReservedRange, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.start !== undefined && message.start !== 0) {
       writer.uint32(8).int32(message.start);
@@ -2913,6 +2977,7 @@ export const DescriptorProto_ReservedRange: MessageFns<DescriptorProto_ReservedR
 
   fromJSON(object: any): DescriptorProto_ReservedRange {
     return {
+      $type: DescriptorProto_ReservedRange.$type,
       start: isSet(object.start) ? globalThis.Number(object.start) : 0,
       end: isSet(object.end) ? globalThis.Number(object.end) : 0,
     };
@@ -2942,11 +3007,21 @@ export const DescriptorProto_ReservedRange: MessageFns<DescriptorProto_ReservedR
   },
 };
 
+messageTypeRegistry.set(DescriptorProto_ReservedRange.$type, DescriptorProto_ReservedRange);
+
 function createBaseExtensionRangeOptions(): ExtensionRangeOptions {
-  return { uninterpretedOption: [], declaration: [], features: undefined, verification: 1 };
+  return {
+    $type: "google.protobuf.ExtensionRangeOptions",
+    uninterpretedOption: [],
+    declaration: [],
+    features: undefined,
+    verification: 1,
+  };
 }
 
-export const ExtensionRangeOptions: MessageFns<ExtensionRangeOptions> = {
+export const ExtensionRangeOptions: MessageFns<ExtensionRangeOptions, "google.protobuf.ExtensionRangeOptions"> = {
+  $type: "google.protobuf.ExtensionRangeOptions" as const,
+
   encode(message: ExtensionRangeOptions, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.uninterpretedOption) {
       UninterpretedOption.encode(v!, writer.uint32(7994).fork()).join();
@@ -3013,6 +3088,7 @@ export const ExtensionRangeOptions: MessageFns<ExtensionRangeOptions> = {
 
   fromJSON(object: any): ExtensionRangeOptions {
     return {
+      $type: ExtensionRangeOptions.$type,
       uninterpretedOption: globalThis.Array.isArray(object?.uninterpretedOption)
         ? object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e))
         : [],
@@ -3058,11 +3134,25 @@ export const ExtensionRangeOptions: MessageFns<ExtensionRangeOptions> = {
   },
 };
 
+messageTypeRegistry.set(ExtensionRangeOptions.$type, ExtensionRangeOptions);
+
 function createBaseExtensionRangeOptions_Declaration(): ExtensionRangeOptions_Declaration {
-  return { number: 0, fullName: "", type: "", reserved: false, repeated: false };
+  return {
+    $type: "google.protobuf.ExtensionRangeOptions.Declaration",
+    number: 0,
+    fullName: "",
+    type: "",
+    reserved: false,
+    repeated: false,
+  };
 }
 
-export const ExtensionRangeOptions_Declaration: MessageFns<ExtensionRangeOptions_Declaration> = {
+export const ExtensionRangeOptions_Declaration: MessageFns<
+  ExtensionRangeOptions_Declaration,
+  "google.protobuf.ExtensionRangeOptions.Declaration"
+> = {
+  $type: "google.protobuf.ExtensionRangeOptions.Declaration" as const,
+
   encode(message: ExtensionRangeOptions_Declaration, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.number !== undefined && message.number !== 0) {
       writer.uint32(8).int32(message.number);
@@ -3140,6 +3230,7 @@ export const ExtensionRangeOptions_Declaration: MessageFns<ExtensionRangeOptions
 
   fromJSON(object: any): ExtensionRangeOptions_Declaration {
     return {
+      $type: ExtensionRangeOptions_Declaration.$type,
       number: isSet(object.number) ? globalThis.Number(object.number) : 0,
       fullName: isSet(object.fullName) ? globalThis.String(object.fullName) : "",
       type: isSet(object.type) ? globalThis.String(object.type) : "",
@@ -3186,8 +3277,11 @@ export const ExtensionRangeOptions_Declaration: MessageFns<ExtensionRangeOptions
   },
 };
 
+messageTypeRegistry.set(ExtensionRangeOptions_Declaration.$type, ExtensionRangeOptions_Declaration);
+
 function createBaseFieldDescriptorProto(): FieldDescriptorProto {
   return {
+    $type: "google.protobuf.FieldDescriptorProto",
     name: "",
     number: 0,
     label: 1,
@@ -3202,7 +3296,9 @@ function createBaseFieldDescriptorProto(): FieldDescriptorProto {
   };
 }
 
-export const FieldDescriptorProto: MessageFns<FieldDescriptorProto> = {
+export const FieldDescriptorProto: MessageFns<FieldDescriptorProto, "google.protobuf.FieldDescriptorProto"> = {
+  $type: "google.protobuf.FieldDescriptorProto" as const,
+
   encode(message: FieldDescriptorProto, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.name !== undefined && message.name !== "") {
       writer.uint32(10).string(message.name);
@@ -3346,6 +3442,7 @@ export const FieldDescriptorProto: MessageFns<FieldDescriptorProto> = {
 
   fromJSON(object: any): FieldDescriptorProto {
     return {
+      $type: FieldDescriptorProto.$type,
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       number: isSet(object.number) ? globalThis.Number(object.number) : 0,
       label: isSet(object.label) ? fieldDescriptorProto_LabelFromJSON(object.label) : 1,
@@ -3420,11 +3517,15 @@ export const FieldDescriptorProto: MessageFns<FieldDescriptorProto> = {
   },
 };
 
+messageTypeRegistry.set(FieldDescriptorProto.$type, FieldDescriptorProto);
+
 function createBaseOneofDescriptorProto(): OneofDescriptorProto {
-  return { name: "", options: undefined };
+  return { $type: "google.protobuf.OneofDescriptorProto", name: "", options: undefined };
 }
 
-export const OneofDescriptorProto: MessageFns<OneofDescriptorProto> = {
+export const OneofDescriptorProto: MessageFns<OneofDescriptorProto, "google.protobuf.OneofDescriptorProto"> = {
+  $type: "google.protobuf.OneofDescriptorProto" as const,
+
   encode(message: OneofDescriptorProto, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.name !== undefined && message.name !== "") {
       writer.uint32(10).string(message.name);
@@ -3469,6 +3570,7 @@ export const OneofDescriptorProto: MessageFns<OneofDescriptorProto> = {
 
   fromJSON(object: any): OneofDescriptorProto {
     return {
+      $type: OneofDescriptorProto.$type,
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       options: isSet(object.options) ? OneofOptions.fromJSON(object.options) : undefined,
     };
@@ -3498,11 +3600,22 @@ export const OneofDescriptorProto: MessageFns<OneofDescriptorProto> = {
   },
 };
 
+messageTypeRegistry.set(OneofDescriptorProto.$type, OneofDescriptorProto);
+
 function createBaseEnumDescriptorProto(): EnumDescriptorProto {
-  return { name: "", value: [], options: undefined, reservedRange: [], reservedName: [] };
+  return {
+    $type: "google.protobuf.EnumDescriptorProto",
+    name: "",
+    value: [],
+    options: undefined,
+    reservedRange: [],
+    reservedName: [],
+  };
 }
 
-export const EnumDescriptorProto: MessageFns<EnumDescriptorProto> = {
+export const EnumDescriptorProto: MessageFns<EnumDescriptorProto, "google.protobuf.EnumDescriptorProto"> = {
+  $type: "google.protobuf.EnumDescriptorProto" as const,
+
   encode(message: EnumDescriptorProto, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.name !== undefined && message.name !== "") {
       writer.uint32(10).string(message.name);
@@ -3580,6 +3693,7 @@ export const EnumDescriptorProto: MessageFns<EnumDescriptorProto> = {
 
   fromJSON(object: any): EnumDescriptorProto {
     return {
+      $type: EnumDescriptorProto.$type,
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       value: globalThis.Array.isArray(object?.value)
         ? object.value.map((e: any) => EnumValueDescriptorProto.fromJSON(e))
@@ -3631,11 +3745,18 @@ export const EnumDescriptorProto: MessageFns<EnumDescriptorProto> = {
   },
 };
 
+messageTypeRegistry.set(EnumDescriptorProto.$type, EnumDescriptorProto);
+
 function createBaseEnumDescriptorProto_EnumReservedRange(): EnumDescriptorProto_EnumReservedRange {
-  return { start: 0, end: 0 };
+  return { $type: "google.protobuf.EnumDescriptorProto.EnumReservedRange", start: 0, end: 0 };
 }
 
-export const EnumDescriptorProto_EnumReservedRange: MessageFns<EnumDescriptorProto_EnumReservedRange> = {
+export const EnumDescriptorProto_EnumReservedRange: MessageFns<
+  EnumDescriptorProto_EnumReservedRange,
+  "google.protobuf.EnumDescriptorProto.EnumReservedRange"
+> = {
+  $type: "google.protobuf.EnumDescriptorProto.EnumReservedRange" as const,
+
   encode(message: EnumDescriptorProto_EnumReservedRange, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.start !== undefined && message.start !== 0) {
       writer.uint32(8).int32(message.start);
@@ -3680,6 +3801,7 @@ export const EnumDescriptorProto_EnumReservedRange: MessageFns<EnumDescriptorPro
 
   fromJSON(object: any): EnumDescriptorProto_EnumReservedRange {
     return {
+      $type: EnumDescriptorProto_EnumReservedRange.$type,
       start: isSet(object.start) ? globalThis.Number(object.start) : 0,
       end: isSet(object.end) ? globalThis.Number(object.end) : 0,
     };
@@ -3711,11 +3833,18 @@ export const EnumDescriptorProto_EnumReservedRange: MessageFns<EnumDescriptorPro
   },
 };
 
+messageTypeRegistry.set(EnumDescriptorProto_EnumReservedRange.$type, EnumDescriptorProto_EnumReservedRange);
+
 function createBaseEnumValueDescriptorProto(): EnumValueDescriptorProto {
-  return { name: "", number: 0, options: undefined };
+  return { $type: "google.protobuf.EnumValueDescriptorProto", name: "", number: 0, options: undefined };
 }
 
-export const EnumValueDescriptorProto: MessageFns<EnumValueDescriptorProto> = {
+export const EnumValueDescriptorProto: MessageFns<
+  EnumValueDescriptorProto,
+  "google.protobuf.EnumValueDescriptorProto"
+> = {
+  $type: "google.protobuf.EnumValueDescriptorProto" as const,
+
   encode(message: EnumValueDescriptorProto, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.name !== undefined && message.name !== "") {
       writer.uint32(10).string(message.name);
@@ -3771,6 +3900,7 @@ export const EnumValueDescriptorProto: MessageFns<EnumValueDescriptorProto> = {
 
   fromJSON(object: any): EnumValueDescriptorProto {
     return {
+      $type: EnumValueDescriptorProto.$type,
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       number: isSet(object.number) ? globalThis.Number(object.number) : 0,
       options: isSet(object.options) ? EnumValueOptions.fromJSON(object.options) : undefined,
@@ -3805,11 +3935,15 @@ export const EnumValueDescriptorProto: MessageFns<EnumValueDescriptorProto> = {
   },
 };
 
+messageTypeRegistry.set(EnumValueDescriptorProto.$type, EnumValueDescriptorProto);
+
 function createBaseServiceDescriptorProto(): ServiceDescriptorProto {
-  return { name: "", method: [], options: undefined };
+  return { $type: "google.protobuf.ServiceDescriptorProto", name: "", method: [], options: undefined };
 }
 
-export const ServiceDescriptorProto: MessageFns<ServiceDescriptorProto> = {
+export const ServiceDescriptorProto: MessageFns<ServiceDescriptorProto, "google.protobuf.ServiceDescriptorProto"> = {
+  $type: "google.protobuf.ServiceDescriptorProto" as const,
+
   encode(message: ServiceDescriptorProto, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.name !== undefined && message.name !== "") {
       writer.uint32(10).string(message.name);
@@ -3865,6 +3999,7 @@ export const ServiceDescriptorProto: MessageFns<ServiceDescriptorProto> = {
 
   fromJSON(object: any): ServiceDescriptorProto {
     return {
+      $type: ServiceDescriptorProto.$type,
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       method: globalThis.Array.isArray(object?.method)
         ? object.method.map((e: any) => MethodDescriptorProto.fromJSON(e))
@@ -3901,8 +4036,11 @@ export const ServiceDescriptorProto: MessageFns<ServiceDescriptorProto> = {
   },
 };
 
+messageTypeRegistry.set(ServiceDescriptorProto.$type, ServiceDescriptorProto);
+
 function createBaseMethodDescriptorProto(): MethodDescriptorProto {
   return {
+    $type: "google.protobuf.MethodDescriptorProto",
     name: "",
     inputType: "",
     outputType: "",
@@ -3912,7 +4050,9 @@ function createBaseMethodDescriptorProto(): MethodDescriptorProto {
   };
 }
 
-export const MethodDescriptorProto: MessageFns<MethodDescriptorProto> = {
+export const MethodDescriptorProto: MessageFns<MethodDescriptorProto, "google.protobuf.MethodDescriptorProto"> = {
+  $type: "google.protobuf.MethodDescriptorProto" as const,
+
   encode(message: MethodDescriptorProto, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.name !== undefined && message.name !== "") {
       writer.uint32(10).string(message.name);
@@ -4001,6 +4141,7 @@ export const MethodDescriptorProto: MessageFns<MethodDescriptorProto> = {
 
   fromJSON(object: any): MethodDescriptorProto {
     return {
+      $type: MethodDescriptorProto.$type,
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       inputType: isSet(object.inputType) ? globalThis.String(object.inputType) : "",
       outputType: isSet(object.outputType) ? globalThis.String(object.outputType) : "",
@@ -4050,8 +4191,11 @@ export const MethodDescriptorProto: MessageFns<MethodDescriptorProto> = {
   },
 };
 
+messageTypeRegistry.set(MethodDescriptorProto.$type, MethodDescriptorProto);
+
 function createBaseFileOptions(): FileOptions {
   return {
+    $type: "google.protobuf.FileOptions",
     javaPackage: "",
     javaOuterClassname: "",
     javaMultipleFiles: false,
@@ -4077,7 +4221,9 @@ function createBaseFileOptions(): FileOptions {
   };
 }
 
-export const FileOptions: MessageFns<FileOptions> = {
+export const FileOptions: MessageFns<FileOptions, "google.protobuf.FileOptions"> = {
+  $type: "google.protobuf.FileOptions" as const,
+
   encode(message: FileOptions, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.javaPackage !== undefined && message.javaPackage !== "") {
       writer.uint32(10).string(message.javaPackage);
@@ -4342,6 +4488,7 @@ export const FileOptions: MessageFns<FileOptions> = {
 
   fromJSON(object: any): FileOptions {
     return {
+      $type: FileOptions.$type,
       javaPackage: isSet(object.javaPackage) ? globalThis.String(object.javaPackage) : "",
       javaOuterClassname: isSet(object.javaOuterClassname) ? globalThis.String(object.javaOuterClassname) : "",
       javaMultipleFiles: isSet(object.javaMultipleFiles) ? globalThis.Boolean(object.javaMultipleFiles) : false,
@@ -4475,8 +4622,11 @@ export const FileOptions: MessageFns<FileOptions> = {
   },
 };
 
+messageTypeRegistry.set(FileOptions.$type, FileOptions);
+
 function createBaseMessageOptions(): MessageOptions {
   return {
+    $type: "google.protobuf.MessageOptions",
     messageSetWireFormat: false,
     noStandardDescriptorAccessor: false,
     deprecated: false,
@@ -4487,7 +4637,9 @@ function createBaseMessageOptions(): MessageOptions {
   };
 }
 
-export const MessageOptions: MessageFns<MessageOptions> = {
+export const MessageOptions: MessageFns<MessageOptions, "google.protobuf.MessageOptions"> = {
+  $type: "google.protobuf.MessageOptions" as const,
+
   encode(message: MessageOptions, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.messageSetWireFormat !== undefined && message.messageSetWireFormat !== false) {
       writer.uint32(8).bool(message.messageSetWireFormat);
@@ -4589,6 +4741,7 @@ export const MessageOptions: MessageFns<MessageOptions> = {
 
   fromJSON(object: any): MessageOptions {
     return {
+      $type: MessageOptions.$type,
       messageSetWireFormat: isSet(object.messageSetWireFormat)
         ? globalThis.Boolean(object.messageSetWireFormat)
         : false,
@@ -4653,8 +4806,11 @@ export const MessageOptions: MessageFns<MessageOptions> = {
   },
 };
 
+messageTypeRegistry.set(MessageOptions.$type, MessageOptions);
+
 function createBaseFieldOptions(): FieldOptions {
   return {
+    $type: "google.protobuf.FieldOptions",
     ctype: 0,
     packed: false,
     jstype: 0,
@@ -4671,7 +4827,9 @@ function createBaseFieldOptions(): FieldOptions {
   };
 }
 
-export const FieldOptions: MessageFns<FieldOptions> = {
+export const FieldOptions: MessageFns<FieldOptions, "google.protobuf.FieldOptions"> = {
+  $type: "google.protobuf.FieldOptions" as const,
+
   encode(message: FieldOptions, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.ctype !== undefined && message.ctype !== 0) {
       writer.uint32(8).int32(message.ctype);
@@ -4849,6 +5007,7 @@ export const FieldOptions: MessageFns<FieldOptions> = {
 
   fromJSON(object: any): FieldOptions {
     return {
+      $type: FieldOptions.$type,
       ctype: isSet(object.ctype) ? fieldOptions_CTypeFromJSON(object.ctype) : 0,
       packed: isSet(object.packed) ? globalThis.Boolean(object.packed) : false,
       jstype: isSet(object.jstype) ? fieldOptions_JSTypeFromJSON(object.jstype) : 0,
@@ -4939,11 +5098,18 @@ export const FieldOptions: MessageFns<FieldOptions> = {
   },
 };
 
+messageTypeRegistry.set(FieldOptions.$type, FieldOptions);
+
 function createBaseFieldOptions_EditionDefault(): FieldOptions_EditionDefault {
-  return { edition: 0, value: "" };
+  return { $type: "google.protobuf.FieldOptions.EditionDefault", edition: 0, value: "" };
 }
 
-export const FieldOptions_EditionDefault: MessageFns<FieldOptions_EditionDefault> = {
+export const FieldOptions_EditionDefault: MessageFns<
+  FieldOptions_EditionDefault,
+  "google.protobuf.FieldOptions.EditionDefault"
+> = {
+  $type: "google.protobuf.FieldOptions.EditionDefault" as const,
+
   encode(message: FieldOptions_EditionDefault, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.edition !== undefined && message.edition !== 0) {
       writer.uint32(24).int32(message.edition);
@@ -4988,6 +5154,7 @@ export const FieldOptions_EditionDefault: MessageFns<FieldOptions_EditionDefault
 
   fromJSON(object: any): FieldOptions_EditionDefault {
     return {
+      $type: FieldOptions_EditionDefault.$type,
       edition: isSet(object.edition) ? editionFromJSON(object.edition) : 0,
       value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
@@ -5015,11 +5182,15 @@ export const FieldOptions_EditionDefault: MessageFns<FieldOptions_EditionDefault
   },
 };
 
+messageTypeRegistry.set(FieldOptions_EditionDefault.$type, FieldOptions_EditionDefault);
+
 function createBaseOneofOptions(): OneofOptions {
-  return { features: undefined, uninterpretedOption: [] };
+  return { $type: "google.protobuf.OneofOptions", features: undefined, uninterpretedOption: [] };
 }
 
-export const OneofOptions: MessageFns<OneofOptions> = {
+export const OneofOptions: MessageFns<OneofOptions, "google.protobuf.OneofOptions"> = {
+  $type: "google.protobuf.OneofOptions" as const,
+
   encode(message: OneofOptions, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.features !== undefined) {
       FeatureSet.encode(message.features, writer.uint32(10).fork()).join();
@@ -5064,6 +5235,7 @@ export const OneofOptions: MessageFns<OneofOptions> = {
 
   fromJSON(object: any): OneofOptions {
     return {
+      $type: OneofOptions.$type,
       features: isSet(object.features) ? FeatureSet.fromJSON(object.features) : undefined,
       uninterpretedOption: globalThis.Array.isArray(object?.uninterpretedOption)
         ? object.uninterpretedOption.map((e: any) => UninterpretedOption.fromJSON(e))
@@ -5095,8 +5267,11 @@ export const OneofOptions: MessageFns<OneofOptions> = {
   },
 };
 
+messageTypeRegistry.set(OneofOptions.$type, OneofOptions);
+
 function createBaseEnumOptions(): EnumOptions {
   return {
+    $type: "google.protobuf.EnumOptions",
     allowAlias: false,
     deprecated: false,
     deprecatedLegacyJsonFieldConflicts: false,
@@ -5105,7 +5280,9 @@ function createBaseEnumOptions(): EnumOptions {
   };
 }
 
-export const EnumOptions: MessageFns<EnumOptions> = {
+export const EnumOptions: MessageFns<EnumOptions, "google.protobuf.EnumOptions"> = {
+  $type: "google.protobuf.EnumOptions" as const,
+
   encode(message: EnumOptions, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.allowAlias !== undefined && message.allowAlias !== false) {
       writer.uint32(16).bool(message.allowAlias);
@@ -5185,6 +5362,7 @@ export const EnumOptions: MessageFns<EnumOptions> = {
 
   fromJSON(object: any): EnumOptions {
     return {
+      $type: EnumOptions.$type,
       allowAlias: isSet(object.allowAlias) ? globalThis.Boolean(object.allowAlias) : false,
       deprecated: isSet(object.deprecated) ? globalThis.Boolean(object.deprecated) : false,
       deprecatedLegacyJsonFieldConflicts: isSet(object.deprecatedLegacyJsonFieldConflicts)
@@ -5235,11 +5413,21 @@ export const EnumOptions: MessageFns<EnumOptions> = {
   },
 };
 
+messageTypeRegistry.set(EnumOptions.$type, EnumOptions);
+
 function createBaseEnumValueOptions(): EnumValueOptions {
-  return { deprecated: false, features: undefined, debugRedact: false, uninterpretedOption: [] };
+  return {
+    $type: "google.protobuf.EnumValueOptions",
+    deprecated: false,
+    features: undefined,
+    debugRedact: false,
+    uninterpretedOption: [],
+  };
 }
 
-export const EnumValueOptions: MessageFns<EnumValueOptions> = {
+export const EnumValueOptions: MessageFns<EnumValueOptions, "google.protobuf.EnumValueOptions"> = {
+  $type: "google.protobuf.EnumValueOptions" as const,
+
   encode(message: EnumValueOptions, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.deprecated !== undefined && message.deprecated !== false) {
       writer.uint32(8).bool(message.deprecated);
@@ -5306,6 +5494,7 @@ export const EnumValueOptions: MessageFns<EnumValueOptions> = {
 
   fromJSON(object: any): EnumValueOptions {
     return {
+      $type: EnumValueOptions.$type,
       deprecated: isSet(object.deprecated) ? globalThis.Boolean(object.deprecated) : false,
       features: isSet(object.features) ? FeatureSet.fromJSON(object.features) : undefined,
       debugRedact: isSet(object.debugRedact) ? globalThis.Boolean(object.debugRedact) : false,
@@ -5347,11 +5536,15 @@ export const EnumValueOptions: MessageFns<EnumValueOptions> = {
   },
 };
 
+messageTypeRegistry.set(EnumValueOptions.$type, EnumValueOptions);
+
 function createBaseServiceOptions(): ServiceOptions {
-  return { features: undefined, deprecated: false, uninterpretedOption: [] };
+  return { $type: "google.protobuf.ServiceOptions", features: undefined, deprecated: false, uninterpretedOption: [] };
 }
 
-export const ServiceOptions: MessageFns<ServiceOptions> = {
+export const ServiceOptions: MessageFns<ServiceOptions, "google.protobuf.ServiceOptions"> = {
+  $type: "google.protobuf.ServiceOptions" as const,
+
   encode(message: ServiceOptions, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.features !== undefined) {
       FeatureSet.encode(message.features, writer.uint32(274).fork()).join();
@@ -5407,6 +5600,7 @@ export const ServiceOptions: MessageFns<ServiceOptions> = {
 
   fromJSON(object: any): ServiceOptions {
     return {
+      $type: ServiceOptions.$type,
       features: isSet(object.features) ? FeatureSet.fromJSON(object.features) : undefined,
       deprecated: isSet(object.deprecated) ? globalThis.Boolean(object.deprecated) : false,
       uninterpretedOption: globalThis.Array.isArray(object?.uninterpretedOption)
@@ -5443,11 +5637,21 @@ export const ServiceOptions: MessageFns<ServiceOptions> = {
   },
 };
 
+messageTypeRegistry.set(ServiceOptions.$type, ServiceOptions);
+
 function createBaseMethodOptions(): MethodOptions {
-  return { deprecated: false, idempotencyLevel: 0, features: undefined, uninterpretedOption: [] };
+  return {
+    $type: "google.protobuf.MethodOptions",
+    deprecated: false,
+    idempotencyLevel: 0,
+    features: undefined,
+    uninterpretedOption: [],
+  };
 }
 
-export const MethodOptions: MessageFns<MethodOptions> = {
+export const MethodOptions: MessageFns<MethodOptions, "google.protobuf.MethodOptions"> = {
+  $type: "google.protobuf.MethodOptions" as const,
+
   encode(message: MethodOptions, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.deprecated !== undefined && message.deprecated !== false) {
       writer.uint32(264).bool(message.deprecated);
@@ -5514,6 +5718,7 @@ export const MethodOptions: MessageFns<MethodOptions> = {
 
   fromJSON(object: any): MethodOptions {
     return {
+      $type: MethodOptions.$type,
       deprecated: isSet(object.deprecated) ? globalThis.Boolean(object.deprecated) : false,
       idempotencyLevel: isSet(object.idempotencyLevel)
         ? methodOptions_IdempotencyLevelFromJSON(object.idempotencyLevel)
@@ -5557,19 +5762,24 @@ export const MethodOptions: MessageFns<MethodOptions> = {
   },
 };
 
+messageTypeRegistry.set(MethodOptions.$type, MethodOptions);
+
 function createBaseUninterpretedOption(): UninterpretedOption {
   return {
+    $type: "google.protobuf.UninterpretedOption",
     name: [],
     identifierValue: "",
-    positiveIntValue: 0,
-    negativeIntValue: 0,
+    positiveIntValue: 0n,
+    negativeIntValue: 0n,
     doubleValue: 0,
     stringValue: Buffer.alloc(0),
     aggregateValue: "",
   };
 }
 
-export const UninterpretedOption: MessageFns<UninterpretedOption> = {
+export const UninterpretedOption: MessageFns<UninterpretedOption, "google.protobuf.UninterpretedOption"> = {
+  $type: "google.protobuf.UninterpretedOption" as const,
+
   encode(message: UninterpretedOption, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.name) {
       UninterpretedOption_NamePart.encode(v!, writer.uint32(18).fork()).join();
@@ -5577,10 +5787,16 @@ export const UninterpretedOption: MessageFns<UninterpretedOption> = {
     if (message.identifierValue !== undefined && message.identifierValue !== "") {
       writer.uint32(26).string(message.identifierValue);
     }
-    if (message.positiveIntValue !== undefined && message.positiveIntValue !== 0) {
+    if (message.positiveIntValue !== undefined && message.positiveIntValue !== 0n) {
+      if (BigInt.asUintN(64, message.positiveIntValue) !== message.positiveIntValue) {
+        throw new globalThis.Error("value provided for field message.positiveIntValue of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.positiveIntValue);
     }
-    if (message.negativeIntValue !== undefined && message.negativeIntValue !== 0) {
+    if (message.negativeIntValue !== undefined && message.negativeIntValue !== 0n) {
+      if (BigInt.asIntN(64, message.negativeIntValue) !== message.negativeIntValue) {
+        throw new globalThis.Error("value provided for field message.negativeIntValue of type int64 too large");
+      }
       writer.uint32(40).int64(message.negativeIntValue);
     }
     if (message.doubleValue !== undefined && message.doubleValue !== 0) {
@@ -5623,7 +5839,7 @@ export const UninterpretedOption: MessageFns<UninterpretedOption> = {
             break;
           }
 
-          message.positiveIntValue = longToNumber(reader.uint64());
+          message.positiveIntValue = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -5631,7 +5847,7 @@ export const UninterpretedOption: MessageFns<UninterpretedOption> = {
             break;
           }
 
-          message.negativeIntValue = longToNumber(reader.int64());
+          message.negativeIntValue = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -5669,12 +5885,13 @@ export const UninterpretedOption: MessageFns<UninterpretedOption> = {
 
   fromJSON(object: any): UninterpretedOption {
     return {
+      $type: UninterpretedOption.$type,
       name: globalThis.Array.isArray(object?.name)
         ? object.name.map((e: any) => UninterpretedOption_NamePart.fromJSON(e))
         : [],
       identifierValue: isSet(object.identifierValue) ? globalThis.String(object.identifierValue) : "",
-      positiveIntValue: isSet(object.positiveIntValue) ? globalThis.Number(object.positiveIntValue) : 0,
-      negativeIntValue: isSet(object.negativeIntValue) ? globalThis.Number(object.negativeIntValue) : 0,
+      positiveIntValue: isSet(object.positiveIntValue) ? BigInt(object.positiveIntValue) : 0n,
+      negativeIntValue: isSet(object.negativeIntValue) ? BigInt(object.negativeIntValue) : 0n,
       doubleValue: isSet(object.doubleValue) ? globalThis.Number(object.doubleValue) : 0,
       stringValue: isSet(object.stringValue) ? Buffer.from(bytesFromBase64(object.stringValue)) : Buffer.alloc(0),
       aggregateValue: isSet(object.aggregateValue) ? globalThis.String(object.aggregateValue) : "",
@@ -5689,11 +5906,11 @@ export const UninterpretedOption: MessageFns<UninterpretedOption> = {
     if (message.identifierValue !== undefined && message.identifierValue !== "") {
       obj.identifierValue = message.identifierValue;
     }
-    if (message.positiveIntValue !== undefined && message.positiveIntValue !== 0) {
-      obj.positiveIntValue = Math.round(message.positiveIntValue);
+    if (message.positiveIntValue !== undefined && message.positiveIntValue !== 0n) {
+      obj.positiveIntValue = message.positiveIntValue.toString();
     }
-    if (message.negativeIntValue !== undefined && message.negativeIntValue !== 0) {
-      obj.negativeIntValue = Math.round(message.negativeIntValue);
+    if (message.negativeIntValue !== undefined && message.negativeIntValue !== 0n) {
+      obj.negativeIntValue = message.negativeIntValue.toString();
     }
     if (message.doubleValue !== undefined && message.doubleValue !== 0) {
       obj.doubleValue = message.doubleValue;
@@ -5714,8 +5931,8 @@ export const UninterpretedOption: MessageFns<UninterpretedOption> = {
     const message = createBaseUninterpretedOption();
     message.name = object.name?.map((e) => UninterpretedOption_NamePart.fromPartial(e)) || [];
     message.identifierValue = object.identifierValue ?? "";
-    message.positiveIntValue = object.positiveIntValue ?? 0;
-    message.negativeIntValue = object.negativeIntValue ?? 0;
+    message.positiveIntValue = object.positiveIntValue ?? 0n;
+    message.negativeIntValue = object.negativeIntValue ?? 0n;
     message.doubleValue = object.doubleValue ?? 0;
     message.stringValue = object.stringValue ?? Buffer.alloc(0);
     message.aggregateValue = object.aggregateValue ?? "";
@@ -5723,11 +5940,18 @@ export const UninterpretedOption: MessageFns<UninterpretedOption> = {
   },
 };
 
+messageTypeRegistry.set(UninterpretedOption.$type, UninterpretedOption);
+
 function createBaseUninterpretedOption_NamePart(): UninterpretedOption_NamePart {
-  return { namePart: "", isExtension: false };
+  return { $type: "google.protobuf.UninterpretedOption.NamePart", namePart: "", isExtension: false };
 }
 
-export const UninterpretedOption_NamePart: MessageFns<UninterpretedOption_NamePart> = {
+export const UninterpretedOption_NamePart: MessageFns<
+  UninterpretedOption_NamePart,
+  "google.protobuf.UninterpretedOption.NamePart"
+> = {
+  $type: "google.protobuf.UninterpretedOption.NamePart" as const,
+
   encode(message: UninterpretedOption_NamePart, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.namePart !== "") {
       writer.uint32(10).string(message.namePart);
@@ -5772,6 +5996,7 @@ export const UninterpretedOption_NamePart: MessageFns<UninterpretedOption_NamePa
 
   fromJSON(object: any): UninterpretedOption_NamePart {
     return {
+      $type: UninterpretedOption_NamePart.$type,
       namePart: isSet(object.namePart) ? globalThis.String(object.namePart) : "",
       isExtension: isSet(object.isExtension) ? globalThis.Boolean(object.isExtension) : false,
     };
@@ -5799,8 +6024,11 @@ export const UninterpretedOption_NamePart: MessageFns<UninterpretedOption_NamePa
   },
 };
 
+messageTypeRegistry.set(UninterpretedOption_NamePart.$type, UninterpretedOption_NamePart);
+
 function createBaseFeatureSet(): FeatureSet {
   return {
+    $type: "google.protobuf.FeatureSet",
     fieldPresence: 0,
     enumType: 0,
     repeatedFieldEncoding: 0,
@@ -5810,7 +6038,9 @@ function createBaseFeatureSet(): FeatureSet {
   };
 }
 
-export const FeatureSet: MessageFns<FeatureSet> = {
+export const FeatureSet: MessageFns<FeatureSet, "google.protobuf.FeatureSet"> = {
+  $type: "google.protobuf.FeatureSet" as const,
+
   encode(message: FeatureSet, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.fieldPresence !== undefined && message.fieldPresence !== 0) {
       writer.uint32(8).int32(message.fieldPresence);
@@ -5899,6 +6129,7 @@ export const FeatureSet: MessageFns<FeatureSet> = {
 
   fromJSON(object: any): FeatureSet {
     return {
+      $type: FeatureSet.$type,
       fieldPresence: isSet(object.fieldPresence) ? featureSet_FieldPresenceFromJSON(object.fieldPresence) : 0,
       enumType: isSet(object.enumType) ? featureSet_EnumTypeFromJSON(object.enumType) : 0,
       repeatedFieldEncoding: isSet(object.repeatedFieldEncoding)
@@ -5948,11 +6179,15 @@ export const FeatureSet: MessageFns<FeatureSet> = {
   },
 };
 
+messageTypeRegistry.set(FeatureSet.$type, FeatureSet);
+
 function createBaseFeatureSetDefaults(): FeatureSetDefaults {
-  return { defaults: [], minimumEdition: 0, maximumEdition: 0 };
+  return { $type: "google.protobuf.FeatureSetDefaults", defaults: [], minimumEdition: 0, maximumEdition: 0 };
 }
 
-export const FeatureSetDefaults: MessageFns<FeatureSetDefaults> = {
+export const FeatureSetDefaults: MessageFns<FeatureSetDefaults, "google.protobuf.FeatureSetDefaults"> = {
+  $type: "google.protobuf.FeatureSetDefaults" as const,
+
   encode(message: FeatureSetDefaults, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.defaults) {
       FeatureSetDefaults_FeatureSetEditionDefault.encode(v!, writer.uint32(10).fork()).join();
@@ -6008,6 +6243,7 @@ export const FeatureSetDefaults: MessageFns<FeatureSetDefaults> = {
 
   fromJSON(object: any): FeatureSetDefaults {
     return {
+      $type: FeatureSetDefaults.$type,
       defaults: globalThis.Array.isArray(object?.defaults)
         ? object.defaults.map((e: any) => FeatureSetDefaults_FeatureSetEditionDefault.fromJSON(e))
         : [],
@@ -6042,11 +6278,18 @@ export const FeatureSetDefaults: MessageFns<FeatureSetDefaults> = {
   },
 };
 
+messageTypeRegistry.set(FeatureSetDefaults.$type, FeatureSetDefaults);
+
 function createBaseFeatureSetDefaults_FeatureSetEditionDefault(): FeatureSetDefaults_FeatureSetEditionDefault {
-  return { edition: 0, features: undefined };
+  return { $type: "google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault", edition: 0, features: undefined };
 }
 
-export const FeatureSetDefaults_FeatureSetEditionDefault: MessageFns<FeatureSetDefaults_FeatureSetEditionDefault> = {
+export const FeatureSetDefaults_FeatureSetEditionDefault: MessageFns<
+  FeatureSetDefaults_FeatureSetEditionDefault,
+  "google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault"
+> = {
+  $type: "google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault" as const,
+
   encode(
     message: FeatureSetDefaults_FeatureSetEditionDefault,
     writer: BinaryWriter = new BinaryWriter(),
@@ -6094,6 +6337,7 @@ export const FeatureSetDefaults_FeatureSetEditionDefault: MessageFns<FeatureSetD
 
   fromJSON(object: any): FeatureSetDefaults_FeatureSetEditionDefault {
     return {
+      $type: FeatureSetDefaults_FeatureSetEditionDefault.$type,
       edition: isSet(object.edition) ? editionFromJSON(object.edition) : 0,
       features: isSet(object.features) ? FeatureSet.fromJSON(object.features) : undefined,
     };
@@ -6127,11 +6371,15 @@ export const FeatureSetDefaults_FeatureSetEditionDefault: MessageFns<FeatureSetD
   },
 };
 
+messageTypeRegistry.set(FeatureSetDefaults_FeatureSetEditionDefault.$type, FeatureSetDefaults_FeatureSetEditionDefault);
+
 function createBaseSourceCodeInfo(): SourceCodeInfo {
-  return { location: [] };
+  return { $type: "google.protobuf.SourceCodeInfo", location: [] };
 }
 
-export const SourceCodeInfo: MessageFns<SourceCodeInfo> = {
+export const SourceCodeInfo: MessageFns<SourceCodeInfo, "google.protobuf.SourceCodeInfo"> = {
+  $type: "google.protobuf.SourceCodeInfo" as const,
+
   encode(message: SourceCodeInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.location) {
       SourceCodeInfo_Location.encode(v!, writer.uint32(10).fork()).join();
@@ -6165,6 +6413,7 @@ export const SourceCodeInfo: MessageFns<SourceCodeInfo> = {
 
   fromJSON(object: any): SourceCodeInfo {
     return {
+      $type: SourceCodeInfo.$type,
       location: globalThis.Array.isArray(object?.location)
         ? object.location.map((e: any) => SourceCodeInfo_Location.fromJSON(e))
         : [],
@@ -6189,11 +6438,22 @@ export const SourceCodeInfo: MessageFns<SourceCodeInfo> = {
   },
 };
 
+messageTypeRegistry.set(SourceCodeInfo.$type, SourceCodeInfo);
+
 function createBaseSourceCodeInfo_Location(): SourceCodeInfo_Location {
-  return { path: [], span: [], leadingComments: "", trailingComments: "", leadingDetachedComments: [] };
+  return {
+    $type: "google.protobuf.SourceCodeInfo.Location",
+    path: [],
+    span: [],
+    leadingComments: "",
+    trailingComments: "",
+    leadingDetachedComments: [],
+  };
 }
 
-export const SourceCodeInfo_Location: MessageFns<SourceCodeInfo_Location> = {
+export const SourceCodeInfo_Location: MessageFns<SourceCodeInfo_Location, "google.protobuf.SourceCodeInfo.Location"> = {
+  $type: "google.protobuf.SourceCodeInfo.Location" as const,
+
   encode(message: SourceCodeInfo_Location, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     writer.uint32(10).fork();
     for (const v of message.path) {
@@ -6295,6 +6555,7 @@ export const SourceCodeInfo_Location: MessageFns<SourceCodeInfo_Location> = {
 
   fromJSON(object: any): SourceCodeInfo_Location {
     return {
+      $type: SourceCodeInfo_Location.$type,
       path: globalThis.Array.isArray(object?.path) ? object.path.map((e: any) => globalThis.Number(e)) : [],
       span: globalThis.Array.isArray(object?.span) ? object.span.map((e: any) => globalThis.Number(e)) : [],
       leadingComments: isSet(object.leadingComments) ? globalThis.String(object.leadingComments) : "",
@@ -6339,11 +6600,15 @@ export const SourceCodeInfo_Location: MessageFns<SourceCodeInfo_Location> = {
   },
 };
 
+messageTypeRegistry.set(SourceCodeInfo_Location.$type, SourceCodeInfo_Location);
+
 function createBaseGeneratedCodeInfo(): GeneratedCodeInfo {
-  return { annotation: [] };
+  return { $type: "google.protobuf.GeneratedCodeInfo", annotation: [] };
 }
 
-export const GeneratedCodeInfo: MessageFns<GeneratedCodeInfo> = {
+export const GeneratedCodeInfo: MessageFns<GeneratedCodeInfo, "google.protobuf.GeneratedCodeInfo"> = {
+  $type: "google.protobuf.GeneratedCodeInfo" as const,
+
   encode(message: GeneratedCodeInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.annotation) {
       GeneratedCodeInfo_Annotation.encode(v!, writer.uint32(10).fork()).join();
@@ -6377,6 +6642,7 @@ export const GeneratedCodeInfo: MessageFns<GeneratedCodeInfo> = {
 
   fromJSON(object: any): GeneratedCodeInfo {
     return {
+      $type: GeneratedCodeInfo.$type,
       annotation: globalThis.Array.isArray(object?.annotation)
         ? object.annotation.map((e: any) => GeneratedCodeInfo_Annotation.fromJSON(e))
         : [],
@@ -6401,11 +6667,25 @@ export const GeneratedCodeInfo: MessageFns<GeneratedCodeInfo> = {
   },
 };
 
+messageTypeRegistry.set(GeneratedCodeInfo.$type, GeneratedCodeInfo);
+
 function createBaseGeneratedCodeInfo_Annotation(): GeneratedCodeInfo_Annotation {
-  return { path: [], sourceFile: "", begin: 0, end: 0, semantic: 0 };
+  return {
+    $type: "google.protobuf.GeneratedCodeInfo.Annotation",
+    path: [],
+    sourceFile: "",
+    begin: 0,
+    end: 0,
+    semantic: 0,
+  };
 }
 
-export const GeneratedCodeInfo_Annotation: MessageFns<GeneratedCodeInfo_Annotation> = {
+export const GeneratedCodeInfo_Annotation: MessageFns<
+  GeneratedCodeInfo_Annotation,
+  "google.protobuf.GeneratedCodeInfo.Annotation"
+> = {
+  $type: "google.protobuf.GeneratedCodeInfo.Annotation" as const,
+
   encode(message: GeneratedCodeInfo_Annotation, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     writer.uint32(10).fork();
     for (const v of message.path) {
@@ -6495,6 +6775,7 @@ export const GeneratedCodeInfo_Annotation: MessageFns<GeneratedCodeInfo_Annotati
 
   fromJSON(object: any): GeneratedCodeInfo_Annotation {
     return {
+      $type: GeneratedCodeInfo_Annotation.$type,
       path: globalThis.Array.isArray(object?.path) ? object.path.map((e: any) => globalThis.Number(e)) : [],
       sourceFile: isSet(object.sourceFile) ? globalThis.String(object.sourceFile) : "",
       begin: isSet(object.begin) ? globalThis.Number(object.begin) : 0,
@@ -6537,6 +6818,3891 @@ export const GeneratedCodeInfo_Annotation: MessageFns<GeneratedCodeInfo_Annotati
   },
 };
 
+messageTypeRegistry.set(GeneratedCodeInfo_Annotation.$type, GeneratedCodeInfo_Annotation);
+
+type ProtoMetaMessageOptions = {
+  options?: { [key: string]: any };
+  fields?: { [key: string]: { [key: string]: any } };
+  oneof?: { [key: string]: { [key: string]: any } };
+  nested?: { [key: string]: ProtoMetaMessageOptions };
+};
+
+export interface ProtoMetadata {
+  fileDescriptor: FileDescriptorProto1;
+  references: { [key: string]: any };
+  dependencies?: ProtoMetadata[];
+  options?: {
+    options?: { [key: string]: any };
+    services?: {
+      [key: string]: { options?: { [key: string]: any }; methods?: { [key: string]: { [key: string]: any } } };
+    };
+    messages?: { [key: string]: ProtoMetaMessageOptions };
+    enums?: { [key: string]: { options?: { [key: string]: any }; values?: { [key: string]: { [key: string]: any } } } };
+  };
+}
+
+export const protoMetadata = {
+  fileDescriptor: {
+    "name": "google/protobuf/descriptor.proto",
+    "package": "google.protobuf",
+    "dependency": [],
+    "publicDependency": [],
+    "weakDependency": [],
+    "messageType": [{
+      "name": "FileDescriptorSet",
+      "field": [{
+        "name": "file",
+        "number": 1,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.FileDescriptorProto",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "file",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "FileDescriptorProto",
+      "field": [{
+        "name": "name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "name",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "package",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "package",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "dependency",
+        "number": 3,
+        "label": 3,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "dependency",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "public_dependency",
+        "number": 10,
+        "label": 3,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "publicDependency",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "weak_dependency",
+        "number": 11,
+        "label": 3,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "weakDependency",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "message_type",
+        "number": 4,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.DescriptorProto",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "messageType",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "enum_type",
+        "number": 5,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.EnumDescriptorProto",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "enumType",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "service",
+        "number": 6,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.ServiceDescriptorProto",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "service",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "extension",
+        "number": 7,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.FieldDescriptorProto",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "extension",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "options",
+        "number": 8,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.FileOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "options",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "source_code_info",
+        "number": 9,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.SourceCodeInfo",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "sourceCodeInfo",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "syntax",
+        "number": 12,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "syntax",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "edition",
+        "number": 14,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.Edition",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "edition",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "DescriptorProto",
+      "field": [{
+        "name": "name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "name",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "field",
+        "number": 2,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.FieldDescriptorProto",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "field",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "extension",
+        "number": 6,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.FieldDescriptorProto",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "extension",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "nested_type",
+        "number": 3,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.DescriptorProto",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "nestedType",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "enum_type",
+        "number": 4,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.EnumDescriptorProto",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "enumType",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "extension_range",
+        "number": 5,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.DescriptorProto.ExtensionRange",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "extensionRange",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "oneof_decl",
+        "number": 8,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.OneofDescriptorProto",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "oneofDecl",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "options",
+        "number": 7,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.MessageOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "options",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "reserved_range",
+        "number": 9,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.DescriptorProto.ReservedRange",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "reservedRange",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "reserved_name",
+        "number": 10,
+        "label": 3,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "reservedName",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "ExtensionRange",
+        "field": [{
+          "name": "start",
+          "number": 1,
+          "label": 1,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "start",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "end",
+          "number": 2,
+          "label": 1,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "end",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "options",
+          "number": 3,
+          "label": 1,
+          "type": 11,
+          "typeName": ".google.protobuf.ExtensionRangeOptions",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "options",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "ReservedRange",
+        "field": [{
+          "name": "start",
+          "number": 1,
+          "label": 1,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "start",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "end",
+          "number": 2,
+          "label": 1,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "end",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ExtensionRangeOptions",
+      "field": [{
+        "name": "uninterpreted_option",
+        "number": 999,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.UninterpretedOption",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "uninterpretedOption",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "declaration",
+        "number": 2,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.ExtensionRangeOptions.Declaration",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "declaration",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": false,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "features",
+        "number": 50,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.FeatureSet",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "features",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "verification",
+        "number": 3,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.ExtensionRangeOptions.VerificationState",
+        "extendee": "",
+        "defaultValue": "UNVERIFIED",
+        "oneofIndex": 0,
+        "jsonName": "verification",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "Declaration",
+        "field": [{
+          "name": "number",
+          "number": 1,
+          "label": 1,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "number",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "full_name",
+          "number": 2,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "fullName",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "type",
+          "number": 3,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "type",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "reserved",
+          "number": 5,
+          "label": 1,
+          "type": 8,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "reserved",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "repeated",
+          "number": 6,
+          "label": 1,
+          "type": 8,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "repeated",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": undefined,
+        "reservedRange": [{ "start": 4, "end": 5 }],
+        "reservedName": [],
+      }],
+      "enumType": [{
+        "name": "VerificationState",
+        "value": [{ "name": "DECLARATION", "number": 0, "options": undefined }, {
+          "name": "UNVERIFIED",
+          "number": 1,
+          "options": undefined,
+        }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [{ "start": 1000, "end": 536870912, "options": undefined }],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "FieldDescriptorProto",
+      "field": [{
+        "name": "name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "name",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "number",
+        "number": 3,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "number",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "label",
+        "number": 4,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.FieldDescriptorProto.Label",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "label",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "type",
+        "number": 5,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.FieldDescriptorProto.Type",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "type",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "type_name",
+        "number": 6,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "typeName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "extendee",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "extendee",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "default_value",
+        "number": 7,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "defaultValue",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "oneof_index",
+        "number": 9,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "oneofIndex",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "json_name",
+        "number": 10,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "jsonName",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "options",
+        "number": 8,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.FieldOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "options",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "proto3_optional",
+        "number": 17,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "proto3Optional",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [{
+        "name": "Type",
+        "value": [
+          { "name": "TYPE_DOUBLE", "number": 1, "options": undefined },
+          { "name": "TYPE_FLOAT", "number": 2, "options": undefined },
+          { "name": "TYPE_INT64", "number": 3, "options": undefined },
+          { "name": "TYPE_UINT64", "number": 4, "options": undefined },
+          { "name": "TYPE_INT32", "number": 5, "options": undefined },
+          { "name": "TYPE_FIXED64", "number": 6, "options": undefined },
+          { "name": "TYPE_FIXED32", "number": 7, "options": undefined },
+          { "name": "TYPE_BOOL", "number": 8, "options": undefined },
+          { "name": "TYPE_STRING", "number": 9, "options": undefined },
+          { "name": "TYPE_GROUP", "number": 10, "options": undefined },
+          { "name": "TYPE_MESSAGE", "number": 11, "options": undefined },
+          { "name": "TYPE_BYTES", "number": 12, "options": undefined },
+          { "name": "TYPE_UINT32", "number": 13, "options": undefined },
+          { "name": "TYPE_ENUM", "number": 14, "options": undefined },
+          { "name": "TYPE_SFIXED32", "number": 15, "options": undefined },
+          { "name": "TYPE_SFIXED64", "number": 16, "options": undefined },
+          { "name": "TYPE_SINT32", "number": 17, "options": undefined },
+          { "name": "TYPE_SINT64", "number": 18, "options": undefined },
+        ],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "Label",
+        "value": [{ "name": "LABEL_OPTIONAL", "number": 1, "options": undefined }, {
+          "name": "LABEL_REPEATED",
+          "number": 3,
+          "options": undefined,
+        }, { "name": "LABEL_REQUIRED", "number": 2, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "OneofDescriptorProto",
+      "field": [{
+        "name": "name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "name",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "options",
+        "number": 2,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.OneofOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "options",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "EnumDescriptorProto",
+      "field": [{
+        "name": "name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "name",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "value",
+        "number": 2,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.EnumValueDescriptorProto",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "value",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "options",
+        "number": 3,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.EnumOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "options",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "reserved_range",
+        "number": 4,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.EnumDescriptorProto.EnumReservedRange",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "reservedRange",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "reserved_name",
+        "number": 5,
+        "label": 3,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "reservedName",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "EnumReservedRange",
+        "field": [{
+          "name": "start",
+          "number": 1,
+          "label": 1,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "start",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "end",
+          "number": 2,
+          "label": 1,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "end",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "EnumValueDescriptorProto",
+      "field": [{
+        "name": "name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "name",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "number",
+        "number": 2,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "number",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "options",
+        "number": 3,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.EnumValueOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "options",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ServiceDescriptorProto",
+      "field": [{
+        "name": "name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "name",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "method",
+        "number": 2,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.MethodDescriptorProto",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "method",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "options",
+        "number": 3,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.ServiceOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "options",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "MethodDescriptorProto",
+      "field": [{
+        "name": "name",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "name",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "input_type",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "inputType",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "output_type",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "outputType",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "options",
+        "number": 4,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.MethodOptions",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "options",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "client_streaming",
+        "number": 5,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "clientStreaming",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "server_streaming",
+        "number": 6,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "serverStreaming",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "FileOptions",
+      "field": [{
+        "name": "java_package",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "javaPackage",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "java_outer_classname",
+        "number": 8,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "javaOuterClassname",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "java_multiple_files",
+        "number": 10,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "javaMultipleFiles",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "java_generate_equals_and_hash",
+        "number": 20,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "javaGenerateEqualsAndHash",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "java_string_check_utf8",
+        "number": 27,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "javaStringCheckUtf8",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "optimize_for",
+        "number": 9,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.FileOptions.OptimizeMode",
+        "extendee": "",
+        "defaultValue": "SPEED",
+        "oneofIndex": 0,
+        "jsonName": "optimizeFor",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "go_package",
+        "number": 11,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "goPackage",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "cc_generic_services",
+        "number": 16,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "ccGenericServices",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "java_generic_services",
+        "number": 17,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "javaGenericServices",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "py_generic_services",
+        "number": 18,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "pyGenericServices",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "php_generic_services",
+        "number": 42,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "phpGenericServices",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "deprecated",
+        "number": 23,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "deprecated",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "cc_enable_arenas",
+        "number": 31,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "true",
+        "oneofIndex": 0,
+        "jsonName": "ccEnableArenas",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "objc_class_prefix",
+        "number": 36,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "objcClassPrefix",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "csharp_namespace",
+        "number": 37,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "csharpNamespace",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "swift_prefix",
+        "number": 39,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "swiftPrefix",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "php_class_prefix",
+        "number": 40,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "phpClassPrefix",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "php_namespace",
+        "number": 41,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "phpNamespace",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "php_metadata_namespace",
+        "number": 44,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "phpMetadataNamespace",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ruby_package",
+        "number": 45,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rubyPackage",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "features",
+        "number": 50,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.FeatureSet",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "features",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "uninterpreted_option",
+        "number": 999,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.UninterpretedOption",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "uninterpretedOption",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [{
+        "name": "OptimizeMode",
+        "value": [{ "name": "SPEED", "number": 1, "options": undefined }, {
+          "name": "CODE_SIZE",
+          "number": 2,
+          "options": undefined,
+        }, { "name": "LITE_RUNTIME", "number": 3, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [{ "start": 1000, "end": 536870912, "options": undefined }],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [{ "start": 38, "end": 39 }],
+      "reservedName": [],
+    }, {
+      "name": "MessageOptions",
+      "field": [{
+        "name": "message_set_wire_format",
+        "number": 1,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "messageSetWireFormat",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "no_standard_descriptor_accessor",
+        "number": 2,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "noStandardDescriptorAccessor",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "deprecated",
+        "number": 3,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "deprecated",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "map_entry",
+        "number": 7,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "mapEntry",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "deprecated_legacy_json_field_conflicts",
+        "number": 11,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "deprecatedLegacyJsonFieldConflicts",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "features",
+        "number": 12,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.FeatureSet",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "features",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "uninterpreted_option",
+        "number": 999,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.UninterpretedOption",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "uninterpretedOption",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [{ "start": 1000, "end": 536870912, "options": undefined }],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [{ "start": 4, "end": 5 }, { "start": 5, "end": 6 }, { "start": 6, "end": 7 }, {
+        "start": 8,
+        "end": 9,
+      }, { "start": 9, "end": 10 }],
+      "reservedName": [],
+    }, {
+      "name": "FieldOptions",
+      "field": [{
+        "name": "ctype",
+        "number": 1,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.FieldOptions.CType",
+        "extendee": "",
+        "defaultValue": "STRING",
+        "oneofIndex": 0,
+        "jsonName": "ctype",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packed",
+        "number": 2,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packed",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "jstype",
+        "number": 6,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.FieldOptions.JSType",
+        "extendee": "",
+        "defaultValue": "JS_NORMAL",
+        "oneofIndex": 0,
+        "jsonName": "jstype",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "lazy",
+        "number": 5,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "lazy",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "unverified_lazy",
+        "number": 15,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "unverifiedLazy",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "deprecated",
+        "number": 3,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "deprecated",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "weak",
+        "number": 10,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "weak",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "debug_redact",
+        "number": 16,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "debugRedact",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "retention",
+        "number": 17,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.FieldOptions.OptionRetention",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "retention",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "targets",
+        "number": 19,
+        "label": 3,
+        "type": 14,
+        "typeName": ".google.protobuf.FieldOptions.OptionTargetType",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "targets",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "edition_defaults",
+        "number": 20,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.FieldOptions.EditionDefault",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "editionDefaults",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "features",
+        "number": 21,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.FeatureSet",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "features",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "uninterpreted_option",
+        "number": 999,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.UninterpretedOption",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "uninterpretedOption",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "EditionDefault",
+        "field": [{
+          "name": "edition",
+          "number": 3,
+          "label": 1,
+          "type": 14,
+          "typeName": ".google.protobuf.Edition",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "edition",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "value",
+          "number": 2,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "value",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [{
+        "name": "CType",
+        "value": [{ "name": "STRING", "number": 0, "options": undefined }, {
+          "name": "CORD",
+          "number": 1,
+          "options": undefined,
+        }, { "name": "STRING_PIECE", "number": 2, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "JSType",
+        "value": [{ "name": "JS_NORMAL", "number": 0, "options": undefined }, {
+          "name": "JS_STRING",
+          "number": 1,
+          "options": undefined,
+        }, { "name": "JS_NUMBER", "number": 2, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "OptionRetention",
+        "value": [{ "name": "RETENTION_UNKNOWN", "number": 0, "options": undefined }, {
+          "name": "RETENTION_RUNTIME",
+          "number": 1,
+          "options": undefined,
+        }, { "name": "RETENTION_SOURCE", "number": 2, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "OptionTargetType",
+        "value": [
+          { "name": "TARGET_TYPE_UNKNOWN", "number": 0, "options": undefined },
+          { "name": "TARGET_TYPE_FILE", "number": 1, "options": undefined },
+          { "name": "TARGET_TYPE_EXTENSION_RANGE", "number": 2, "options": undefined },
+          { "name": "TARGET_TYPE_MESSAGE", "number": 3, "options": undefined },
+          { "name": "TARGET_TYPE_FIELD", "number": 4, "options": undefined },
+          { "name": "TARGET_TYPE_ONEOF", "number": 5, "options": undefined },
+          { "name": "TARGET_TYPE_ENUM", "number": 6, "options": undefined },
+          { "name": "TARGET_TYPE_ENUM_ENTRY", "number": 7, "options": undefined },
+          { "name": "TARGET_TYPE_SERVICE", "number": 8, "options": undefined },
+          { "name": "TARGET_TYPE_METHOD", "number": 9, "options": undefined },
+        ],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [{ "start": 1000, "end": 536870912, "options": undefined }],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [{ "start": 4, "end": 5 }, { "start": 18, "end": 19 }],
+      "reservedName": [],
+    }, {
+      "name": "OneofOptions",
+      "field": [{
+        "name": "features",
+        "number": 1,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.FeatureSet",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "features",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "uninterpreted_option",
+        "number": 999,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.UninterpretedOption",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "uninterpretedOption",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [{ "start": 1000, "end": 536870912, "options": undefined }],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "EnumOptions",
+      "field": [{
+        "name": "allow_alias",
+        "number": 2,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "allowAlias",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "deprecated",
+        "number": 3,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "deprecated",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "deprecated_legacy_json_field_conflicts",
+        "number": 6,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "deprecatedLegacyJsonFieldConflicts",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "features",
+        "number": 7,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.FeatureSet",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "features",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "uninterpreted_option",
+        "number": 999,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.UninterpretedOption",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "uninterpretedOption",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [{ "start": 1000, "end": 536870912, "options": undefined }],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [{ "start": 5, "end": 6 }],
+      "reservedName": [],
+    }, {
+      "name": "EnumValueOptions",
+      "field": [{
+        "name": "deprecated",
+        "number": 1,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "deprecated",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "features",
+        "number": 2,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.FeatureSet",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "features",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "debug_redact",
+        "number": 3,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "debugRedact",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "uninterpreted_option",
+        "number": 999,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.UninterpretedOption",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "uninterpretedOption",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [{ "start": 1000, "end": 536870912, "options": undefined }],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ServiceOptions",
+      "field": [{
+        "name": "features",
+        "number": 34,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.FeatureSet",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "features",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "deprecated",
+        "number": 33,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "deprecated",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "uninterpreted_option",
+        "number": 999,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.UninterpretedOption",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "uninterpretedOption",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [{ "start": 1000, "end": 536870912, "options": undefined }],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "MethodOptions",
+      "field": [{
+        "name": "deprecated",
+        "number": 33,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "false",
+        "oneofIndex": 0,
+        "jsonName": "deprecated",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "idempotency_level",
+        "number": 34,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.MethodOptions.IdempotencyLevel",
+        "extendee": "",
+        "defaultValue": "IDEMPOTENCY_UNKNOWN",
+        "oneofIndex": 0,
+        "jsonName": "idempotencyLevel",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "features",
+        "number": 35,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.FeatureSet",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "features",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "uninterpreted_option",
+        "number": 999,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.UninterpretedOption",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "uninterpretedOption",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [{
+        "name": "IdempotencyLevel",
+        "value": [{ "name": "IDEMPOTENCY_UNKNOWN", "number": 0, "options": undefined }, {
+          "name": "NO_SIDE_EFFECTS",
+          "number": 1,
+          "options": undefined,
+        }, { "name": "IDEMPOTENT", "number": 2, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [{ "start": 1000, "end": 536870912, "options": undefined }],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "UninterpretedOption",
+      "field": [{
+        "name": "name",
+        "number": 2,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.UninterpretedOption.NamePart",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "name",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "identifier_value",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "identifierValue",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "positive_int_value",
+        "number": 4,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "positiveIntValue",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "negative_int_value",
+        "number": 5,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "negativeIntValue",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "double_value",
+        "number": 6,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "doubleValue",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "string_value",
+        "number": 7,
+        "label": 1,
+        "type": 12,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "stringValue",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "aggregate_value",
+        "number": 8,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "aggregateValue",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "NamePart",
+        "field": [{
+          "name": "name_part",
+          "number": 1,
+          "label": 2,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "namePart",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "is_extension",
+          "number": 2,
+          "label": 2,
+          "type": 8,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "isExtension",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "FeatureSet",
+      "field": [{
+        "name": "field_presence",
+        "number": 1,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.FeatureSet.FieldPresence",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "fieldPresence",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": false,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "enum_type",
+        "number": 2,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.FeatureSet.EnumType",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "enumType",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": false,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "repeated_field_encoding",
+        "number": 3,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.FeatureSet.RepeatedFieldEncoding",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "repeatedFieldEncoding",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": false,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "utf8_validation",
+        "number": 4,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.FeatureSet.Utf8Validation",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "utf8Validation",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": false,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "message_encoding",
+        "number": 5,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.FeatureSet.MessageEncoding",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "messageEncoding",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": false,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "json_format",
+        "number": 6,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.FeatureSet.JsonFormat",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "jsonFormat",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": false,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [{
+        "name": "FieldPresence",
+        "value": [
+          { "name": "FIELD_PRESENCE_UNKNOWN", "number": 0, "options": undefined },
+          { "name": "EXPLICIT", "number": 1, "options": undefined },
+          { "name": "IMPLICIT", "number": 2, "options": undefined },
+          { "name": "LEGACY_REQUIRED", "number": 3, "options": undefined },
+        ],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "EnumType",
+        "value": [{ "name": "ENUM_TYPE_UNKNOWN", "number": 0, "options": undefined }, {
+          "name": "OPEN",
+          "number": 1,
+          "options": undefined,
+        }, { "name": "CLOSED", "number": 2, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "RepeatedFieldEncoding",
+        "value": [{ "name": "REPEATED_FIELD_ENCODING_UNKNOWN", "number": 0, "options": undefined }, {
+          "name": "PACKED",
+          "number": 1,
+          "options": undefined,
+        }, { "name": "EXPANDED", "number": 2, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "Utf8Validation",
+        "value": [{ "name": "UTF8_VALIDATION_UNKNOWN", "number": 0, "options": undefined }, {
+          "name": "NONE",
+          "number": 1,
+          "options": undefined,
+        }, { "name": "VERIFY", "number": 2, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "MessageEncoding",
+        "value": [{ "name": "MESSAGE_ENCODING_UNKNOWN", "number": 0, "options": undefined }, {
+          "name": "LENGTH_PREFIXED",
+          "number": 1,
+          "options": undefined,
+        }, { "name": "DELIMITED", "number": 2, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "JsonFormat",
+        "value": [{ "name": "JSON_FORMAT_UNKNOWN", "number": 0, "options": undefined }, {
+          "name": "ALLOW",
+          "number": 1,
+          "options": undefined,
+        }, { "name": "LEGACY_BEST_EFFORT", "number": 2, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [{ "start": 1000, "end": 1001, "options": undefined }, {
+        "start": 1001,
+        "end": 1002,
+        "options": undefined,
+      }, { "start": 9995, "end": 10000, "options": undefined }],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [{ "start": 999, "end": 1000 }],
+      "reservedName": [],
+    }, {
+      "name": "FeatureSetDefaults",
+      "field": [{
+        "name": "defaults",
+        "number": 1,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "defaults",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "minimum_edition",
+        "number": 4,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.Edition",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "minimumEdition",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "maximum_edition",
+        "number": 5,
+        "label": 1,
+        "type": 14,
+        "typeName": ".google.protobuf.Edition",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "maximumEdition",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "FeatureSetEditionDefault",
+        "field": [{
+          "name": "edition",
+          "number": 3,
+          "label": 1,
+          "type": 14,
+          "typeName": ".google.protobuf.Edition",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "edition",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "features",
+          "number": 2,
+          "label": 1,
+          "type": 11,
+          "typeName": ".google.protobuf.FeatureSet",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "features",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "SourceCodeInfo",
+      "field": [{
+        "name": "location",
+        "number": 1,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.SourceCodeInfo.Location",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "location",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "Location",
+        "field": [{
+          "name": "path",
+          "number": 1,
+          "label": 3,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "path",
+          "options": {
+            "ctype": 0,
+            "packed": true,
+            "jstype": 0,
+            "lazy": false,
+            "deprecated": false,
+            "weak": false,
+            "uninterpretedOption": [],
+          },
+          "proto3Optional": false,
+        }, {
+          "name": "span",
+          "number": 2,
+          "label": 3,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "span",
+          "options": {
+            "ctype": 0,
+            "packed": true,
+            "jstype": 0,
+            "lazy": false,
+            "deprecated": false,
+            "weak": false,
+            "uninterpretedOption": [],
+          },
+          "proto3Optional": false,
+        }, {
+          "name": "leading_comments",
+          "number": 3,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "leadingComments",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "trailing_comments",
+          "number": 4,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "trailingComments",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "leading_detached_comments",
+          "number": 6,
+          "label": 3,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "leadingDetachedComments",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "GeneratedCodeInfo",
+      "field": [{
+        "name": "annotation",
+        "number": 1,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.GeneratedCodeInfo.Annotation",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "annotation",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "Annotation",
+        "field": [{
+          "name": "path",
+          "number": 1,
+          "label": 3,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "path",
+          "options": {
+            "ctype": 0,
+            "packed": true,
+            "jstype": 0,
+            "lazy": false,
+            "deprecated": false,
+            "weak": false,
+            "uninterpretedOption": [],
+          },
+          "proto3Optional": false,
+        }, {
+          "name": "source_file",
+          "number": 2,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "sourceFile",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "begin",
+          "number": 3,
+          "label": 1,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "begin",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "end",
+          "number": 4,
+          "label": 1,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "end",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "semantic",
+          "number": 5,
+          "label": 1,
+          "type": 14,
+          "typeName": ".google.protobuf.GeneratedCodeInfo.Annotation.Semantic",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "semantic",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [{
+          "name": "Semantic",
+          "value": [{ "name": "NONE", "number": 0, "options": undefined }, {
+            "name": "SET",
+            "number": 1,
+            "options": undefined,
+          }, { "name": "ALIAS", "number": 2, "options": undefined }],
+          "options": undefined,
+          "reservedRange": [],
+          "reservedName": [],
+        }],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }],
+    "enumType": [{
+      "name": "Edition",
+      "value": [
+        { "name": "EDITION_UNKNOWN", "number": 0, "options": undefined },
+        { "name": "EDITION_PROTO2", "number": 998, "options": undefined },
+        { "name": "EDITION_PROTO3", "number": 999, "options": undefined },
+        { "name": "EDITION_2023", "number": 1000, "options": undefined },
+        { "name": "EDITION_1_TEST_ONLY", "number": 1, "options": undefined },
+        { "name": "EDITION_2_TEST_ONLY", "number": 2, "options": undefined },
+        { "name": "EDITION_99997_TEST_ONLY", "number": 99997, "options": undefined },
+        { "name": "EDITION_99998_TEST_ONLY", "number": 99998, "options": undefined },
+        { "name": "EDITION_99999_TEST_ONLY", "number": 99999, "options": undefined },
+      ],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }],
+    "service": [],
+    "extension": [],
+    "options": {
+      "javaPackage": "com.google.protobuf",
+      "javaOuterClassname": "DescriptorProtos",
+      "javaMultipleFiles": false,
+      "javaGenerateEqualsAndHash": false,
+      "javaStringCheckUtf8": false,
+      "optimizeFor": 1,
+      "goPackage": "google.golang.org/protobuf/types/descriptorpb",
+      "ccGenericServices": false,
+      "javaGenericServices": false,
+      "pyGenericServices": false,
+      "phpGenericServices": false,
+      "deprecated": false,
+      "ccEnableArenas": true,
+      "objcClassPrefix": "GPB",
+      "csharpNamespace": "Google.Protobuf.Reflection",
+      "swiftPrefix": "",
+      "phpClassPrefix": "",
+      "phpNamespace": "",
+      "phpMetadataNamespace": "",
+      "rubyPackage": "",
+      "uninterpretedOption": [],
+    },
+    "sourceCodeInfo": {
+      "location": [{
+        "path": [8, 9],
+        "span": [51, 0, 28],
+        "leadingComments":
+          " descriptor.proto must be optimized for speed because reflection-based\n algorithms don't work during bootstrapping.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 0],
+        "span": [55, 0, 57, 1],
+        "leadingComments":
+          " The protocol compiler can output a FileDescriptorSet containing the .proto\n files it parses.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 0],
+        "span": [60, 0, 83, 1],
+        "leadingComments": " The full set of known editions.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 0, 2, 0],
+        "span": [62, 2, 22],
+        "leadingComments": " A placeholder for an unknown edition value.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 0, 2, 1],
+        "span": [68, 2, 23],
+        "leadingComments":
+          ' Legacy syntax "editions".  These pre-date editions, but behave much like\n distinct editions.  These can\'t be used to specify the edition of proto\n files, but feature definitions must supply proto2/proto3 defaults for\n backwards compatibility.\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 0, 2, 3],
+        "span": [74, 2, 22],
+        "leadingComments":
+          " Editions that have been released.  The specific values are arbitrary and\n should not be depended on, but they will always be time-ordered for easy\n comparison.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 0, 2, 4],
+        "span": [78, 2, 26],
+        "leadingComments":
+          " Placeholder editions for testing feature resolution.  These should not be\n used or relyed on outside of tests.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1],
+        "span": [86, 0, 120, 1],
+        "leadingComments": " Describes a complete .proto file.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 0],
+        "span": [87, 2, 27],
+        "leadingComments": "",
+        "trailingComments": " file name, relative to root of source tree\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 1],
+        "span": [88, 2, 30],
+        "leadingComments": "",
+        "trailingComments": ' e.g. "foo", "foo.bar", etc.\n',
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 2],
+        "span": [91, 2, 33],
+        "leadingComments": " Names of files imported by this file.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 3],
+        "span": [93, 2, 40],
+        "leadingComments": " Indexes of the public imported files in the dependency list above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 4],
+        "span": [96, 2, 38],
+        "leadingComments":
+          " Indexes of the weak imported files in the dependency list.\n For Google-internal migration only. Do not use.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 5],
+        "span": [99, 2, 44],
+        "leadingComments": " All top-level definitions in this file.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 10],
+        "span": [110, 2, 47],
+        "leadingComments":
+          " This field contains optional information about the original source code.\n You may safely remove this entire field without harming runtime\n functionality of the descriptors -- the information is needed only by\n development tools.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 11],
+        "span": [116, 2, 30],
+        "leadingComments":
+          ' The syntax of the proto file.\n The supported values are "proto2", "proto3", and "editions".\n\n If `edition` is present, this value must be "editions".\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 1, 2, 12],
+        "span": [119, 2, 32],
+        "leadingComments": " The edition of the proto file.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2],
+        "span": [123, 0, 155, 1],
+        "leadingComments": " Describes a message type.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2, 3, 0, 2, 0],
+        "span": [133, 4, 29],
+        "leadingComments": "",
+        "trailingComments": " Inclusive.\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2, 3, 0, 2, 1],
+        "span": [134, 4, 27],
+        "leadingComments": "",
+        "trailingComments": " Exclusive.\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2, 3, 1],
+        "span": [147, 2, 150, 3],
+        "leadingComments":
+          " Range of reserved tag numbers. Reserved tag numbers may not be used by\n fields or extension ranges in the same message. Reserved ranges may\n not overlap.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2, 3, 1, 2, 0],
+        "span": [148, 4, 29],
+        "leadingComments": "",
+        "trailingComments": " Inclusive.\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2, 3, 1, 2, 1],
+        "span": [149, 4, 27],
+        "leadingComments": "",
+        "trailingComments": " Exclusive.\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 2, 2, 9],
+        "span": [154, 2, 37],
+        "leadingComments":
+          " Reserved field names, which may not be used by fields in the same message.\n A given name may only be reserved once.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 2, 0],
+        "span": [159, 2, 58],
+        "leadingComments": " The parser stores options it doesn't recognize here. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 3, 0, 2, 0],
+        "span": [163, 4, 30],
+        "leadingComments": " The extension number declared within the extension range.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 3, 0, 2, 1],
+        "span": [167, 4, 34],
+        "leadingComments":
+          " The fully-qualified name of the extension field. There must be a leading\n dot in front of the full name.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 3, 0, 2, 2],
+        "span": [172, 4, 29],
+        "leadingComments":
+          " The fully-qualified type name of the extension field. Unlike\n Metadata.type, Declaration.type must have a leading dot for messages\n and enums.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 3, 0, 2, 3],
+        "span": [177, 4, 31],
+        "leadingComments":
+          " If true, indicates that the number is reserved in the extension range,\n and any extension field with the number will fail to compile. Set this\n when a declared extension field is deleted.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 3, 0, 2, 4],
+        "span": [181, 4, 31],
+        "leadingComments":
+          " If true, indicates that the extension must be defined as repeated.\n Otherwise the extension must be defined as optional.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 3, 0, 9],
+        "span": [183, 4, 15],
+        "leadingComments": "",
+        "trailingComments": " removed is_repeated\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 2, 1],
+        "span": [189, 2, 70],
+        "leadingComments":
+          " For external users: DO NOT USE. We are in the process of open sourcing\n extension declaration and executing internal cleanups before it can be\n used externally.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 2, 2],
+        "span": [192, 2, 36],
+        "leadingComments": " Any features defined in the specific edition.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 4, 0],
+        "span": [195, 2, 199, 3],
+        "leadingComments": " The verification state of the extension range.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 4, 0, 2, 0],
+        "span": [197, 4, 20],
+        "leadingComments": " All the extensions of the range must be declared.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 2, 3],
+        "span": [204, 2, 69],
+        "leadingComments":
+          " The verification state of the range.\n TODO: flip the default to DECLARATION once all empty ranges\n are marked as UNVERIFIED.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 3, 5],
+        "span": [207, 2, 25],
+        "leadingComments": " Clients can define custom options in extensions of this message. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4],
+        "span": [211, 0, 315, 1],
+        "leadingComments": " Describes a field within a message.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 4, 0, 2, 0],
+        "span": [215, 4, 20],
+        "leadingComments": " 0 is reserved for errors.\n Order is weird for historical reasons.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 4, 0, 2, 2],
+        "span": [219, 4, 19],
+        "leadingComments":
+          " Not ZigZag encoded.  Negative numbers take 10 bytes.  Use TYPE_SINT64 if\n negative values are likely.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 4, 0, 2, 4],
+        "span": [223, 4, 19],
+        "leadingComments":
+          " Not ZigZag encoded.  Negative numbers take 10 bytes.  Use TYPE_SINT32 if\n negative values are likely.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 4, 0, 2, 9],
+        "span": [233, 4, 20],
+        "leadingComments":
+          " Tag-delimited aggregate.\n Group type is deprecated and not supported after google.protobuf. However, Proto3\n implementations should still be able to parse the group wire format and\n treat group fields as unknown fields.  In Editions, the group wire format\n can be enabled via the `message_encoding` feature.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 4, 0, 2, 10],
+        "span": [234, 4, 22],
+        "leadingComments": "",
+        "trailingComments": " Length-delimited aggregate.\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 4, 0, 2, 11],
+        "span": [237, 4, 20],
+        "leadingComments": " New in version 2.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 4, 0, 2, 16],
+        "span": [242, 4, 21],
+        "leadingComments": "",
+        "trailingComments": " Uses ZigZag encoding.\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 4, 0, 2, 17],
+        "span": [243, 4, 21],
+        "leadingComments": "",
+        "trailingComments": " Uses ZigZag encoding.\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 4, 1, 2, 0],
+        "span": [248, 4, 23],
+        "leadingComments": " 0 is reserved for errors\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 4, 1, 2, 2],
+        "span": [253, 4, 23],
+        "leadingComments":
+          " The required label is only allowed in google.protobuf.  In proto3 and Editions\n it's explicitly prohibited.  In Editions, the `field_presence` feature\n can be used to get this behavior.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 3],
+        "span": [262, 2, 25],
+        "leadingComments":
+          " If type_name is set, this need not be set.  If both this and type_name\n are set, this must be one of TYPE_ENUM, TYPE_MESSAGE or TYPE_GROUP.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 4],
+        "span": [269, 2, 32],
+        "leadingComments":
+          " For message and enum types, this is the name of the type.  If the name\n starts with a '.', it is fully-qualified.  Otherwise, C++-like scoping\n rules are used to find the type (i.e. first the nested types within this\n message are searched, then within the parent, on up to the root\n namespace).\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 5],
+        "span": [273, 2, 31],
+        "leadingComments":
+          " For extensions, this is the name of the type being extended.  It is\n resolved in the same manner as type_name.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 6],
+        "span": [279, 2, 36],
+        "leadingComments":
+          ' For numeric types, contains the original text representation of the value.\n For booleans, "true" or "false".\n For strings, contains the default text contents (not escaped in any way).\n For bytes, contains the C escaped value.  All bytes >= 128 are escaped.\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 7],
+        "span": [283, 2, 33],
+        "leadingComments":
+          " If set, gives the index of a oneof in the containing type's oneof_decl\n list.  This field is a member of that oneof.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 8],
+        "span": [289, 2, 33],
+        "leadingComments":
+          " JSON name of this field. The value is set by protocol compiler. If the\n user has set a \"json_name\" option on this field, that option's value\n will be used. Otherwise, it's deduced from the field's name by converting\n it to camelCase.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 10],
+        "span": [314, 2, 37],
+        "leadingComments":
+          ' If true, this is a proto3 "optional". When a proto3 field is optional, it\n tracks presence regardless of field type.\n\n When proto3_optional is true, this field must be belong to a oneof to\n signal to old proto3 clients that presence is tracked for this field. This\n oneof is known as a "synthetic" oneof, and this field must be its sole\n member (each proto3 optional field gets its own synthetic oneof). Synthetic\n oneofs exist in the descriptor only, and do not generate any API. Synthetic\n oneofs must be ordered after all "real" oneofs.\n\n For message fields, proto3_optional doesn\'t create any semantic change,\n since non-repeated message fields always track presence. However it still\n indicates the semantic detail of whether the user wrote "optional" or not.\n This can be useful for round-tripping the .proto file. For consistency we\n give message fields a synthetic oneof also, even though it is not required\n to track presence. This is especially important because the parser can\'t\n tell if a field is a message or an enum, so it must always create a\n synthetic oneof.\n\n Proto2 optional fields do not set this flag, because they already indicate\n optional with `LABEL_OPTIONAL`.\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5],
+        "span": [318, 0, 321, 1],
+        "leadingComments": " Describes a oneof.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6],
+        "span": [324, 0, 350, 1],
+        "leadingComments": " Describes an enum type.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 3, 0],
+        "span": [337, 2, 340, 3],
+        "leadingComments":
+          " Range of reserved numeric values. Reserved values may not be used by\n entries in the same enum. Reserved ranges may not overlap.\n\n Note that this is distinct from DescriptorProto.ReservedRange in that it\n is inclusive such that it can appropriately represent the entire int32\n domain.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 3, 0, 2, 0],
+        "span": [338, 4, 29],
+        "leadingComments": "",
+        "trailingComments": " Inclusive.\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 3, 0, 2, 1],
+        "span": [339, 4, 27],
+        "leadingComments": "",
+        "trailingComments": " Inclusive.\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 2, 3],
+        "span": [345, 2, 48],
+        "leadingComments":
+          " Range of reserved numeric values. Reserved numeric values may not be used\n by enum values in the same enum declaration. Reserved ranges may not\n overlap.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 6, 2, 4],
+        "span": [349, 2, 36],
+        "leadingComments":
+          " Reserved enum value names, which may not be reused. A given name may only\n be reserved once.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 7],
+        "span": [353, 0, 358, 1],
+        "leadingComments": " Describes a value within an enum.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8],
+        "span": [361, 0, 366, 1],
+        "leadingComments": " Describes a service.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 9],
+        "span": [369, 0, 383, 1],
+        "leadingComments": " Describes a method of a service.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 9, 2, 1],
+        "span": [374, 2, 33],
+        "leadingComments":
+          " Input and output type names.  These are resolved in the same way as\n FieldDescriptorProto.type_name, but must refer to a message type.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 9, 2, 4],
+        "span": [380, 2, 55],
+        "leadingComments": " Identifies if client streams multiple client messages\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 9, 2, 5],
+        "span": [382, 2, 55],
+        "leadingComments": " Identifies if server streams multiple server messages\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 0],
+        "span": [423, 2, 35],
+        "leadingComments":
+          " Sets the Java package where classes generated from this .proto will be\n placed.  By default, the proto package is used, but this is often\n inappropriate because proto packages do not normally start with backwards\n domain names.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 1],
+        "span": [430, 2, 43],
+        "leadingComments":
+          " Controls the name of the wrapper Java class generated for the .proto file.\n That class will always contain the .proto file's getDescriptor() method as\n well as any top-level extensions defined in the .proto file.\n If java_multiple_files is disabled, then all the other classes from the\n .proto file will be nested inside the single wrapper outer class.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 2],
+        "span": [438, 2, 59],
+        "leadingComments":
+          " If enabled, then the Java code generator will generate a separate .java\n file for each top-level message, enum, and service defined in the .proto\n file.  Thus, these types will *not* be nested inside the wrapper class\n named by java_outer_classname.  However, the wrapper class will still be\n generated to contain the file's getDescriptor() method as well as any\n top-level extensions defined in the file.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 3],
+        "span": [441, 2, 69],
+        "leadingComments": " This option does nothing.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 4],
+        "span": [449, 2, 62],
+        "leadingComments":
+          " If set true, then the Java2 code generator will generate code that\n throws an exception whenever an attempt is made to assign a non-UTF-8\n byte sequence to a string field.\n Message reflection will do the same.\n However, an extension field still accepts non-UTF-8 byte sequences.\n This option has no effect on when used with the lite runtime.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 4, 0],
+        "span": [452, 2, 457, 3],
+        "leadingComments": " Generated classes can be optimized for speed or code size.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 4, 0, 2, 0],
+        "span": [453, 4, 14],
+        "leadingComments": "",
+        "trailingComments": " Generate complete code for parsing, serialization,\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 4, 0, 2, 1],
+        "span": [455, 4, 18],
+        "leadingComments": " etc.\n",
+        "trailingComments": " Use ReflectionOps to implement these methods.\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 4, 0, 2, 2],
+        "span": [456, 4, 21],
+        "leadingComments": "",
+        "trailingComments": " Generate code using MessageLite and the lite runtime.\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 6],
+        "span": [465, 2, 34],
+        "leadingComments":
+          " Sets the Go package where structs generated from this .proto will be\n placed. If omitted, the Go package will be derived from the following:\n   - The basename of the package import path, if provided.\n   - Otherwise, the package statement in the .proto file, if present.\n   - Otherwise, the basename of the .proto file, without extension.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 7],
+        "span": [477, 2, 59],
+        "leadingComments":
+          ' Should generic services be generated in each language?  "Generic" services\n are not specific to any particular RPC system.  They are generated by the\n main code generators in each language (without additional plugins).\n Generic services were the only kind of service generation supported by\n early versions of google.protobuf.\n\n Generic services are now considered deprecated in favor of using plugins\n that generate code specific to your particular RPC system.  Therefore,\n these default to false.  Old code which depends on generic services should\n explicitly set them to true.\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 11],
+        "span": [486, 2, 50],
+        "leadingComments":
+          " Is this file deprecated?\n Depending on the target platform, this can emit Deprecated annotations\n for everything in the file, or it will be completely ignored; in the very\n least, this is a formalization for deprecating files.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 12],
+        "span": [490, 2, 55],
+        "leadingComments":
+          " Enables the use of arenas for the proto messages in this file. This applies\n only to generated classes for C++.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 13],
+        "span": [494, 2, 41],
+        "leadingComments":
+          " Sets the objective c class prefix which is prepended to all objective c\n generated classes from this .proto. There is no default.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 14],
+        "span": [497, 2, 40],
+        "leadingComments": " Namespace for generated classes; defaults to the package.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 15],
+        "span": [503, 2, 36],
+        "leadingComments":
+          " By default Swift generators will take the proto package and CamelCase it\n replacing '.' with underscore and use that to prefix the types/symbols\n defined. When this options is provided, they will use this value instead\n to prefix the types/symbols defined.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 16],
+        "span": [507, 2, 40],
+        "leadingComments":
+          " Sets the php class prefix which is prepended to all php generated classes\n from this .proto. Default is empty.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 17],
+        "span": [512, 2, 37],
+        "leadingComments":
+          " Use this option to change the namespace of php generated classes. Default\n is empty. When this option is empty, the package name will be used for\n determining the namespace.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 18],
+        "span": [517, 2, 46],
+        "leadingComments":
+          " Use this option to change the namespace of php generated metadata classes.\n Default is empty. When this option is empty, the proto file name will be\n used for determining the namespace.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 19],
+        "span": [522, 2, 36],
+        "leadingComments":
+          " Use this option to change the package of ruby generated classes. Default\n is empty. When this option is not set, the package name will be used for\n determining the ruby package.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 20],
+        "span": [525, 2, 36],
+        "leadingComments": " Any features defined in the specific edition.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 21],
+        "span": [529, 2, 58],
+        "leadingComments":
+          ' The parser stores options it doesn\'t recognize here.\n See the documentation for the "Options" section above.\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 5],
+        "span": [533, 2, 25],
+        "leadingComments":
+          ' Clients can define custom options in extensions of this message.\n See the documentation for the "Options" section above.\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 11, 2, 0],
+        "span": [557, 2, 62],
+        "leadingComments":
+          " Set true to use the old proto1 MessageSet wire format for extensions.\n This is provided for backwards-compatibility with the MessageSet wire\n format.  You should not use this for any other reason:  It's less\n efficient, has fewer features, and is more complicated.\n\n The message must be defined exactly as follows:\n   message Foo {\n     option message_set_wire_format = true;\n     extensions 4 to max;\n   }\n Note that the message cannot have any defined fields; MessageSets only\n have extensions.\n\n All extensions of your type must be singular messages; e.g. they cannot\n be int32s, enums, or repeated messages.\n\n Because this is an option, the above two restrictions are not enforced by\n the protocol compiler.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 11, 2, 1],
+        "span": [562, 2, 70],
+        "leadingComments":
+          ' Disables the generation of the standard "descriptor()" accessor, which can\n conflict with a field of the same name.  This is meant to make migration\n from proto1 easier; new code should avoid fields named "descriptor".\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 11, 2, 2],
+        "span": [568, 2, 49],
+        "leadingComments":
+          " Is this message deprecated?\n Depending on the target platform, this can emit Deprecated annotations\n for the message, or it will be completely ignored; in the very least,\n this is a formalization for deprecating messages.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 11, 2, 3],
+        "span": [593, 2, 30],
+        "leadingComments":
+          " NOTE: Do not set the option in .proto files. Always use the maps syntax\n instead. The option should only be implicitly set by the proto compiler\n parser.\n\n Whether the message is an automatically generated map entry type for the\n maps field.\n\n For maps fields:\n     map<KeyType, ValueType> map_field = 1;\n The parsed descriptor looks like:\n     message MapFieldEntry {\n         option map_entry = true;\n         optional KeyType key = 1;\n         optional ValueType value = 2;\n     }\n     repeated MapFieldEntry map_field = 1;\n\n Implementations may choose not to generate the map_entry=true message, but\n use a native map in the target language to hold the keys and values.\n The reflection APIs in such implementations still need to work as\n if the field is a repeated message field.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 11, 9],
+        "span": [595, 2, 13],
+        "leadingComments": "",
+        "trailingComments": " javalite_serializable\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 11, 9],
+        "span": [596, 2, 13],
+        "leadingComments": "",
+        "trailingComments": " javanano_as_lite\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 11, 2, 4],
+        "span": [608, 2, 80],
+        "leadingComments":
+          " Enable the legacy handling of JSON field name conflicts.  This lowercases\n and strips underscored from the fields before comparison in proto3 only.\n The new behavior takes `json_name` into account and applies to proto2 as\n well.\n\n This should only be used as a temporary measure against broken builds due\n to the change in behavior for JSON field name conflicts.\n\n TODO This is legacy behavior we plan to remove once downstream\n teams have had time to migrate.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 11, 2, 5],
+        "span": [611, 2, 36],
+        "leadingComments": " Any features defined in the specific edition.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 11, 2, 6],
+        "span": [614, 2, 58],
+        "leadingComments": " The parser stores options it doesn't recognize here. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 11, 5],
+        "span": [617, 2, 25],
+        "leadingComments": " Clients can define custom options in extensions of this message. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 2, 0],
+        "span": [627, 2, 46],
+        "leadingComments":
+          ' The ctype option instructs the C++ code generator to use a different\n representation of the field than it normally would.  See the specific\n options below.  This option is only implemented to support use of\n [ctype=CORD] and [ctype=STRING] (the default) on non-repeated fields of\n type "bytes" in the open source release -- sorry, we\'ll try to include\n other types in a future version!\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 4, 0, 2, 0],
+        "span": [630, 4, 15],
+        "leadingComments": " Default mode.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 4, 0, 2, 1],
+        "span": [638, 4, 13],
+        "leadingComments":
+          ' The option [ctype=CORD] may be applied to a non-repeated field of type\n "bytes". It indicates that in C++, the data should be stored in a Cord\n instead of a string.  For very large strings, this may reduce memory\n fragmentation. It may also allow better performance when parsing from a\n Cord, or when parsing with aliasing enabled, as the parsed Cord may then\n alias the original buffer.\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 2, 1],
+        "span": [649, 2, 27],
+        "leadingComments":
+          " The packed option can be enabled for repeated primitive fields to enable\n a more efficient representation on the wire. Rather than repeatedly\n writing the tag and type for each element, the entire array is encoded as\n a single length-delimited blob. In proto3, only explicit setting it to\n false will avoid using packed encoding.  This option is prohibited in\n Editions, but the `repeated_field_encoding` feature can be used to control\n the behavior.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 2, 2],
+        "span": [662, 2, 51],
+        "leadingComments":
+          ' The jstype option determines the JavaScript type used for values of the\n field.  The option is permitted only for 64 bit integral and fixed types\n (int64, uint64, sint64, fixed64, sfixed64).  A field with jstype JS_STRING\n is represented as JavaScript string, which avoids loss of precision that\n can happen when a large value is converted to a floating point JavaScript.\n Specifying JS_NUMBER for the jstype causes the generated JavaScript code to\n use the JavaScript "number" type.  The behavior of the default option\n JS_NORMAL is implementation dependent.\n\n This option is an enum to permit additional types to be added, e.g.\n goog.math.Integer.\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 4, 1, 2, 0],
+        "span": [665, 4, 18],
+        "leadingComments": " Use the default type.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 4, 1, 2, 1],
+        "span": [668, 4, 18],
+        "leadingComments": " Use JavaScript strings.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 4, 1, 2, 2],
+        "span": [671, 4, 18],
+        "leadingComments": " Use JavaScript numbers.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 2, 3],
+        "span": [704, 2, 43],
+        "leadingComments":
+          " Should this field be parsed lazily?  Lazy applies only to message-type\n fields.  It means that when the outer message is initially parsed, the\n inner message's contents will not be parsed but instead stored in encoded\n form.  The inner message will actually be parsed when it is first accessed.\n\n This is only a hint.  Implementations are free to choose whether to use\n eager or lazy parsing regardless of the value of this option.  However,\n setting this option true suggests that the protocol author believes that\n using lazy parsing on this field is worth the additional bookkeeping\n overhead typically needed to implement it.\n\n This option does not affect the public interface of any generated code;\n all method signatures remain the same.  Furthermore, thread-safety of the\n interface is not affected by this option; const methods remain safe to\n call from multiple threads concurrently, while non-const methods continue\n to require exclusive access.\n\n Note that implementations may choose not to check required fields within\n a lazy sub-message.  That is, calling IsInitialized() on the outer message\n may return true even if the inner message has missing required fields.\n This is necessary because otherwise the inner message would have to be\n parsed in order to perform the check, defeating the purpose of lazy\n parsing.  An implementation which chooses not to check required fields\n must be consistent about it.  That is, for any particular sub-message, the\n implementation must either *always* check its required fields, or *never*\n check its required fields, regardless of whether or not the message has\n been parsed.\n\n As of May 2022, lazy verifies the contents of the byte stream during\n parsing.  An invalid byte stream will cause the overall parsing to fail.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 2, 4],
+        "span": [709, 2, 55],
+        "leadingComments":
+          " unverified_lazy does no correctness checks on the byte stream. This should\n only be used where lazy with verification is prohibitive for performance\n reasons.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 2, 5],
+        "span": [715, 2, 49],
+        "leadingComments":
+          " Is this field deprecated?\n Depending on the target platform, this can emit Deprecated annotations\n for accessors, or it will be completely ignored; in the very least, this\n is a formalization for deprecating fields.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 2, 6],
+        "span": [718, 2, 44],
+        "leadingComments": " For Google-internal migration only. Do not use.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 2, 7],
+        "span": [722, 2, 52],
+        "leadingComments":
+          " Indicate that the field value should not be printed out when using debug\n formats, e.g. when the field contains sensitive credentials.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 4, 2],
+        "span": [727, 2, 731, 3],
+        "leadingComments":
+          " If set to RETENTION_SOURCE, the option will be omitted from the binary.\n Note: as of January 2023, support for this is in progress and does not yet\n have an effect (b/264593489).\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 4, 3],
+        "span": [739, 2, 750, 3],
+        "leadingComments":
+          " This indicates the types of entities that the field may apply to when used\n as an option. If it is unset, then the field may be freely used as an\n option on any kind of entity. Note: as of January 2023, support for this is\n in progress and does not yet have an effect (b/264593489).\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 3, 0, 2, 1],
+        "span": [756, 4, 30],
+        "leadingComments": "",
+        "trailingComments": " Textproto value.\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 2, 11],
+        "span": [761, 2, 36],
+        "leadingComments": " Any features defined in the specific edition.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 2, 12],
+        "span": [764, 2, 58],
+        "leadingComments": " The parser stores options it doesn't recognize here. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 5],
+        "span": [767, 2, 25],
+        "leadingComments": " Clients can define custom options in extensions of this message. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 9],
+        "span": [769, 2, 13],
+        "leadingComments": "",
+        "trailingComments": " removed jtype\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 9],
+        "span": [770, 2, 14],
+        "leadingComments": "",
+        "trailingComments": " reserve target, target_obsolete_do_not_use\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 13, 2, 0],
+        "span": [775, 2, 35],
+        "leadingComments": " Any features defined in the specific edition.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 13, 2, 1],
+        "span": [778, 2, 58],
+        "leadingComments": " The parser stores options it doesn't recognize here. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 13, 5],
+        "span": [781, 2, 25],
+        "leadingComments": " Clients can define custom options in extensions of this message. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 14, 2, 0],
+        "span": [788, 2, 32],
+        "leadingComments": " Set this option to true to allow mapping different tag names to the same\n value.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 14, 2, 1],
+        "span": [794, 2, 49],
+        "leadingComments":
+          " Is this enum deprecated?\n Depending on the target platform, this can emit Deprecated annotations\n for the enum, or it will be completely ignored; in the very least, this\n is a formalization for deprecating enums.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 14, 9],
+        "span": [796, 2, 13],
+        "leadingComments": "",
+        "trailingComments": " javanano_as_lite\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 14, 2, 2],
+        "span": [804, 2, 79],
+        "leadingComments":
+          " Enable the legacy handling of JSON field name conflicts.  This lowercases\n and strips underscored from the fields before comparison in proto3 only.\n The new behavior takes `json_name` into account and applies to proto2 as\n well.\n TODO Remove this legacy behavior once downstream teams have\n had time to migrate.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 14, 2, 3],
+        "span": [807, 2, 35],
+        "leadingComments": " Any features defined in the specific edition.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 14, 2, 4],
+        "span": [810, 2, 58],
+        "leadingComments": " The parser stores options it doesn't recognize here. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 14, 5],
+        "span": [813, 2, 25],
+        "leadingComments": " Clients can define custom options in extensions of this message. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 0],
+        "span": [821, 2, 49],
+        "leadingComments":
+          " Is this enum value deprecated?\n Depending on the target platform, this can emit Deprecated annotations\n for the enum value, or it will be completely ignored; in the very least,\n this is a formalization for deprecating enum values.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 1],
+        "span": [824, 2, 35],
+        "leadingComments": " Any features defined in the specific edition.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 2],
+        "span": [829, 2, 51],
+        "leadingComments":
+          " Indicate that fields annotated with this enum value should not be printed\n out when using debug formats, e.g. when the field contains sensitive\n credentials.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 3],
+        "span": [832, 2, 58],
+        "leadingComments": " The parser stores options it doesn't recognize here. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 5],
+        "span": [835, 2, 25],
+        "leadingComments": " Clients can define custom options in extensions of this message. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 16, 2, 0],
+        "span": [841, 2, 36],
+        "leadingComments": " Any features defined in the specific edition.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 16, 2, 1],
+        "span": [852, 2, 50],
+        "leadingComments":
+          " Is this service deprecated?\n Depending on the target platform, this can emit Deprecated annotations\n for the service, or it will be completely ignored; in the very least,\n this is a formalization for deprecating services.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [
+          " Note:  Field numbers 1 through 32 are reserved for Google's internal RPC\n   framework.  We apologize for hoarding these numbers to ourselves, but\n   we were already using them long before we decided to release Protocol\n   Buffers.\n",
+        ],
+      }, {
+        "path": [4, 16, 2, 2],
+        "span": [855, 2, 58],
+        "leadingComments": " The parser stores options it doesn't recognize here. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 16, 5],
+        "span": [858, 2, 25],
+        "leadingComments": " Clients can define custom options in extensions of this message. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 17, 2, 0],
+        "span": [872, 2, 50],
+        "leadingComments":
+          " Is this method deprecated?\n Depending on the target platform, this can emit Deprecated annotations\n for the method, or it will be completely ignored; in the very least,\n this is a formalization for deprecating methods.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [
+          " Note:  Field numbers 1 through 32 are reserved for Google's internal RPC\n   framework.  We apologize for hoarding these numbers to ourselves, but\n   we were already using them long before we decided to release Protocol\n   Buffers.\n",
+        ],
+      }, {
+        "path": [4, 17, 4, 0],
+        "span": [877, 2, 881, 3],
+        "leadingComments":
+          " Is this method side-effect-free (or safe in HTTP parlance), or idempotent,\n or neither? HTTP based RPC implementation may choose GET verb for safe\n methods, and PUT verb for idempotent methods instead of the default POST.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 17, 4, 0, 2, 1],
+        "span": [879, 4, 24],
+        "leadingComments": "",
+        "trailingComments": " implies idempotent\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 17, 4, 0, 2, 2],
+        "span": [880, 4, 19],
+        "leadingComments": "",
+        "trailingComments": " idempotent, but may have side effects\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 17, 2, 2],
+        "span": [886, 2, 36],
+        "leadingComments": " Any features defined in the specific edition.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 17, 2, 3],
+        "span": [889, 2, 58],
+        "leadingComments": " The parser stores options it doesn't recognize here. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 17, 5],
+        "span": [892, 2, 25],
+        "leadingComments": " Clients can define custom options in extensions of this message. See above.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 18],
+        "span": [901, 0, 921, 1],
+        "leadingComments":
+          " A message representing a option the parser does not recognize. This only\n appears in options protos created by the compiler::Parser class.\n DescriptorPool resolves these when building Descriptor objects. Therefore,\n options protos in descriptor objects (e.g. returned by Descriptor::options(),\n or produced by Descriptor::CopyTo()) will never have UninterpretedOptions\n in them.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 18, 3, 0],
+        "span": [907, 2, 910, 3],
+        "leadingComments":
+          ' The name of the uninterpreted option.  Each string represents a segment in\n a dot-separated name.  is_extension is true iff a segment represents an\n extension (denoted with parentheses in options specs in .proto files).\n E.g.,{ ["foo", false], ["bar.baz", true], ["moo", false] } represents\n "foo.(bar.baz).moo".\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 18, 2, 1],
+        "span": [915, 2, 39],
+        "leadingComments":
+          " The value of the uninterpreted option, in whatever type the tokenizer\n identified it as during parsing. Exactly one of these should be set.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 19],
+        "span": [932, 0, 1019, 1],
+        "leadingComments":
+          " TODO Enums in C++ gencode (and potentially other languages) are\n not well scoped.  This means that each of the feature enums below can clash\n with each other.  The short names we've chosen maximize call-site\n readability, but leave us very open to this scenario.  A future feature will\n be designed and implemented to handle this, hopefully before we ever hit a\n conflict here.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [
+          " ===================================================================\n Features\n",
+        ],
+      }, {
+        "path": [4, 19, 5],
+        "span": [1015, 2, 18],
+        "leadingComments": "",
+        "trailingComments": " for Protobuf C++\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 19, 5],
+        "span": [1016, 2, 18],
+        "leadingComments": "",
+        "trailingComments": " for Protobuf Java\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 19, 5],
+        "span": [1018, 2, 26],
+        "leadingComments": "",
+        "trailingComments": " For internal testing\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 20],
+        "span": [1025, 0, 1043, 1],
+        "leadingComments":
+          " A compiled specification for the defaults of a set of features.  These\n messages are generated from FeatureSet extensions and can be used to seed\n feature resolution. The resolution with this object becomes a simple search\n for the closest matching edition, followed by proto merges.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 20, 3, 0],
+        "span": [1030, 2, 1033, 3],
+        "leadingComments":
+          " A map from every known edition with a unique set of defaults to its\n defaults. Not all editions may be contained here.  For a given edition,\n the defaults at the closest matching edition ordered at or before it should\n be used.  This field must be in strict ascending order by edition.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 20, 2, 1],
+        "span": [1038, 2, 39],
+        "leadingComments":
+          " The minimum supported edition (inclusive) when this was constructed.\n Editions before this will not have defaults.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 20, 2, 2],
+        "span": [1042, 2, 39],
+        "leadingComments":
+          " The maximum known edition (inclusive) when this was constructed. Editions\n after this will not have reliable defaults.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 21],
+        "span": [1050, 0, 1179, 1],
+        "leadingComments":
+          " Encapsulates information about the original source file from which a\n FileDescriptorProto was generated.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [
+          " ===================================================================\n Optional source code info\n",
+        ],
+      }, {
+        "path": [4, 21, 2, 0],
+        "span": [1094, 2, 33],
+        "leadingComments":
+          ' A Location identifies a piece of source code in a .proto file which\n corresponds to a particular definition.  This information is intended\n to be useful to IDEs, code indexers, documentation generators, and similar\n tools.\n\n For example, say we have a file like:\n   message Foo {\n     optional string foo = 1;\n   }\n Let\'s look at just the field definition:\n   optional string foo = 1;\n   ^       ^^     ^^  ^  ^^^\n   a       bc     de  f  ghi\n We have the following locations:\n   span   path               represents\n   [a,i)  [ 4, 0, 2, 0 ]     The whole field definition.\n   [a,b)  [ 4, 0, 2, 0, 4 ]  The label (optional).\n   [c,d)  [ 4, 0, 2, 0, 5 ]  The type (string).\n   [e,f)  [ 4, 0, 2, 0, 1 ]  The name (foo).\n   [g,h)  [ 4, 0, 2, 0, 3 ]  The number (1).\n\n Notes:\n - A location may refer to a repeated field itself (i.e. not to any\n   particular index within it).  This is used whenever a set of elements are\n   logically enclosed in a single code segment.  For example, an entire\n   extend block (possibly containing multiple extension definitions) will\n   have an outer location whose path refers to the "extensions" repeated\n   field without an index.\n - Multiple locations may have the same path.  This happens when a single\n   logical declaration is spread out across multiple places.  The most\n   obvious example is the "extend" block again -- there may be multiple\n   extend blocks in the same scope, each of which will have the same path.\n - A location\'s span is not always a subset of its parent\'s span.  For\n   example, the "extendee" of an extension declaration appears at the\n   beginning of the "extend" block and is shared by all extensions within\n   the block.\n - Just because a location\'s span is a subset of some other location\'s span\n   does not mean that it is a descendant.  For example, a "group" defines\n   both a type and a field in a single declaration.  Thus, the locations\n   corresponding to the type and field and their components will overlap.\n - Code which tries to interpret locations should probably be designed to\n   ignore those that it doesn\'t understand, as more types of locations could\n   be recorded in the future.\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 21, 3, 0, 2, 0],
+        "span": [1119, 4, 44],
+        "leadingComments":
+          " Identifies which part of the FileDescriptorProto was defined at this\n location.\n\n Each element is a field number or an index.  They form a path from\n the root FileDescriptorProto to the place where the definition occurs.\n For example, this path:\n   [ 4, 3, 2, 7, 1 ]\n refers to:\n   file.message_type(3)  // 4, 3\n       .field(7)         // 2, 7\n       .name()           // 1\n This is because FileDescriptorProto.message_type has field number 4:\n   repeated DescriptorProto message_type = 4;\n and DescriptorProto.field has field number 2:\n   repeated FieldDescriptorProto field = 2;\n and FieldDescriptorProto.name has field number 1:\n   optional string name = 1;\n\n Thus, the above path gives the location of a field name.  If we removed\n the last element:\n   [ 4, 3, 2, 7 ]\n this path refers to the whole field declaration (from the beginning\n of the label to the terminating semicolon).\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 21, 3, 0, 2, 1],
+        "span": [1126, 4, 44],
+        "leadingComments":
+          " Always has exactly three or four elements: start line, start column,\n end line (optional, otherwise assumed same as start line), end column.\n These are packed into a single field for efficiency.  Note that line\n and column numbers are zero-based -- typically you will want to add\n 1 to each before displaying to a user.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 21, 3, 0, 2, 2],
+        "span": [1175, 4, 41],
+        "leadingComments":
+          " If this SourceCodeInfo represents a complete declaration, these are any\n comments appearing before and after the declaration which appear to be\n attached to the declaration.\n\n A series of line comments appearing on consecutive lines, with no other\n tokens appearing on those lines, will be treated as a single comment.\n\n leading_detached_comments will keep paragraphs of comments that appear\n before (but not connected to) the current element. Each paragraph,\n separated by empty lines, will be one comment element in the repeated\n field.\n\n Only the comment content is provided; comment markers (e.g. //) are\n stripped out.  For block comments, leading whitespace and an asterisk\n will be stripped from the beginning of each line other than the first.\n Newlines are included in the output.\n\n Examples:\n\n   optional int32 foo = 1;  // Comment attached to foo.\n   // Comment attached to bar.\n   optional int32 bar = 2;\n\n   optional string baz = 3;\n   // Comment attached to baz.\n   // Another line attached to baz.\n\n   // Comment attached to moo.\n   //\n   // Another line attached to moo.\n   optional double moo = 4;\n\n   // Detached comment for corge. This is not leading or trailing comments\n   // to moo or corge because there are blank lines separating it from\n   // both.\n\n   // Detached comment for corge paragraph 2.\n\n   optional string corge = 5;\n   /* Block comment attached\n    * to corge.  Leading asterisks\n    * will be removed. */\n   /* Block comment attached to\n    * grault. */\n   optional int32 grault = 6;\n\n   // ignored detached comments.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 22],
+        "span": [1184, 0, 1217, 1],
+        "leadingComments":
+          " Describes the relationship between generated code and its original source\n file. A GeneratedCodeInfo message is associated with only one generated\n source file, but may contain references to different source .proto files.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 22, 2, 0],
+        "span": [1187, 2, 37],
+        "leadingComments":
+          " An Annotation connects some span of text in generated code to an element\n of its generating .proto file.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 22, 3, 0, 2, 0],
+        "span": [1191, 4, 44],
+        "leadingComments":
+          " Identifies the element in the original source .proto file. This field\n is formatted the same as SourceCodeInfo.Location.path.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 22, 3, 0, 2, 1],
+        "span": [1194, 4, 36],
+        "leadingComments": " Identifies the filesystem path to the original source .proto.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 22, 3, 0, 2, 2],
+        "span": [1198, 4, 29],
+        "leadingComments":
+          " Identifies the starting offset in bytes in the generated code\n that relates to the identified object.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 22, 3, 0, 2, 3],
+        "span": [1203, 4, 27],
+        "leadingComments":
+          " Identifies the ending offset in bytes in the generated code that\n relates to the identified object. The end offset should be one past\n the last relevant byte (so the length of the text = end - begin).\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 22, 3, 0, 4, 0],
+        "span": [1207, 4, 1214, 5],
+        "leadingComments": " Represents the identified object's effect on the element in the original\n .proto file.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 22, 3, 0, 4, 0, 2, 0],
+        "span": [1209, 6, 15],
+        "leadingComments": " There is no effect or the effect is indescribable.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 22, 3, 0, 4, 0, 2, 1],
+        "span": [1211, 6, 14],
+        "leadingComments": " The element is set or otherwise mutated.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 22, 3, 0, 4, 0, 2, 2],
+        "span": [1213, 6, 16],
+        "leadingComments": " An alias to the element is returned.\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }],
+    },
+    "syntax": "",
+  },
+  references: {
+    ".google.protobuf.Edition": Edition,
+    ".google.protobuf.FileDescriptorSet": FileDescriptorSet,
+    ".google.protobuf.FileDescriptorProto": FileDescriptorProto,
+    ".google.protobuf.DescriptorProto": DescriptorProto,
+    ".google.protobuf.DescriptorProto.ExtensionRange": DescriptorProto_ExtensionRange,
+    ".google.protobuf.DescriptorProto.ReservedRange": DescriptorProto_ReservedRange,
+    ".google.protobuf.ExtensionRangeOptions": ExtensionRangeOptions,
+    ".google.protobuf.ExtensionRangeOptions.VerificationState": ExtensionRangeOptions_VerificationState,
+    ".google.protobuf.ExtensionRangeOptions.Declaration": ExtensionRangeOptions_Declaration,
+    ".google.protobuf.FieldDescriptorProto": FieldDescriptorProto,
+    ".google.protobuf.FieldDescriptorProto.Type": FieldDescriptorProto_Type,
+    ".google.protobuf.FieldDescriptorProto.Label": FieldDescriptorProto_Label,
+    ".google.protobuf.OneofDescriptorProto": OneofDescriptorProto,
+    ".google.protobuf.EnumDescriptorProto": EnumDescriptorProto,
+    ".google.protobuf.EnumDescriptorProto.EnumReservedRange": EnumDescriptorProto_EnumReservedRange,
+    ".google.protobuf.EnumValueDescriptorProto": EnumValueDescriptorProto,
+    ".google.protobuf.ServiceDescriptorProto": ServiceDescriptorProto,
+    ".google.protobuf.MethodDescriptorProto": MethodDescriptorProto,
+    ".google.protobuf.FileOptions": FileOptions,
+    ".google.protobuf.FileOptions.OptimizeMode": FileOptions_OptimizeMode,
+    ".google.protobuf.MessageOptions": MessageOptions,
+    ".google.protobuf.FieldOptions": FieldOptions,
+    ".google.protobuf.FieldOptions.CType": FieldOptions_CType,
+    ".google.protobuf.FieldOptions.JSType": FieldOptions_JSType,
+    ".google.protobuf.FieldOptions.OptionRetention": FieldOptions_OptionRetention,
+    ".google.protobuf.FieldOptions.OptionTargetType": FieldOptions_OptionTargetType,
+    ".google.protobuf.FieldOptions.EditionDefault": FieldOptions_EditionDefault,
+    ".google.protobuf.OneofOptions": OneofOptions,
+    ".google.protobuf.EnumOptions": EnumOptions,
+    ".google.protobuf.EnumValueOptions": EnumValueOptions,
+    ".google.protobuf.ServiceOptions": ServiceOptions,
+    ".google.protobuf.MethodOptions": MethodOptions,
+    ".google.protobuf.MethodOptions.IdempotencyLevel": MethodOptions_IdempotencyLevel,
+    ".google.protobuf.UninterpretedOption": UninterpretedOption,
+    ".google.protobuf.UninterpretedOption.NamePart": UninterpretedOption_NamePart,
+    ".google.protobuf.FeatureSet": FeatureSet,
+    ".google.protobuf.FeatureSet.FieldPresence": FeatureSet_FieldPresence,
+    ".google.protobuf.FeatureSet.EnumType": FeatureSet_EnumType,
+    ".google.protobuf.FeatureSet.RepeatedFieldEncoding": FeatureSet_RepeatedFieldEncoding,
+    ".google.protobuf.FeatureSet.Utf8Validation": FeatureSet_Utf8Validation,
+    ".google.protobuf.FeatureSet.MessageEncoding": FeatureSet_MessageEncoding,
+    ".google.protobuf.FeatureSet.JsonFormat": FeatureSet_JsonFormat,
+    ".google.protobuf.FeatureSetDefaults": FeatureSetDefaults,
+    ".google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault": FeatureSetDefaults_FeatureSetEditionDefault,
+    ".google.protobuf.SourceCodeInfo": SourceCodeInfo,
+    ".google.protobuf.SourceCodeInfo.Location": SourceCodeInfo_Location,
+    ".google.protobuf.GeneratedCodeInfo": GeneratedCodeInfo,
+    ".google.protobuf.GeneratedCodeInfo.Annotation": GeneratedCodeInfo_Annotation,
+    ".google.protobuf.GeneratedCodeInfo.Annotation.Semantic": GeneratedCodeInfo_Annotation_Semantic,
+  },
+  dependencies: [],
+} as const satisfies ProtoMetadata;
+
 function bytesFromBase64(b64: string): Uint8Array {
   return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
 }
@@ -6545,34 +10711,24 @@ function base64FromBytes(arr: Uint8Array): string {
   return globalThis.Buffer.from(arr).toString("base64");
 }
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | bigint | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
   : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : T extends {} ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
 }
 
-export interface MessageFns<T> {
+export interface MessageFns<T, V extends string> {
+  readonly $type: V;
   encode(message: T, writer?: BinaryWriter): BinaryWriter;
   decode(input: BinaryReader | Uint8Array, length?: number): T;
   fromJSON(object: any): T;

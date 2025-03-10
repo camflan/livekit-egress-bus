@@ -6,25 +6,30 @@
 
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
-import { Any } from "./google/protobuf/any.proto";
+import { FileDescriptorProto } from "ts-proto-descriptors";
+import { Any, protoMetadata as protoMetadata1 } from "./google/protobuf/any";
+import { messageTypeRegistry } from "./typeRegistry";
 
 export const protobufPackage = "internal";
 
 export interface Msg {
+  $type: "internal.Msg";
   typeUrl: string;
   value: Buffer;
   channel: string;
 }
 
 export interface Channel {
+  $type: "internal.Channel";
   channel: string;
 }
 
 export interface Request {
+  $type: "internal.Request";
   requestId: string;
   clientId: string;
-  sentAt: number;
-  expiry: number;
+  sentAt: bigint;
+  expiry: bigint;
   multi: boolean;
   request: Any | undefined;
   metadata: { [key: string]: string };
@@ -32,14 +37,16 @@ export interface Request {
 }
 
 export interface Request_MetadataEntry {
+  $type: "internal.Request.MetadataEntry";
   key: string;
   value: string;
 }
 
 export interface Response {
+  $type: "internal.Response";
   requestId: string;
   serverId: string;
-  sentAt: number;
+  sentAt: bigint;
   response: Any | undefined;
   error: string;
   code: string;
@@ -48,21 +55,24 @@ export interface Response {
 }
 
 export interface ClaimRequest {
+  $type: "internal.ClaimRequest";
   requestId: string;
   serverId: string;
   affinity: number;
 }
 
 export interface ClaimResponse {
+  $type: "internal.ClaimResponse";
   requestId: string;
   serverId: string;
 }
 
 export interface Stream {
+  $type: "internal.Stream";
   streamId: string;
   requestId: string;
-  sentAt: number;
-  expiry: number;
+  sentAt: bigint;
+  expiry: bigint;
   open?: StreamOpen | undefined;
   message?: StreamMessage | undefined;
   ack?: StreamAck | undefined;
@@ -70,33 +80,40 @@ export interface Stream {
 }
 
 export interface StreamOpen {
+  $type: "internal.StreamOpen";
   nodeId: string;
   metadata: { [key: string]: string };
 }
 
 export interface StreamOpen_MetadataEntry {
+  $type: "internal.StreamOpen.MetadataEntry";
   key: string;
   value: string;
 }
 
 export interface StreamMessage {
+  $type: "internal.StreamMessage";
   message: Any | undefined;
   rawMessage: Buffer;
 }
 
 export interface StreamAck {
+  $type: "internal.StreamAck";
 }
 
 export interface StreamClose {
+  $type: "internal.StreamClose";
   error: string;
   code: string;
 }
 
 function createBaseMsg(): Msg {
-  return { typeUrl: "", value: Buffer.alloc(0), channel: "" };
+  return { $type: "internal.Msg", typeUrl: "", value: Buffer.alloc(0), channel: "" };
 }
 
-export const Msg: MessageFns<Msg> = {
+export const Msg: MessageFns<Msg, "internal.Msg"> = {
+  $type: "internal.Msg" as const,
+
   encode(message: Msg, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.typeUrl !== "") {
       writer.uint32(10).string(message.typeUrl);
@@ -152,6 +169,7 @@ export const Msg: MessageFns<Msg> = {
 
   fromJSON(object: any): Msg {
     return {
+      $type: Msg.$type,
       typeUrl: isSet(object.typeUrl) ? globalThis.String(object.typeUrl) : "",
       value: isSet(object.value) ? Buffer.from(bytesFromBase64(object.value)) : Buffer.alloc(0),
       channel: isSet(object.channel) ? globalThis.String(object.channel) : "",
@@ -184,11 +202,15 @@ export const Msg: MessageFns<Msg> = {
   },
 };
 
+messageTypeRegistry.set(Msg.$type, Msg);
+
 function createBaseChannel(): Channel {
-  return { channel: "" };
+  return { $type: "internal.Channel", channel: "" };
 }
 
-export const Channel: MessageFns<Channel> = {
+export const Channel: MessageFns<Channel, "internal.Channel"> = {
+  $type: "internal.Channel" as const,
+
   encode(message: Channel, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.channel !== "") {
       writer.uint32(26).string(message.channel);
@@ -221,7 +243,7 @@ export const Channel: MessageFns<Channel> = {
   },
 
   fromJSON(object: any): Channel {
-    return { channel: isSet(object.channel) ? globalThis.String(object.channel) : "" };
+    return { $type: Channel.$type, channel: isSet(object.channel) ? globalThis.String(object.channel) : "" };
   },
 
   toJSON(message: Channel): unknown {
@@ -242,12 +264,15 @@ export const Channel: MessageFns<Channel> = {
   },
 };
 
+messageTypeRegistry.set(Channel.$type, Channel);
+
 function createBaseRequest(): Request {
   return {
+    $type: "internal.Request",
     requestId: "",
     clientId: "",
-    sentAt: 0,
-    expiry: 0,
+    sentAt: 0n,
+    expiry: 0n,
     multi: false,
     request: undefined,
     metadata: {},
@@ -255,7 +280,9 @@ function createBaseRequest(): Request {
   };
 }
 
-export const Request: MessageFns<Request> = {
+export const Request: MessageFns<Request, "internal.Request"> = {
+  $type: "internal.Request" as const,
+
   encode(message: Request, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.requestId !== "") {
       writer.uint32(10).string(message.requestId);
@@ -263,10 +290,16 @@ export const Request: MessageFns<Request> = {
     if (message.clientId !== "") {
       writer.uint32(18).string(message.clientId);
     }
-    if (message.sentAt !== 0) {
+    if (message.sentAt !== 0n) {
+      if (BigInt.asIntN(64, message.sentAt) !== message.sentAt) {
+        throw new globalThis.Error("value provided for field message.sentAt of type int64 too large");
+      }
       writer.uint32(24).int64(message.sentAt);
     }
-    if (message.expiry !== 0) {
+    if (message.expiry !== 0n) {
+      if (BigInt.asIntN(64, message.expiry) !== message.expiry) {
+        throw new globalThis.Error("value provided for field message.expiry of type int64 too large");
+      }
       writer.uint32(32).int64(message.expiry);
     }
     if (message.multi !== false) {
@@ -276,7 +309,10 @@ export const Request: MessageFns<Request> = {
       Any.encode(message.request, writer.uint32(50).fork()).join();
     }
     Object.entries(message.metadata).forEach(([key, value]) => {
-      Request_MetadataEntry.encode({ key: key as any, value }, writer.uint32(58).fork()).join();
+      Request_MetadataEntry.encode(
+        { $type: "internal.Request.MetadataEntry", key: key as any, value },
+        writer.uint32(58).fork(),
+      ).join();
     });
     if (message.rawRequest.length !== 0) {
       writer.uint32(66).bytes(message.rawRequest);
@@ -312,7 +348,7 @@ export const Request: MessageFns<Request> = {
             break;
           }
 
-          message.sentAt = longToNumber(reader.int64());
+          message.sentAt = reader.int64() as bigint;
           continue;
         }
         case 4: {
@@ -320,7 +356,7 @@ export const Request: MessageFns<Request> = {
             break;
           }
 
-          message.expiry = longToNumber(reader.int64());
+          message.expiry = reader.int64() as bigint;
           continue;
         }
         case 5: {
@@ -369,10 +405,11 @@ export const Request: MessageFns<Request> = {
 
   fromJSON(object: any): Request {
     return {
+      $type: Request.$type,
       requestId: isSet(object.requestId) ? globalThis.String(object.requestId) : "",
       clientId: isSet(object.clientId) ? globalThis.String(object.clientId) : "",
-      sentAt: isSet(object.sentAt) ? globalThis.Number(object.sentAt) : 0,
-      expiry: isSet(object.expiry) ? globalThis.Number(object.expiry) : 0,
+      sentAt: isSet(object.sentAt) ? BigInt(object.sentAt) : 0n,
+      expiry: isSet(object.expiry) ? BigInt(object.expiry) : 0n,
       multi: isSet(object.multi) ? globalThis.Boolean(object.multi) : false,
       request: isSet(object.request) ? Any.fromJSON(object.request) : undefined,
       metadata: isObject(object.metadata)
@@ -393,11 +430,11 @@ export const Request: MessageFns<Request> = {
     if (message.clientId !== "") {
       obj.clientId = message.clientId;
     }
-    if (message.sentAt !== 0) {
-      obj.sentAt = Math.round(message.sentAt);
+    if (message.sentAt !== 0n) {
+      obj.sentAt = message.sentAt.toString();
     }
-    if (message.expiry !== 0) {
-      obj.expiry = Math.round(message.expiry);
+    if (message.expiry !== 0n) {
+      obj.expiry = message.expiry.toString();
     }
     if (message.multi !== false) {
       obj.multi = message.multi;
@@ -427,8 +464,8 @@ export const Request: MessageFns<Request> = {
     const message = createBaseRequest();
     message.requestId = object.requestId ?? "";
     message.clientId = object.clientId ?? "";
-    message.sentAt = object.sentAt ?? 0;
-    message.expiry = object.expiry ?? 0;
+    message.sentAt = object.sentAt ?? 0n;
+    message.expiry = object.expiry ?? 0n;
     message.multi = object.multi ?? false;
     message.request = (object.request !== undefined && object.request !== null)
       ? Any.fromPartial(object.request)
@@ -444,11 +481,15 @@ export const Request: MessageFns<Request> = {
   },
 };
 
+messageTypeRegistry.set(Request.$type, Request);
+
 function createBaseRequest_MetadataEntry(): Request_MetadataEntry {
-  return { key: "", value: "" };
+  return { $type: "internal.Request.MetadataEntry", key: "", value: "" };
 }
 
-export const Request_MetadataEntry: MessageFns<Request_MetadataEntry> = {
+export const Request_MetadataEntry: MessageFns<Request_MetadataEntry, "internal.Request.MetadataEntry"> = {
+  $type: "internal.Request.MetadataEntry" as const,
+
   encode(message: Request_MetadataEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
@@ -493,6 +534,7 @@ export const Request_MetadataEntry: MessageFns<Request_MetadataEntry> = {
 
   fromJSON(object: any): Request_MetadataEntry {
     return {
+      $type: Request_MetadataEntry.$type,
       key: isSet(object.key) ? globalThis.String(object.key) : "",
       value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
@@ -520,11 +562,14 @@ export const Request_MetadataEntry: MessageFns<Request_MetadataEntry> = {
   },
 };
 
+messageTypeRegistry.set(Request_MetadataEntry.$type, Request_MetadataEntry);
+
 function createBaseResponse(): Response {
   return {
+    $type: "internal.Response",
     requestId: "",
     serverId: "",
-    sentAt: 0,
+    sentAt: 0n,
     response: undefined,
     error: "",
     code: "",
@@ -533,7 +578,9 @@ function createBaseResponse(): Response {
   };
 }
 
-export const Response: MessageFns<Response> = {
+export const Response: MessageFns<Response, "internal.Response"> = {
+  $type: "internal.Response" as const,
+
   encode(message: Response, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.requestId !== "") {
       writer.uint32(10).string(message.requestId);
@@ -541,7 +588,10 @@ export const Response: MessageFns<Response> = {
     if (message.serverId !== "") {
       writer.uint32(18).string(message.serverId);
     }
-    if (message.sentAt !== 0) {
+    if (message.sentAt !== 0n) {
+      if (BigInt.asIntN(64, message.sentAt) !== message.sentAt) {
+        throw new globalThis.Error("value provided for field message.sentAt of type int64 too large");
+      }
       writer.uint32(24).int64(message.sentAt);
     }
     if (message.response !== undefined) {
@@ -590,7 +640,7 @@ export const Response: MessageFns<Response> = {
             break;
           }
 
-          message.sentAt = longToNumber(reader.int64());
+          message.sentAt = reader.int64() as bigint;
           continue;
         }
         case 4: {
@@ -644,9 +694,10 @@ export const Response: MessageFns<Response> = {
 
   fromJSON(object: any): Response {
     return {
+      $type: Response.$type,
       requestId: isSet(object.requestId) ? globalThis.String(object.requestId) : "",
       serverId: isSet(object.serverId) ? globalThis.String(object.serverId) : "",
-      sentAt: isSet(object.sentAt) ? globalThis.Number(object.sentAt) : 0,
+      sentAt: isSet(object.sentAt) ? BigInt(object.sentAt) : 0n,
       response: isSet(object.response) ? Any.fromJSON(object.response) : undefined,
       error: isSet(object.error) ? globalThis.String(object.error) : "",
       code: isSet(object.code) ? globalThis.String(object.code) : "",
@@ -665,8 +716,8 @@ export const Response: MessageFns<Response> = {
     if (message.serverId !== "") {
       obj.serverId = message.serverId;
     }
-    if (message.sentAt !== 0) {
-      obj.sentAt = Math.round(message.sentAt);
+    if (message.sentAt !== 0n) {
+      obj.sentAt = message.sentAt.toString();
     }
     if (message.response !== undefined) {
       obj.response = Any.toJSON(message.response);
@@ -693,7 +744,7 @@ export const Response: MessageFns<Response> = {
     const message = createBaseResponse();
     message.requestId = object.requestId ?? "";
     message.serverId = object.serverId ?? "";
-    message.sentAt = object.sentAt ?? 0;
+    message.sentAt = object.sentAt ?? 0n;
     message.response = (object.response !== undefined && object.response !== null)
       ? Any.fromPartial(object.response)
       : undefined;
@@ -705,11 +756,15 @@ export const Response: MessageFns<Response> = {
   },
 };
 
+messageTypeRegistry.set(Response.$type, Response);
+
 function createBaseClaimRequest(): ClaimRequest {
-  return { requestId: "", serverId: "", affinity: 0 };
+  return { $type: "internal.ClaimRequest", requestId: "", serverId: "", affinity: 0 };
 }
 
-export const ClaimRequest: MessageFns<ClaimRequest> = {
+export const ClaimRequest: MessageFns<ClaimRequest, "internal.ClaimRequest"> = {
+  $type: "internal.ClaimRequest" as const,
+
   encode(message: ClaimRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.requestId !== "") {
       writer.uint32(10).string(message.requestId);
@@ -765,6 +820,7 @@ export const ClaimRequest: MessageFns<ClaimRequest> = {
 
   fromJSON(object: any): ClaimRequest {
     return {
+      $type: ClaimRequest.$type,
       requestId: isSet(object.requestId) ? globalThis.String(object.requestId) : "",
       serverId: isSet(object.serverId) ? globalThis.String(object.serverId) : "",
       affinity: isSet(object.affinity) ? globalThis.Number(object.affinity) : 0,
@@ -797,11 +853,15 @@ export const ClaimRequest: MessageFns<ClaimRequest> = {
   },
 };
 
+messageTypeRegistry.set(ClaimRequest.$type, ClaimRequest);
+
 function createBaseClaimResponse(): ClaimResponse {
-  return { requestId: "", serverId: "" };
+  return { $type: "internal.ClaimResponse", requestId: "", serverId: "" };
 }
 
-export const ClaimResponse: MessageFns<ClaimResponse> = {
+export const ClaimResponse: MessageFns<ClaimResponse, "internal.ClaimResponse"> = {
+  $type: "internal.ClaimResponse" as const,
+
   encode(message: ClaimResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.requestId !== "") {
       writer.uint32(10).string(message.requestId);
@@ -846,6 +906,7 @@ export const ClaimResponse: MessageFns<ClaimResponse> = {
 
   fromJSON(object: any): ClaimResponse {
     return {
+      $type: ClaimResponse.$type,
       requestId: isSet(object.requestId) ? globalThis.String(object.requestId) : "",
       serverId: isSet(object.serverId) ? globalThis.String(object.serverId) : "",
     };
@@ -873,12 +934,15 @@ export const ClaimResponse: MessageFns<ClaimResponse> = {
   },
 };
 
+messageTypeRegistry.set(ClaimResponse.$type, ClaimResponse);
+
 function createBaseStream(): Stream {
   return {
+    $type: "internal.Stream",
     streamId: "",
     requestId: "",
-    sentAt: 0,
-    expiry: 0,
+    sentAt: 0n,
+    expiry: 0n,
     open: undefined,
     message: undefined,
     ack: undefined,
@@ -886,7 +950,9 @@ function createBaseStream(): Stream {
   };
 }
 
-export const Stream: MessageFns<Stream> = {
+export const Stream: MessageFns<Stream, "internal.Stream"> = {
+  $type: "internal.Stream" as const,
+
   encode(message: Stream, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.streamId !== "") {
       writer.uint32(10).string(message.streamId);
@@ -894,10 +960,16 @@ export const Stream: MessageFns<Stream> = {
     if (message.requestId !== "") {
       writer.uint32(18).string(message.requestId);
     }
-    if (message.sentAt !== 0) {
+    if (message.sentAt !== 0n) {
+      if (BigInt.asIntN(64, message.sentAt) !== message.sentAt) {
+        throw new globalThis.Error("value provided for field message.sentAt of type int64 too large");
+      }
       writer.uint32(24).int64(message.sentAt);
     }
-    if (message.expiry !== 0) {
+    if (message.expiry !== 0n) {
+      if (BigInt.asIntN(64, message.expiry) !== message.expiry) {
+        throw new globalThis.Error("value provided for field message.expiry of type int64 too large");
+      }
       writer.uint32(32).int64(message.expiry);
     }
     if (message.open !== undefined) {
@@ -943,7 +1015,7 @@ export const Stream: MessageFns<Stream> = {
             break;
           }
 
-          message.sentAt = longToNumber(reader.int64());
+          message.sentAt = reader.int64() as bigint;
           continue;
         }
         case 4: {
@@ -951,7 +1023,7 @@ export const Stream: MessageFns<Stream> = {
             break;
           }
 
-          message.expiry = longToNumber(reader.int64());
+          message.expiry = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -997,10 +1069,11 @@ export const Stream: MessageFns<Stream> = {
 
   fromJSON(object: any): Stream {
     return {
+      $type: Stream.$type,
       streamId: isSet(object.streamId) ? globalThis.String(object.streamId) : "",
       requestId: isSet(object.requestId) ? globalThis.String(object.requestId) : "",
-      sentAt: isSet(object.sentAt) ? globalThis.Number(object.sentAt) : 0,
-      expiry: isSet(object.expiry) ? globalThis.Number(object.expiry) : 0,
+      sentAt: isSet(object.sentAt) ? BigInt(object.sentAt) : 0n,
+      expiry: isSet(object.expiry) ? BigInt(object.expiry) : 0n,
       open: isSet(object.open) ? StreamOpen.fromJSON(object.open) : undefined,
       message: isSet(object.message) ? StreamMessage.fromJSON(object.message) : undefined,
       ack: isSet(object.ack) ? StreamAck.fromJSON(object.ack) : undefined,
@@ -1016,11 +1089,11 @@ export const Stream: MessageFns<Stream> = {
     if (message.requestId !== "") {
       obj.requestId = message.requestId;
     }
-    if (message.sentAt !== 0) {
-      obj.sentAt = Math.round(message.sentAt);
+    if (message.sentAt !== 0n) {
+      obj.sentAt = message.sentAt.toString();
     }
-    if (message.expiry !== 0) {
-      obj.expiry = Math.round(message.expiry);
+    if (message.expiry !== 0n) {
+      obj.expiry = message.expiry.toString();
     }
     if (message.open !== undefined) {
       obj.open = StreamOpen.toJSON(message.open);
@@ -1044,8 +1117,8 @@ export const Stream: MessageFns<Stream> = {
     const message = createBaseStream();
     message.streamId = object.streamId ?? "";
     message.requestId = object.requestId ?? "";
-    message.sentAt = object.sentAt ?? 0;
-    message.expiry = object.expiry ?? 0;
+    message.sentAt = object.sentAt ?? 0n;
+    message.expiry = object.expiry ?? 0n;
     message.open = (object.open !== undefined && object.open !== null)
       ? StreamOpen.fromPartial(object.open)
       : undefined;
@@ -1060,17 +1133,24 @@ export const Stream: MessageFns<Stream> = {
   },
 };
 
+messageTypeRegistry.set(Stream.$type, Stream);
+
 function createBaseStreamOpen(): StreamOpen {
-  return { nodeId: "", metadata: {} };
+  return { $type: "internal.StreamOpen", nodeId: "", metadata: {} };
 }
 
-export const StreamOpen: MessageFns<StreamOpen> = {
+export const StreamOpen: MessageFns<StreamOpen, "internal.StreamOpen"> = {
+  $type: "internal.StreamOpen" as const,
+
   encode(message: StreamOpen, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.nodeId !== "") {
       writer.uint32(10).string(message.nodeId);
     }
     Object.entries(message.metadata).forEach(([key, value]) => {
-      StreamOpen_MetadataEntry.encode({ key: key as any, value }, writer.uint32(58).fork()).join();
+      StreamOpen_MetadataEntry.encode(
+        { $type: "internal.StreamOpen.MetadataEntry", key: key as any, value },
+        writer.uint32(58).fork(),
+      ).join();
     });
     return writer;
   },
@@ -1112,6 +1192,7 @@ export const StreamOpen: MessageFns<StreamOpen> = {
 
   fromJSON(object: any): StreamOpen {
     return {
+      $type: StreamOpen.$type,
       nodeId: isSet(object.nodeId) ? globalThis.String(object.nodeId) : "",
       metadata: isObject(object.metadata)
         ? Object.entries(object.metadata).reduce<{ [key: string]: string }>((acc, [key, value]) => {
@@ -1155,11 +1236,15 @@ export const StreamOpen: MessageFns<StreamOpen> = {
   },
 };
 
+messageTypeRegistry.set(StreamOpen.$type, StreamOpen);
+
 function createBaseStreamOpen_MetadataEntry(): StreamOpen_MetadataEntry {
-  return { key: "", value: "" };
+  return { $type: "internal.StreamOpen.MetadataEntry", key: "", value: "" };
 }
 
-export const StreamOpen_MetadataEntry: MessageFns<StreamOpen_MetadataEntry> = {
+export const StreamOpen_MetadataEntry: MessageFns<StreamOpen_MetadataEntry, "internal.StreamOpen.MetadataEntry"> = {
+  $type: "internal.StreamOpen.MetadataEntry" as const,
+
   encode(message: StreamOpen_MetadataEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
@@ -1204,6 +1289,7 @@ export const StreamOpen_MetadataEntry: MessageFns<StreamOpen_MetadataEntry> = {
 
   fromJSON(object: any): StreamOpen_MetadataEntry {
     return {
+      $type: StreamOpen_MetadataEntry.$type,
       key: isSet(object.key) ? globalThis.String(object.key) : "",
       value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
@@ -1231,11 +1317,15 @@ export const StreamOpen_MetadataEntry: MessageFns<StreamOpen_MetadataEntry> = {
   },
 };
 
+messageTypeRegistry.set(StreamOpen_MetadataEntry.$type, StreamOpen_MetadataEntry);
+
 function createBaseStreamMessage(): StreamMessage {
-  return { message: undefined, rawMessage: Buffer.alloc(0) };
+  return { $type: "internal.StreamMessage", message: undefined, rawMessage: Buffer.alloc(0) };
 }
 
-export const StreamMessage: MessageFns<StreamMessage> = {
+export const StreamMessage: MessageFns<StreamMessage, "internal.StreamMessage"> = {
+  $type: "internal.StreamMessage" as const,
+
   encode(message: StreamMessage, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.message !== undefined) {
       Any.encode(message.message, writer.uint32(10).fork()).join();
@@ -1280,6 +1370,7 @@ export const StreamMessage: MessageFns<StreamMessage> = {
 
   fromJSON(object: any): StreamMessage {
     return {
+      $type: StreamMessage.$type,
       message: isSet(object.message) ? Any.fromJSON(object.message) : undefined,
       rawMessage: isSet(object.rawMessage) ? Buffer.from(bytesFromBase64(object.rawMessage)) : Buffer.alloc(0),
     };
@@ -1309,11 +1400,15 @@ export const StreamMessage: MessageFns<StreamMessage> = {
   },
 };
 
+messageTypeRegistry.set(StreamMessage.$type, StreamMessage);
+
 function createBaseStreamAck(): StreamAck {
-  return {};
+  return { $type: "internal.StreamAck" };
 }
 
-export const StreamAck: MessageFns<StreamAck> = {
+export const StreamAck: MessageFns<StreamAck, "internal.StreamAck"> = {
+  $type: "internal.StreamAck" as const,
+
   encode(_: StreamAck, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     return writer;
   },
@@ -1335,7 +1430,7 @@ export const StreamAck: MessageFns<StreamAck> = {
   },
 
   fromJSON(_: any): StreamAck {
-    return {};
+    return { $type: StreamAck.$type };
   },
 
   toJSON(_: StreamAck): unknown {
@@ -1352,11 +1447,15 @@ export const StreamAck: MessageFns<StreamAck> = {
   },
 };
 
+messageTypeRegistry.set(StreamAck.$type, StreamAck);
+
 function createBaseStreamClose(): StreamClose {
-  return { error: "", code: "" };
+  return { $type: "internal.StreamClose", error: "", code: "" };
 }
 
-export const StreamClose: MessageFns<StreamClose> = {
+export const StreamClose: MessageFns<StreamClose, "internal.StreamClose"> = {
+  $type: "internal.StreamClose" as const,
+
   encode(message: StreamClose, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.error !== "") {
       writer.uint32(10).string(message.error);
@@ -1401,6 +1500,7 @@ export const StreamClose: MessageFns<StreamClose> = {
 
   fromJSON(object: any): StreamClose {
     return {
+      $type: StreamClose.$type,
       error: isSet(object.error) ? globalThis.String(object.error) : "",
       code: isSet(object.code) ? globalThis.String(object.code) : "",
     };
@@ -1428,6 +1528,755 @@ export const StreamClose: MessageFns<StreamClose> = {
   },
 };
 
+messageTypeRegistry.set(StreamClose.$type, StreamClose);
+
+type ProtoMetaMessageOptions = {
+  options?: { [key: string]: any };
+  fields?: { [key: string]: { [key: string]: any } };
+  oneof?: { [key: string]: { [key: string]: any } };
+  nested?: { [key: string]: ProtoMetaMessageOptions };
+};
+
+export interface ProtoMetadata {
+  fileDescriptor: FileDescriptorProto;
+  references: { [key: string]: any };
+  dependencies?: ProtoMetadata[];
+  options?: {
+    options?: { [key: string]: any };
+    services?: {
+      [key: string]: { options?: { [key: string]: any }; methods?: { [key: string]: { [key: string]: any } } };
+    };
+    messages?: { [key: string]: ProtoMetaMessageOptions };
+    enums?: { [key: string]: { options?: { [key: string]: any }; values?: { [key: string]: { [key: string]: any } } } };
+  };
+}
+
+export const protoMetadata = {
+  fileDescriptor: {
+    "name": "internal.proto",
+    "package": "internal",
+    "dependency": ["google/protobuf/any.proto"],
+    "publicDependency": [],
+    "weakDependency": [],
+    "messageType": [{
+      "name": "Msg",
+      "field": [{
+        "name": "type_url",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "typeUrl",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "value",
+        "number": 2,
+        "label": 1,
+        "type": 12,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "value",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "channel",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "channel",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "Channel",
+      "field": [{
+        "name": "channel",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "channel",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "Request",
+      "field": [{
+        "name": "request_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "requestId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "client_id",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "clientId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "sent_at",
+        "number": 3,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "sentAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "expiry",
+        "number": 4,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "expiry",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "multi",
+        "number": 5,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "multi",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "request",
+        "number": 6,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.Any",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "request",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "metadata",
+        "number": 7,
+        "label": 3,
+        "type": 11,
+        "typeName": ".internal.Request.MetadataEntry",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "metadata",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "raw_request",
+        "number": 8,
+        "label": 1,
+        "type": 12,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rawRequest",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "MetadataEntry",
+        "field": [{
+          "name": "key",
+          "number": 1,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "key",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "value",
+          "number": 2,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "value",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": {
+          "messageSetWireFormat": false,
+          "noStandardDescriptorAccessor": false,
+          "deprecated": false,
+          "mapEntry": true,
+          "uninterpretedOption": [],
+        },
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "Response",
+      "field": [{
+        "name": "request_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "requestId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "server_id",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "serverId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "sent_at",
+        "number": 3,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "sentAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "response",
+        "number": 4,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.Any",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "response",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "error",
+        "number": 5,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "error",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "code",
+        "number": 6,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "code",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "raw_response",
+        "number": 7,
+        "label": 1,
+        "type": 12,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rawResponse",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "error_details",
+        "number": 8,
+        "label": 3,
+        "type": 11,
+        "typeName": ".google.protobuf.Any",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "errorDetails",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ClaimRequest",
+      "field": [{
+        "name": "request_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "requestId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "server_id",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "serverId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "affinity",
+        "number": 3,
+        "label": 1,
+        "type": 2,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "affinity",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ClaimResponse",
+      "field": [{
+        "name": "request_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "requestId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "server_id",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "serverId",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "Stream",
+      "field": [{
+        "name": "stream_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "streamId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "request_id",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "requestId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "sent_at",
+        "number": 3,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "sentAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "expiry",
+        "number": 4,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "expiry",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "open",
+        "number": 6,
+        "label": 1,
+        "type": 11,
+        "typeName": ".internal.StreamOpen",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "open",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "message",
+        "number": 7,
+        "label": 1,
+        "type": 11,
+        "typeName": ".internal.StreamMessage",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "message",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ack",
+        "number": 8,
+        "label": 1,
+        "type": 11,
+        "typeName": ".internal.StreamAck",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "ack",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "close",
+        "number": 9,
+        "label": 1,
+        "type": 11,
+        "typeName": ".internal.StreamClose",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "close",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "body", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "StreamOpen",
+      "field": [{
+        "name": "node_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "nodeId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "metadata",
+        "number": 7,
+        "label": 3,
+        "type": 11,
+        "typeName": ".internal.StreamOpen.MetadataEntry",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "metadata",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "MetadataEntry",
+        "field": [{
+          "name": "key",
+          "number": 1,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "key",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "value",
+          "number": 2,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "value",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": {
+          "messageSetWireFormat": false,
+          "noStandardDescriptorAccessor": false,
+          "deprecated": false,
+          "mapEntry": true,
+          "uninterpretedOption": [],
+        },
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "StreamMessage",
+      "field": [{
+        "name": "message",
+        "number": 1,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.Any",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "message",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "raw_message",
+        "number": 2,
+        "label": 1,
+        "type": 12,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rawMessage",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "StreamAck",
+      "field": [],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "StreamClose",
+      "field": [{
+        "name": "error",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "error",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "code",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "code",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }],
+    "enumType": [],
+    "service": [],
+    "extension": [],
+    "options": {
+      "javaPackage": "",
+      "javaOuterClassname": "",
+      "javaMultipleFiles": false,
+      "javaGenerateEqualsAndHash": false,
+      "javaStringCheckUtf8": false,
+      "optimizeFor": 1,
+      "goPackage": "github.com/livekit/psrpc/internal",
+      "ccGenericServices": false,
+      "javaGenericServices": false,
+      "pyGenericServices": false,
+      "phpGenericServices": false,
+      "deprecated": false,
+      "ccEnableArenas": true,
+      "objcClassPrefix": "",
+      "csharpNamespace": "",
+      "swiftPrefix": "",
+      "phpClassPrefix": "",
+      "phpNamespace": "",
+      "phpMetadataNamespace": "",
+      "rubyPackage": "",
+      "uninterpretedOption": [],
+    },
+    "sourceCodeInfo": { "location": [] },
+    "syntax": "proto3",
+  },
+  references: {
+    ".internal.Msg": Msg,
+    ".internal.Channel": Channel,
+    ".internal.Request": Request,
+    ".internal.Request.MetadataEntry": Request_MetadataEntry,
+    ".internal.Response": Response,
+    ".internal.ClaimRequest": ClaimRequest,
+    ".internal.ClaimResponse": ClaimResponse,
+    ".internal.Stream": Stream,
+    ".internal.StreamOpen": StreamOpen,
+    ".internal.StreamOpen.MetadataEntry": StreamOpen_MetadataEntry,
+    ".internal.StreamMessage": StreamMessage,
+    ".internal.StreamAck": StreamAck,
+    ".internal.StreamClose": StreamClose,
+  },
+  dependencies: [protoMetadata1],
+} as const satisfies ProtoMetadata;
+
 function bytesFromBase64(b64: string): Uint8Array {
   return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
 }
@@ -1436,28 +2285,17 @@ function base64FromBytes(arr: Uint8Array): string {
   return globalThis.Buffer.from(arr).toString("base64");
 }
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | bigint | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
   : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : T extends {} ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
-
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never };
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;
@@ -1467,7 +2305,8 @@ function isSet(value: any): boolean {
   return value !== null && value !== undefined;
 }
 
-export interface MessageFns<T> {
+export interface MessageFns<T, V extends string> {
+  readonly $type: V;
   encode(message: T, writer?: BinaryWriter): BinaryWriter;
   decode(input: BinaryReader | Uint8Array, length?: number): T;
   fromJSON(object: any): T;

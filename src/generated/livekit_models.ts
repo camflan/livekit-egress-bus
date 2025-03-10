@@ -6,8 +6,10 @@
 
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
-import { Timestamp } from "./google/protobuf/timestamp.proto";
-import { MetricsBatch } from "./livekit_metrics.proto";
+import { FileDescriptorProto as FileDescriptorProto1 } from "ts-proto-descriptors";
+import { protoMetadata as protoMetadata1, Timestamp } from "./google/protobuf/timestamp";
+import { MetricsBatch, protoMetadata as protoMetadata2 } from "./livekit_metrics";
+import { messageTypeRegistry } from "./typeRegistry";
 
 export const protobufPackage = "livekit";
 
@@ -761,19 +763,21 @@ export function audioTrackFeatureToJSON(object: AudioTrackFeature): string {
 }
 
 export interface Pagination {
+  $type: "livekit.Pagination";
   /** list entities which IDs are greater */
   afterId: string;
   limit: number;
 }
 
 export interface Room {
+  $type: "livekit.Room";
   sid: string;
   name: string;
   emptyTimeout: number;
   departureTimeout: number;
   maxParticipants: number;
-  creationTime: number;
-  creationTimeMs: number;
+  creationTime: bigint;
+  creationTimeMs: bigint;
   turnPassword: string;
   enabledCodecs: Codec[];
   metadata: string;
@@ -784,17 +788,20 @@ export interface Room {
 }
 
 export interface Codec {
+  $type: "livekit.Codec";
   mime: string;
   fmtpLine: string;
 }
 
 export interface PlayoutDelay {
+  $type: "livekit.PlayoutDelay";
   enabled: boolean;
   min: number;
   max: number;
 }
 
 export interface ParticipantPermission {
+  $type: "livekit.ParticipantPermission";
   /** allow participant to subscribe to other tracks in the room */
   canSubscribe: boolean;
   /** allow participant to publish new tracks to room */
@@ -826,15 +833,16 @@ export interface ParticipantPermission {
 }
 
 export interface ParticipantInfo {
+  $type: "livekit.ParticipantInfo";
   sid: string;
   identity: string;
   state: ParticipantInfo_State;
   tracks: TrackInfo[];
   metadata: string;
   /** timestamp when participant joined room, in seconds */
-  joinedAt: number;
+  joinedAt: bigint;
   /** timestamp when participant joined room, in milliseconds */
-  joinedAtMs: number;
+  joinedAtMs: bigint;
   name: string;
   version: number;
   permission: ParticipantPermission | undefined;
@@ -976,11 +984,13 @@ export function participantInfo_KindToJSON(object: ParticipantInfo_Kind): string
 }
 
 export interface ParticipantInfo_AttributesEntry {
+  $type: "livekit.ParticipantInfo.AttributesEntry";
   key: string;
   value: string;
 }
 
 export interface Encryption {
+  $type: "livekit.Encryption";
 }
 
 export const Encryption_Type = { NONE: 0, GCM: 1, CUSTOM: 2, UNRECOGNIZED: -1 } as const;
@@ -1027,6 +1037,7 @@ export function encryption_TypeToJSON(object: Encryption_Type): string {
 }
 
 export interface SimulcastCodecInfo {
+  $type: "livekit.SimulcastCodecInfo";
   mimeType: string;
   mid: string;
   cid: string;
@@ -1034,6 +1045,7 @@ export interface SimulcastCodecInfo {
 }
 
 export interface TrackInfo {
+  $type: "livekit.TrackInfo";
   sid: string;
   type: TrackType;
   name: string;
@@ -1068,6 +1080,7 @@ export interface TrackInfo {
 
 /** provide information about available spatial layers */
 export interface VideoLayer {
+  $type: "livekit.VideoLayer";
   /** for tracks with a single layer, this should be HIGH */
   quality: VideoQuality;
   width: number;
@@ -1079,6 +1092,7 @@ export interface VideoLayer {
 
 /** new DataPacket API */
 export interface DataPacket {
+  $type: "livekit.DataPacket";
   /** @deprecated */
   kind: DataPacket_Kind;
   /** participant identity of user that sent the message */
@@ -1140,10 +1154,12 @@ export function dataPacket_KindToJSON(object: DataPacket_Kind): string {
 }
 
 export interface ActiveSpeakerUpdate {
+  $type: "livekit.ActiveSpeakerUpdate";
   speakers: SpeakerInfo[];
 }
 
 export interface SpeakerInfo {
+  $type: "livekit.SpeakerInfo";
   sid: string;
   /** audio level, 0-1.0, 1 is loudest */
   level: number;
@@ -1152,6 +1168,7 @@ export interface SpeakerInfo {
 }
 
 export interface UserPacket {
+  $type: "livekit.UserPacket";
   /**
    * participant ID of user that sent the message
    *
@@ -1183,20 +1200,22 @@ export interface UserPacket {
     | string
     | undefined;
   /** start and end time allow relating the message to specific media time */
-  startTime?: number | undefined;
+  startTime?: bigint | undefined;
   endTime?:
-    | number
+    | bigint
     | undefined;
   /** added by SDK to enable de-duping of messages, for INTERNAL USE ONLY */
   nonce: Buffer;
 }
 
 export interface SipDTMF {
+  $type: "livekit.SipDTMF";
   code: number;
   digit: string;
 }
 
 export interface Transcription {
+  $type: "livekit.Transcription";
   /** Participant that got its speech transcribed */
   transcribedParticipantIdentity: string;
   trackId: string;
@@ -1204,20 +1223,22 @@ export interface Transcription {
 }
 
 export interface TranscriptionSegment {
+  $type: "livekit.TranscriptionSegment";
   id: string;
   text: string;
-  startTime: number;
-  endTime: number;
+  startTime: bigint;
+  endTime: bigint;
   final: boolean;
   language: string;
 }
 
 export interface ChatMessage {
+  $type: "livekit.ChatMessage";
   /** uuid */
   id: string;
-  timestamp: number;
+  timestamp: bigint;
   /** populated only if the intent is to edit/update an existing message */
-  editTimestamp?: number | undefined;
+  editTimestamp?: bigint | undefined;
   message: string;
   /** true to remove message */
   deleted: boolean;
@@ -1226,6 +1247,7 @@ export interface ChatMessage {
 }
 
 export interface RpcRequest {
+  $type: "livekit.RpcRequest";
   id: string;
   method: string;
   payload: string;
@@ -1234,22 +1256,26 @@ export interface RpcRequest {
 }
 
 export interface RpcAck {
+  $type: "livekit.RpcAck";
   requestId: string;
 }
 
 export interface RpcResponse {
+  $type: "livekit.RpcResponse";
   requestId: string;
   payload?: string | undefined;
   error?: RpcError | undefined;
 }
 
 export interface RpcError {
+  $type: "livekit.RpcError";
   code: number;
   message: string;
   data: string;
 }
 
 export interface ParticipantTracks {
+  $type: "livekit.ParticipantTracks";
   /** participant ID of participant to whom the tracks belong */
   participantSid: string;
   trackSids: string[];
@@ -1257,6 +1283,7 @@ export interface ParticipantTracks {
 
 /** details about the server */
 export interface ServerInfo {
+  $type: "livekit.ServerInfo";
   edition: ServerInfo_Edition;
   version: string;
   protocol: number;
@@ -1306,6 +1333,7 @@ export function serverInfo_EditionToJSON(object: ServerInfo_Edition): string {
 
 /** details about the client */
 export interface ClientInfo {
+  $type: "livekit.ClientInfo";
   sdk: ClientInfo_SDK;
   version: string;
   protocol: number;
@@ -1444,6 +1472,7 @@ export function clientInfo_SDKToJSON(object: ClientInfo_SDK): string {
 
 /** server provided client configuration */
 export interface ClientConfiguration {
+  $type: "livekit.ClientConfiguration";
   video: VideoConfiguration | undefined;
   screen: VideoConfiguration | undefined;
   resumeConnection: ClientConfigSetting;
@@ -1452,10 +1481,12 @@ export interface ClientConfiguration {
 }
 
 export interface VideoConfiguration {
+  $type: "livekit.VideoConfiguration";
   hardwareEncoder: ClientConfigSetting;
 }
 
 export interface DisabledCodecs {
+  $type: "livekit.DisabledCodecs";
   /** disabled for both publish and subscribe */
   codecs: Codec[];
   /** only disable for publish */
@@ -1463,38 +1494,40 @@ export interface DisabledCodecs {
 }
 
 export interface RTPDrift {
+  $type: "livekit.RTPDrift";
   startTime: Date | undefined;
   endTime: Date | undefined;
   duration: number;
-  startTimestamp: number;
-  endTimestamp: number;
-  rtpClockTicks: number;
-  driftSamples: number;
+  startTimestamp: bigint;
+  endTimestamp: bigint;
+  rtpClockTicks: bigint;
+  driftSamples: bigint;
   driftMs: number;
   clockRate: number;
 }
 
 export interface RTPStats {
+  $type: "livekit.RTPStats";
   startTime: Date | undefined;
   endTime: Date | undefined;
   duration: number;
   packets: number;
   packetRate: number;
-  bytes: number;
-  headerBytes: number;
+  bytes: bigint;
+  headerBytes: bigint;
   bitrate: number;
   packetsLost: number;
   packetLossRate: number;
   packetLossPercentage: number;
   packetsDuplicate: number;
   packetDuplicateRate: number;
-  bytesDuplicate: number;
-  headerBytesDuplicate: number;
+  bytesDuplicate: bigint;
+  headerBytesDuplicate: bigint;
   bitrateDuplicate: number;
   packetsPadding: number;
   packetPaddingRate: number;
-  bytesPadding: number;
-  headerBytesPadding: number;
+  bytesPadding: bigint;
+  headerBytesPadding: bigint;
   bitratePadding: number;
   packetsOutOfOrder: number;
   frames: number;
@@ -1526,42 +1559,47 @@ export interface RTPStats {
 }
 
 export interface RTPStats_GapHistogramEntry {
+  $type: "livekit.RTPStats.GapHistogramEntry";
   key: number;
   value: number;
 }
 
 export interface RTCPSenderReportState {
+  $type: "livekit.RTCPSenderReportState";
   rtpTimestamp: number;
-  rtpTimestampExt: number;
-  ntpTimestamp: number;
+  rtpTimestampExt: bigint;
+  ntpTimestamp: bigint;
   /** time at which this happened */
-  at: number;
-  atAdjusted: number;
+  at: bigint;
+  atAdjusted: bigint;
   packets: number;
-  octets: number;
+  octets: bigint;
 }
 
 export interface RTPForwarderState {
+  $type: "livekit.RTPForwarderState";
   started: boolean;
   referenceLayerSpatial: number;
-  preStartTime: number;
-  extFirstTimestamp: number;
-  dummyStartTimestampOffset: number;
+  preStartTime: bigint;
+  extFirstTimestamp: bigint;
+  dummyStartTimestampOffset: bigint;
   rtpMunger: RTPMungerState | undefined;
   vp8Munger?: VP8MungerState | undefined;
   senderReportState: RTCPSenderReportState[];
 }
 
 export interface RTPMungerState {
-  extLastSequenceNumber: number;
-  extSecondLastSequenceNumber: number;
-  extLastTimestamp: number;
-  extSecondLastTimestamp: number;
+  $type: "livekit.RTPMungerState";
+  extLastSequenceNumber: bigint;
+  extSecondLastSequenceNumber: bigint;
+  extLastTimestamp: bigint;
+  extSecondLastTimestamp: bigint;
   lastMarker: boolean;
   secondLastMarker: boolean;
 }
 
 export interface VP8MungerState {
+  $type: "livekit.VP8MungerState";
   extLastPictureId: number;
   pictureIdUsed: boolean;
   lastTl0PicIdx: number;
@@ -1572,11 +1610,13 @@ export interface VP8MungerState {
 }
 
 export interface TimedVersion {
-  unixMicro: number;
+  $type: "livekit.TimedVersion";
+  unixMicro: bigint;
   ticks: number;
 }
 
 export interface DataStream {
+  $type: "livekit.DataStream";
 }
 
 /** enum for operation types (specific to TextHeader) */
@@ -1631,6 +1671,7 @@ export function dataStream_OperationTypeToJSON(object: DataStream_OperationType)
 
 /** header properties specific to text streams */
 export interface DataStream_TextHeader {
+  $type: "livekit.DataStream.TextHeader";
   operationType: DataStream_OperationType;
   /** Optional: Version for updates/edits */
   version: number;
@@ -1644,20 +1685,22 @@ export interface DataStream_TextHeader {
 
 /** header properties specific to byte or file streams */
 export interface DataStream_ByteHeader {
+  $type: "livekit.DataStream.ByteHeader";
   name: string;
 }
 
 /** main DataStream.Header that contains a oneof for specific headers */
 export interface DataStream_Header {
+  $type: "livekit.DataStream.Header";
   /** unique identifier for this data stream */
   streamId: string;
   /** using int64 for Unix timestamp */
-  timestamp: number;
+  timestamp: bigint;
   topic: string;
   mimeType: string;
   /** only populated for finite streams, if it's a stream of unknown size this stays empty */
   totalLength?:
-    | number
+    | bigint
     | undefined;
   /** defaults to NONE */
   encryptionType: Encryption_Type;
@@ -1668,14 +1711,16 @@ export interface DataStream_Header {
 }
 
 export interface DataStream_Header_AttributesEntry {
+  $type: "livekit.DataStream.Header.AttributesEntry";
   key: string;
   value: string;
 }
 
 export interface DataStream_Chunk {
+  $type: "livekit.DataStream.Chunk";
   /** unique identifier for this data stream to map it to the correct header */
   streamId: string;
-  chunkIndex: number;
+  chunkIndex: bigint;
   /** content as binary (bytes) */
   content: Buffer;
   /** a version indicating that this chunk_index has been retroactively modified and the original one needs to be replaced */
@@ -1685,6 +1730,7 @@ export interface DataStream_Chunk {
 }
 
 export interface DataStream_Trailer {
+  $type: "livekit.DataStream.Trailer";
   /** unique identifier for this data stream */
   streamId: string;
   /** reason why the stream was closed (could contain "error" / "interrupted" / empty for expected end) */
@@ -1694,15 +1740,18 @@ export interface DataStream_Trailer {
 }
 
 export interface DataStream_Trailer_AttributesEntry {
+  $type: "livekit.DataStream.Trailer.AttributesEntry";
   key: string;
   value: string;
 }
 
 function createBasePagination(): Pagination {
-  return { afterId: "", limit: 0 };
+  return { $type: "livekit.Pagination", afterId: "", limit: 0 };
 }
 
-export const Pagination: MessageFns<Pagination> = {
+export const Pagination: MessageFns<Pagination, "livekit.Pagination"> = {
+  $type: "livekit.Pagination" as const,
+
   encode(message: Pagination, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.afterId !== "") {
       writer.uint32(10).string(message.afterId);
@@ -1747,6 +1796,7 @@ export const Pagination: MessageFns<Pagination> = {
 
   fromJSON(object: any): Pagination {
     return {
+      $type: Pagination.$type,
       afterId: isSet(object.afterId) ? globalThis.String(object.afterId) : "",
       limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
     };
@@ -1774,15 +1824,18 @@ export const Pagination: MessageFns<Pagination> = {
   },
 };
 
+messageTypeRegistry.set(Pagination.$type, Pagination);
+
 function createBaseRoom(): Room {
   return {
+    $type: "livekit.Room",
     sid: "",
     name: "",
     emptyTimeout: 0,
     departureTimeout: 0,
     maxParticipants: 0,
-    creationTime: 0,
-    creationTimeMs: 0,
+    creationTime: 0n,
+    creationTimeMs: 0n,
     turnPassword: "",
     enabledCodecs: [],
     metadata: "",
@@ -1793,7 +1846,9 @@ function createBaseRoom(): Room {
   };
 }
 
-export const Room: MessageFns<Room> = {
+export const Room: MessageFns<Room, "livekit.Room"> = {
+  $type: "livekit.Room" as const,
+
   encode(message: Room, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.sid !== "") {
       writer.uint32(10).string(message.sid);
@@ -1810,10 +1865,16 @@ export const Room: MessageFns<Room> = {
     if (message.maxParticipants !== 0) {
       writer.uint32(32).uint32(message.maxParticipants);
     }
-    if (message.creationTime !== 0) {
+    if (message.creationTime !== 0n) {
+      if (BigInt.asIntN(64, message.creationTime) !== message.creationTime) {
+        throw new globalThis.Error("value provided for field message.creationTime of type int64 too large");
+      }
       writer.uint32(40).int64(message.creationTime);
     }
-    if (message.creationTimeMs !== 0) {
+    if (message.creationTimeMs !== 0n) {
+      if (BigInt.asIntN(64, message.creationTimeMs) !== message.creationTimeMs) {
+        throw new globalThis.Error("value provided for field message.creationTimeMs of type int64 too large");
+      }
       writer.uint32(120).int64(message.creationTimeMs);
     }
     if (message.turnPassword !== "") {
@@ -1892,7 +1953,7 @@ export const Room: MessageFns<Room> = {
             break;
           }
 
-          message.creationTime = longToNumber(reader.int64());
+          message.creationTime = reader.int64() as bigint;
           continue;
         }
         case 15: {
@@ -1900,7 +1961,7 @@ export const Room: MessageFns<Room> = {
             break;
           }
 
-          message.creationTimeMs = longToNumber(reader.int64());
+          message.creationTimeMs = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -1970,13 +2031,14 @@ export const Room: MessageFns<Room> = {
 
   fromJSON(object: any): Room {
     return {
+      $type: Room.$type,
       sid: isSet(object.sid) ? globalThis.String(object.sid) : "",
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       emptyTimeout: isSet(object.emptyTimeout) ? globalThis.Number(object.emptyTimeout) : 0,
       departureTimeout: isSet(object.departureTimeout) ? globalThis.Number(object.departureTimeout) : 0,
       maxParticipants: isSet(object.maxParticipants) ? globalThis.Number(object.maxParticipants) : 0,
-      creationTime: isSet(object.creationTime) ? globalThis.Number(object.creationTime) : 0,
-      creationTimeMs: isSet(object.creationTimeMs) ? globalThis.Number(object.creationTimeMs) : 0,
+      creationTime: isSet(object.creationTime) ? BigInt(object.creationTime) : 0n,
+      creationTimeMs: isSet(object.creationTimeMs) ? BigInt(object.creationTimeMs) : 0n,
       turnPassword: isSet(object.turnPassword) ? globalThis.String(object.turnPassword) : "",
       enabledCodecs: globalThis.Array.isArray(object?.enabledCodecs)
         ? object.enabledCodecs.map((e: any) => Codec.fromJSON(e))
@@ -2006,11 +2068,11 @@ export const Room: MessageFns<Room> = {
     if (message.maxParticipants !== 0) {
       obj.maxParticipants = Math.round(message.maxParticipants);
     }
-    if (message.creationTime !== 0) {
-      obj.creationTime = Math.round(message.creationTime);
+    if (message.creationTime !== 0n) {
+      obj.creationTime = message.creationTime.toString();
     }
-    if (message.creationTimeMs !== 0) {
-      obj.creationTimeMs = Math.round(message.creationTimeMs);
+    if (message.creationTimeMs !== 0n) {
+      obj.creationTimeMs = message.creationTimeMs.toString();
     }
     if (message.turnPassword !== "") {
       obj.turnPassword = message.turnPassword;
@@ -2046,8 +2108,8 @@ export const Room: MessageFns<Room> = {
     message.emptyTimeout = object.emptyTimeout ?? 0;
     message.departureTimeout = object.departureTimeout ?? 0;
     message.maxParticipants = object.maxParticipants ?? 0;
-    message.creationTime = object.creationTime ?? 0;
-    message.creationTimeMs = object.creationTimeMs ?? 0;
+    message.creationTime = object.creationTime ?? 0n;
+    message.creationTimeMs = object.creationTimeMs ?? 0n;
     message.turnPassword = object.turnPassword ?? "";
     message.enabledCodecs = object.enabledCodecs?.map((e) => Codec.fromPartial(e)) || [];
     message.metadata = object.metadata ?? "";
@@ -2061,11 +2123,15 @@ export const Room: MessageFns<Room> = {
   },
 };
 
+messageTypeRegistry.set(Room.$type, Room);
+
 function createBaseCodec(): Codec {
-  return { mime: "", fmtpLine: "" };
+  return { $type: "livekit.Codec", mime: "", fmtpLine: "" };
 }
 
-export const Codec: MessageFns<Codec> = {
+export const Codec: MessageFns<Codec, "livekit.Codec"> = {
+  $type: "livekit.Codec" as const,
+
   encode(message: Codec, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.mime !== "") {
       writer.uint32(10).string(message.mime);
@@ -2110,6 +2176,7 @@ export const Codec: MessageFns<Codec> = {
 
   fromJSON(object: any): Codec {
     return {
+      $type: Codec.$type,
       mime: isSet(object.mime) ? globalThis.String(object.mime) : "",
       fmtpLine: isSet(object.fmtpLine) ? globalThis.String(object.fmtpLine) : "",
     };
@@ -2137,11 +2204,15 @@ export const Codec: MessageFns<Codec> = {
   },
 };
 
+messageTypeRegistry.set(Codec.$type, Codec);
+
 function createBasePlayoutDelay(): PlayoutDelay {
-  return { enabled: false, min: 0, max: 0 };
+  return { $type: "livekit.PlayoutDelay", enabled: false, min: 0, max: 0 };
 }
 
-export const PlayoutDelay: MessageFns<PlayoutDelay> = {
+export const PlayoutDelay: MessageFns<PlayoutDelay, "livekit.PlayoutDelay"> = {
+  $type: "livekit.PlayoutDelay" as const,
+
   encode(message: PlayoutDelay, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.enabled !== false) {
       writer.uint32(8).bool(message.enabled);
@@ -2197,6 +2268,7 @@ export const PlayoutDelay: MessageFns<PlayoutDelay> = {
 
   fromJSON(object: any): PlayoutDelay {
     return {
+      $type: PlayoutDelay.$type,
       enabled: isSet(object.enabled) ? globalThis.Boolean(object.enabled) : false,
       min: isSet(object.min) ? globalThis.Number(object.min) : 0,
       max: isSet(object.max) ? globalThis.Number(object.max) : 0,
@@ -2229,8 +2301,11 @@ export const PlayoutDelay: MessageFns<PlayoutDelay> = {
   },
 };
 
+messageTypeRegistry.set(PlayoutDelay.$type, PlayoutDelay);
+
 function createBaseParticipantPermission(): ParticipantPermission {
   return {
+    $type: "livekit.ParticipantPermission",
     canSubscribe: false,
     canPublish: false,
     canPublishData: false,
@@ -2243,7 +2318,9 @@ function createBaseParticipantPermission(): ParticipantPermission {
   };
 }
 
-export const ParticipantPermission: MessageFns<ParticipantPermission> = {
+export const ParticipantPermission: MessageFns<ParticipantPermission, "livekit.ParticipantPermission"> = {
+  $type: "livekit.ParticipantPermission" as const,
+
   encode(message: ParticipantPermission, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.canSubscribe !== false) {
       writer.uint32(8).bool(message.canSubscribe);
@@ -2377,6 +2454,7 @@ export const ParticipantPermission: MessageFns<ParticipantPermission> = {
 
   fromJSON(object: any): ParticipantPermission {
     return {
+      $type: ParticipantPermission.$type,
       canSubscribe: isSet(object.canSubscribe) ? globalThis.Boolean(object.canSubscribe) : false,
       canPublish: isSet(object.canPublish) ? globalThis.Boolean(object.canPublish) : false,
       canPublishData: isSet(object.canPublishData) ? globalThis.Boolean(object.canPublishData) : false,
@@ -2441,15 +2519,18 @@ export const ParticipantPermission: MessageFns<ParticipantPermission> = {
   },
 };
 
+messageTypeRegistry.set(ParticipantPermission.$type, ParticipantPermission);
+
 function createBaseParticipantInfo(): ParticipantInfo {
   return {
+    $type: "livekit.ParticipantInfo",
     sid: "",
     identity: "",
     state: 0,
     tracks: [],
     metadata: "",
-    joinedAt: 0,
-    joinedAtMs: 0,
+    joinedAt: 0n,
+    joinedAtMs: 0n,
     name: "",
     version: 0,
     permission: undefined,
@@ -2461,7 +2542,9 @@ function createBaseParticipantInfo(): ParticipantInfo {
   };
 }
 
-export const ParticipantInfo: MessageFns<ParticipantInfo> = {
+export const ParticipantInfo: MessageFns<ParticipantInfo, "livekit.ParticipantInfo"> = {
+  $type: "livekit.ParticipantInfo" as const,
+
   encode(message: ParticipantInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.sid !== "") {
       writer.uint32(10).string(message.sid);
@@ -2478,10 +2561,16 @@ export const ParticipantInfo: MessageFns<ParticipantInfo> = {
     if (message.metadata !== "") {
       writer.uint32(42).string(message.metadata);
     }
-    if (message.joinedAt !== 0) {
+    if (message.joinedAt !== 0n) {
+      if (BigInt.asIntN(64, message.joinedAt) !== message.joinedAt) {
+        throw new globalThis.Error("value provided for field message.joinedAt of type int64 too large");
+      }
       writer.uint32(48).int64(message.joinedAt);
     }
-    if (message.joinedAtMs !== 0) {
+    if (message.joinedAtMs !== 0n) {
+      if (BigInt.asIntN(64, message.joinedAtMs) !== message.joinedAtMs) {
+        throw new globalThis.Error("value provided for field message.joinedAtMs of type int64 too large");
+      }
       writer.uint32(136).int64(message.joinedAtMs);
     }
     if (message.name !== "") {
@@ -2503,7 +2592,11 @@ export const ParticipantInfo: MessageFns<ParticipantInfo> = {
       writer.uint32(112).int32(message.kind);
     }
     Object.entries(message.attributes).forEach(([key, value]) => {
-      ParticipantInfo_AttributesEntry.encode({ key: key as any, value }, writer.uint32(122).fork()).join();
+      ParticipantInfo_AttributesEntry.encode({
+        $type: "livekit.ParticipantInfo.AttributesEntry",
+        key: key as any,
+        value,
+      }, writer.uint32(122).fork()).join();
     });
     if (message.disconnectReason !== 0) {
       writer.uint32(128).int32(message.disconnectReason);
@@ -2563,7 +2656,7 @@ export const ParticipantInfo: MessageFns<ParticipantInfo> = {
             break;
           }
 
-          message.joinedAt = longToNumber(reader.int64());
+          message.joinedAt = reader.int64() as bigint;
           continue;
         }
         case 17: {
@@ -2571,7 +2664,7 @@ export const ParticipantInfo: MessageFns<ParticipantInfo> = {
             break;
           }
 
-          message.joinedAtMs = longToNumber(reader.int64());
+          message.joinedAtMs = reader.int64() as bigint;
           continue;
         }
         case 9: {
@@ -2652,13 +2745,14 @@ export const ParticipantInfo: MessageFns<ParticipantInfo> = {
 
   fromJSON(object: any): ParticipantInfo {
     return {
+      $type: ParticipantInfo.$type,
       sid: isSet(object.sid) ? globalThis.String(object.sid) : "",
       identity: isSet(object.identity) ? globalThis.String(object.identity) : "",
       state: isSet(object.state) ? participantInfo_StateFromJSON(object.state) : 0,
       tracks: globalThis.Array.isArray(object?.tracks) ? object.tracks.map((e: any) => TrackInfo.fromJSON(e)) : [],
       metadata: isSet(object.metadata) ? globalThis.String(object.metadata) : "",
-      joinedAt: isSet(object.joinedAt) ? globalThis.Number(object.joinedAt) : 0,
-      joinedAtMs: isSet(object.joinedAtMs) ? globalThis.Number(object.joinedAtMs) : 0,
+      joinedAt: isSet(object.joinedAt) ? BigInt(object.joinedAt) : 0n,
+      joinedAtMs: isSet(object.joinedAtMs) ? BigInt(object.joinedAtMs) : 0n,
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       version: isSet(object.version) ? globalThis.Number(object.version) : 0,
       permission: isSet(object.permission) ? ParticipantPermission.fromJSON(object.permission) : undefined,
@@ -2692,11 +2786,11 @@ export const ParticipantInfo: MessageFns<ParticipantInfo> = {
     if (message.metadata !== "") {
       obj.metadata = message.metadata;
     }
-    if (message.joinedAt !== 0) {
-      obj.joinedAt = Math.round(message.joinedAt);
+    if (message.joinedAt !== 0n) {
+      obj.joinedAt = message.joinedAt.toString();
     }
-    if (message.joinedAtMs !== 0) {
-      obj.joinedAtMs = Math.round(message.joinedAtMs);
+    if (message.joinedAtMs !== 0n) {
+      obj.joinedAtMs = message.joinedAtMs.toString();
     }
     if (message.name !== "") {
       obj.name = message.name;
@@ -2741,8 +2835,8 @@ export const ParticipantInfo: MessageFns<ParticipantInfo> = {
     message.state = object.state ?? 0;
     message.tracks = object.tracks?.map((e) => TrackInfo.fromPartial(e)) || [];
     message.metadata = object.metadata ?? "";
-    message.joinedAt = object.joinedAt ?? 0;
-    message.joinedAtMs = object.joinedAtMs ?? 0;
+    message.joinedAt = object.joinedAt ?? 0n;
+    message.joinedAtMs = object.joinedAtMs ?? 0n;
     message.name = object.name ?? "";
     message.version = object.version ?? 0;
     message.permission = (object.permission !== undefined && object.permission !== null)
@@ -2765,11 +2859,18 @@ export const ParticipantInfo: MessageFns<ParticipantInfo> = {
   },
 };
 
+messageTypeRegistry.set(ParticipantInfo.$type, ParticipantInfo);
+
 function createBaseParticipantInfo_AttributesEntry(): ParticipantInfo_AttributesEntry {
-  return { key: "", value: "" };
+  return { $type: "livekit.ParticipantInfo.AttributesEntry", key: "", value: "" };
 }
 
-export const ParticipantInfo_AttributesEntry: MessageFns<ParticipantInfo_AttributesEntry> = {
+export const ParticipantInfo_AttributesEntry: MessageFns<
+  ParticipantInfo_AttributesEntry,
+  "livekit.ParticipantInfo.AttributesEntry"
+> = {
+  $type: "livekit.ParticipantInfo.AttributesEntry" as const,
+
   encode(message: ParticipantInfo_AttributesEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
@@ -2814,6 +2915,7 @@ export const ParticipantInfo_AttributesEntry: MessageFns<ParticipantInfo_Attribu
 
   fromJSON(object: any): ParticipantInfo_AttributesEntry {
     return {
+      $type: ParticipantInfo_AttributesEntry.$type,
       key: isSet(object.key) ? globalThis.String(object.key) : "",
       value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
@@ -2843,11 +2945,15 @@ export const ParticipantInfo_AttributesEntry: MessageFns<ParticipantInfo_Attribu
   },
 };
 
+messageTypeRegistry.set(ParticipantInfo_AttributesEntry.$type, ParticipantInfo_AttributesEntry);
+
 function createBaseEncryption(): Encryption {
-  return {};
+  return { $type: "livekit.Encryption" };
 }
 
-export const Encryption: MessageFns<Encryption> = {
+export const Encryption: MessageFns<Encryption, "livekit.Encryption"> = {
+  $type: "livekit.Encryption" as const,
+
   encode(_: Encryption, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     return writer;
   },
@@ -2869,7 +2975,7 @@ export const Encryption: MessageFns<Encryption> = {
   },
 
   fromJSON(_: any): Encryption {
-    return {};
+    return { $type: Encryption.$type };
   },
 
   toJSON(_: Encryption): unknown {
@@ -2886,11 +2992,15 @@ export const Encryption: MessageFns<Encryption> = {
   },
 };
 
+messageTypeRegistry.set(Encryption.$type, Encryption);
+
 function createBaseSimulcastCodecInfo(): SimulcastCodecInfo {
-  return { mimeType: "", mid: "", cid: "", layers: [] };
+  return { $type: "livekit.SimulcastCodecInfo", mimeType: "", mid: "", cid: "", layers: [] };
 }
 
-export const SimulcastCodecInfo: MessageFns<SimulcastCodecInfo> = {
+export const SimulcastCodecInfo: MessageFns<SimulcastCodecInfo, "livekit.SimulcastCodecInfo"> = {
+  $type: "livekit.SimulcastCodecInfo" as const,
+
   encode(message: SimulcastCodecInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.mimeType !== "") {
       writer.uint32(10).string(message.mimeType);
@@ -2957,6 +3067,7 @@ export const SimulcastCodecInfo: MessageFns<SimulcastCodecInfo> = {
 
   fromJSON(object: any): SimulcastCodecInfo {
     return {
+      $type: SimulcastCodecInfo.$type,
       mimeType: isSet(object.mimeType) ? globalThis.String(object.mimeType) : "",
       mid: isSet(object.mid) ? globalThis.String(object.mid) : "",
       cid: isSet(object.cid) ? globalThis.String(object.cid) : "",
@@ -2994,8 +3105,11 @@ export const SimulcastCodecInfo: MessageFns<SimulcastCodecInfo> = {
   },
 };
 
+messageTypeRegistry.set(SimulcastCodecInfo.$type, SimulcastCodecInfo);
+
 function createBaseTrackInfo(): TrackInfo {
   return {
+    $type: "livekit.TrackInfo",
     sid: "",
     type: 0,
     name: "",
@@ -3019,7 +3133,9 @@ function createBaseTrackInfo(): TrackInfo {
   };
 }
 
-export const TrackInfo: MessageFns<TrackInfo> = {
+export const TrackInfo: MessageFns<TrackInfo, "livekit.TrackInfo"> = {
+  $type: "livekit.TrackInfo" as const,
+
   encode(message: TrackInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.sid !== "") {
       writer.uint32(10).string(message.sid);
@@ -3274,6 +3390,7 @@ export const TrackInfo: MessageFns<TrackInfo> = {
 
   fromJSON(object: any): TrackInfo {
     return {
+      $type: TrackInfo.$type,
       sid: isSet(object.sid) ? globalThis.String(object.sid) : "",
       type: isSet(object.type) ? trackTypeFromJSON(object.type) : 0,
       name: isSet(object.name) ? globalThis.String(object.name) : "",
@@ -3397,11 +3514,15 @@ export const TrackInfo: MessageFns<TrackInfo> = {
   },
 };
 
+messageTypeRegistry.set(TrackInfo.$type, TrackInfo);
+
 function createBaseVideoLayer(): VideoLayer {
-  return { quality: 0, width: 0, height: 0, bitrate: 0, ssrc: 0 };
+  return { $type: "livekit.VideoLayer", quality: 0, width: 0, height: 0, bitrate: 0, ssrc: 0 };
 }
 
-export const VideoLayer: MessageFns<VideoLayer> = {
+export const VideoLayer: MessageFns<VideoLayer, "livekit.VideoLayer"> = {
+  $type: "livekit.VideoLayer" as const,
+
   encode(message: VideoLayer, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.quality !== 0) {
       writer.uint32(8).int32(message.quality);
@@ -3479,6 +3600,7 @@ export const VideoLayer: MessageFns<VideoLayer> = {
 
   fromJSON(object: any): VideoLayer {
     return {
+      $type: VideoLayer.$type,
       quality: isSet(object.quality) ? videoQualityFromJSON(object.quality) : 0,
       width: isSet(object.width) ? globalThis.Number(object.width) : 0,
       height: isSet(object.height) ? globalThis.Number(object.height) : 0,
@@ -3521,8 +3643,11 @@ export const VideoLayer: MessageFns<VideoLayer> = {
   },
 };
 
+messageTypeRegistry.set(VideoLayer.$type, VideoLayer);
+
 function createBaseDataPacket(): DataPacket {
   return {
+    $type: "livekit.DataPacket",
     kind: 0,
     participantIdentity: "",
     destinationIdentities: [],
@@ -3541,7 +3666,9 @@ function createBaseDataPacket(): DataPacket {
   };
 }
 
-export const DataPacket: MessageFns<DataPacket> = {
+export const DataPacket: MessageFns<DataPacket, "livekit.DataPacket"> = {
+  $type: "livekit.DataPacket" as const,
+
   encode(message: DataPacket, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.kind !== 0) {
       writer.uint32(8).int32(message.kind);
@@ -3729,6 +3856,7 @@ export const DataPacket: MessageFns<DataPacket> = {
 
   fromJSON(object: any): DataPacket {
     return {
+      $type: DataPacket.$type,
       kind: isSet(object.kind) ? dataPacket_KindFromJSON(object.kind) : 0,
       participantIdentity: isSet(object.participantIdentity) ? globalThis.String(object.participantIdentity) : "",
       destinationIdentities: globalThis.Array.isArray(object?.destinationIdentities)
@@ -3847,11 +3975,15 @@ export const DataPacket: MessageFns<DataPacket> = {
   },
 };
 
+messageTypeRegistry.set(DataPacket.$type, DataPacket);
+
 function createBaseActiveSpeakerUpdate(): ActiveSpeakerUpdate {
-  return { speakers: [] };
+  return { $type: "livekit.ActiveSpeakerUpdate", speakers: [] };
 }
 
-export const ActiveSpeakerUpdate: MessageFns<ActiveSpeakerUpdate> = {
+export const ActiveSpeakerUpdate: MessageFns<ActiveSpeakerUpdate, "livekit.ActiveSpeakerUpdate"> = {
+  $type: "livekit.ActiveSpeakerUpdate" as const,
+
   encode(message: ActiveSpeakerUpdate, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.speakers) {
       SpeakerInfo.encode(v!, writer.uint32(10).fork()).join();
@@ -3885,6 +4017,7 @@ export const ActiveSpeakerUpdate: MessageFns<ActiveSpeakerUpdate> = {
 
   fromJSON(object: any): ActiveSpeakerUpdate {
     return {
+      $type: ActiveSpeakerUpdate.$type,
       speakers: globalThis.Array.isArray(object?.speakers)
         ? object.speakers.map((e: any) => SpeakerInfo.fromJSON(e))
         : [],
@@ -3909,11 +4042,15 @@ export const ActiveSpeakerUpdate: MessageFns<ActiveSpeakerUpdate> = {
   },
 };
 
+messageTypeRegistry.set(ActiveSpeakerUpdate.$type, ActiveSpeakerUpdate);
+
 function createBaseSpeakerInfo(): SpeakerInfo {
-  return { sid: "", level: 0, active: false };
+  return { $type: "livekit.SpeakerInfo", sid: "", level: 0, active: false };
 }
 
-export const SpeakerInfo: MessageFns<SpeakerInfo> = {
+export const SpeakerInfo: MessageFns<SpeakerInfo, "livekit.SpeakerInfo"> = {
+  $type: "livekit.SpeakerInfo" as const,
+
   encode(message: SpeakerInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.sid !== "") {
       writer.uint32(10).string(message.sid);
@@ -3969,6 +4106,7 @@ export const SpeakerInfo: MessageFns<SpeakerInfo> = {
 
   fromJSON(object: any): SpeakerInfo {
     return {
+      $type: SpeakerInfo.$type,
       sid: isSet(object.sid) ? globalThis.String(object.sid) : "",
       level: isSet(object.level) ? globalThis.Number(object.level) : 0,
       active: isSet(object.active) ? globalThis.Boolean(object.active) : false,
@@ -4001,8 +4139,11 @@ export const SpeakerInfo: MessageFns<SpeakerInfo> = {
   },
 };
 
+messageTypeRegistry.set(SpeakerInfo.$type, SpeakerInfo);
+
 function createBaseUserPacket(): UserPacket {
   return {
+    $type: "livekit.UserPacket",
     participantSid: "",
     participantIdentity: "",
     payload: Buffer.alloc(0),
@@ -4016,7 +4157,9 @@ function createBaseUserPacket(): UserPacket {
   };
 }
 
-export const UserPacket: MessageFns<UserPacket> = {
+export const UserPacket: MessageFns<UserPacket, "livekit.UserPacket"> = {
+  $type: "livekit.UserPacket" as const,
+
   encode(message: UserPacket, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.participantSid !== "") {
       writer.uint32(10).string(message.participantSid);
@@ -4040,9 +4183,15 @@ export const UserPacket: MessageFns<UserPacket> = {
       writer.uint32(66).string(message.id);
     }
     if (message.startTime !== undefined) {
+      if (BigInt.asUintN(64, message.startTime) !== message.startTime) {
+        throw new globalThis.Error("value provided for field message.startTime of type uint64 too large");
+      }
       writer.uint32(72).uint64(message.startTime);
     }
     if (message.endTime !== undefined) {
+      if (BigInt.asUintN(64, message.endTime) !== message.endTime) {
+        throw new globalThis.Error("value provided for field message.endTime of type uint64 too large");
+      }
       writer.uint32(80).uint64(message.endTime);
     }
     if (message.nonce.length !== 0) {
@@ -4119,7 +4268,7 @@ export const UserPacket: MessageFns<UserPacket> = {
             break;
           }
 
-          message.startTime = longToNumber(reader.uint64());
+          message.startTime = reader.uint64() as bigint;
           continue;
         }
         case 10: {
@@ -4127,7 +4276,7 @@ export const UserPacket: MessageFns<UserPacket> = {
             break;
           }
 
-          message.endTime = longToNumber(reader.uint64());
+          message.endTime = reader.uint64() as bigint;
           continue;
         }
         case 11: {
@@ -4149,6 +4298,7 @@ export const UserPacket: MessageFns<UserPacket> = {
 
   fromJSON(object: any): UserPacket {
     return {
+      $type: UserPacket.$type,
       participantSid: isSet(object.participantSid) ? globalThis.String(object.participantSid) : "",
       participantIdentity: isSet(object.participantIdentity) ? globalThis.String(object.participantIdentity) : "",
       payload: isSet(object.payload) ? Buffer.from(bytesFromBase64(object.payload)) : Buffer.alloc(0),
@@ -4160,8 +4310,8 @@ export const UserPacket: MessageFns<UserPacket> = {
         : [],
       topic: isSet(object.topic) ? globalThis.String(object.topic) : undefined,
       id: isSet(object.id) ? globalThis.String(object.id) : undefined,
-      startTime: isSet(object.startTime) ? globalThis.Number(object.startTime) : undefined,
-      endTime: isSet(object.endTime) ? globalThis.Number(object.endTime) : undefined,
+      startTime: isSet(object.startTime) ? BigInt(object.startTime) : undefined,
+      endTime: isSet(object.endTime) ? BigInt(object.endTime) : undefined,
       nonce: isSet(object.nonce) ? Buffer.from(bytesFromBase64(object.nonce)) : Buffer.alloc(0),
     };
   },
@@ -4190,10 +4340,10 @@ export const UserPacket: MessageFns<UserPacket> = {
       obj.id = message.id;
     }
     if (message.startTime !== undefined) {
-      obj.startTime = Math.round(message.startTime);
+      obj.startTime = message.startTime.toString();
     }
     if (message.endTime !== undefined) {
-      obj.endTime = Math.round(message.endTime);
+      obj.endTime = message.endTime.toString();
     }
     if (message.nonce.length !== 0) {
       obj.nonce = base64FromBytes(message.nonce);
@@ -4220,11 +4370,15 @@ export const UserPacket: MessageFns<UserPacket> = {
   },
 };
 
+messageTypeRegistry.set(UserPacket.$type, UserPacket);
+
 function createBaseSipDTMF(): SipDTMF {
-  return { code: 0, digit: "" };
+  return { $type: "livekit.SipDTMF", code: 0, digit: "" };
 }
 
-export const SipDTMF: MessageFns<SipDTMF> = {
+export const SipDTMF: MessageFns<SipDTMF, "livekit.SipDTMF"> = {
+  $type: "livekit.SipDTMF" as const,
+
   encode(message: SipDTMF, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.code !== 0) {
       writer.uint32(24).uint32(message.code);
@@ -4269,6 +4423,7 @@ export const SipDTMF: MessageFns<SipDTMF> = {
 
   fromJSON(object: any): SipDTMF {
     return {
+      $type: SipDTMF.$type,
       code: isSet(object.code) ? globalThis.Number(object.code) : 0,
       digit: isSet(object.digit) ? globalThis.String(object.digit) : "",
     };
@@ -4296,11 +4451,15 @@ export const SipDTMF: MessageFns<SipDTMF> = {
   },
 };
 
+messageTypeRegistry.set(SipDTMF.$type, SipDTMF);
+
 function createBaseTranscription(): Transcription {
-  return { transcribedParticipantIdentity: "", trackId: "", segments: [] };
+  return { $type: "livekit.Transcription", transcribedParticipantIdentity: "", trackId: "", segments: [] };
 }
 
-export const Transcription: MessageFns<Transcription> = {
+export const Transcription: MessageFns<Transcription, "livekit.Transcription"> = {
+  $type: "livekit.Transcription" as const,
+
   encode(message: Transcription, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.transcribedParticipantIdentity !== "") {
       writer.uint32(18).string(message.transcribedParticipantIdentity);
@@ -4356,6 +4515,7 @@ export const Transcription: MessageFns<Transcription> = {
 
   fromJSON(object: any): Transcription {
     return {
+      $type: Transcription.$type,
       transcribedParticipantIdentity: isSet(object.transcribedParticipantIdentity)
         ? globalThis.String(object.transcribedParticipantIdentity)
         : "",
@@ -4392,11 +4552,23 @@ export const Transcription: MessageFns<Transcription> = {
   },
 };
 
+messageTypeRegistry.set(Transcription.$type, Transcription);
+
 function createBaseTranscriptionSegment(): TranscriptionSegment {
-  return { id: "", text: "", startTime: 0, endTime: 0, final: false, language: "" };
+  return {
+    $type: "livekit.TranscriptionSegment",
+    id: "",
+    text: "",
+    startTime: 0n,
+    endTime: 0n,
+    final: false,
+    language: "",
+  };
 }
 
-export const TranscriptionSegment: MessageFns<TranscriptionSegment> = {
+export const TranscriptionSegment: MessageFns<TranscriptionSegment, "livekit.TranscriptionSegment"> = {
+  $type: "livekit.TranscriptionSegment" as const,
+
   encode(message: TranscriptionSegment, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
@@ -4404,10 +4576,16 @@ export const TranscriptionSegment: MessageFns<TranscriptionSegment> = {
     if (message.text !== "") {
       writer.uint32(18).string(message.text);
     }
-    if (message.startTime !== 0) {
+    if (message.startTime !== 0n) {
+      if (BigInt.asUintN(64, message.startTime) !== message.startTime) {
+        throw new globalThis.Error("value provided for field message.startTime of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.startTime);
     }
-    if (message.endTime !== 0) {
+    if (message.endTime !== 0n) {
+      if (BigInt.asUintN(64, message.endTime) !== message.endTime) {
+        throw new globalThis.Error("value provided for field message.endTime of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.endTime);
     }
     if (message.final !== false) {
@@ -4447,7 +4625,7 @@ export const TranscriptionSegment: MessageFns<TranscriptionSegment> = {
             break;
           }
 
-          message.startTime = longToNumber(reader.uint64());
+          message.startTime = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -4455,7 +4633,7 @@ export const TranscriptionSegment: MessageFns<TranscriptionSegment> = {
             break;
           }
 
-          message.endTime = longToNumber(reader.uint64());
+          message.endTime = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -4485,10 +4663,11 @@ export const TranscriptionSegment: MessageFns<TranscriptionSegment> = {
 
   fromJSON(object: any): TranscriptionSegment {
     return {
+      $type: TranscriptionSegment.$type,
       id: isSet(object.id) ? globalThis.String(object.id) : "",
       text: isSet(object.text) ? globalThis.String(object.text) : "",
-      startTime: isSet(object.startTime) ? globalThis.Number(object.startTime) : 0,
-      endTime: isSet(object.endTime) ? globalThis.Number(object.endTime) : 0,
+      startTime: isSet(object.startTime) ? BigInt(object.startTime) : 0n,
+      endTime: isSet(object.endTime) ? BigInt(object.endTime) : 0n,
       final: isSet(object.final) ? globalThis.Boolean(object.final) : false,
       language: isSet(object.language) ? globalThis.String(object.language) : "",
     };
@@ -4502,11 +4681,11 @@ export const TranscriptionSegment: MessageFns<TranscriptionSegment> = {
     if (message.text !== "") {
       obj.text = message.text;
     }
-    if (message.startTime !== 0) {
-      obj.startTime = Math.round(message.startTime);
+    if (message.startTime !== 0n) {
+      obj.startTime = message.startTime.toString();
     }
-    if (message.endTime !== 0) {
-      obj.endTime = Math.round(message.endTime);
+    if (message.endTime !== 0n) {
+      obj.endTime = message.endTime.toString();
     }
     if (message.final !== false) {
       obj.final = message.final;
@@ -4524,27 +4703,45 @@ export const TranscriptionSegment: MessageFns<TranscriptionSegment> = {
     const message = createBaseTranscriptionSegment();
     message.id = object.id ?? "";
     message.text = object.text ?? "";
-    message.startTime = object.startTime ?? 0;
-    message.endTime = object.endTime ?? 0;
+    message.startTime = object.startTime ?? 0n;
+    message.endTime = object.endTime ?? 0n;
     message.final = object.final ?? false;
     message.language = object.language ?? "";
     return message;
   },
 };
 
+messageTypeRegistry.set(TranscriptionSegment.$type, TranscriptionSegment);
+
 function createBaseChatMessage(): ChatMessage {
-  return { id: "", timestamp: 0, editTimestamp: undefined, message: "", deleted: false, generated: false };
+  return {
+    $type: "livekit.ChatMessage",
+    id: "",
+    timestamp: 0n,
+    editTimestamp: undefined,
+    message: "",
+    deleted: false,
+    generated: false,
+  };
 }
 
-export const ChatMessage: MessageFns<ChatMessage> = {
+export const ChatMessage: MessageFns<ChatMessage, "livekit.ChatMessage"> = {
+  $type: "livekit.ChatMessage" as const,
+
   encode(message: ChatMessage, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
-    if (message.timestamp !== 0) {
+    if (message.timestamp !== 0n) {
+      if (BigInt.asIntN(64, message.timestamp) !== message.timestamp) {
+        throw new globalThis.Error("value provided for field message.timestamp of type int64 too large");
+      }
       writer.uint32(16).int64(message.timestamp);
     }
     if (message.editTimestamp !== undefined) {
+      if (BigInt.asIntN(64, message.editTimestamp) !== message.editTimestamp) {
+        throw new globalThis.Error("value provided for field message.editTimestamp of type int64 too large");
+      }
       writer.uint32(24).int64(message.editTimestamp);
     }
     if (message.message !== "") {
@@ -4579,7 +4776,7 @@ export const ChatMessage: MessageFns<ChatMessage> = {
             break;
           }
 
-          message.timestamp = longToNumber(reader.int64());
+          message.timestamp = reader.int64() as bigint;
           continue;
         }
         case 3: {
@@ -4587,7 +4784,7 @@ export const ChatMessage: MessageFns<ChatMessage> = {
             break;
           }
 
-          message.editTimestamp = longToNumber(reader.int64());
+          message.editTimestamp = reader.int64() as bigint;
           continue;
         }
         case 4: {
@@ -4625,9 +4822,10 @@ export const ChatMessage: MessageFns<ChatMessage> = {
 
   fromJSON(object: any): ChatMessage {
     return {
+      $type: ChatMessage.$type,
       id: isSet(object.id) ? globalThis.String(object.id) : "",
-      timestamp: isSet(object.timestamp) ? globalThis.Number(object.timestamp) : 0,
-      editTimestamp: isSet(object.editTimestamp) ? globalThis.Number(object.editTimestamp) : undefined,
+      timestamp: isSet(object.timestamp) ? BigInt(object.timestamp) : 0n,
+      editTimestamp: isSet(object.editTimestamp) ? BigInt(object.editTimestamp) : undefined,
       message: isSet(object.message) ? globalThis.String(object.message) : "",
       deleted: isSet(object.deleted) ? globalThis.Boolean(object.deleted) : false,
       generated: isSet(object.generated) ? globalThis.Boolean(object.generated) : false,
@@ -4639,11 +4837,11 @@ export const ChatMessage: MessageFns<ChatMessage> = {
     if (message.id !== "") {
       obj.id = message.id;
     }
-    if (message.timestamp !== 0) {
-      obj.timestamp = Math.round(message.timestamp);
+    if (message.timestamp !== 0n) {
+      obj.timestamp = message.timestamp.toString();
     }
     if (message.editTimestamp !== undefined) {
-      obj.editTimestamp = Math.round(message.editTimestamp);
+      obj.editTimestamp = message.editTimestamp.toString();
     }
     if (message.message !== "") {
       obj.message = message.message;
@@ -4663,7 +4861,7 @@ export const ChatMessage: MessageFns<ChatMessage> = {
   fromPartial<I extends Exact<DeepPartial<ChatMessage>, I>>(object: I): ChatMessage {
     const message = createBaseChatMessage();
     message.id = object.id ?? "";
-    message.timestamp = object.timestamp ?? 0;
+    message.timestamp = object.timestamp ?? 0n;
     message.editTimestamp = object.editTimestamp ?? undefined;
     message.message = object.message ?? "";
     message.deleted = object.deleted ?? false;
@@ -4672,11 +4870,15 @@ export const ChatMessage: MessageFns<ChatMessage> = {
   },
 };
 
+messageTypeRegistry.set(ChatMessage.$type, ChatMessage);
+
 function createBaseRpcRequest(): RpcRequest {
-  return { id: "", method: "", payload: "", responseTimeoutMs: 0, version: 0 };
+  return { $type: "livekit.RpcRequest", id: "", method: "", payload: "", responseTimeoutMs: 0, version: 0 };
 }
 
-export const RpcRequest: MessageFns<RpcRequest> = {
+export const RpcRequest: MessageFns<RpcRequest, "livekit.RpcRequest"> = {
+  $type: "livekit.RpcRequest" as const,
+
   encode(message: RpcRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
@@ -4754,6 +4956,7 @@ export const RpcRequest: MessageFns<RpcRequest> = {
 
   fromJSON(object: any): RpcRequest {
     return {
+      $type: RpcRequest.$type,
       id: isSet(object.id) ? globalThis.String(object.id) : "",
       method: isSet(object.method) ? globalThis.String(object.method) : "",
       payload: isSet(object.payload) ? globalThis.String(object.payload) : "",
@@ -4796,11 +4999,15 @@ export const RpcRequest: MessageFns<RpcRequest> = {
   },
 };
 
+messageTypeRegistry.set(RpcRequest.$type, RpcRequest);
+
 function createBaseRpcAck(): RpcAck {
-  return { requestId: "" };
+  return { $type: "livekit.RpcAck", requestId: "" };
 }
 
-export const RpcAck: MessageFns<RpcAck> = {
+export const RpcAck: MessageFns<RpcAck, "livekit.RpcAck"> = {
+  $type: "livekit.RpcAck" as const,
+
   encode(message: RpcAck, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.requestId !== "") {
       writer.uint32(10).string(message.requestId);
@@ -4833,7 +5040,7 @@ export const RpcAck: MessageFns<RpcAck> = {
   },
 
   fromJSON(object: any): RpcAck {
-    return { requestId: isSet(object.requestId) ? globalThis.String(object.requestId) : "" };
+    return { $type: RpcAck.$type, requestId: isSet(object.requestId) ? globalThis.String(object.requestId) : "" };
   },
 
   toJSON(message: RpcAck): unknown {
@@ -4854,11 +5061,15 @@ export const RpcAck: MessageFns<RpcAck> = {
   },
 };
 
+messageTypeRegistry.set(RpcAck.$type, RpcAck);
+
 function createBaseRpcResponse(): RpcResponse {
-  return { requestId: "", payload: undefined, error: undefined };
+  return { $type: "livekit.RpcResponse", requestId: "", payload: undefined, error: undefined };
 }
 
-export const RpcResponse: MessageFns<RpcResponse> = {
+export const RpcResponse: MessageFns<RpcResponse, "livekit.RpcResponse"> = {
+  $type: "livekit.RpcResponse" as const,
+
   encode(message: RpcResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.requestId !== "") {
       writer.uint32(10).string(message.requestId);
@@ -4914,6 +5125,7 @@ export const RpcResponse: MessageFns<RpcResponse> = {
 
   fromJSON(object: any): RpcResponse {
     return {
+      $type: RpcResponse.$type,
       requestId: isSet(object.requestId) ? globalThis.String(object.requestId) : "",
       payload: isSet(object.payload) ? globalThis.String(object.payload) : undefined,
       error: isSet(object.error) ? RpcError.fromJSON(object.error) : undefined,
@@ -4948,11 +5160,15 @@ export const RpcResponse: MessageFns<RpcResponse> = {
   },
 };
 
+messageTypeRegistry.set(RpcResponse.$type, RpcResponse);
+
 function createBaseRpcError(): RpcError {
-  return { code: 0, message: "", data: "" };
+  return { $type: "livekit.RpcError", code: 0, message: "", data: "" };
 }
 
-export const RpcError: MessageFns<RpcError> = {
+export const RpcError: MessageFns<RpcError, "livekit.RpcError"> = {
+  $type: "livekit.RpcError" as const,
+
   encode(message: RpcError, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.code !== 0) {
       writer.uint32(8).uint32(message.code);
@@ -5008,6 +5224,7 @@ export const RpcError: MessageFns<RpcError> = {
 
   fromJSON(object: any): RpcError {
     return {
+      $type: RpcError.$type,
       code: isSet(object.code) ? globalThis.Number(object.code) : 0,
       message: isSet(object.message) ? globalThis.String(object.message) : "",
       data: isSet(object.data) ? globalThis.String(object.data) : "",
@@ -5040,11 +5257,15 @@ export const RpcError: MessageFns<RpcError> = {
   },
 };
 
+messageTypeRegistry.set(RpcError.$type, RpcError);
+
 function createBaseParticipantTracks(): ParticipantTracks {
-  return { participantSid: "", trackSids: [] };
+  return { $type: "livekit.ParticipantTracks", participantSid: "", trackSids: [] };
 }
 
-export const ParticipantTracks: MessageFns<ParticipantTracks> = {
+export const ParticipantTracks: MessageFns<ParticipantTracks, "livekit.ParticipantTracks"> = {
+  $type: "livekit.ParticipantTracks" as const,
+
   encode(message: ParticipantTracks, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.participantSid !== "") {
       writer.uint32(10).string(message.participantSid);
@@ -5089,6 +5310,7 @@ export const ParticipantTracks: MessageFns<ParticipantTracks> = {
 
   fromJSON(object: any): ParticipantTracks {
     return {
+      $type: ParticipantTracks.$type,
       participantSid: isSet(object.participantSid) ? globalThis.String(object.participantSid) : "",
       trackSids: globalThis.Array.isArray(object?.trackSids)
         ? object.trackSids.map((e: any) => globalThis.String(e))
@@ -5118,11 +5340,24 @@ export const ParticipantTracks: MessageFns<ParticipantTracks> = {
   },
 };
 
+messageTypeRegistry.set(ParticipantTracks.$type, ParticipantTracks);
+
 function createBaseServerInfo(): ServerInfo {
-  return { edition: 0, version: "", protocol: 0, region: "", nodeId: "", debugInfo: "", agentProtocol: 0 };
+  return {
+    $type: "livekit.ServerInfo",
+    edition: 0,
+    version: "",
+    protocol: 0,
+    region: "",
+    nodeId: "",
+    debugInfo: "",
+    agentProtocol: 0,
+  };
 }
 
-export const ServerInfo: MessageFns<ServerInfo> = {
+export const ServerInfo: MessageFns<ServerInfo, "livekit.ServerInfo"> = {
+  $type: "livekit.ServerInfo" as const,
+
   encode(message: ServerInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.edition !== 0) {
       writer.uint32(8).int32(message.edition);
@@ -5222,6 +5457,7 @@ export const ServerInfo: MessageFns<ServerInfo> = {
 
   fromJSON(object: any): ServerInfo {
     return {
+      $type: ServerInfo.$type,
       edition: isSet(object.edition) ? serverInfo_EditionFromJSON(object.edition) : 0,
       version: isSet(object.version) ? globalThis.String(object.version) : "",
       protocol: isSet(object.protocol) ? globalThis.Number(object.protocol) : 0,
@@ -5274,8 +5510,11 @@ export const ServerInfo: MessageFns<ServerInfo> = {
   },
 };
 
+messageTypeRegistry.set(ServerInfo.$type, ServerInfo);
+
 function createBaseClientInfo(): ClientInfo {
   return {
+    $type: "livekit.ClientInfo",
     sdk: 0,
     version: "",
     protocol: 0,
@@ -5290,7 +5529,9 @@ function createBaseClientInfo(): ClientInfo {
   };
 }
 
-export const ClientInfo: MessageFns<ClientInfo> = {
+export const ClientInfo: MessageFns<ClientInfo, "livekit.ClientInfo"> = {
+  $type: "livekit.ClientInfo" as const,
+
   encode(message: ClientInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.sdk !== 0) {
       writer.uint32(8).int32(message.sdk);
@@ -5434,6 +5675,7 @@ export const ClientInfo: MessageFns<ClientInfo> = {
 
   fromJSON(object: any): ClientInfo {
     return {
+      $type: ClientInfo.$type,
       sdk: isSet(object.sdk) ? clientInfo_SDKFromJSON(object.sdk) : 0,
       version: isSet(object.version) ? globalThis.String(object.version) : "",
       protocol: isSet(object.protocol) ? globalThis.Number(object.protocol) : 0,
@@ -5506,11 +5748,22 @@ export const ClientInfo: MessageFns<ClientInfo> = {
   },
 };
 
+messageTypeRegistry.set(ClientInfo.$type, ClientInfo);
+
 function createBaseClientConfiguration(): ClientConfiguration {
-  return { video: undefined, screen: undefined, resumeConnection: 0, disabledCodecs: undefined, forceRelay: 0 };
+  return {
+    $type: "livekit.ClientConfiguration",
+    video: undefined,
+    screen: undefined,
+    resumeConnection: 0,
+    disabledCodecs: undefined,
+    forceRelay: 0,
+  };
 }
 
-export const ClientConfiguration: MessageFns<ClientConfiguration> = {
+export const ClientConfiguration: MessageFns<ClientConfiguration, "livekit.ClientConfiguration"> = {
+  $type: "livekit.ClientConfiguration" as const,
+
   encode(message: ClientConfiguration, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.video !== undefined) {
       VideoConfiguration.encode(message.video, writer.uint32(10).fork()).join();
@@ -5588,6 +5841,7 @@ export const ClientConfiguration: MessageFns<ClientConfiguration> = {
 
   fromJSON(object: any): ClientConfiguration {
     return {
+      $type: ClientConfiguration.$type,
       video: isSet(object.video) ? VideoConfiguration.fromJSON(object.video) : undefined,
       screen: isSet(object.screen) ? VideoConfiguration.fromJSON(object.screen) : undefined,
       resumeConnection: isSet(object.resumeConnection) ? clientConfigSettingFromJSON(object.resumeConnection) : 0,
@@ -5636,11 +5890,15 @@ export const ClientConfiguration: MessageFns<ClientConfiguration> = {
   },
 };
 
+messageTypeRegistry.set(ClientConfiguration.$type, ClientConfiguration);
+
 function createBaseVideoConfiguration(): VideoConfiguration {
-  return { hardwareEncoder: 0 };
+  return { $type: "livekit.VideoConfiguration", hardwareEncoder: 0 };
 }
 
-export const VideoConfiguration: MessageFns<VideoConfiguration> = {
+export const VideoConfiguration: MessageFns<VideoConfiguration, "livekit.VideoConfiguration"> = {
+  $type: "livekit.VideoConfiguration" as const,
+
   encode(message: VideoConfiguration, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.hardwareEncoder !== 0) {
       writer.uint32(8).int32(message.hardwareEncoder);
@@ -5673,7 +5931,10 @@ export const VideoConfiguration: MessageFns<VideoConfiguration> = {
   },
 
   fromJSON(object: any): VideoConfiguration {
-    return { hardwareEncoder: isSet(object.hardwareEncoder) ? clientConfigSettingFromJSON(object.hardwareEncoder) : 0 };
+    return {
+      $type: VideoConfiguration.$type,
+      hardwareEncoder: isSet(object.hardwareEncoder) ? clientConfigSettingFromJSON(object.hardwareEncoder) : 0,
+    };
   },
 
   toJSON(message: VideoConfiguration): unknown {
@@ -5694,11 +5955,15 @@ export const VideoConfiguration: MessageFns<VideoConfiguration> = {
   },
 };
 
+messageTypeRegistry.set(VideoConfiguration.$type, VideoConfiguration);
+
 function createBaseDisabledCodecs(): DisabledCodecs {
-  return { codecs: [], publish: [] };
+  return { $type: "livekit.DisabledCodecs", codecs: [], publish: [] };
 }
 
-export const DisabledCodecs: MessageFns<DisabledCodecs> = {
+export const DisabledCodecs: MessageFns<DisabledCodecs, "livekit.DisabledCodecs"> = {
+  $type: "livekit.DisabledCodecs" as const,
+
   encode(message: DisabledCodecs, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.codecs) {
       Codec.encode(v!, writer.uint32(10).fork()).join();
@@ -5743,6 +6008,7 @@ export const DisabledCodecs: MessageFns<DisabledCodecs> = {
 
   fromJSON(object: any): DisabledCodecs {
     return {
+      $type: DisabledCodecs.$type,
       codecs: globalThis.Array.isArray(object?.codecs) ? object.codecs.map((e: any) => Codec.fromJSON(e)) : [],
       publish: globalThis.Array.isArray(object?.publish) ? object.publish.map((e: any) => Codec.fromJSON(e)) : [],
     };
@@ -5770,21 +6036,26 @@ export const DisabledCodecs: MessageFns<DisabledCodecs> = {
   },
 };
 
+messageTypeRegistry.set(DisabledCodecs.$type, DisabledCodecs);
+
 function createBaseRTPDrift(): RTPDrift {
   return {
+    $type: "livekit.RTPDrift",
     startTime: undefined,
     endTime: undefined,
     duration: 0,
-    startTimestamp: 0,
-    endTimestamp: 0,
-    rtpClockTicks: 0,
-    driftSamples: 0,
+    startTimestamp: 0n,
+    endTimestamp: 0n,
+    rtpClockTicks: 0n,
+    driftSamples: 0n,
     driftMs: 0,
     clockRate: 0,
   };
 }
 
-export const RTPDrift: MessageFns<RTPDrift> = {
+export const RTPDrift: MessageFns<RTPDrift, "livekit.RTPDrift"> = {
+  $type: "livekit.RTPDrift" as const,
+
   encode(message: RTPDrift, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.startTime !== undefined) {
       Timestamp.encode(toTimestamp(message.startTime), writer.uint32(10).fork()).join();
@@ -5795,16 +6066,28 @@ export const RTPDrift: MessageFns<RTPDrift> = {
     if (message.duration !== 0) {
       writer.uint32(25).double(message.duration);
     }
-    if (message.startTimestamp !== 0) {
+    if (message.startTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.startTimestamp) !== message.startTimestamp) {
+        throw new globalThis.Error("value provided for field message.startTimestamp of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.startTimestamp);
     }
-    if (message.endTimestamp !== 0) {
+    if (message.endTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.endTimestamp) !== message.endTimestamp) {
+        throw new globalThis.Error("value provided for field message.endTimestamp of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.endTimestamp);
     }
-    if (message.rtpClockTicks !== 0) {
+    if (message.rtpClockTicks !== 0n) {
+      if (BigInt.asUintN(64, message.rtpClockTicks) !== message.rtpClockTicks) {
+        throw new globalThis.Error("value provided for field message.rtpClockTicks of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.rtpClockTicks);
     }
-    if (message.driftSamples !== 0) {
+    if (message.driftSamples !== 0n) {
+      if (BigInt.asIntN(64, message.driftSamples) !== message.driftSamples) {
+        throw new globalThis.Error("value provided for field message.driftSamples of type int64 too large");
+      }
       writer.uint32(56).int64(message.driftSamples);
     }
     if (message.driftMs !== 0) {
@@ -5852,7 +6135,7 @@ export const RTPDrift: MessageFns<RTPDrift> = {
             break;
           }
 
-          message.startTimestamp = longToNumber(reader.uint64());
+          message.startTimestamp = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -5860,7 +6143,7 @@ export const RTPDrift: MessageFns<RTPDrift> = {
             break;
           }
 
-          message.endTimestamp = longToNumber(reader.uint64());
+          message.endTimestamp = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -5868,7 +6151,7 @@ export const RTPDrift: MessageFns<RTPDrift> = {
             break;
           }
 
-          message.rtpClockTicks = longToNumber(reader.uint64());
+          message.rtpClockTicks = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -5876,7 +6159,7 @@ export const RTPDrift: MessageFns<RTPDrift> = {
             break;
           }
 
-          message.driftSamples = longToNumber(reader.int64());
+          message.driftSamples = reader.int64() as bigint;
           continue;
         }
         case 8: {
@@ -5906,13 +6189,14 @@ export const RTPDrift: MessageFns<RTPDrift> = {
 
   fromJSON(object: any): RTPDrift {
     return {
+      $type: RTPDrift.$type,
       startTime: isSet(object.startTime) ? fromJsonTimestamp(object.startTime) : undefined,
       endTime: isSet(object.endTime) ? fromJsonTimestamp(object.endTime) : undefined,
       duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
-      startTimestamp: isSet(object.startTimestamp) ? globalThis.Number(object.startTimestamp) : 0,
-      endTimestamp: isSet(object.endTimestamp) ? globalThis.Number(object.endTimestamp) : 0,
-      rtpClockTicks: isSet(object.rtpClockTicks) ? globalThis.Number(object.rtpClockTicks) : 0,
-      driftSamples: isSet(object.driftSamples) ? globalThis.Number(object.driftSamples) : 0,
+      startTimestamp: isSet(object.startTimestamp) ? BigInt(object.startTimestamp) : 0n,
+      endTimestamp: isSet(object.endTimestamp) ? BigInt(object.endTimestamp) : 0n,
+      rtpClockTicks: isSet(object.rtpClockTicks) ? BigInt(object.rtpClockTicks) : 0n,
+      driftSamples: isSet(object.driftSamples) ? BigInt(object.driftSamples) : 0n,
       driftMs: isSet(object.driftMs) ? globalThis.Number(object.driftMs) : 0,
       clockRate: isSet(object.clockRate) ? globalThis.Number(object.clockRate) : 0,
     };
@@ -5929,17 +6213,17 @@ export const RTPDrift: MessageFns<RTPDrift> = {
     if (message.duration !== 0) {
       obj.duration = message.duration;
     }
-    if (message.startTimestamp !== 0) {
-      obj.startTimestamp = Math.round(message.startTimestamp);
+    if (message.startTimestamp !== 0n) {
+      obj.startTimestamp = message.startTimestamp.toString();
     }
-    if (message.endTimestamp !== 0) {
-      obj.endTimestamp = Math.round(message.endTimestamp);
+    if (message.endTimestamp !== 0n) {
+      obj.endTimestamp = message.endTimestamp.toString();
     }
-    if (message.rtpClockTicks !== 0) {
-      obj.rtpClockTicks = Math.round(message.rtpClockTicks);
+    if (message.rtpClockTicks !== 0n) {
+      obj.rtpClockTicks = message.rtpClockTicks.toString();
     }
-    if (message.driftSamples !== 0) {
-      obj.driftSamples = Math.round(message.driftSamples);
+    if (message.driftSamples !== 0n) {
+      obj.driftSamples = message.driftSamples.toString();
     }
     if (message.driftMs !== 0) {
       obj.driftMs = message.driftMs;
@@ -5958,38 +6242,41 @@ export const RTPDrift: MessageFns<RTPDrift> = {
     message.startTime = object.startTime ?? undefined;
     message.endTime = object.endTime ?? undefined;
     message.duration = object.duration ?? 0;
-    message.startTimestamp = object.startTimestamp ?? 0;
-    message.endTimestamp = object.endTimestamp ?? 0;
-    message.rtpClockTicks = object.rtpClockTicks ?? 0;
-    message.driftSamples = object.driftSamples ?? 0;
+    message.startTimestamp = object.startTimestamp ?? 0n;
+    message.endTimestamp = object.endTimestamp ?? 0n;
+    message.rtpClockTicks = object.rtpClockTicks ?? 0n;
+    message.driftSamples = object.driftSamples ?? 0n;
     message.driftMs = object.driftMs ?? 0;
     message.clockRate = object.clockRate ?? 0;
     return message;
   },
 };
 
+messageTypeRegistry.set(RTPDrift.$type, RTPDrift);
+
 function createBaseRTPStats(): RTPStats {
   return {
+    $type: "livekit.RTPStats",
     startTime: undefined,
     endTime: undefined,
     duration: 0,
     packets: 0,
     packetRate: 0,
-    bytes: 0,
-    headerBytes: 0,
+    bytes: 0n,
+    headerBytes: 0n,
     bitrate: 0,
     packetsLost: 0,
     packetLossRate: 0,
     packetLossPercentage: 0,
     packetsDuplicate: 0,
     packetDuplicateRate: 0,
-    bytesDuplicate: 0,
-    headerBytesDuplicate: 0,
+    bytesDuplicate: 0n,
+    headerBytesDuplicate: 0n,
     bitrateDuplicate: 0,
     packetsPadding: 0,
     packetPaddingRate: 0,
-    bytesPadding: 0,
-    headerBytesPadding: 0,
+    bytesPadding: 0n,
+    headerBytesPadding: 0n,
     bitratePadding: 0,
     packetsOutOfOrder: 0,
     frames: 0,
@@ -6018,7 +6305,9 @@ function createBaseRTPStats(): RTPStats {
   };
 }
 
-export const RTPStats: MessageFns<RTPStats> = {
+export const RTPStats: MessageFns<RTPStats, "livekit.RTPStats"> = {
+  $type: "livekit.RTPStats" as const,
+
   encode(message: RTPStats, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.startTime !== undefined) {
       Timestamp.encode(toTimestamp(message.startTime), writer.uint32(10).fork()).join();
@@ -6035,10 +6324,16 @@ export const RTPStats: MessageFns<RTPStats> = {
     if (message.packetRate !== 0) {
       writer.uint32(41).double(message.packetRate);
     }
-    if (message.bytes !== 0) {
+    if (message.bytes !== 0n) {
+      if (BigInt.asUintN(64, message.bytes) !== message.bytes) {
+        throw new globalThis.Error("value provided for field message.bytes of type uint64 too large");
+      }
       writer.uint32(48).uint64(message.bytes);
     }
-    if (message.headerBytes !== 0) {
+    if (message.headerBytes !== 0n) {
+      if (BigInt.asUintN(64, message.headerBytes) !== message.headerBytes) {
+        throw new globalThis.Error("value provided for field message.headerBytes of type uint64 too large");
+      }
       writer.uint32(312).uint64(message.headerBytes);
     }
     if (message.bitrate !== 0) {
@@ -6059,10 +6354,16 @@ export const RTPStats: MessageFns<RTPStats> = {
     if (message.packetDuplicateRate !== 0) {
       writer.uint32(97).double(message.packetDuplicateRate);
     }
-    if (message.bytesDuplicate !== 0) {
+    if (message.bytesDuplicate !== 0n) {
+      if (BigInt.asUintN(64, message.bytesDuplicate) !== message.bytesDuplicate) {
+        throw new globalThis.Error("value provided for field message.bytesDuplicate of type uint64 too large");
+      }
       writer.uint32(104).uint64(message.bytesDuplicate);
     }
-    if (message.headerBytesDuplicate !== 0) {
+    if (message.headerBytesDuplicate !== 0n) {
+      if (BigInt.asUintN(64, message.headerBytesDuplicate) !== message.headerBytesDuplicate) {
+        throw new globalThis.Error("value provided for field message.headerBytesDuplicate of type uint64 too large");
+      }
       writer.uint32(320).uint64(message.headerBytesDuplicate);
     }
     if (message.bitrateDuplicate !== 0) {
@@ -6074,10 +6375,16 @@ export const RTPStats: MessageFns<RTPStats> = {
     if (message.packetPaddingRate !== 0) {
       writer.uint32(129).double(message.packetPaddingRate);
     }
-    if (message.bytesPadding !== 0) {
+    if (message.bytesPadding !== 0n) {
+      if (BigInt.asUintN(64, message.bytesPadding) !== message.bytesPadding) {
+        throw new globalThis.Error("value provided for field message.bytesPadding of type uint64 too large");
+      }
       writer.uint32(136).uint64(message.bytesPadding);
     }
-    if (message.headerBytesPadding !== 0) {
+    if (message.headerBytesPadding !== 0n) {
+      if (BigInt.asUintN(64, message.headerBytesPadding) !== message.headerBytesPadding) {
+        throw new globalThis.Error("value provided for field message.headerBytesPadding of type uint64 too large");
+      }
       writer.uint32(328).uint64(message.headerBytesPadding);
     }
     if (message.bitratePadding !== 0) {
@@ -6099,7 +6406,10 @@ export const RTPStats: MessageFns<RTPStats> = {
       writer.uint32(185).double(message.jitterMax);
     }
     Object.entries(message.gapHistogram).forEach(([key, value]) => {
-      RTPStats_GapHistogramEntry.encode({ key: key as any, value }, writer.uint32(194).fork()).join();
+      RTPStats_GapHistogramEntry.encode(
+        { $type: "livekit.RTPStats.GapHistogramEntry", key: key as any, value },
+        writer.uint32(194).fork(),
+      ).join();
     });
     if (message.nacks !== 0) {
       writer.uint32(200).uint32(message.nacks);
@@ -6210,7 +6520,7 @@ export const RTPStats: MessageFns<RTPStats> = {
             break;
           }
 
-          message.bytes = longToNumber(reader.uint64());
+          message.bytes = reader.uint64() as bigint;
           continue;
         }
         case 39: {
@@ -6218,7 +6528,7 @@ export const RTPStats: MessageFns<RTPStats> = {
             break;
           }
 
-          message.headerBytes = longToNumber(reader.uint64());
+          message.headerBytes = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -6274,7 +6584,7 @@ export const RTPStats: MessageFns<RTPStats> = {
             break;
           }
 
-          message.bytesDuplicate = longToNumber(reader.uint64());
+          message.bytesDuplicate = reader.uint64() as bigint;
           continue;
         }
         case 40: {
@@ -6282,7 +6592,7 @@ export const RTPStats: MessageFns<RTPStats> = {
             break;
           }
 
-          message.headerBytesDuplicate = longToNumber(reader.uint64());
+          message.headerBytesDuplicate = reader.uint64() as bigint;
           continue;
         }
         case 14: {
@@ -6314,7 +6624,7 @@ export const RTPStats: MessageFns<RTPStats> = {
             break;
           }
 
-          message.bytesPadding = longToNumber(reader.uint64());
+          message.bytesPadding = reader.uint64() as bigint;
           continue;
         }
         case 41: {
@@ -6322,7 +6632,7 @@ export const RTPStats: MessageFns<RTPStats> = {
             break;
           }
 
-          message.headerBytesPadding = longToNumber(reader.uint64());
+          message.headerBytesPadding = reader.uint64() as bigint;
           continue;
         }
         case 18: {
@@ -6539,26 +6849,27 @@ export const RTPStats: MessageFns<RTPStats> = {
 
   fromJSON(object: any): RTPStats {
     return {
+      $type: RTPStats.$type,
       startTime: isSet(object.startTime) ? fromJsonTimestamp(object.startTime) : undefined,
       endTime: isSet(object.endTime) ? fromJsonTimestamp(object.endTime) : undefined,
       duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
       packets: isSet(object.packets) ? globalThis.Number(object.packets) : 0,
       packetRate: isSet(object.packetRate) ? globalThis.Number(object.packetRate) : 0,
-      bytes: isSet(object.bytes) ? globalThis.Number(object.bytes) : 0,
-      headerBytes: isSet(object.headerBytes) ? globalThis.Number(object.headerBytes) : 0,
+      bytes: isSet(object.bytes) ? BigInt(object.bytes) : 0n,
+      headerBytes: isSet(object.headerBytes) ? BigInt(object.headerBytes) : 0n,
       bitrate: isSet(object.bitrate) ? globalThis.Number(object.bitrate) : 0,
       packetsLost: isSet(object.packetsLost) ? globalThis.Number(object.packetsLost) : 0,
       packetLossRate: isSet(object.packetLossRate) ? globalThis.Number(object.packetLossRate) : 0,
       packetLossPercentage: isSet(object.packetLossPercentage) ? globalThis.Number(object.packetLossPercentage) : 0,
       packetsDuplicate: isSet(object.packetsDuplicate) ? globalThis.Number(object.packetsDuplicate) : 0,
       packetDuplicateRate: isSet(object.packetDuplicateRate) ? globalThis.Number(object.packetDuplicateRate) : 0,
-      bytesDuplicate: isSet(object.bytesDuplicate) ? globalThis.Number(object.bytesDuplicate) : 0,
-      headerBytesDuplicate: isSet(object.headerBytesDuplicate) ? globalThis.Number(object.headerBytesDuplicate) : 0,
+      bytesDuplicate: isSet(object.bytesDuplicate) ? BigInt(object.bytesDuplicate) : 0n,
+      headerBytesDuplicate: isSet(object.headerBytesDuplicate) ? BigInt(object.headerBytesDuplicate) : 0n,
       bitrateDuplicate: isSet(object.bitrateDuplicate) ? globalThis.Number(object.bitrateDuplicate) : 0,
       packetsPadding: isSet(object.packetsPadding) ? globalThis.Number(object.packetsPadding) : 0,
       packetPaddingRate: isSet(object.packetPaddingRate) ? globalThis.Number(object.packetPaddingRate) : 0,
-      bytesPadding: isSet(object.bytesPadding) ? globalThis.Number(object.bytesPadding) : 0,
-      headerBytesPadding: isSet(object.headerBytesPadding) ? globalThis.Number(object.headerBytesPadding) : 0,
+      bytesPadding: isSet(object.bytesPadding) ? BigInt(object.bytesPadding) : 0n,
+      headerBytesPadding: isSet(object.headerBytesPadding) ? BigInt(object.headerBytesPadding) : 0n,
       bitratePadding: isSet(object.bitratePadding) ? globalThis.Number(object.bitratePadding) : 0,
       packetsOutOfOrder: isSet(object.packetsOutOfOrder) ? globalThis.Number(object.packetsOutOfOrder) : 0,
       frames: isSet(object.frames) ? globalThis.Number(object.frames) : 0,
@@ -6611,11 +6922,11 @@ export const RTPStats: MessageFns<RTPStats> = {
     if (message.packetRate !== 0) {
       obj.packetRate = message.packetRate;
     }
-    if (message.bytes !== 0) {
-      obj.bytes = Math.round(message.bytes);
+    if (message.bytes !== 0n) {
+      obj.bytes = message.bytes.toString();
     }
-    if (message.headerBytes !== 0) {
-      obj.headerBytes = Math.round(message.headerBytes);
+    if (message.headerBytes !== 0n) {
+      obj.headerBytes = message.headerBytes.toString();
     }
     if (message.bitrate !== 0) {
       obj.bitrate = message.bitrate;
@@ -6635,11 +6946,11 @@ export const RTPStats: MessageFns<RTPStats> = {
     if (message.packetDuplicateRate !== 0) {
       obj.packetDuplicateRate = message.packetDuplicateRate;
     }
-    if (message.bytesDuplicate !== 0) {
-      obj.bytesDuplicate = Math.round(message.bytesDuplicate);
+    if (message.bytesDuplicate !== 0n) {
+      obj.bytesDuplicate = message.bytesDuplicate.toString();
     }
-    if (message.headerBytesDuplicate !== 0) {
-      obj.headerBytesDuplicate = Math.round(message.headerBytesDuplicate);
+    if (message.headerBytesDuplicate !== 0n) {
+      obj.headerBytesDuplicate = message.headerBytesDuplicate.toString();
     }
     if (message.bitrateDuplicate !== 0) {
       obj.bitrateDuplicate = message.bitrateDuplicate;
@@ -6650,11 +6961,11 @@ export const RTPStats: MessageFns<RTPStats> = {
     if (message.packetPaddingRate !== 0) {
       obj.packetPaddingRate = message.packetPaddingRate;
     }
-    if (message.bytesPadding !== 0) {
-      obj.bytesPadding = Math.round(message.bytesPadding);
+    if (message.bytesPadding !== 0n) {
+      obj.bytesPadding = message.bytesPadding.toString();
     }
-    if (message.headerBytesPadding !== 0) {
-      obj.headerBytesPadding = Math.round(message.headerBytesPadding);
+    if (message.headerBytesPadding !== 0n) {
+      obj.headerBytesPadding = message.headerBytesPadding.toString();
     }
     if (message.bitratePadding !== 0) {
       obj.bitratePadding = message.bitratePadding;
@@ -6750,21 +7061,21 @@ export const RTPStats: MessageFns<RTPStats> = {
     message.duration = object.duration ?? 0;
     message.packets = object.packets ?? 0;
     message.packetRate = object.packetRate ?? 0;
-    message.bytes = object.bytes ?? 0;
-    message.headerBytes = object.headerBytes ?? 0;
+    message.bytes = object.bytes ?? 0n;
+    message.headerBytes = object.headerBytes ?? 0n;
     message.bitrate = object.bitrate ?? 0;
     message.packetsLost = object.packetsLost ?? 0;
     message.packetLossRate = object.packetLossRate ?? 0;
     message.packetLossPercentage = object.packetLossPercentage ?? 0;
     message.packetsDuplicate = object.packetsDuplicate ?? 0;
     message.packetDuplicateRate = object.packetDuplicateRate ?? 0;
-    message.bytesDuplicate = object.bytesDuplicate ?? 0;
-    message.headerBytesDuplicate = object.headerBytesDuplicate ?? 0;
+    message.bytesDuplicate = object.bytesDuplicate ?? 0n;
+    message.headerBytesDuplicate = object.headerBytesDuplicate ?? 0n;
     message.bitrateDuplicate = object.bitrateDuplicate ?? 0;
     message.packetsPadding = object.packetsPadding ?? 0;
     message.packetPaddingRate = object.packetPaddingRate ?? 0;
-    message.bytesPadding = object.bytesPadding ?? 0;
-    message.headerBytesPadding = object.headerBytesPadding ?? 0;
+    message.bytesPadding = object.bytesPadding ?? 0n;
+    message.headerBytesPadding = object.headerBytesPadding ?? 0n;
     message.bitratePadding = object.bitratePadding ?? 0;
     message.packetsOutOfOrder = object.packetsOutOfOrder ?? 0;
     message.frames = object.frames ?? 0;
@@ -6810,107 +7121,141 @@ export const RTPStats: MessageFns<RTPStats> = {
   },
 };
 
+messageTypeRegistry.set(RTPStats.$type, RTPStats);
+
 function createBaseRTPStats_GapHistogramEntry(): RTPStats_GapHistogramEntry {
-  return { key: 0, value: 0 };
+  return { $type: "livekit.RTPStats.GapHistogramEntry", key: 0, value: 0 };
 }
 
-export const RTPStats_GapHistogramEntry: MessageFns<RTPStats_GapHistogramEntry> = {
-  encode(message: RTPStats_GapHistogramEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.key !== 0) {
-      writer.uint32(8).int32(message.key);
-    }
-    if (message.value !== 0) {
-      writer.uint32(16).uint32(message.value);
-    }
-    return writer;
-  },
+export const RTPStats_GapHistogramEntry: MessageFns<RTPStats_GapHistogramEntry, "livekit.RTPStats.GapHistogramEntry"> =
+  {
+    $type: "livekit.RTPStats.GapHistogramEntry" as const,
 
-  decode(input: BinaryReader | Uint8Array, length?: number): RTPStats_GapHistogramEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseRTPStats_GapHistogramEntry();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 8) {
-            break;
-          }
-
-          message.key = reader.int32();
-          continue;
-        }
-        case 2: {
-          if (tag !== 16) {
-            break;
-          }
-
-          message.value = reader.uint32();
-          continue;
-        }
+    encode(message: RTPStats_GapHistogramEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+      if (message.key !== 0) {
+        writer.uint32(8).int32(message.key);
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      if (message.value !== 0) {
+        writer.uint32(16).uint32(message.value);
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      return writer;
+    },
 
-  fromJSON(object: any): RTPStats_GapHistogramEntry {
-    return {
-      key: isSet(object.key) ? globalThis.Number(object.key) : 0,
-      value: isSet(object.value) ? globalThis.Number(object.value) : 0,
-    };
-  },
+    decode(input: BinaryReader | Uint8Array, length?: number): RTPStats_GapHistogramEntry {
+      const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+      let end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseRTPStats_GapHistogramEntry();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 8) {
+              break;
+            }
 
-  toJSON(message: RTPStats_GapHistogramEntry): unknown {
-    const obj: any = {};
-    if (message.key !== 0) {
-      obj.key = Math.round(message.key);
-    }
-    if (message.value !== 0) {
-      obj.value = Math.round(message.value);
-    }
-    return obj;
-  },
+            message.key = reader.int32();
+            continue;
+          }
+          case 2: {
+            if (tag !== 16) {
+              break;
+            }
 
-  create<I extends Exact<DeepPartial<RTPStats_GapHistogramEntry>, I>>(base?: I): RTPStats_GapHistogramEntry {
-    return RTPStats_GapHistogramEntry.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<RTPStats_GapHistogramEntry>, I>>(object: I): RTPStats_GapHistogramEntry {
-    const message = createBaseRTPStats_GapHistogramEntry();
-    message.key = object.key ?? 0;
-    message.value = object.value ?? 0;
-    return message;
-  },
-};
+            message.value = reader.uint32();
+            continue;
+          }
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
+
+    fromJSON(object: any): RTPStats_GapHistogramEntry {
+      return {
+        $type: RTPStats_GapHistogramEntry.$type,
+        key: isSet(object.key) ? globalThis.Number(object.key) : 0,
+        value: isSet(object.value) ? globalThis.Number(object.value) : 0,
+      };
+    },
+
+    toJSON(message: RTPStats_GapHistogramEntry): unknown {
+      const obj: any = {};
+      if (message.key !== 0) {
+        obj.key = Math.round(message.key);
+      }
+      if (message.value !== 0) {
+        obj.value = Math.round(message.value);
+      }
+      return obj;
+    },
+
+    create<I extends Exact<DeepPartial<RTPStats_GapHistogramEntry>, I>>(base?: I): RTPStats_GapHistogramEntry {
+      return RTPStats_GapHistogramEntry.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<RTPStats_GapHistogramEntry>, I>>(object: I): RTPStats_GapHistogramEntry {
+      const message = createBaseRTPStats_GapHistogramEntry();
+      message.key = object.key ?? 0;
+      message.value = object.value ?? 0;
+      return message;
+    },
+  };
+
+messageTypeRegistry.set(RTPStats_GapHistogramEntry.$type, RTPStats_GapHistogramEntry);
 
 function createBaseRTCPSenderReportState(): RTCPSenderReportState {
-  return { rtpTimestamp: 0, rtpTimestampExt: 0, ntpTimestamp: 0, at: 0, atAdjusted: 0, packets: 0, octets: 0 };
+  return {
+    $type: "livekit.RTCPSenderReportState",
+    rtpTimestamp: 0,
+    rtpTimestampExt: 0n,
+    ntpTimestamp: 0n,
+    at: 0n,
+    atAdjusted: 0n,
+    packets: 0,
+    octets: 0n,
+  };
 }
 
-export const RTCPSenderReportState: MessageFns<RTCPSenderReportState> = {
+export const RTCPSenderReportState: MessageFns<RTCPSenderReportState, "livekit.RTCPSenderReportState"> = {
+  $type: "livekit.RTCPSenderReportState" as const,
+
   encode(message: RTCPSenderReportState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.rtpTimestamp !== 0) {
       writer.uint32(8).uint32(message.rtpTimestamp);
     }
-    if (message.rtpTimestampExt !== 0) {
+    if (message.rtpTimestampExt !== 0n) {
+      if (BigInt.asUintN(64, message.rtpTimestampExt) !== message.rtpTimestampExt) {
+        throw new globalThis.Error("value provided for field message.rtpTimestampExt of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.rtpTimestampExt);
     }
-    if (message.ntpTimestamp !== 0) {
+    if (message.ntpTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.ntpTimestamp) !== message.ntpTimestamp) {
+        throw new globalThis.Error("value provided for field message.ntpTimestamp of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.ntpTimestamp);
     }
-    if (message.at !== 0) {
+    if (message.at !== 0n) {
+      if (BigInt.asIntN(64, message.at) !== message.at) {
+        throw new globalThis.Error("value provided for field message.at of type int64 too large");
+      }
       writer.uint32(32).int64(message.at);
     }
-    if (message.atAdjusted !== 0) {
+    if (message.atAdjusted !== 0n) {
+      if (BigInt.asIntN(64, message.atAdjusted) !== message.atAdjusted) {
+        throw new globalThis.Error("value provided for field message.atAdjusted of type int64 too large");
+      }
       writer.uint32(40).int64(message.atAdjusted);
     }
     if (message.packets !== 0) {
       writer.uint32(48).uint32(message.packets);
     }
-    if (message.octets !== 0) {
+    if (message.octets !== 0n) {
+      if (BigInt.asUintN(64, message.octets) !== message.octets) {
+        throw new globalThis.Error("value provided for field message.octets of type uint64 too large");
+      }
       writer.uint32(56).uint64(message.octets);
     }
     return writer;
@@ -6936,7 +7281,7 @@ export const RTCPSenderReportState: MessageFns<RTCPSenderReportState> = {
             break;
           }
 
-          message.rtpTimestampExt = longToNumber(reader.uint64());
+          message.rtpTimestampExt = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -6944,7 +7289,7 @@ export const RTCPSenderReportState: MessageFns<RTCPSenderReportState> = {
             break;
           }
 
-          message.ntpTimestamp = longToNumber(reader.uint64());
+          message.ntpTimestamp = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -6952,7 +7297,7 @@ export const RTCPSenderReportState: MessageFns<RTCPSenderReportState> = {
             break;
           }
 
-          message.at = longToNumber(reader.int64());
+          message.at = reader.int64() as bigint;
           continue;
         }
         case 5: {
@@ -6960,7 +7305,7 @@ export const RTCPSenderReportState: MessageFns<RTCPSenderReportState> = {
             break;
           }
 
-          message.atAdjusted = longToNumber(reader.int64());
+          message.atAdjusted = reader.int64() as bigint;
           continue;
         }
         case 6: {
@@ -6976,7 +7321,7 @@ export const RTCPSenderReportState: MessageFns<RTCPSenderReportState> = {
             break;
           }
 
-          message.octets = longToNumber(reader.uint64());
+          message.octets = reader.uint64() as bigint;
           continue;
         }
       }
@@ -6990,13 +7335,14 @@ export const RTCPSenderReportState: MessageFns<RTCPSenderReportState> = {
 
   fromJSON(object: any): RTCPSenderReportState {
     return {
+      $type: RTCPSenderReportState.$type,
       rtpTimestamp: isSet(object.rtpTimestamp) ? globalThis.Number(object.rtpTimestamp) : 0,
-      rtpTimestampExt: isSet(object.rtpTimestampExt) ? globalThis.Number(object.rtpTimestampExt) : 0,
-      ntpTimestamp: isSet(object.ntpTimestamp) ? globalThis.Number(object.ntpTimestamp) : 0,
-      at: isSet(object.at) ? globalThis.Number(object.at) : 0,
-      atAdjusted: isSet(object.atAdjusted) ? globalThis.Number(object.atAdjusted) : 0,
+      rtpTimestampExt: isSet(object.rtpTimestampExt) ? BigInt(object.rtpTimestampExt) : 0n,
+      ntpTimestamp: isSet(object.ntpTimestamp) ? BigInt(object.ntpTimestamp) : 0n,
+      at: isSet(object.at) ? BigInt(object.at) : 0n,
+      atAdjusted: isSet(object.atAdjusted) ? BigInt(object.atAdjusted) : 0n,
       packets: isSet(object.packets) ? globalThis.Number(object.packets) : 0,
-      octets: isSet(object.octets) ? globalThis.Number(object.octets) : 0,
+      octets: isSet(object.octets) ? BigInt(object.octets) : 0n,
     };
   },
 
@@ -7005,23 +7351,23 @@ export const RTCPSenderReportState: MessageFns<RTCPSenderReportState> = {
     if (message.rtpTimestamp !== 0) {
       obj.rtpTimestamp = Math.round(message.rtpTimestamp);
     }
-    if (message.rtpTimestampExt !== 0) {
-      obj.rtpTimestampExt = Math.round(message.rtpTimestampExt);
+    if (message.rtpTimestampExt !== 0n) {
+      obj.rtpTimestampExt = message.rtpTimestampExt.toString();
     }
-    if (message.ntpTimestamp !== 0) {
-      obj.ntpTimestamp = Math.round(message.ntpTimestamp);
+    if (message.ntpTimestamp !== 0n) {
+      obj.ntpTimestamp = message.ntpTimestamp.toString();
     }
-    if (message.at !== 0) {
-      obj.at = Math.round(message.at);
+    if (message.at !== 0n) {
+      obj.at = message.at.toString();
     }
-    if (message.atAdjusted !== 0) {
-      obj.atAdjusted = Math.round(message.atAdjusted);
+    if (message.atAdjusted !== 0n) {
+      obj.atAdjusted = message.atAdjusted.toString();
     }
     if (message.packets !== 0) {
       obj.packets = Math.round(message.packets);
     }
-    if (message.octets !== 0) {
-      obj.octets = Math.round(message.octets);
+    if (message.octets !== 0n) {
+      obj.octets = message.octets.toString();
     }
     return obj;
   },
@@ -7032,30 +7378,35 @@ export const RTCPSenderReportState: MessageFns<RTCPSenderReportState> = {
   fromPartial<I extends Exact<DeepPartial<RTCPSenderReportState>, I>>(object: I): RTCPSenderReportState {
     const message = createBaseRTCPSenderReportState();
     message.rtpTimestamp = object.rtpTimestamp ?? 0;
-    message.rtpTimestampExt = object.rtpTimestampExt ?? 0;
-    message.ntpTimestamp = object.ntpTimestamp ?? 0;
-    message.at = object.at ?? 0;
-    message.atAdjusted = object.atAdjusted ?? 0;
+    message.rtpTimestampExt = object.rtpTimestampExt ?? 0n;
+    message.ntpTimestamp = object.ntpTimestamp ?? 0n;
+    message.at = object.at ?? 0n;
+    message.atAdjusted = object.atAdjusted ?? 0n;
     message.packets = object.packets ?? 0;
-    message.octets = object.octets ?? 0;
+    message.octets = object.octets ?? 0n;
     return message;
   },
 };
 
+messageTypeRegistry.set(RTCPSenderReportState.$type, RTCPSenderReportState);
+
 function createBaseRTPForwarderState(): RTPForwarderState {
   return {
+    $type: "livekit.RTPForwarderState",
     started: false,
     referenceLayerSpatial: 0,
-    preStartTime: 0,
-    extFirstTimestamp: 0,
-    dummyStartTimestampOffset: 0,
+    preStartTime: 0n,
+    extFirstTimestamp: 0n,
+    dummyStartTimestampOffset: 0n,
     rtpMunger: undefined,
     vp8Munger: undefined,
     senderReportState: [],
   };
 }
 
-export const RTPForwarderState: MessageFns<RTPForwarderState> = {
+export const RTPForwarderState: MessageFns<RTPForwarderState, "livekit.RTPForwarderState"> = {
+  $type: "livekit.RTPForwarderState" as const,
+
   encode(message: RTPForwarderState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.started !== false) {
       writer.uint32(8).bool(message.started);
@@ -7063,13 +7414,24 @@ export const RTPForwarderState: MessageFns<RTPForwarderState> = {
     if (message.referenceLayerSpatial !== 0) {
       writer.uint32(16).int32(message.referenceLayerSpatial);
     }
-    if (message.preStartTime !== 0) {
+    if (message.preStartTime !== 0n) {
+      if (BigInt.asIntN(64, message.preStartTime) !== message.preStartTime) {
+        throw new globalThis.Error("value provided for field message.preStartTime of type int64 too large");
+      }
       writer.uint32(24).int64(message.preStartTime);
     }
-    if (message.extFirstTimestamp !== 0) {
+    if (message.extFirstTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.extFirstTimestamp) !== message.extFirstTimestamp) {
+        throw new globalThis.Error("value provided for field message.extFirstTimestamp of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.extFirstTimestamp);
     }
-    if (message.dummyStartTimestampOffset !== 0) {
+    if (message.dummyStartTimestampOffset !== 0n) {
+      if (BigInt.asUintN(64, message.dummyStartTimestampOffset) !== message.dummyStartTimestampOffset) {
+        throw new globalThis.Error(
+          "value provided for field message.dummyStartTimestampOffset of type uint64 too large",
+        );
+      }
       writer.uint32(40).uint64(message.dummyStartTimestampOffset);
     }
     if (message.rtpMunger !== undefined) {
@@ -7112,7 +7474,7 @@ export const RTPForwarderState: MessageFns<RTPForwarderState> = {
             break;
           }
 
-          message.preStartTime = longToNumber(reader.int64());
+          message.preStartTime = reader.int64() as bigint;
           continue;
         }
         case 4: {
@@ -7120,7 +7482,7 @@ export const RTPForwarderState: MessageFns<RTPForwarderState> = {
             break;
           }
 
-          message.extFirstTimestamp = longToNumber(reader.uint64());
+          message.extFirstTimestamp = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -7128,7 +7490,7 @@ export const RTPForwarderState: MessageFns<RTPForwarderState> = {
             break;
           }
 
-          message.dummyStartTimestampOffset = longToNumber(reader.uint64());
+          message.dummyStartTimestampOffset = reader.uint64() as bigint;
           continue;
         }
         case 6: {
@@ -7166,13 +7528,14 @@ export const RTPForwarderState: MessageFns<RTPForwarderState> = {
 
   fromJSON(object: any): RTPForwarderState {
     return {
+      $type: RTPForwarderState.$type,
       started: isSet(object.started) ? globalThis.Boolean(object.started) : false,
       referenceLayerSpatial: isSet(object.referenceLayerSpatial) ? globalThis.Number(object.referenceLayerSpatial) : 0,
-      preStartTime: isSet(object.preStartTime) ? globalThis.Number(object.preStartTime) : 0,
-      extFirstTimestamp: isSet(object.extFirstTimestamp) ? globalThis.Number(object.extFirstTimestamp) : 0,
+      preStartTime: isSet(object.preStartTime) ? BigInt(object.preStartTime) : 0n,
+      extFirstTimestamp: isSet(object.extFirstTimestamp) ? BigInt(object.extFirstTimestamp) : 0n,
       dummyStartTimestampOffset: isSet(object.dummyStartTimestampOffset)
-        ? globalThis.Number(object.dummyStartTimestampOffset)
-        : 0,
+        ? BigInt(object.dummyStartTimestampOffset)
+        : 0n,
       rtpMunger: isSet(object.rtpMunger) ? RTPMungerState.fromJSON(object.rtpMunger) : undefined,
       vp8Munger: isSet(object.vp8Munger) ? VP8MungerState.fromJSON(object.vp8Munger) : undefined,
       senderReportState: globalThis.Array.isArray(object?.senderReportState)
@@ -7189,14 +7552,14 @@ export const RTPForwarderState: MessageFns<RTPForwarderState> = {
     if (message.referenceLayerSpatial !== 0) {
       obj.referenceLayerSpatial = Math.round(message.referenceLayerSpatial);
     }
-    if (message.preStartTime !== 0) {
-      obj.preStartTime = Math.round(message.preStartTime);
+    if (message.preStartTime !== 0n) {
+      obj.preStartTime = message.preStartTime.toString();
     }
-    if (message.extFirstTimestamp !== 0) {
-      obj.extFirstTimestamp = Math.round(message.extFirstTimestamp);
+    if (message.extFirstTimestamp !== 0n) {
+      obj.extFirstTimestamp = message.extFirstTimestamp.toString();
     }
-    if (message.dummyStartTimestampOffset !== 0) {
-      obj.dummyStartTimestampOffset = Math.round(message.dummyStartTimestampOffset);
+    if (message.dummyStartTimestampOffset !== 0n) {
+      obj.dummyStartTimestampOffset = message.dummyStartTimestampOffset.toString();
     }
     if (message.rtpMunger !== undefined) {
       obj.rtpMunger = RTPMungerState.toJSON(message.rtpMunger);
@@ -7217,9 +7580,9 @@ export const RTPForwarderState: MessageFns<RTPForwarderState> = {
     const message = createBaseRTPForwarderState();
     message.started = object.started ?? false;
     message.referenceLayerSpatial = object.referenceLayerSpatial ?? 0;
-    message.preStartTime = object.preStartTime ?? 0;
-    message.extFirstTimestamp = object.extFirstTimestamp ?? 0;
-    message.dummyStartTimestampOffset = object.dummyStartTimestampOffset ?? 0;
+    message.preStartTime = object.preStartTime ?? 0n;
+    message.extFirstTimestamp = object.extFirstTimestamp ?? 0n;
+    message.dummyStartTimestampOffset = object.dummyStartTimestampOffset ?? 0n;
     message.rtpMunger = (object.rtpMunger !== undefined && object.rtpMunger !== null)
       ? RTPMungerState.fromPartial(object.rtpMunger)
       : undefined;
@@ -7231,29 +7594,48 @@ export const RTPForwarderState: MessageFns<RTPForwarderState> = {
   },
 };
 
+messageTypeRegistry.set(RTPForwarderState.$type, RTPForwarderState);
+
 function createBaseRTPMungerState(): RTPMungerState {
   return {
-    extLastSequenceNumber: 0,
-    extSecondLastSequenceNumber: 0,
-    extLastTimestamp: 0,
-    extSecondLastTimestamp: 0,
+    $type: "livekit.RTPMungerState",
+    extLastSequenceNumber: 0n,
+    extSecondLastSequenceNumber: 0n,
+    extLastTimestamp: 0n,
+    extSecondLastTimestamp: 0n,
     lastMarker: false,
     secondLastMarker: false,
   };
 }
 
-export const RTPMungerState: MessageFns<RTPMungerState> = {
+export const RTPMungerState: MessageFns<RTPMungerState, "livekit.RTPMungerState"> = {
+  $type: "livekit.RTPMungerState" as const,
+
   encode(message: RTPMungerState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.extLastSequenceNumber !== 0) {
+    if (message.extLastSequenceNumber !== 0n) {
+      if (BigInt.asUintN(64, message.extLastSequenceNumber) !== message.extLastSequenceNumber) {
+        throw new globalThis.Error("value provided for field message.extLastSequenceNumber of type uint64 too large");
+      }
       writer.uint32(8).uint64(message.extLastSequenceNumber);
     }
-    if (message.extSecondLastSequenceNumber !== 0) {
+    if (message.extSecondLastSequenceNumber !== 0n) {
+      if (BigInt.asUintN(64, message.extSecondLastSequenceNumber) !== message.extSecondLastSequenceNumber) {
+        throw new globalThis.Error(
+          "value provided for field message.extSecondLastSequenceNumber of type uint64 too large",
+        );
+      }
       writer.uint32(16).uint64(message.extSecondLastSequenceNumber);
     }
-    if (message.extLastTimestamp !== 0) {
+    if (message.extLastTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.extLastTimestamp) !== message.extLastTimestamp) {
+        throw new globalThis.Error("value provided for field message.extLastTimestamp of type uint64 too large");
+      }
       writer.uint32(24).uint64(message.extLastTimestamp);
     }
-    if (message.extSecondLastTimestamp !== 0) {
+    if (message.extSecondLastTimestamp !== 0n) {
+      if (BigInt.asUintN(64, message.extSecondLastTimestamp) !== message.extSecondLastTimestamp) {
+        throw new globalThis.Error("value provided for field message.extSecondLastTimestamp of type uint64 too large");
+      }
       writer.uint32(32).uint64(message.extSecondLastTimestamp);
     }
     if (message.lastMarker !== false) {
@@ -7277,7 +7659,7 @@ export const RTPMungerState: MessageFns<RTPMungerState> = {
             break;
           }
 
-          message.extLastSequenceNumber = longToNumber(reader.uint64());
+          message.extLastSequenceNumber = reader.uint64() as bigint;
           continue;
         }
         case 2: {
@@ -7285,7 +7667,7 @@ export const RTPMungerState: MessageFns<RTPMungerState> = {
             break;
           }
 
-          message.extSecondLastSequenceNumber = longToNumber(reader.uint64());
+          message.extSecondLastSequenceNumber = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -7293,7 +7675,7 @@ export const RTPMungerState: MessageFns<RTPMungerState> = {
             break;
           }
 
-          message.extLastTimestamp = longToNumber(reader.uint64());
+          message.extLastTimestamp = reader.uint64() as bigint;
           continue;
         }
         case 4: {
@@ -7301,7 +7683,7 @@ export const RTPMungerState: MessageFns<RTPMungerState> = {
             break;
           }
 
-          message.extSecondLastTimestamp = longToNumber(reader.uint64());
+          message.extSecondLastTimestamp = reader.uint64() as bigint;
           continue;
         }
         case 5: {
@@ -7331,14 +7713,13 @@ export const RTPMungerState: MessageFns<RTPMungerState> = {
 
   fromJSON(object: any): RTPMungerState {
     return {
-      extLastSequenceNumber: isSet(object.extLastSequenceNumber) ? globalThis.Number(object.extLastSequenceNumber) : 0,
+      $type: RTPMungerState.$type,
+      extLastSequenceNumber: isSet(object.extLastSequenceNumber) ? BigInt(object.extLastSequenceNumber) : 0n,
       extSecondLastSequenceNumber: isSet(object.extSecondLastSequenceNumber)
-        ? globalThis.Number(object.extSecondLastSequenceNumber)
-        : 0,
-      extLastTimestamp: isSet(object.extLastTimestamp) ? globalThis.Number(object.extLastTimestamp) : 0,
-      extSecondLastTimestamp: isSet(object.extSecondLastTimestamp)
-        ? globalThis.Number(object.extSecondLastTimestamp)
-        : 0,
+        ? BigInt(object.extSecondLastSequenceNumber)
+        : 0n,
+      extLastTimestamp: isSet(object.extLastTimestamp) ? BigInt(object.extLastTimestamp) : 0n,
+      extSecondLastTimestamp: isSet(object.extSecondLastTimestamp) ? BigInt(object.extSecondLastTimestamp) : 0n,
       lastMarker: isSet(object.lastMarker) ? globalThis.Boolean(object.lastMarker) : false,
       secondLastMarker: isSet(object.secondLastMarker) ? globalThis.Boolean(object.secondLastMarker) : false,
     };
@@ -7346,17 +7727,17 @@ export const RTPMungerState: MessageFns<RTPMungerState> = {
 
   toJSON(message: RTPMungerState): unknown {
     const obj: any = {};
-    if (message.extLastSequenceNumber !== 0) {
-      obj.extLastSequenceNumber = Math.round(message.extLastSequenceNumber);
+    if (message.extLastSequenceNumber !== 0n) {
+      obj.extLastSequenceNumber = message.extLastSequenceNumber.toString();
     }
-    if (message.extSecondLastSequenceNumber !== 0) {
-      obj.extSecondLastSequenceNumber = Math.round(message.extSecondLastSequenceNumber);
+    if (message.extSecondLastSequenceNumber !== 0n) {
+      obj.extSecondLastSequenceNumber = message.extSecondLastSequenceNumber.toString();
     }
-    if (message.extLastTimestamp !== 0) {
-      obj.extLastTimestamp = Math.round(message.extLastTimestamp);
+    if (message.extLastTimestamp !== 0n) {
+      obj.extLastTimestamp = message.extLastTimestamp.toString();
     }
-    if (message.extSecondLastTimestamp !== 0) {
-      obj.extSecondLastTimestamp = Math.round(message.extSecondLastTimestamp);
+    if (message.extSecondLastTimestamp !== 0n) {
+      obj.extSecondLastTimestamp = message.extSecondLastTimestamp.toString();
     }
     if (message.lastMarker !== false) {
       obj.lastMarker = message.lastMarker;
@@ -7372,18 +7753,21 @@ export const RTPMungerState: MessageFns<RTPMungerState> = {
   },
   fromPartial<I extends Exact<DeepPartial<RTPMungerState>, I>>(object: I): RTPMungerState {
     const message = createBaseRTPMungerState();
-    message.extLastSequenceNumber = object.extLastSequenceNumber ?? 0;
-    message.extSecondLastSequenceNumber = object.extSecondLastSequenceNumber ?? 0;
-    message.extLastTimestamp = object.extLastTimestamp ?? 0;
-    message.extSecondLastTimestamp = object.extSecondLastTimestamp ?? 0;
+    message.extLastSequenceNumber = object.extLastSequenceNumber ?? 0n;
+    message.extSecondLastSequenceNumber = object.extSecondLastSequenceNumber ?? 0n;
+    message.extLastTimestamp = object.extLastTimestamp ?? 0n;
+    message.extSecondLastTimestamp = object.extSecondLastTimestamp ?? 0n;
     message.lastMarker = object.lastMarker ?? false;
     message.secondLastMarker = object.secondLastMarker ?? false;
     return message;
   },
 };
 
+messageTypeRegistry.set(RTPMungerState.$type, RTPMungerState);
+
 function createBaseVP8MungerState(): VP8MungerState {
   return {
+    $type: "livekit.VP8MungerState",
     extLastPictureId: 0,
     pictureIdUsed: false,
     lastTl0PicIdx: 0,
@@ -7394,7 +7778,9 @@ function createBaseVP8MungerState(): VP8MungerState {
   };
 }
 
-export const VP8MungerState: MessageFns<VP8MungerState> = {
+export const VP8MungerState: MessageFns<VP8MungerState, "livekit.VP8MungerState"> = {
+  $type: "livekit.VP8MungerState" as const,
+
   encode(message: VP8MungerState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.extLastPictureId !== 0) {
       writer.uint32(8).int32(message.extLastPictureId);
@@ -7494,6 +7880,7 @@ export const VP8MungerState: MessageFns<VP8MungerState> = {
 
   fromJSON(object: any): VP8MungerState {
     return {
+      $type: VP8MungerState.$type,
       extLastPictureId: isSet(object.extLastPictureId) ? globalThis.Number(object.extLastPictureId) : 0,
       pictureIdUsed: isSet(object.pictureIdUsed) ? globalThis.Boolean(object.pictureIdUsed) : false,
       lastTl0PicIdx: isSet(object.lastTl0PicIdx) ? globalThis.Number(object.lastTl0PicIdx) : 0,
@@ -7546,13 +7933,20 @@ export const VP8MungerState: MessageFns<VP8MungerState> = {
   },
 };
 
+messageTypeRegistry.set(VP8MungerState.$type, VP8MungerState);
+
 function createBaseTimedVersion(): TimedVersion {
-  return { unixMicro: 0, ticks: 0 };
+  return { $type: "livekit.TimedVersion", unixMicro: 0n, ticks: 0 };
 }
 
-export const TimedVersion: MessageFns<TimedVersion> = {
+export const TimedVersion: MessageFns<TimedVersion, "livekit.TimedVersion"> = {
+  $type: "livekit.TimedVersion" as const,
+
   encode(message: TimedVersion, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.unixMicro !== 0) {
+    if (message.unixMicro !== 0n) {
+      if (BigInt.asIntN(64, message.unixMicro) !== message.unixMicro) {
+        throw new globalThis.Error("value provided for field message.unixMicro of type int64 too large");
+      }
       writer.uint32(8).int64(message.unixMicro);
     }
     if (message.ticks !== 0) {
@@ -7573,7 +7967,7 @@ export const TimedVersion: MessageFns<TimedVersion> = {
             break;
           }
 
-          message.unixMicro = longToNumber(reader.int64());
+          message.unixMicro = reader.int64() as bigint;
           continue;
         }
         case 2: {
@@ -7595,15 +7989,16 @@ export const TimedVersion: MessageFns<TimedVersion> = {
 
   fromJSON(object: any): TimedVersion {
     return {
-      unixMicro: isSet(object.unixMicro) ? globalThis.Number(object.unixMicro) : 0,
+      $type: TimedVersion.$type,
+      unixMicro: isSet(object.unixMicro) ? BigInt(object.unixMicro) : 0n,
       ticks: isSet(object.ticks) ? globalThis.Number(object.ticks) : 0,
     };
   },
 
   toJSON(message: TimedVersion): unknown {
     const obj: any = {};
-    if (message.unixMicro !== 0) {
-      obj.unixMicro = Math.round(message.unixMicro);
+    if (message.unixMicro !== 0n) {
+      obj.unixMicro = message.unixMicro.toString();
     }
     if (message.ticks !== 0) {
       obj.ticks = Math.round(message.ticks);
@@ -7616,17 +8011,21 @@ export const TimedVersion: MessageFns<TimedVersion> = {
   },
   fromPartial<I extends Exact<DeepPartial<TimedVersion>, I>>(object: I): TimedVersion {
     const message = createBaseTimedVersion();
-    message.unixMicro = object.unixMicro ?? 0;
+    message.unixMicro = object.unixMicro ?? 0n;
     message.ticks = object.ticks ?? 0;
     return message;
   },
 };
 
+messageTypeRegistry.set(TimedVersion.$type, TimedVersion);
+
 function createBaseDataStream(): DataStream {
-  return {};
+  return { $type: "livekit.DataStream" };
 }
 
-export const DataStream: MessageFns<DataStream> = {
+export const DataStream: MessageFns<DataStream, "livekit.DataStream"> = {
+  $type: "livekit.DataStream" as const,
+
   encode(_: DataStream, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     return writer;
   },
@@ -7648,7 +8047,7 @@ export const DataStream: MessageFns<DataStream> = {
   },
 
   fromJSON(_: any): DataStream {
-    return {};
+    return { $type: DataStream.$type };
   },
 
   toJSON(_: DataStream): unknown {
@@ -7665,11 +8064,22 @@ export const DataStream: MessageFns<DataStream> = {
   },
 };
 
+messageTypeRegistry.set(DataStream.$type, DataStream);
+
 function createBaseDataStream_TextHeader(): DataStream_TextHeader {
-  return { operationType: 0, version: 0, replyToStreamId: "", attachedStreamIds: [], generated: false };
+  return {
+    $type: "livekit.DataStream.TextHeader",
+    operationType: 0,
+    version: 0,
+    replyToStreamId: "",
+    attachedStreamIds: [],
+    generated: false,
+  };
 }
 
-export const DataStream_TextHeader: MessageFns<DataStream_TextHeader> = {
+export const DataStream_TextHeader: MessageFns<DataStream_TextHeader, "livekit.DataStream.TextHeader"> = {
+  $type: "livekit.DataStream.TextHeader" as const,
+
   encode(message: DataStream_TextHeader, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.operationType !== 0) {
       writer.uint32(8).int32(message.operationType);
@@ -7747,6 +8157,7 @@ export const DataStream_TextHeader: MessageFns<DataStream_TextHeader> = {
 
   fromJSON(object: any): DataStream_TextHeader {
     return {
+      $type: DataStream_TextHeader.$type,
       operationType: isSet(object.operationType) ? dataStream_OperationTypeFromJSON(object.operationType) : 0,
       version: isSet(object.version) ? globalThis.Number(object.version) : 0,
       replyToStreamId: isSet(object.replyToStreamId) ? globalThis.String(object.replyToStreamId) : "",
@@ -7791,11 +8202,15 @@ export const DataStream_TextHeader: MessageFns<DataStream_TextHeader> = {
   },
 };
 
+messageTypeRegistry.set(DataStream_TextHeader.$type, DataStream_TextHeader);
+
 function createBaseDataStream_ByteHeader(): DataStream_ByteHeader {
-  return { name: "" };
+  return { $type: "livekit.DataStream.ByteHeader", name: "" };
 }
 
-export const DataStream_ByteHeader: MessageFns<DataStream_ByteHeader> = {
+export const DataStream_ByteHeader: MessageFns<DataStream_ByteHeader, "livekit.DataStream.ByteHeader"> = {
+  $type: "livekit.DataStream.ByteHeader" as const,
+
   encode(message: DataStream_ByteHeader, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
@@ -7828,7 +8243,7 @@ export const DataStream_ByteHeader: MessageFns<DataStream_ByteHeader> = {
   },
 
   fromJSON(object: any): DataStream_ByteHeader {
-    return { name: isSet(object.name) ? globalThis.String(object.name) : "" };
+    return { $type: DataStream_ByteHeader.$type, name: isSet(object.name) ? globalThis.String(object.name) : "" };
   },
 
   toJSON(message: DataStream_ByteHeader): unknown {
@@ -7849,10 +8264,13 @@ export const DataStream_ByteHeader: MessageFns<DataStream_ByteHeader> = {
   },
 };
 
+messageTypeRegistry.set(DataStream_ByteHeader.$type, DataStream_ByteHeader);
+
 function createBaseDataStream_Header(): DataStream_Header {
   return {
+    $type: "livekit.DataStream.Header",
     streamId: "",
-    timestamp: 0,
+    timestamp: 0n,
     topic: "",
     mimeType: "",
     totalLength: undefined,
@@ -7863,12 +8281,17 @@ function createBaseDataStream_Header(): DataStream_Header {
   };
 }
 
-export const DataStream_Header: MessageFns<DataStream_Header> = {
+export const DataStream_Header: MessageFns<DataStream_Header, "livekit.DataStream.Header"> = {
+  $type: "livekit.DataStream.Header" as const,
+
   encode(message: DataStream_Header, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.streamId !== "") {
       writer.uint32(10).string(message.streamId);
     }
-    if (message.timestamp !== 0) {
+    if (message.timestamp !== 0n) {
+      if (BigInt.asIntN(64, message.timestamp) !== message.timestamp) {
+        throw new globalThis.Error("value provided for field message.timestamp of type int64 too large");
+      }
       writer.uint32(16).int64(message.timestamp);
     }
     if (message.topic !== "") {
@@ -7878,13 +8301,20 @@ export const DataStream_Header: MessageFns<DataStream_Header> = {
       writer.uint32(34).string(message.mimeType);
     }
     if (message.totalLength !== undefined) {
+      if (BigInt.asUintN(64, message.totalLength) !== message.totalLength) {
+        throw new globalThis.Error("value provided for field message.totalLength of type uint64 too large");
+      }
       writer.uint32(40).uint64(message.totalLength);
     }
     if (message.encryptionType !== 0) {
       writer.uint32(56).int32(message.encryptionType);
     }
     Object.entries(message.attributes).forEach(([key, value]) => {
-      DataStream_Header_AttributesEntry.encode({ key: key as any, value }, writer.uint32(66).fork()).join();
+      DataStream_Header_AttributesEntry.encode({
+        $type: "livekit.DataStream.Header.AttributesEntry",
+        key: key as any,
+        value,
+      }, writer.uint32(66).fork()).join();
     });
     if (message.textHeader !== undefined) {
       DataStream_TextHeader.encode(message.textHeader, writer.uint32(74).fork()).join();
@@ -7915,7 +8345,7 @@ export const DataStream_Header: MessageFns<DataStream_Header> = {
             break;
           }
 
-          message.timestamp = longToNumber(reader.int64());
+          message.timestamp = reader.int64() as bigint;
           continue;
         }
         case 3: {
@@ -7939,7 +8369,7 @@ export const DataStream_Header: MessageFns<DataStream_Header> = {
             break;
           }
 
-          message.totalLength = longToNumber(reader.uint64());
+          message.totalLength = reader.uint64() as bigint;
           continue;
         }
         case 7: {
@@ -7988,11 +8418,12 @@ export const DataStream_Header: MessageFns<DataStream_Header> = {
 
   fromJSON(object: any): DataStream_Header {
     return {
+      $type: DataStream_Header.$type,
       streamId: isSet(object.streamId) ? globalThis.String(object.streamId) : "",
-      timestamp: isSet(object.timestamp) ? globalThis.Number(object.timestamp) : 0,
+      timestamp: isSet(object.timestamp) ? BigInt(object.timestamp) : 0n,
       topic: isSet(object.topic) ? globalThis.String(object.topic) : "",
       mimeType: isSet(object.mimeType) ? globalThis.String(object.mimeType) : "",
-      totalLength: isSet(object.totalLength) ? globalThis.Number(object.totalLength) : undefined,
+      totalLength: isSet(object.totalLength) ? BigInt(object.totalLength) : undefined,
       encryptionType: isSet(object.encryptionType) ? encryption_TypeFromJSON(object.encryptionType) : 0,
       attributes: isObject(object.attributes)
         ? Object.entries(object.attributes).reduce<{ [key: string]: string }>((acc, [key, value]) => {
@@ -8010,8 +8441,8 @@ export const DataStream_Header: MessageFns<DataStream_Header> = {
     if (message.streamId !== "") {
       obj.streamId = message.streamId;
     }
-    if (message.timestamp !== 0) {
-      obj.timestamp = Math.round(message.timestamp);
+    if (message.timestamp !== 0n) {
+      obj.timestamp = message.timestamp.toString();
     }
     if (message.topic !== "") {
       obj.topic = message.topic;
@@ -8020,7 +8451,7 @@ export const DataStream_Header: MessageFns<DataStream_Header> = {
       obj.mimeType = message.mimeType;
     }
     if (message.totalLength !== undefined) {
-      obj.totalLength = Math.round(message.totalLength);
+      obj.totalLength = message.totalLength.toString();
     }
     if (message.encryptionType !== 0) {
       obj.encryptionType = encryption_TypeToJSON(message.encryptionType);
@@ -8049,7 +8480,7 @@ export const DataStream_Header: MessageFns<DataStream_Header> = {
   fromPartial<I extends Exact<DeepPartial<DataStream_Header>, I>>(object: I): DataStream_Header {
     const message = createBaseDataStream_Header();
     message.streamId = object.streamId ?? "";
-    message.timestamp = object.timestamp ?? 0;
+    message.timestamp = object.timestamp ?? 0n;
     message.topic = object.topic ?? "";
     message.mimeType = object.mimeType ?? "";
     message.totalLength = object.totalLength ?? undefined;
@@ -8073,11 +8504,18 @@ export const DataStream_Header: MessageFns<DataStream_Header> = {
   },
 };
 
+messageTypeRegistry.set(DataStream_Header.$type, DataStream_Header);
+
 function createBaseDataStream_Header_AttributesEntry(): DataStream_Header_AttributesEntry {
-  return { key: "", value: "" };
+  return { $type: "livekit.DataStream.Header.AttributesEntry", key: "", value: "" };
 }
 
-export const DataStream_Header_AttributesEntry: MessageFns<DataStream_Header_AttributesEntry> = {
+export const DataStream_Header_AttributesEntry: MessageFns<
+  DataStream_Header_AttributesEntry,
+  "livekit.DataStream.Header.AttributesEntry"
+> = {
+  $type: "livekit.DataStream.Header.AttributesEntry" as const,
+
   encode(message: DataStream_Header_AttributesEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
@@ -8122,6 +8560,7 @@ export const DataStream_Header_AttributesEntry: MessageFns<DataStream_Header_Att
 
   fromJSON(object: any): DataStream_Header_AttributesEntry {
     return {
+      $type: DataStream_Header_AttributesEntry.$type,
       key: isSet(object.key) ? globalThis.String(object.key) : "",
       value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
@@ -8153,16 +8592,30 @@ export const DataStream_Header_AttributesEntry: MessageFns<DataStream_Header_Att
   },
 };
 
+messageTypeRegistry.set(DataStream_Header_AttributesEntry.$type, DataStream_Header_AttributesEntry);
+
 function createBaseDataStream_Chunk(): DataStream_Chunk {
-  return { streamId: "", chunkIndex: 0, content: Buffer.alloc(0), version: 0, iv: undefined };
+  return {
+    $type: "livekit.DataStream.Chunk",
+    streamId: "",
+    chunkIndex: 0n,
+    content: Buffer.alloc(0),
+    version: 0,
+    iv: undefined,
+  };
 }
 
-export const DataStream_Chunk: MessageFns<DataStream_Chunk> = {
+export const DataStream_Chunk: MessageFns<DataStream_Chunk, "livekit.DataStream.Chunk"> = {
+  $type: "livekit.DataStream.Chunk" as const,
+
   encode(message: DataStream_Chunk, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.streamId !== "") {
       writer.uint32(10).string(message.streamId);
     }
-    if (message.chunkIndex !== 0) {
+    if (message.chunkIndex !== 0n) {
+      if (BigInt.asUintN(64, message.chunkIndex) !== message.chunkIndex) {
+        throw new globalThis.Error("value provided for field message.chunkIndex of type uint64 too large");
+      }
       writer.uint32(16).uint64(message.chunkIndex);
     }
     if (message.content.length !== 0) {
@@ -8197,7 +8650,7 @@ export const DataStream_Chunk: MessageFns<DataStream_Chunk> = {
             break;
           }
 
-          message.chunkIndex = longToNumber(reader.uint64());
+          message.chunkIndex = reader.uint64() as bigint;
           continue;
         }
         case 3: {
@@ -8235,8 +8688,9 @@ export const DataStream_Chunk: MessageFns<DataStream_Chunk> = {
 
   fromJSON(object: any): DataStream_Chunk {
     return {
+      $type: DataStream_Chunk.$type,
       streamId: isSet(object.streamId) ? globalThis.String(object.streamId) : "",
-      chunkIndex: isSet(object.chunkIndex) ? globalThis.Number(object.chunkIndex) : 0,
+      chunkIndex: isSet(object.chunkIndex) ? BigInt(object.chunkIndex) : 0n,
       content: isSet(object.content) ? Buffer.from(bytesFromBase64(object.content)) : Buffer.alloc(0),
       version: isSet(object.version) ? globalThis.Number(object.version) : 0,
       iv: isSet(object.iv) ? Buffer.from(bytesFromBase64(object.iv)) : undefined,
@@ -8248,8 +8702,8 @@ export const DataStream_Chunk: MessageFns<DataStream_Chunk> = {
     if (message.streamId !== "") {
       obj.streamId = message.streamId;
     }
-    if (message.chunkIndex !== 0) {
-      obj.chunkIndex = Math.round(message.chunkIndex);
+    if (message.chunkIndex !== 0n) {
+      obj.chunkIndex = message.chunkIndex.toString();
     }
     if (message.content.length !== 0) {
       obj.content = base64FromBytes(message.content);
@@ -8269,7 +8723,7 @@ export const DataStream_Chunk: MessageFns<DataStream_Chunk> = {
   fromPartial<I extends Exact<DeepPartial<DataStream_Chunk>, I>>(object: I): DataStream_Chunk {
     const message = createBaseDataStream_Chunk();
     message.streamId = object.streamId ?? "";
-    message.chunkIndex = object.chunkIndex ?? 0;
+    message.chunkIndex = object.chunkIndex ?? 0n;
     message.content = object.content ?? Buffer.alloc(0);
     message.version = object.version ?? 0;
     message.iv = object.iv ?? undefined;
@@ -8277,11 +8731,15 @@ export const DataStream_Chunk: MessageFns<DataStream_Chunk> = {
   },
 };
 
+messageTypeRegistry.set(DataStream_Chunk.$type, DataStream_Chunk);
+
 function createBaseDataStream_Trailer(): DataStream_Trailer {
-  return { streamId: "", reason: "", attributes: {} };
+  return { $type: "livekit.DataStream.Trailer", streamId: "", reason: "", attributes: {} };
 }
 
-export const DataStream_Trailer: MessageFns<DataStream_Trailer> = {
+export const DataStream_Trailer: MessageFns<DataStream_Trailer, "livekit.DataStream.Trailer"> = {
+  $type: "livekit.DataStream.Trailer" as const,
+
   encode(message: DataStream_Trailer, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.streamId !== "") {
       writer.uint32(10).string(message.streamId);
@@ -8290,7 +8748,11 @@ export const DataStream_Trailer: MessageFns<DataStream_Trailer> = {
       writer.uint32(18).string(message.reason);
     }
     Object.entries(message.attributes).forEach(([key, value]) => {
-      DataStream_Trailer_AttributesEntry.encode({ key: key as any, value }, writer.uint32(26).fork()).join();
+      DataStream_Trailer_AttributesEntry.encode({
+        $type: "livekit.DataStream.Trailer.AttributesEntry",
+        key: key as any,
+        value,
+      }, writer.uint32(26).fork()).join();
     });
     return writer;
   },
@@ -8340,6 +8802,7 @@ export const DataStream_Trailer: MessageFns<DataStream_Trailer> = {
 
   fromJSON(object: any): DataStream_Trailer {
     return {
+      $type: DataStream_Trailer.$type,
       streamId: isSet(object.streamId) ? globalThis.String(object.streamId) : "",
       reason: isSet(object.reason) ? globalThis.String(object.reason) : "",
       attributes: isObject(object.attributes)
@@ -8391,11 +8854,18 @@ export const DataStream_Trailer: MessageFns<DataStream_Trailer> = {
   },
 };
 
+messageTypeRegistry.set(DataStream_Trailer.$type, DataStream_Trailer);
+
 function createBaseDataStream_Trailer_AttributesEntry(): DataStream_Trailer_AttributesEntry {
-  return { key: "", value: "" };
+  return { $type: "livekit.DataStream.Trailer.AttributesEntry", key: "", value: "" };
 }
 
-export const DataStream_Trailer_AttributesEntry: MessageFns<DataStream_Trailer_AttributesEntry> = {
+export const DataStream_Trailer_AttributesEntry: MessageFns<
+  DataStream_Trailer_AttributesEntry,
+  "livekit.DataStream.Trailer.AttributesEntry"
+> = {
+  $type: "livekit.DataStream.Trailer.AttributesEntry" as const,
+
   encode(message: DataStream_Trailer_AttributesEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
@@ -8440,6 +8910,7 @@ export const DataStream_Trailer_AttributesEntry: MessageFns<DataStream_Trailer_A
 
   fromJSON(object: any): DataStream_Trailer_AttributesEntry {
     return {
+      $type: DataStream_Trailer_AttributesEntry.$type,
       key: isSet(object.key) ? globalThis.String(object.key) : "",
       value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
@@ -8471,6 +8942,4861 @@ export const DataStream_Trailer_AttributesEntry: MessageFns<DataStream_Trailer_A
   },
 };
 
+messageTypeRegistry.set(DataStream_Trailer_AttributesEntry.$type, DataStream_Trailer_AttributesEntry);
+
+type ProtoMetaMessageOptions = {
+  options?: { [key: string]: any };
+  fields?: { [key: string]: { [key: string]: any } };
+  oneof?: { [key: string]: { [key: string]: any } };
+  nested?: { [key: string]: ProtoMetaMessageOptions };
+};
+
+export interface ProtoMetadata {
+  fileDescriptor: FileDescriptorProto1;
+  references: { [key: string]: any };
+  dependencies?: ProtoMetadata[];
+  options?: {
+    options?: { [key: string]: any };
+    services?: {
+      [key: string]: { options?: { [key: string]: any }; methods?: { [key: string]: { [key: string]: any } } };
+    };
+    messages?: { [key: string]: ProtoMetaMessageOptions };
+    enums?: { [key: string]: { options?: { [key: string]: any }; values?: { [key: string]: { [key: string]: any } } } };
+  };
+}
+
+export const protoMetadata = {
+  fileDescriptor: {
+    "name": "livekit_models.proto",
+    "package": "livekit",
+    "dependency": ["google/protobuf/timestamp.proto", "livekit_metrics.proto"],
+    "publicDependency": [],
+    "weakDependency": [],
+    "messageType": [{
+      "name": "Pagination",
+      "field": [{
+        "name": "after_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "afterId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "limit",
+        "number": 2,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "limit",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "Room",
+      "field": [{
+        "name": "sid",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "sid",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "name",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "name",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "empty_timeout",
+        "number": 3,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "emptyTimeout",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "departure_timeout",
+        "number": 14,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "departureTimeout",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "max_participants",
+        "number": 4,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "maxParticipants",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "creation_time",
+        "number": 5,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "creationTime",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "creation_time_ms",
+        "number": 15,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "creationTimeMs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "turn_password",
+        "number": 6,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "turnPassword",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "enabled_codecs",
+        "number": 7,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.Codec",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "enabledCodecs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "metadata",
+        "number": 8,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "metadata",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "num_participants",
+        "number": 9,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "numParticipants",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "num_publishers",
+        "number": 11,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "numPublishers",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "active_recording",
+        "number": 10,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "activeRecording",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "version",
+        "number": 13,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.TimedVersion",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "version",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "Codec",
+      "field": [{
+        "name": "mime",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "mime",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "fmtp_line",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "fmtpLine",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "PlayoutDelay",
+      "field": [{
+        "name": "enabled",
+        "number": 1,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "enabled",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "min",
+        "number": 2,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "min",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "max",
+        "number": 3,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "max",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ParticipantPermission",
+      "field": [{
+        "name": "can_subscribe",
+        "number": 1,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "canSubscribe",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "can_publish",
+        "number": 2,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "canPublish",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "can_publish_data",
+        "number": 3,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "canPublishData",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "can_publish_sources",
+        "number": 9,
+        "label": 3,
+        "type": 14,
+        "typeName": ".livekit.TrackSource",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "canPublishSources",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "hidden",
+        "number": 7,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "hidden",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "recorder",
+        "number": 8,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "recorder",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "can_update_metadata",
+        "number": 10,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "canUpdateMetadata",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "agent",
+        "number": 11,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "agent",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "can_subscribe_metrics",
+        "number": 12,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "canSubscribeMetrics",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ParticipantInfo",
+      "field": [{
+        "name": "sid",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "sid",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "identity",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "identity",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "state",
+        "number": 3,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.ParticipantInfo.State",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "state",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "tracks",
+        "number": 4,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.TrackInfo",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "tracks",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "metadata",
+        "number": 5,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "metadata",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "joined_at",
+        "number": 6,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "joinedAt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "joined_at_ms",
+        "number": 17,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "joinedAtMs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "name",
+        "number": 9,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "name",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "version",
+        "number": 10,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "version",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "permission",
+        "number": 11,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.ParticipantPermission",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "permission",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "region",
+        "number": 12,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "region",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "is_publisher",
+        "number": 13,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "isPublisher",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "kind",
+        "number": 14,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.ParticipantInfo.Kind",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "kind",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "attributes",
+        "number": 15,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.ParticipantInfo.AttributesEntry",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "attributes",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "disconnect_reason",
+        "number": 16,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.DisconnectReason",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "disconnectReason",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "AttributesEntry",
+        "field": [{
+          "name": "key",
+          "number": 1,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "key",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "value",
+          "number": 2,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "value",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": {
+          "messageSetWireFormat": false,
+          "noStandardDescriptorAccessor": false,
+          "deprecated": false,
+          "mapEntry": true,
+          "uninterpretedOption": [],
+        },
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [{
+        "name": "State",
+        "value": [
+          { "name": "JOINING", "number": 0, "options": undefined },
+          { "name": "JOINED", "number": 1, "options": undefined },
+          { "name": "ACTIVE", "number": 2, "options": undefined },
+          { "name": "DISCONNECTED", "number": 3, "options": undefined },
+        ],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "Kind",
+        "value": [
+          { "name": "STANDARD", "number": 0, "options": undefined },
+          { "name": "INGRESS", "number": 1, "options": undefined },
+          { "name": "EGRESS", "number": 2, "options": undefined },
+          { "name": "SIP", "number": 3, "options": undefined },
+          { "name": "AGENT", "number": 4, "options": undefined },
+        ],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "Encryption",
+      "field": [],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [{
+        "name": "Type",
+        "value": [{ "name": "NONE", "number": 0, "options": undefined }, {
+          "name": "GCM",
+          "number": 1,
+          "options": undefined,
+        }, { "name": "CUSTOM", "number": 2, "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "SimulcastCodecInfo",
+      "field": [{
+        "name": "mime_type",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "mimeType",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "mid",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "mid",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "cid",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "cid",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "layers",
+        "number": 4,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.VideoLayer",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "layers",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "TrackInfo",
+      "field": [{
+        "name": "sid",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "sid",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "type",
+        "number": 2,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.TrackType",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "type",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "name",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "name",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "muted",
+        "number": 4,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "muted",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "width",
+        "number": 5,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "width",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "height",
+        "number": 6,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "height",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "simulcast",
+        "number": 7,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "simulcast",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "disable_dtx",
+        "number": 8,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "disableDtx",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "source",
+        "number": 9,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.TrackSource",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "source",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "layers",
+        "number": 10,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.VideoLayer",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "layers",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "mime_type",
+        "number": 11,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "mimeType",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "mid",
+        "number": 12,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "mid",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "codecs",
+        "number": 13,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.SimulcastCodecInfo",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "codecs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "stereo",
+        "number": 14,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "stereo",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "disable_red",
+        "number": 15,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "disableRed",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "encryption",
+        "number": 16,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.Encryption.Type",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "encryption",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "stream",
+        "number": 17,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "stream",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "version",
+        "number": 18,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.TimedVersion",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "version",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "audio_features",
+        "number": 19,
+        "label": 3,
+        "type": 14,
+        "typeName": ".livekit.AudioTrackFeature",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "audioFeatures",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "backup_codec_policy",
+        "number": 20,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.BackupCodecPolicy",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "backupCodecPolicy",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "VideoLayer",
+      "field": [{
+        "name": "quality",
+        "number": 1,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.VideoQuality",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "quality",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "width",
+        "number": 2,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "width",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "height",
+        "number": 3,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "height",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "bitrate",
+        "number": 4,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "bitrate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ssrc",
+        "number": 5,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "ssrc",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "DataPacket",
+      "field": [{
+        "name": "kind",
+        "number": 1,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.DataPacket.Kind",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "kind",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "participant_identity",
+        "number": 4,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "participantIdentity",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "destination_identities",
+        "number": 5,
+        "label": 3,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "destinationIdentities",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "user",
+        "number": 2,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.UserPacket",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "user",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "speaker",
+        "number": 3,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.ActiveSpeakerUpdate",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "speaker",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "sip_dtmf",
+        "number": 6,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.SipDTMF",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "sipDtmf",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "transcription",
+        "number": 7,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.Transcription",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "transcription",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "metrics",
+        "number": 8,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.MetricsBatch",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "metrics",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "chat_message",
+        "number": 9,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.ChatMessage",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "chatMessage",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "rpc_request",
+        "number": 10,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.RpcRequest",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rpcRequest",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "rpc_ack",
+        "number": 11,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.RpcAck",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rpcAck",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "rpc_response",
+        "number": 12,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.RpcResponse",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rpcResponse",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "stream_header",
+        "number": 13,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.DataStream.Header",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "streamHeader",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "stream_chunk",
+        "number": 14,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.DataStream.Chunk",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "streamChunk",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "stream_trailer",
+        "number": 15,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.DataStream.Trailer",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "streamTrailer",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [{
+        "name": "Kind",
+        "value": [{ "name": "RELIABLE", "number": 0, "options": undefined }, {
+          "name": "LOSSY",
+          "number": 1,
+          "options": undefined,
+        }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "value", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ActiveSpeakerUpdate",
+      "field": [{
+        "name": "speakers",
+        "number": 1,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.SpeakerInfo",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "speakers",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "SpeakerInfo",
+      "field": [{
+        "name": "sid",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "sid",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "level",
+        "number": 2,
+        "label": 1,
+        "type": 2,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "level",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "active",
+        "number": 3,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "active",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "UserPacket",
+      "field": [{
+        "name": "participant_sid",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "participantSid",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "participant_identity",
+        "number": 5,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "participantIdentity",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "payload",
+        "number": 2,
+        "label": 1,
+        "type": 12,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "payload",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "destination_sids",
+        "number": 3,
+        "label": 3,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "destinationSids",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "destination_identities",
+        "number": 6,
+        "label": 3,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "destinationIdentities",
+        "options": {
+          "ctype": 0,
+          "packed": false,
+          "jstype": 0,
+          "lazy": false,
+          "deprecated": true,
+          "weak": false,
+          "uninterpretedOption": [],
+        },
+        "proto3Optional": false,
+      }, {
+        "name": "topic",
+        "number": 4,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "topic",
+        "options": undefined,
+        "proto3Optional": true,
+      }, {
+        "name": "id",
+        "number": 8,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 1,
+        "jsonName": "id",
+        "options": undefined,
+        "proto3Optional": true,
+      }, {
+        "name": "start_time",
+        "number": 9,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 2,
+        "jsonName": "startTime",
+        "options": undefined,
+        "proto3Optional": true,
+      }, {
+        "name": "end_time",
+        "number": 10,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 3,
+        "jsonName": "endTime",
+        "options": undefined,
+        "proto3Optional": true,
+      }, {
+        "name": "nonce",
+        "number": 11,
+        "label": 1,
+        "type": 12,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "nonce",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "_topic", "options": undefined }, { "name": "_id", "options": undefined }, {
+        "name": "_start_time",
+        "options": undefined,
+      }, { "name": "_end_time", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "SipDTMF",
+      "field": [{
+        "name": "code",
+        "number": 3,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "code",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "digit",
+        "number": 4,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "digit",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "Transcription",
+      "field": [{
+        "name": "transcribed_participant_identity",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "transcribedParticipantIdentity",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "track_id",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "trackId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "segments",
+        "number": 4,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.TranscriptionSegment",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "segments",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "TranscriptionSegment",
+      "field": [{
+        "name": "id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "id",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "text",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "text",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "start_time",
+        "number": 3,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "startTime",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "end_time",
+        "number": 4,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "endTime",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "final",
+        "number": 5,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "final",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "language",
+        "number": 6,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "language",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ChatMessage",
+      "field": [{
+        "name": "id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "id",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "timestamp",
+        "number": 2,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "timestamp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "edit_timestamp",
+        "number": 3,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "editTimestamp",
+        "options": undefined,
+        "proto3Optional": true,
+      }, {
+        "name": "message",
+        "number": 4,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "message",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "deleted",
+        "number": 5,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "deleted",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "generated",
+        "number": 6,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "generated",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "_edit_timestamp", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "RpcRequest",
+      "field": [{
+        "name": "id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "id",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "method",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "method",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "payload",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "payload",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "response_timeout_ms",
+        "number": 4,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "responseTimeoutMs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "version",
+        "number": 5,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "version",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "RpcAck",
+      "field": [{
+        "name": "request_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "requestId",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "RpcResponse",
+      "field": [{
+        "name": "request_id",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "requestId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "payload",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "payload",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "error",
+        "number": 3,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.RpcError",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "error",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "value", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "RpcError",
+      "field": [{
+        "name": "code",
+        "number": 1,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "code",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "message",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "message",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "data",
+        "number": 3,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "data",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ParticipantTracks",
+      "field": [{
+        "name": "participant_sid",
+        "number": 1,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "participantSid",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "track_sids",
+        "number": 2,
+        "label": 3,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "trackSids",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ServerInfo",
+      "field": [{
+        "name": "edition",
+        "number": 1,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.ServerInfo.Edition",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "edition",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "version",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "version",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "protocol",
+        "number": 3,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "protocol",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "region",
+        "number": 4,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "region",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "node_id",
+        "number": 5,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "nodeId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "debug_info",
+        "number": 6,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "debugInfo",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "agent_protocol",
+        "number": 7,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "agentProtocol",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [{
+        "name": "Edition",
+        "value": [{ "name": "Standard", "number": 0, "options": undefined }, {
+          "name": "Cloud",
+          "number": 1,
+          "options": undefined,
+        }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ClientInfo",
+      "field": [{
+        "name": "sdk",
+        "number": 1,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.ClientInfo.SDK",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "sdk",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "version",
+        "number": 2,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "version",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "protocol",
+        "number": 3,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "protocol",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "os",
+        "number": 4,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "os",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "os_version",
+        "number": 5,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "osVersion",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "device_model",
+        "number": 6,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "deviceModel",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "browser",
+        "number": 7,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "browser",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "browser_version",
+        "number": 8,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "browserVersion",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "address",
+        "number": 9,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "address",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "network",
+        "number": 10,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "network",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "other_sdks",
+        "number": 11,
+        "label": 1,
+        "type": 9,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "otherSdks",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [{
+        "name": "SDK",
+        "value": [
+          { "name": "UNKNOWN", "number": 0, "options": undefined },
+          { "name": "JS", "number": 1, "options": undefined },
+          { "name": "SWIFT", "number": 2, "options": undefined },
+          { "name": "ANDROID", "number": 3, "options": undefined },
+          { "name": "FLUTTER", "number": 4, "options": undefined },
+          { "name": "GO", "number": 5, "options": undefined },
+          { "name": "UNITY", "number": 6, "options": undefined },
+          { "name": "REACT_NATIVE", "number": 7, "options": undefined },
+          { "name": "RUST", "number": 8, "options": undefined },
+          { "name": "PYTHON", "number": 9, "options": undefined },
+          { "name": "CPP", "number": 10, "options": undefined },
+          { "name": "UNITY_WEB", "number": 11, "options": undefined },
+          { "name": "NODE", "number": 12, "options": undefined },
+        ],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ClientConfiguration",
+      "field": [{
+        "name": "video",
+        "number": 1,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.VideoConfiguration",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "video",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "screen",
+        "number": 2,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.VideoConfiguration",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "screen",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "resume_connection",
+        "number": 3,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.ClientConfigSetting",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "resumeConnection",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "disabled_codecs",
+        "number": 4,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.DisabledCodecs",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "disabledCodecs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "force_relay",
+        "number": 5,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.ClientConfigSetting",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "forceRelay",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "VideoConfiguration",
+      "field": [{
+        "name": "hardware_encoder",
+        "number": 1,
+        "label": 1,
+        "type": 14,
+        "typeName": ".livekit.ClientConfigSetting",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "hardwareEncoder",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "DisabledCodecs",
+      "field": [{
+        "name": "codecs",
+        "number": 1,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.Codec",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "codecs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "publish",
+        "number": 2,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.Codec",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "publish",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "RTPDrift",
+      "field": [{
+        "name": "start_time",
+        "number": 1,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.Timestamp",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "startTime",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "end_time",
+        "number": 2,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.Timestamp",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "endTime",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "duration",
+        "number": 3,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "duration",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "start_timestamp",
+        "number": 4,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "startTimestamp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "end_timestamp",
+        "number": 5,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "endTimestamp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "rtp_clock_ticks",
+        "number": 6,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rtpClockTicks",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "drift_samples",
+        "number": 7,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "driftSamples",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "drift_ms",
+        "number": 8,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "driftMs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "clock_rate",
+        "number": 9,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "clockRate",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "RTPStats",
+      "field": [{
+        "name": "start_time",
+        "number": 1,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.Timestamp",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "startTime",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "end_time",
+        "number": 2,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.Timestamp",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "endTime",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "duration",
+        "number": 3,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "duration",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packets",
+        "number": 4,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packets",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packet_rate",
+        "number": 5,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packetRate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "bytes",
+        "number": 6,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "bytes",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "header_bytes",
+        "number": 39,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "headerBytes",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "bitrate",
+        "number": 7,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "bitrate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packets_lost",
+        "number": 8,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packetsLost",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packet_loss_rate",
+        "number": 9,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packetLossRate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packet_loss_percentage",
+        "number": 10,
+        "label": 1,
+        "type": 2,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packetLossPercentage",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packets_duplicate",
+        "number": 11,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packetsDuplicate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packet_duplicate_rate",
+        "number": 12,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packetDuplicateRate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "bytes_duplicate",
+        "number": 13,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "bytesDuplicate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "header_bytes_duplicate",
+        "number": 40,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "headerBytesDuplicate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "bitrate_duplicate",
+        "number": 14,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "bitrateDuplicate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packets_padding",
+        "number": 15,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packetsPadding",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packet_padding_rate",
+        "number": 16,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packetPaddingRate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "bytes_padding",
+        "number": 17,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "bytesPadding",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "header_bytes_padding",
+        "number": 41,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "headerBytesPadding",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "bitrate_padding",
+        "number": 18,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "bitratePadding",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packets_out_of_order",
+        "number": 19,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packetsOutOfOrder",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "frames",
+        "number": 20,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "frames",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "frame_rate",
+        "number": 21,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "frameRate",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "jitter_current",
+        "number": 22,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "jitterCurrent",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "jitter_max",
+        "number": 23,
+        "label": 1,
+        "type": 1,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "jitterMax",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "gap_histogram",
+        "number": 24,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.RTPStats.GapHistogramEntry",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "gapHistogram",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "nacks",
+        "number": 25,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "nacks",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "nack_acks",
+        "number": 37,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "nackAcks",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "nack_misses",
+        "number": 26,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "nackMisses",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "nack_repeated",
+        "number": 38,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "nackRepeated",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "plis",
+        "number": 27,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "plis",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "last_pli",
+        "number": 28,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.Timestamp",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "lastPli",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "firs",
+        "number": 29,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "firs",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "last_fir",
+        "number": 30,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.Timestamp",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "lastFir",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "rtt_current",
+        "number": 31,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rttCurrent",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "rtt_max",
+        "number": 32,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rttMax",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "key_frames",
+        "number": 33,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "keyFrames",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "last_key_frame",
+        "number": 34,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.Timestamp",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "lastKeyFrame",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "layer_lock_plis",
+        "number": 35,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "layerLockPlis",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "last_layer_lock_pli",
+        "number": 36,
+        "label": 1,
+        "type": 11,
+        "typeName": ".google.protobuf.Timestamp",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "lastLayerLockPli",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packet_drift",
+        "number": 44,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.RTPDrift",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packetDrift",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ntp_report_drift",
+        "number": 45,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.RTPDrift",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "ntpReportDrift",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "rebased_report_drift",
+        "number": 46,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.RTPDrift",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rebasedReportDrift",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "received_report_drift",
+        "number": 47,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.RTPDrift",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "receivedReportDrift",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [{
+        "name": "GapHistogramEntry",
+        "field": [{
+          "name": "key",
+          "number": 1,
+          "label": 1,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "key",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "value",
+          "number": 2,
+          "label": 1,
+          "type": 13,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "value",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": {
+          "messageSetWireFormat": false,
+          "noStandardDescriptorAccessor": false,
+          "deprecated": false,
+          "mapEntry": true,
+          "uninterpretedOption": [],
+        },
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "RTCPSenderReportState",
+      "field": [{
+        "name": "rtp_timestamp",
+        "number": 1,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rtpTimestamp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "rtp_timestamp_ext",
+        "number": 2,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rtpTimestampExt",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ntp_timestamp",
+        "number": 3,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "ntpTimestamp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "at",
+        "number": 4,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "at",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "at_adjusted",
+        "number": 5,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "atAdjusted",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "packets",
+        "number": 6,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "packets",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "octets",
+        "number": 7,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "octets",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "RTPForwarderState",
+      "field": [{
+        "name": "started",
+        "number": 1,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "started",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "reference_layer_spatial",
+        "number": 2,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "referenceLayerSpatial",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "pre_start_time",
+        "number": 3,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "preStartTime",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ext_first_timestamp",
+        "number": 4,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "extFirstTimestamp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "dummy_start_timestamp_offset",
+        "number": 5,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "dummyStartTimestampOffset",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "rtp_munger",
+        "number": 6,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.RTPMungerState",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "rtpMunger",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "vp8_munger",
+        "number": 7,
+        "label": 1,
+        "type": 11,
+        "typeName": ".livekit.VP8MungerState",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "vp8Munger",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "sender_report_state",
+        "number": 8,
+        "label": 3,
+        "type": 11,
+        "typeName": ".livekit.RTCPSenderReportState",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "senderReportState",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [{ "name": "codec_munger", "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "RTPMungerState",
+      "field": [{
+        "name": "ext_last_sequence_number",
+        "number": 1,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "extLastSequenceNumber",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ext_second_last_sequence_number",
+        "number": 2,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "extSecondLastSequenceNumber",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ext_last_timestamp",
+        "number": 3,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "extLastTimestamp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ext_second_last_timestamp",
+        "number": 4,
+        "label": 1,
+        "type": 4,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "extSecondLastTimestamp",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "last_marker",
+        "number": 5,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "lastMarker",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "second_last_marker",
+        "number": 6,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "secondLastMarker",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "VP8MungerState",
+      "field": [{
+        "name": "ext_last_picture_id",
+        "number": 1,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "extLastPictureId",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "picture_id_used",
+        "number": 2,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "pictureIdUsed",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "last_tl0_pic_idx",
+        "number": 3,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "lastTl0PicIdx",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "tl0_pic_idx_used",
+        "number": 4,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "tl0PicIdxUsed",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "tid_used",
+        "number": 5,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "tidUsed",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "last_key_idx",
+        "number": 6,
+        "label": 1,
+        "type": 13,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "lastKeyIdx",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "key_idx_used",
+        "number": 7,
+        "label": 1,
+        "type": 8,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "keyIdxUsed",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "TimedVersion",
+      "field": [{
+        "name": "unix_micro",
+        "number": 1,
+        "label": 1,
+        "type": 3,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "unixMicro",
+        "options": undefined,
+        "proto3Optional": false,
+      }, {
+        "name": "ticks",
+        "number": 2,
+        "label": 1,
+        "type": 5,
+        "typeName": "",
+        "extendee": "",
+        "defaultValue": "",
+        "oneofIndex": 0,
+        "jsonName": "ticks",
+        "options": undefined,
+        "proto3Optional": false,
+      }],
+      "extension": [],
+      "nestedType": [],
+      "enumType": [],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "DataStream",
+      "field": [],
+      "extension": [],
+      "nestedType": [{
+        "name": "TextHeader",
+        "field": [{
+          "name": "operation_type",
+          "number": 1,
+          "label": 1,
+          "type": 14,
+          "typeName": ".livekit.DataStream.OperationType",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "operationType",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "version",
+          "number": 2,
+          "label": 1,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "version",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "reply_to_stream_id",
+          "number": 3,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "replyToStreamId",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "attached_stream_ids",
+          "number": 4,
+          "label": 3,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "attachedStreamIds",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "generated",
+          "number": 5,
+          "label": 1,
+          "type": 8,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "generated",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "ByteHeader",
+        "field": [{
+          "name": "name",
+          "number": 1,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "name",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "Header",
+        "field": [{
+          "name": "stream_id",
+          "number": 1,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "streamId",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "timestamp",
+          "number": 2,
+          "label": 1,
+          "type": 3,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "timestamp",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "topic",
+          "number": 3,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "topic",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "mime_type",
+          "number": 4,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "mimeType",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "total_length",
+          "number": 5,
+          "label": 1,
+          "type": 4,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 1,
+          "jsonName": "totalLength",
+          "options": undefined,
+          "proto3Optional": true,
+        }, {
+          "name": "encryption_type",
+          "number": 7,
+          "label": 1,
+          "type": 14,
+          "typeName": ".livekit.Encryption.Type",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "encryptionType",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "attributes",
+          "number": 8,
+          "label": 3,
+          "type": 11,
+          "typeName": ".livekit.DataStream.Header.AttributesEntry",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "attributes",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "text_header",
+          "number": 9,
+          "label": 1,
+          "type": 11,
+          "typeName": ".livekit.DataStream.TextHeader",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "textHeader",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "byte_header",
+          "number": 10,
+          "label": 1,
+          "type": 11,
+          "typeName": ".livekit.DataStream.ByteHeader",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "byteHeader",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [{
+          "name": "AttributesEntry",
+          "field": [{
+            "name": "key",
+            "number": 1,
+            "label": 1,
+            "type": 9,
+            "typeName": "",
+            "extendee": "",
+            "defaultValue": "",
+            "oneofIndex": 0,
+            "jsonName": "key",
+            "options": undefined,
+            "proto3Optional": false,
+          }, {
+            "name": "value",
+            "number": 2,
+            "label": 1,
+            "type": 9,
+            "typeName": "",
+            "extendee": "",
+            "defaultValue": "",
+            "oneofIndex": 0,
+            "jsonName": "value",
+            "options": undefined,
+            "proto3Optional": false,
+          }],
+          "extension": [],
+          "nestedType": [],
+          "enumType": [],
+          "extensionRange": [],
+          "oneofDecl": [],
+          "options": {
+            "messageSetWireFormat": false,
+            "noStandardDescriptorAccessor": false,
+            "deprecated": false,
+            "mapEntry": true,
+            "uninterpretedOption": [],
+          },
+          "reservedRange": [],
+          "reservedName": [],
+        }],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [{ "name": "content_header", "options": undefined }, {
+          "name": "_total_length",
+          "options": undefined,
+        }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "Chunk",
+        "field": [{
+          "name": "stream_id",
+          "number": 1,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "streamId",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "chunk_index",
+          "number": 2,
+          "label": 1,
+          "type": 4,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "chunkIndex",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "content",
+          "number": 3,
+          "label": 1,
+          "type": 12,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "content",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "version",
+          "number": 4,
+          "label": 1,
+          "type": 5,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "version",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "iv",
+          "number": 5,
+          "label": 1,
+          "type": 12,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "iv",
+          "options": undefined,
+          "proto3Optional": true,
+        }],
+        "extension": [],
+        "nestedType": [],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [{ "name": "_iv", "options": undefined }],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }, {
+        "name": "Trailer",
+        "field": [{
+          "name": "stream_id",
+          "number": 1,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "streamId",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "reason",
+          "number": 2,
+          "label": 1,
+          "type": 9,
+          "typeName": "",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "reason",
+          "options": undefined,
+          "proto3Optional": false,
+        }, {
+          "name": "attributes",
+          "number": 3,
+          "label": 3,
+          "type": 11,
+          "typeName": ".livekit.DataStream.Trailer.AttributesEntry",
+          "extendee": "",
+          "defaultValue": "",
+          "oneofIndex": 0,
+          "jsonName": "attributes",
+          "options": undefined,
+          "proto3Optional": false,
+        }],
+        "extension": [],
+        "nestedType": [{
+          "name": "AttributesEntry",
+          "field": [{
+            "name": "key",
+            "number": 1,
+            "label": 1,
+            "type": 9,
+            "typeName": "",
+            "extendee": "",
+            "defaultValue": "",
+            "oneofIndex": 0,
+            "jsonName": "key",
+            "options": undefined,
+            "proto3Optional": false,
+          }, {
+            "name": "value",
+            "number": 2,
+            "label": 1,
+            "type": 9,
+            "typeName": "",
+            "extendee": "",
+            "defaultValue": "",
+            "oneofIndex": 0,
+            "jsonName": "value",
+            "options": undefined,
+            "proto3Optional": false,
+          }],
+          "extension": [],
+          "nestedType": [],
+          "enumType": [],
+          "extensionRange": [],
+          "oneofDecl": [],
+          "options": {
+            "messageSetWireFormat": false,
+            "noStandardDescriptorAccessor": false,
+            "deprecated": false,
+            "mapEntry": true,
+            "uninterpretedOption": [],
+          },
+          "reservedRange": [],
+          "reservedName": [],
+        }],
+        "enumType": [],
+        "extensionRange": [],
+        "oneofDecl": [],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "enumType": [{
+        "name": "OperationType",
+        "value": [
+          { "name": "CREATE", "number": 0, "options": undefined },
+          { "name": "UPDATE", "number": 1, "options": undefined },
+          { "name": "DELETE", "number": 2, "options": undefined },
+          { "name": "REACTION", "number": 3, "options": undefined },
+        ],
+        "options": undefined,
+        "reservedRange": [],
+        "reservedName": [],
+      }],
+      "extensionRange": [],
+      "oneofDecl": [],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }],
+    "enumType": [{
+      "name": "AudioCodec",
+      "value": [{ "name": "DEFAULT_AC", "number": 0, "options": undefined }, {
+        "name": "OPUS",
+        "number": 1,
+        "options": undefined,
+      }, { "name": "AAC", "number": 2, "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "VideoCodec",
+      "value": [
+        { "name": "DEFAULT_VC", "number": 0, "options": undefined },
+        { "name": "H264_BASELINE", "number": 1, "options": undefined },
+        { "name": "H264_MAIN", "number": 2, "options": undefined },
+        { "name": "H264_HIGH", "number": 3, "options": undefined },
+        { "name": "VP8", "number": 4, "options": undefined },
+      ],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ImageCodec",
+      "value": [{ "name": "IC_DEFAULT", "number": 0, "options": undefined }, {
+        "name": "IC_JPEG",
+        "number": 1,
+        "options": undefined,
+      }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "BackupCodecPolicy",
+      "value": [{ "name": "REGRESSION", "number": 0, "options": undefined }, {
+        "name": "SIMULCAST",
+        "number": 1,
+        "options": undefined,
+      }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "TrackType",
+      "value": [{ "name": "AUDIO", "number": 0, "options": undefined }, {
+        "name": "VIDEO",
+        "number": 1,
+        "options": undefined,
+      }, { "name": "DATA", "number": 2, "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "TrackSource",
+      "value": [
+        { "name": "UNKNOWN", "number": 0, "options": undefined },
+        { "name": "CAMERA", "number": 1, "options": undefined },
+        { "name": "MICROPHONE", "number": 2, "options": undefined },
+        { "name": "SCREEN_SHARE", "number": 3, "options": undefined },
+        { "name": "SCREEN_SHARE_AUDIO", "number": 4, "options": undefined },
+      ],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "VideoQuality",
+      "value": [
+        { "name": "LOW", "number": 0, "options": undefined },
+        { "name": "MEDIUM", "number": 1, "options": undefined },
+        { "name": "HIGH", "number": 2, "options": undefined },
+        { "name": "OFF", "number": 3, "options": undefined },
+      ],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ConnectionQuality",
+      "value": [
+        { "name": "POOR", "number": 0, "options": undefined },
+        { "name": "GOOD", "number": 1, "options": undefined },
+        { "name": "EXCELLENT", "number": 2, "options": undefined },
+        { "name": "LOST", "number": 3, "options": undefined },
+      ],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ClientConfigSetting",
+      "value": [{ "name": "UNSET", "number": 0, "options": undefined }, {
+        "name": "DISABLED",
+        "number": 1,
+        "options": undefined,
+      }, { "name": "ENABLED", "number": 2, "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "DisconnectReason",
+      "value": [
+        { "name": "UNKNOWN_REASON", "number": 0, "options": undefined },
+        { "name": "CLIENT_INITIATED", "number": 1, "options": undefined },
+        { "name": "DUPLICATE_IDENTITY", "number": 2, "options": undefined },
+        { "name": "SERVER_SHUTDOWN", "number": 3, "options": undefined },
+        { "name": "PARTICIPANT_REMOVED", "number": 4, "options": undefined },
+        { "name": "ROOM_DELETED", "number": 5, "options": undefined },
+        { "name": "STATE_MISMATCH", "number": 6, "options": undefined },
+        { "name": "JOIN_FAILURE", "number": 7, "options": undefined },
+        { "name": "MIGRATION", "number": 8, "options": undefined },
+        { "name": "SIGNAL_CLOSE", "number": 9, "options": undefined },
+        { "name": "ROOM_CLOSED", "number": 10, "options": undefined },
+        { "name": "USER_UNAVAILABLE", "number": 11, "options": undefined },
+        { "name": "USER_REJECTED", "number": 12, "options": undefined },
+        { "name": "SIP_TRUNK_FAILURE", "number": 13, "options": undefined },
+      ],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "ReconnectReason",
+      "value": [
+        { "name": "RR_UNKNOWN", "number": 0, "options": undefined },
+        { "name": "RR_SIGNAL_DISCONNECTED", "number": 1, "options": undefined },
+        { "name": "RR_PUBLISHER_FAILED", "number": 2, "options": undefined },
+        { "name": "RR_SUBSCRIBER_FAILED", "number": 3, "options": undefined },
+        { "name": "RR_SWITCH_CANDIDATE", "number": 4, "options": undefined },
+      ],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "SubscriptionError",
+      "value": [{ "name": "SE_UNKNOWN", "number": 0, "options": undefined }, {
+        "name": "SE_CODEC_UNSUPPORTED",
+        "number": 1,
+        "options": undefined,
+      }, { "name": "SE_TRACK_NOTFOUND", "number": 2, "options": undefined }],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }, {
+      "name": "AudioTrackFeature",
+      "value": [
+        { "name": "TF_STEREO", "number": 0, "options": undefined },
+        { "name": "TF_NO_DTX", "number": 1, "options": undefined },
+        { "name": "TF_AUTO_GAIN_CONTROL", "number": 2, "options": undefined },
+        { "name": "TF_ECHO_CANCELLATION", "number": 3, "options": undefined },
+        { "name": "TF_NOISE_SUPPRESSION", "number": 4, "options": undefined },
+        { "name": "TF_ENHANCED_NOISE_CANCELLATION", "number": 5, "options": undefined },
+      ],
+      "options": undefined,
+      "reservedRange": [],
+      "reservedName": [],
+    }],
+    "service": [],
+    "extension": [],
+    "options": {
+      "javaPackage": "",
+      "javaOuterClassname": "",
+      "javaMultipleFiles": false,
+      "javaGenerateEqualsAndHash": false,
+      "javaStringCheckUtf8": false,
+      "optimizeFor": 1,
+      "goPackage": "github.com/livekit/protocol/livekit",
+      "ccGenericServices": false,
+      "javaGenericServices": false,
+      "pyGenericServices": false,
+      "phpGenericServices": false,
+      "deprecated": false,
+      "ccEnableArenas": true,
+      "objcClassPrefix": "",
+      "csharpNamespace": "LiveKit.Proto",
+      "swiftPrefix": "",
+      "phpClassPrefix": "",
+      "phpNamespace": "",
+      "phpMetadataNamespace": "",
+      "rubyPackage": "LiveKit::Proto",
+      "uninterpretedOption": [],
+    },
+    "sourceCodeInfo": {
+      "location": [{
+        "path": [4, 0, 2, 0],
+        "span": [26, 2, 22],
+        "leadingComments": "",
+        "trailingComments": " list entities which IDs are greater\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 3],
+        "span": [74, 0, 79, 1],
+        "leadingComments":
+          " Policy for publisher to handle subscribers that are unable to support the primary codec of a track\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 3, 2, 0],
+        "span": [76, 2, 17],
+        "leadingComments":
+          " default behavior, regress to backup codec and all subscribers will receive the backup codec\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 3, 2, 1],
+        "span": [78, 2, 16],
+        "leadingComments": " encoding/send the primary and backup codec simultaneously\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 0],
+        "span": [89, 2, 25],
+        "leadingComments": " allow participant to subscribe to other tracks in the room\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 1],
+        "span": [91, 2, 23],
+        "leadingComments": " allow participant to publish new tracks to room\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 2],
+        "span": [93, 2, 28],
+        "leadingComments": " allow participant to publish data\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 3],
+        "span": [95, 2, 47],
+        "leadingComments": " sources that are allowed to be published\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 4],
+        "span": [97, 2, 18],
+        "leadingComments": " indicates that it's hidden to others\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 5],
+        "span": [100, 2, 38],
+        "leadingComments": " indicates it's a recorder instance\n deprecated: use ParticipantInfo.kind instead\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 6],
+        "span": [102, 2, 32],
+        "leadingComments": " indicates that participant can update own metadata and attributes\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 7],
+        "span": [105, 2, 36],
+        "leadingComments": " indicates that participant is an agent\n deprecated: use ParticipantInfo.kind instead\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 4, 2, 8],
+        "span": [107, 2, 34],
+        "leadingComments": " if a participant can subscribe to metrics\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 4, 0, 2, 0],
+        "span": [115, 4, 16],
+        "leadingComments": " websocket' connected, but not offered yet\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 4, 0, 2, 1],
+        "span": [117, 4, 15],
+        "leadingComments": " server received client offer\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 4, 0, 2, 2],
+        "span": [119, 4, 15],
+        "leadingComments": " ICE connectivity established\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 4, 0, 2, 3],
+        "span": [121, 4, 21],
+        "leadingComments": " WS disconnected\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 4, 1, 2, 0],
+        "span": [125, 4, 17],
+        "leadingComments": " standard participants, e.g. web clients\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 4, 1, 2, 1],
+        "span": [127, 4, 16],
+        "leadingComments": " only ingests streams\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 4, 1, 2, 2],
+        "span": [129, 4, 15],
+        "leadingComments": " only consumes streams\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 4, 1, 2, 3],
+        "span": [131, 4, 12],
+        "leadingComments": " SIP participants\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 4, 1, 2, 4],
+        "span": [133, 4, 14],
+        "leadingComments": " LiveKit agents\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 2, 5],
+        "span": [141, 2, 22],
+        "leadingComments": " timestamp when participant joined room, in seconds\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 2, 6],
+        "span": [143, 2, 26],
+        "leadingComments": " timestamp when participant joined room, in milliseconds\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 5, 2, 11],
+        "span": [150, 2, 25],
+        "leadingComments":
+          " indicates the participant has an active publisher connection\n and can publish to the server\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 4],
+        "span": [194, 2, 19],
+        "leadingComments":
+          " original width of video (unset for audio)\n clients may receive a lower resolution version with simulcast\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 5],
+        "span": [196, 2, 20],
+        "leadingComments": " original height of video (unset for audio)\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 6],
+        "span": [198, 2, 21],
+        "leadingComments": " true if track is simulcasted\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 7],
+        "span": [200, 2, 23],
+        "leadingComments": " true if DTX (Discontinuous Transmission) is disabled for audio\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 8],
+        "span": [202, 2, 25],
+        "leadingComments": " source of media\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 10],
+        "span": [205, 2, 24],
+        "leadingComments": " mime type of codec\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 8, 2, 14],
+        "span": [210, 2, 24],
+        "leadingComments": " true if RED (Redundant Encoding) is disabled for audio\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 9],
+        "span": [226, 0, 234, 1],
+        "leadingComments": " provide information about available spatial layers\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 9, 2, 0],
+        "span": [228, 2, 27],
+        "leadingComments": " for tracks with a single layer, this should be HIGH\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 9, 2, 3],
+        "span": [232, 2, 21],
+        "leadingComments": " target bitrate in bit per second (bps), server will measure actual\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10],
+        "span": [237, 0, 262, 1],
+        "leadingComments": " new DataPacket API\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 1],
+        "span": [244, 2, 34],
+        "leadingComments": " participant identity of user that sent the message\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 10, 2, 2],
+        "span": [246, 2, 45],
+        "leadingComments": " identities of participants who will receive the message (sent to all by default)\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 2, 1],
+        "span": [271, 2, 18],
+        "leadingComments": " audio level, 0-1.0, 1 is loudest\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 12, 2, 2],
+        "span": [273, 2, 18],
+        "leadingComments": " true if speaker is currently active\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 13, 2, 0],
+        "span": [278, 2, 47],
+        "leadingComments": " participant ID of user that sent the message\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 13, 2, 2],
+        "span": [281, 2, 20],
+        "leadingComments": " user defined payload\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 13, 2, 3],
+        "span": [283, 2, 57],
+        "leadingComments": " the ID of the participants who will receive the message (sent to all by default)\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 13, 2, 4],
+        "span": [285, 2, 63],
+        "leadingComments": " identities of participants who will receive the message (sent to all by default)\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 13, 2, 5],
+        "span": [287, 2, 28],
+        "leadingComments": " topic under which the message was published\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 13, 2, 6],
+        "span": [289, 2, 25],
+        "leadingComments": " Unique ID to indentify the message\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 13, 2, 7],
+        "span": [291, 2, 33],
+        "leadingComments": " start and end time allow relating the message to specific media time\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 13, 2, 9],
+        "span": [294, 2, 19],
+        "leadingComments": " added by SDK to enable de-duping of messages, for INTERNAL USE ONLY\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 15, 2, 0],
+        "span": [306, 2, 46],
+        "leadingComments": " Participant that got its speech transcribed\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 17, 2, 0],
+        "span": [323, 2, 16],
+        "leadingComments": "",
+        "trailingComments": " uuid\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 17, 2, 2],
+        "span": [325, 2, 36],
+        "leadingComments": "",
+        "trailingComments": " populated only if the intent is to edit/update an existing message\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 17, 2, 4],
+        "span": [327, 2, 19],
+        "leadingComments": "",
+        "trailingComments": " true to remove message\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 17, 2, 5],
+        "span": [328, 2, 21],
+        "leadingComments": "",
+        "trailingComments":
+          " true if the chat message has been generated by an agent from a participant's audio transcription\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 22, 2, 0],
+        "span": [366, 2, 29],
+        "leadingComments": " participant ID of participant to whom the tracks belong\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 23],
+        "span": [371, 0, 384, 1],
+        "leadingComments": " details about the server\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 23, 2, 5],
+        "span": [382, 2, 24],
+        "leadingComments": " additional debugging information. sent only if server is in development mode\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 24],
+        "span": [387, 0, 418, 1],
+        "leadingComments": " details about the client\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 24, 2, 9],
+        "span": [414, 2, 22],
+        "leadingComments": " wifi, wired, cellular, vpn, empty if not known\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 24, 2, 10],
+        "span": [417, 2, 25],
+        "leadingComments":
+          ' comma separated list of additional LiveKit SDKs in use of this client, with versions\n e.g. "components-js:1.2.3,track-processors-js:1.2.3"\n',
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 25],
+        "span": [421, 0, 428, 1],
+        "leadingComments": " server provided client configuration\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 27, 2, 0],
+        "span": [442, 2, 28],
+        "leadingComments": " disabled for both publish and subscribe\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 27, 2, 1],
+        "span": [444, 2, 29],
+        "leadingComments": " only disable for publish\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 1],
+        "span": [450, 2, 23],
+        "leadingComments": " the client initiated the disconnect\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 2],
+        "span": [452, 2, 25],
+        "leadingComments": " another participant with the same identity has joined the room\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 3],
+        "span": [454, 2, 22],
+        "leadingComments": " the server instance is shutting down\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 4],
+        "span": [456, 2, 26],
+        "leadingComments": " RoomService.RemoveParticipant was called\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 5],
+        "span": [458, 2, 19],
+        "leadingComments": " RoomService.DeleteRoom was called\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 6],
+        "span": [460, 2, 21],
+        "leadingComments": " the client is attempting to resume a session, but server is not aware of it\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 7],
+        "span": [462, 2, 19],
+        "leadingComments": " client was unable to connect fully\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 8],
+        "span": [464, 2, 16],
+        "leadingComments": " Cloud-only, the server requested Participant to migrate the connection elsewhere\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 9],
+        "span": [466, 2, 19],
+        "leadingComments": " the signal websocket was closed unexpectedly\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 10],
+        "span": [468, 2, 19],
+        "leadingComments": " the room was closed, due to all Standard and Ingress participants having left\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 11],
+        "span": [470, 2, 24],
+        "leadingComments": " SIP callee did not respond in time\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 12],
+        "span": [472, 2, 21],
+        "leadingComments": " SIP callee rejected the call (busy)\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [5, 9, 2, 13],
+        "span": [474, 2, 25],
+        "leadingComments": " SIP protocol failure or unexpected response\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 29, 2, 44],
+        "span": [553, 2, 38],
+        "leadingComments": "",
+        "trailingComments": " NEXT_ID: 48\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 30, 2, 3],
+        "span": [561, 2, 15],
+        "leadingComments": "",
+        "trailingComments": " time at which this happened\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 4, 0],
+        "span": [630, 2, 635, 3],
+        "leadingComments": " enum for operation types (specific to TextHeader)\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 0],
+        "span": [638, 2, 645, 3],
+        "leadingComments": " header properties specific to text streams\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 0, 2, 1],
+        "span": [640, 4, 22],
+        "leadingComments": "",
+        "trailingComments": " Optional: Version for updates/edits\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 0, 2, 2],
+        "span": [641, 4, 34],
+        "leadingComments": "",
+        "trailingComments": " Optional: Reply to specific message\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 0, 2, 3],
+        "span": [642, 4, 44],
+        "leadingComments": "",
+        "trailingComments": " file attachments for text streams\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 0, 2, 4],
+        "span": [643, 4, 23],
+        "leadingComments": "",
+        "trailingComments":
+          " true if the text has been generated by an agent from a participant's audio transcription\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 1],
+        "span": [648, 2, 650, 3],
+        "leadingComments": " header properties specific to byte or file streams\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 2],
+        "span": [653, 2, 667, 3],
+        "leadingComments": " main DataStream.Header that contains a oneof for specific headers\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 2, 2, 0],
+        "span": [654, 4, 25],
+        "leadingComments": "",
+        "trailingComments": " unique identifier for this data stream\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 2, 2, 1],
+        "span": [655, 4, 24],
+        "leadingComments": "",
+        "trailingComments": " using int64 for Unix timestamp\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 2, 2, 4],
+        "span": [658, 4, 37],
+        "leadingComments": "",
+        "trailingComments": " only populated for finite streams, if it's a stream of unknown size this stays empty\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 2, 2, 5],
+        "span": [659, 4, 40],
+        "leadingComments": "",
+        "trailingComments": " defaults to NONE\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 2, 2, 6],
+        "span": [660, 4, 39],
+        "leadingComments": "",
+        "trailingComments": " user defined attributes map that can carry additional info\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 2, 8, 0],
+        "span": [663, 4, 666, 5],
+        "leadingComments": " oneof to choose between specific header types\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 3, 2, 0],
+        "span": [670, 4, 25],
+        "leadingComments": "",
+        "trailingComments": " unique identifier for this data stream to map it to the correct header\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 3, 2, 2],
+        "span": [672, 4, 22],
+        "leadingComments": "",
+        "trailingComments": " content as binary (bytes)\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 3, 2, 3],
+        "span": [673, 4, 22],
+        "leadingComments": "",
+        "trailingComments":
+          " a version indicating that this chunk_index has been retroactively modified and the original one needs to be replaced\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 3, 2, 4],
+        "span": [674, 4, 26],
+        "leadingComments": "",
+        "trailingComments": " optional, initialization vector for AES-GCM encryption\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 4, 2, 0],
+        "span": [678, 4, 25],
+        "leadingComments": "",
+        "trailingComments": " unique identifier for this data stream\n",
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 4, 2, 1],
+        "span": [679, 4, 22],
+        "leadingComments": "",
+        "trailingComments":
+          ' reason why the stream was closed (could contain "error" / "interrupted" / empty for expected end)\n',
+        "leadingDetachedComments": [],
+      }, {
+        "path": [4, 35, 3, 4, 2, 2],
+        "span": [680, 4, 39],
+        "leadingComments": "",
+        "trailingComments":
+          " finalizing updates for the stream, can also include additional insights for errors or endTime for transcription\n",
+        "leadingDetachedComments": [],
+      }],
+    },
+    "syntax": "proto3",
+  },
+  references: {
+    ".livekit.AudioCodec": AudioCodec,
+    ".livekit.VideoCodec": VideoCodec,
+    ".livekit.ImageCodec": ImageCodec,
+    ".livekit.BackupCodecPolicy": BackupCodecPolicy,
+    ".livekit.TrackType": TrackType,
+    ".livekit.TrackSource": TrackSource,
+    ".livekit.VideoQuality": VideoQuality,
+    ".livekit.ConnectionQuality": ConnectionQuality,
+    ".livekit.ClientConfigSetting": ClientConfigSetting,
+    ".livekit.DisconnectReason": DisconnectReason,
+    ".livekit.ReconnectReason": ReconnectReason,
+    ".livekit.SubscriptionError": SubscriptionError,
+    ".livekit.AudioTrackFeature": AudioTrackFeature,
+    ".livekit.Pagination": Pagination,
+    ".livekit.Room": Room,
+    ".livekit.Codec": Codec,
+    ".livekit.PlayoutDelay": PlayoutDelay,
+    ".livekit.ParticipantPermission": ParticipantPermission,
+    ".livekit.ParticipantInfo": ParticipantInfo,
+    ".livekit.ParticipantInfo.State": ParticipantInfo_State,
+    ".livekit.ParticipantInfo.Kind": ParticipantInfo_Kind,
+    ".livekit.ParticipantInfo.AttributesEntry": ParticipantInfo_AttributesEntry,
+    ".livekit.Encryption": Encryption,
+    ".livekit.Encryption.Type": Encryption_Type,
+    ".livekit.SimulcastCodecInfo": SimulcastCodecInfo,
+    ".livekit.TrackInfo": TrackInfo,
+    ".livekit.VideoLayer": VideoLayer,
+    ".livekit.DataPacket": DataPacket,
+    ".livekit.DataPacket.Kind": DataPacket_Kind,
+    ".livekit.ActiveSpeakerUpdate": ActiveSpeakerUpdate,
+    ".livekit.SpeakerInfo": SpeakerInfo,
+    ".livekit.UserPacket": UserPacket,
+    ".livekit.SipDTMF": SipDTMF,
+    ".livekit.Transcription": Transcription,
+    ".livekit.TranscriptionSegment": TranscriptionSegment,
+    ".livekit.ChatMessage": ChatMessage,
+    ".livekit.RpcRequest": RpcRequest,
+    ".livekit.RpcAck": RpcAck,
+    ".livekit.RpcResponse": RpcResponse,
+    ".livekit.RpcError": RpcError,
+    ".livekit.ParticipantTracks": ParticipantTracks,
+    ".livekit.ServerInfo": ServerInfo,
+    ".livekit.ServerInfo.Edition": ServerInfo_Edition,
+    ".livekit.ClientInfo": ClientInfo,
+    ".livekit.ClientInfo.SDK": ClientInfo_SDK,
+    ".livekit.ClientConfiguration": ClientConfiguration,
+    ".livekit.VideoConfiguration": VideoConfiguration,
+    ".livekit.DisabledCodecs": DisabledCodecs,
+    ".livekit.RTPDrift": RTPDrift,
+    ".livekit.RTPStats": RTPStats,
+    ".livekit.RTPStats.GapHistogramEntry": RTPStats_GapHistogramEntry,
+    ".livekit.RTCPSenderReportState": RTCPSenderReportState,
+    ".livekit.RTPForwarderState": RTPForwarderState,
+    ".livekit.RTPMungerState": RTPMungerState,
+    ".livekit.VP8MungerState": VP8MungerState,
+    ".livekit.TimedVersion": TimedVersion,
+    ".livekit.DataStream": DataStream,
+    ".livekit.DataStream.OperationType": DataStream_OperationType,
+    ".livekit.DataStream.TextHeader": DataStream_TextHeader,
+    ".livekit.DataStream.ByteHeader": DataStream_ByteHeader,
+    ".livekit.DataStream.Header": DataStream_Header,
+    ".livekit.DataStream.Header.AttributesEntry": DataStream_Header_AttributesEntry,
+    ".livekit.DataStream.Chunk": DataStream_Chunk,
+    ".livekit.DataStream.Trailer": DataStream_Trailer,
+    ".livekit.DataStream.Trailer.AttributesEntry": DataStream_Trailer_AttributesEntry,
+  },
+  dependencies: [protoMetadata1, protoMetadata2],
+} as const satisfies ProtoMetadata;
+
 function bytesFromBase64(b64: string): Uint8Array {
   return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
 }
@@ -8479,26 +13805,26 @@ function base64FromBytes(arr: Uint8Array): string {
   return globalThis.Buffer.from(arr).toString("base64");
 }
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | bigint | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
   : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : T extends {} ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never };
 
 function toTimestamp(date: Date): Timestamp {
-  const seconds = Math.trunc(date.getTime() / 1_000);
+  const seconds = BigInt(Math.trunc(date.getTime() / 1_000));
   const nanos = (date.getTime() % 1_000) * 1_000_000;
-  return { seconds, nanos };
+  return { $type: "google.protobuf.Timestamp", seconds, nanos };
 }
 
 function fromTimestamp(t: Timestamp): Date {
-  let millis = (t.seconds || 0) * 1_000;
+  let millis = (globalThis.Number(t.seconds.toString()) || 0) * 1_000;
   millis += (t.nanos || 0) / 1_000_000;
   return new globalThis.Date(millis);
 }
@@ -8513,17 +13839,6 @@ function fromJsonTimestamp(o: any): Date {
   }
 }
 
-function longToNumber(int64: { toString(): string }): number {
-  const num = globalThis.Number(int64.toString());
-  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
-    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-  }
-  return num;
-}
-
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;
 }
@@ -8532,7 +13847,8 @@ function isSet(value: any): boolean {
   return value !== null && value !== undefined;
 }
 
-export interface MessageFns<T> {
+export interface MessageFns<T, V extends string> {
+  readonly $type: V;
   encode(message: T, writer?: BinaryWriter): BinaryWriter;
   decode(input: BinaryReader | Uint8Array, length?: number): T;
   fromJSON(object: any): T;
