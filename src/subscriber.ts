@@ -7,6 +7,10 @@ import {
   Stream,
   StreamOpen,
 } from "./generated/internal";
+import {
+  GetEgressRequest,
+  UpdateIngressStateRequest,
+} from "./generated/rpc/io";
 import { StartEgressRequest } from "./generated/rpc/egress";
 import { getValkeyClient } from "./valkey";
 import { startEgressRequestChannel } from "./helpers/channels";
@@ -96,11 +100,18 @@ function handlePMessageBuffer(
     console.log("DECODED VALUE: ", decodedRequestRawRequest);
   }
 
+  if (decodedRequest.$type === "internal.Response") {
+    console.log(
+      `DECODED RAWRESPONSE [${decodedRequest.rawResponse.length}]: `,
+      decodedRequest.rawResponse.toString("utf-8"),
+    );
+  }
+
   console.groupEnd();
 }
 
 function getMessageTypeForChannel(channel: string) {
-  if (channel === startEgressRequestChannel) {
+  if (channel === startEgressRequestChannel.Legacy) {
     return StartEgressRequest;
   }
 

@@ -23,4 +23,4 @@ protoc \
     --proto_path=$script_dir/contrib/livekit-protocol/protobufs \
     --proto_path=$script_dir/contrib/livekit-psrpc/internal \
     --proto_path=$script_dir/contrib/livekit-psrpc/protoc-gen-psrpc/options \
-    internal.proto options.proto rpc/egress.proto rpc/keepalive.proto livekit_metrics.proto livekit_models.proto livekit_egress.proto
+    internal.proto options.proto rpc/egress.proto rpc/io.proto rpc/keepalive.proto livekit_metrics.proto livekit_models.proto livekit_egress.proto

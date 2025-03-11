@@ -2,53 +2,46 @@
 // versions:
 //   protoc-gen-ts_proto  v2.6.1
 //   protoc               v5.29.2
-// source: rpc/keepalive.proto
+// source: google/protobuf/empty.proto
 
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { FileDescriptorProto as FileDescriptorProto1 } from "ts-proto-descriptors";
-import { Options, protoMetadata as protoMetadata1 } from "../options";
-import { messageTypeRegistry } from "../typeRegistry";
+import { messageTypeRegistry } from "../../typeRegistry";
 
-export const protobufPackage = "rpc";
+export const protobufPackage = "google.protobuf";
 
-export interface KeepalivePing {
-  $type: "rpc.KeepalivePing";
-  timestamp: bigint;
+/**
+ * A generic empty message that you can re-use to avoid defining duplicated
+ * empty messages in your APIs. A typical example is to use it as the request
+ * or the response type of an API method. For instance:
+ *
+ *     service Foo {
+ *       rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
+ *     }
+ */
+export interface Empty {
+  $type: "google.protobuf.Empty";
 }
 
-function createBaseKeepalivePing(): KeepalivePing {
-  return { $type: "rpc.KeepalivePing", timestamp: 0n };
+function createBaseEmpty(): Empty {
+  return { $type: "google.protobuf.Empty" };
 }
 
-export const KeepalivePing: MessageFns<KeepalivePing, "rpc.KeepalivePing"> = {
-  $type: "rpc.KeepalivePing" as const,
+export const Empty: MessageFns<Empty, "google.protobuf.Empty"> = {
+  $type: "google.protobuf.Empty" as const,
 
-  encode(message: KeepalivePing, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.timestamp !== 0n) {
-      if (BigInt.asIntN(64, message.timestamp) !== message.timestamp) {
-        throw new globalThis.Error("value provided for field message.timestamp of type int64 too large");
-      }
-      writer.uint32(8).int64(message.timestamp);
-    }
+  encode(_: Empty, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): KeepalivePing {
+  decode(input: BinaryReader | Uint8Array, length?: number): Empty {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseKeepalivePing();
+    const message = createBaseEmpty();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 8) {
-            break;
-          }
-
-          message.timestamp = reader.int64() as bigint;
-          continue;
-        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -58,29 +51,25 @@ export const KeepalivePing: MessageFns<KeepalivePing, "rpc.KeepalivePing"> = {
     return message;
   },
 
-  fromJSON(object: any): KeepalivePing {
-    return { $type: KeepalivePing.$type, timestamp: isSet(object.timestamp) ? BigInt(object.timestamp) : 0n };
+  fromJSON(_: any): Empty {
+    return { $type: Empty.$type };
   },
 
-  toJSON(message: KeepalivePing): unknown {
+  toJSON(_: Empty): unknown {
     const obj: any = {};
-    if (message.timestamp !== 0n) {
-      obj.timestamp = message.timestamp.toString();
-    }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<KeepalivePing>, I>>(base?: I): KeepalivePing {
-    return KeepalivePing.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<Empty>, I>>(base?: I): Empty {
+    return Empty.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<KeepalivePing>, I>>(object: I): KeepalivePing {
-    const message = createBaseKeepalivePing();
-    message.timestamp = object.timestamp ?? 0n;
+  fromPartial<I extends Exact<DeepPartial<Empty>, I>>(_: I): Empty {
+    const message = createBaseEmpty();
     return message;
   },
 };
 
-messageTypeRegistry.set(KeepalivePing.$type, KeepalivePing);
+messageTypeRegistry.set(Empty.$type, Empty);
 
 type ProtoMetaMessageOptions = {
   options?: { [key: string]: any };
@@ -105,26 +94,14 @@ export interface ProtoMetadata {
 
 export const protoMetadata = {
   fileDescriptor: {
-    "name": "rpc/keepalive.proto",
-    "package": "rpc",
-    "dependency": ["options.proto"],
+    "name": "google/protobuf/empty.proto",
+    "package": "google.protobuf",
+    "dependency": [],
     "publicDependency": [],
     "weakDependency": [],
     "messageType": [{
-      "name": "KeepalivePing",
-      "field": [{
-        "name": "timestamp",
-        "number": 1,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "timestamp",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
+      "name": "Empty",
+      "field": [],
       "extension": [],
       "nestedType": [],
       "enumType": [],
@@ -135,35 +112,24 @@ export const protoMetadata = {
       "reservedName": [],
     }],
     "enumType": [],
-    "service": [{
-      "name": "Keepalive",
-      "method": [{
-        "name": "Ping",
-        "inputType": ".rpc.KeepalivePing",
-        "outputType": ".rpc.KeepalivePing",
-        "options": { "deprecated": false, "idempotencyLevel": 0, "uninterpretedOption": [] },
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }],
-      "options": undefined,
-    }],
+    "service": [],
     "extension": [],
     "options": {
-      "javaPackage": "",
-      "javaOuterClassname": "",
-      "javaMultipleFiles": false,
+      "javaPackage": "com.google.protobuf",
+      "javaOuterClassname": "EmptyProto",
+      "javaMultipleFiles": true,
       "javaGenerateEqualsAndHash": false,
       "javaStringCheckUtf8": false,
       "optimizeFor": 1,
-      "goPackage": "github.com/livekit/protocol/rpc",
+      "goPackage": "google.golang.org/protobuf/types/known/emptypb",
       "ccGenericServices": false,
       "javaGenericServices": false,
       "pyGenericServices": false,
       "phpGenericServices": false,
       "deprecated": false,
       "ccEnableArenas": true,
-      "objcClassPrefix": "",
-      "csharpNamespace": "",
+      "objcClassPrefix": "GPB",
+      "csharpNamespace": "Google.Protobuf.WellKnownTypes",
       "swiftPrefix": "",
       "phpClassPrefix": "",
       "phpNamespace": "",
@@ -171,18 +137,20 @@ export const protoMetadata = {
       "rubyPackage": "",
       "uninterpretedOption": [],
     },
-    "sourceCodeInfo": { "location": [] },
+    "sourceCodeInfo": {
+      "location": [{
+        "path": [4, 0],
+        "span": [50, 0, 16],
+        "leadingComments":
+          " A generic empty message that you can re-use to avoid defining duplicated\n empty messages in your APIs. A typical example is to use it as the request\n or the response type of an API method. For instance:\n\n     service Foo {\n       rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n     }\n\n",
+        "trailingComments": "",
+        "leadingDetachedComments": [],
+      }],
+    },
     "syntax": "proto3",
   },
-  references: { ".rpc.KeepalivePing": KeepalivePing },
-  dependencies: [protoMetadata1],
-  options: {
-    services: {
-      "Keepalive": {
-        methods: { "Ping": { "options": Options.decode(Buffer.from("CAEQARoKEgZub2RlSUQYASgB", "base64")) } },
-      },
-    },
-  },
+  references: { ".google.protobuf.Empty": Empty },
+  dependencies: [],
 } as const satisfies ProtoMetadata;
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | bigint | undefined;
@@ -196,10 +164,6 @@ export type DeepPartial<T> = T extends Builtin ? T
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never };
-
-function isSet(value: any): boolean {
-  return value !== null && value !== undefined;
-}
 
 export interface MessageFns<T, V extends string> {
   readonly $type: V;

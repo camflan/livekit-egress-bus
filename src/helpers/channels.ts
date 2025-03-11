@@ -28,7 +28,7 @@ const CHANNEL_SUFFIXES = {
   STREAM: "STR",
 } as const;
 
-const startEgressRequestChannel = getRPCChannel({
+export const startEgressRequestChannel = getRPCChannel({
   service: "EgressInternal",
   method: "StartEgress",
   topic: [],
