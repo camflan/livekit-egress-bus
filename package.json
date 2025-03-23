@@ -11,10 +11,12 @@
   "description": "",
   "dependencies": {
     "@bufbuild/protobuf": "^2.2.3",
+    "@harnyk/chan": "^0.1.1",
     "@livekit/protocol": "^1.34.0",
     "@uplift-ltd/strings": "^4.0.0",
     "@uplift-ltd/ts-helpers": "^3.0.0",
     "iovalkey": "^0.3.1",
+    "ts-chan": "^0.6.0",
     "ts-proto": "^2.6.1"
   },
   "devDependencies": {

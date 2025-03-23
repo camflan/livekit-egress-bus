@@ -1,6 +1,6 @@
 import { getValkeyClient } from "./valkey";
 
-import { EncodingOptionsPreset } from "./generated/livekit_egress";
+import { EgressInfo, EncodingOptionsPreset } from "./generated/livekit_egress";
 import { StartEgressRequest } from "./generated/rpc/egress";
 import {
   ClaimRequest,
@@ -9,15 +9,17 @@ import {
   Request,
   Response,
 } from "./generated/internal";
-import { newClientID, NewRequestID } from "./helpers/ids";
+import { formatID, newClientID, NewRequestID } from "./helpers/ids";
 import {
   getClaimRequestChannel,
   getClaimResponseChannel,
   startEgressRequestChannel,
 } from "./helpers/channels";
-import { decodeMsg } from "./serdes";
-import { MessageType, UnknownMessage } from "./generated/typeRegistry";
-import { parseMsgFromAllTypes } from "./subscriber";
+import { decodeMsg, decodeProtobuf } from "./serdes";
+import { parseMsgFromAllTypes } from "./helpers/parse-from-all";
+import { ensureError } from "@uplift-ltd/ts-helpers";
+import { loadEgress, storeEgress, updateEgress } from "./redis-store";
+import { msToNanosecondsBigInt } from "./helpers/datetimes";
 
 const DEFAULT_EXPIRY_MS = 1_000 * 60 * 60; // 1 minute
 
@@ -36,31 +38,42 @@ main()
 // 3. Start Egress
 async function main() {
   console.log("Starting…");
-  const valkey = getValkeyClient({});
+  // const valkey = getValkeyClient({});
 
-  const config = {
-    web: {
-      preset: EncodingOptionsPreset.H264_1080P_60,
-      streamOutputs: [
-        {
-          urls: [
-            "rtmps://12b43280e4c2.global-contribute.live-video.net:443/app/sk_us-east-1_Zyl6qUz90C1L_Kof1rfclunFfJ9UdhiaXv02zJ8ltDA",
-          ],
-        },
-      ],
-      url: "https://videojs.github.io/autoplay-tests/plain/attr/autoplay-playsinline.html",
-    },
-  };
-
-  const channel = startEgressRequestChannel;
-  const req = Buffer.from(
-    StartEgressRequest.encode(StartEgressRequest.create(config)).finish(),
-  );
   const clientId = newClientID();
+  const egressId = formatID("EG_");
+
+  handleIoInfoRequests();
+
+  // 1. Send StartEgressRequest, wait for response from LK Egress workers
+  const channel = startEgressRequestChannel;
+  // Encode content for the Request, which gets wrapped into a Msg
+  const req = Buffer.from(
+    StartEgressRequest.encode(
+      StartEgressRequest.create({
+        egressId,
+        web: {
+          preset: EncodingOptionsPreset.H264_1080P_60,
+          streamOutputs: [
+            {
+              urls: [
+                "rtmps://12b43280e4c2.global-contribute.live-video.net:443/app/sk_us-east-1_Zyl6qUz90C1L_Kof1rfclunFfJ9UdhiaXv02zJ8ltDA",
+              ],
+            },
+          ],
+          url: "https://videojs.github.io/autoplay-tests/plain/attr/autoplay-playsinline.html",
+        },
+      }),
+    ).finish(),
+  );
   const encodedMsg = encodeRequestMsg(req, clientId);
 
+  // Publish the Msg and wait for an Egress worker to respond with a ClaimRequest
+  // Egress workers send an affinity. I think this can be used by our process to pick
+  // which Egress worker gets it?
+  //
   const decodedResponseMsg = await publishWithResponse(
-    channel,
+    channel.Legacy,
     clientId,
     Buffer.from(encodedMsg),
   );
@@ -71,8 +84,14 @@ async function main() {
 
   console.log("file: index.ts~line: 57~decodedResponseMsg", decodedResponseMsg);
 
+  // 2. After we get responses from the E workers, we'll pick one and publish that
+  // RequestId + ServerId pair back to the channel
   const claimResponseResponse = await publishWithResponse(
-    getClaimResponseChannel("EgressInternal", "StartEgress").Legacy,
+    getClaimResponseChannel({
+      topic: [],
+      service: "EgressInternal",
+      method: "StartEgress",
+    }).Legacy,
     clientId,
     encodeClaimResponseMsg(
       decodedResponseMsg.requestId,
@@ -88,6 +107,7 @@ async function main() {
   console.log(parseMsgFromAllTypes(claimResponseResponse.rawResponse));
 }
 
+// TODO: Replace with single listener and a req/res map?
 async function publishWithResponse<
   T extends Request | Response | ClaimRequest | ClaimResponse,
 >(channel: string, clientId: string, msg: Buffer) {
@@ -169,6 +189,72 @@ function encodeClaimResponseMsg(requestId: string, serverId: string) {
   );
 }
 
-function msToNanosecondsBigInt(ms: number) {
-  return BigInt(ms * 1_000_000);
+function handleIoInfoRequests() {
+  const sub = getValkeyClient({ lazyConnect: false });
+
+  sub.on("pmessageBuffer", async (pattern, channel, msg) => {
+    const channelName = channel.toString("utf-8");
+    const [service, method, _topic] = channelName.split("|");
+    if (service != "IOInfo") {
+      console.warn(`Unknown pattern for msg: ${pattern}`);
+      return;
+    }
+
+    console.info(`MSG recieved on ${channelName}`, msg.toString("utf-8"));
+
+    const valkey = getValkeyClient({ lazyConnect: false });
+    const decodedMsg = decodeMsg(msg);
+
+    switch (method) {
+      case "UpdateEgress": {
+        const info =
+          decodedMsg.$type === "internal.Request"
+            ? decodeProtobuf(EgressInfo, decodedMsg.rawRequest)
+            : null;
+
+        if (!info) {
+          console.warn("Unable to load EgressInfo from req");
+          break;
+        }
+
+        await updateEgress(info, valkey);
+
+        break;
+      }
+      case "CreateEgress": {
+        const info =
+          decodedMsg.$type === "internal.Request"
+            ? decodeProtobuf(EgressInfo, decodedMsg.rawRequest)
+            : null;
+
+        if (!info) {
+          console.warn("Unable to load EgressInfo from req");
+          break;
+        }
+
+        const egress = await loadEgress(info?.egressId, valkey);
+
+        if (!egress) {
+          await storeEgress(info, valkey);
+        }
+
+        break;
+      }
+      default:
+        console.warn(`Unhandled method: ${method}`);
+    }
+  });
+
+  sub.psubscribe("IOInfo*", (err, count) => {
+    if (err) {
+      console.error(ensureError(err).message);
+    } else {
+      console.info(`Now subscribed to ${count} channels`);
+    }
+  });
+
+  return async function () {
+    console.info("Shutting down IOInfo handler…");
+    await sub.punsubscribe();
+  };
 }

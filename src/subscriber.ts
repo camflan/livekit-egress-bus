@@ -1,27 +1,15 @@
-import {
-  ClaimRequest,
-  ClaimResponse,
-  Msg,
-  Request,
-  Response,
-  Stream,
-  StreamOpen,
-} from "./generated/internal";
-import {
-  GetEgressRequest,
-  UpdateIngressStateRequest,
-} from "./generated/rpc/io";
+import { ClaimRequest } from "./generated/internal";
 import { StartEgressRequest } from "./generated/rpc/egress";
 import { getValkeyClient } from "./valkey";
 import { startEgressRequestChannel } from "./helpers/channels";
 import { decodeMsg, decodeProtobuf } from "./serdes";
+import { decodeIOInfoMsg } from "./ioinfo-msg";
+import { EgressInfo } from "./generated/livekit_egress";
 import {
-  EgressInfo,
-  StopEgressRequest,
-  StreamOutput,
-  WebEgressRequest,
-} from "./generated/livekit_egress";
-import { KeepalivePing } from "./generated/rpc/keepalive";
+  EgressInfo as ProtocolEgressInfo,
+  SIPParticipantInfo,
+} from "@livekit/protocol";
+import { typedIncludes } from "@uplift-ltd/ts-helpers";
 
 const DEFAULT_PATTERNS = [
   // "Keepalive|Ping*",
@@ -67,18 +55,18 @@ async function main(patterns = DEFAULT_PATTERNS) {
   console.log("Pong: ", pong);
 }
 
-function handleMessage(channel: string, msg: string) {
-  console.log(`message [${channel}]: ${msg}`);
-}
-
-function handleMessageBuffer(channelBuffer: Buffer, msgBuffer: Buffer) {
-  const channel = channelBuffer.toString("utf-8");
-  console.log(`messageBuffer [${channel}]: ${msgBuffer.toString("utf-8")}`);
-}
-
-function handlePMessage(pattern: string, channel: string, msg: string) {
-  console.log(`pmessage (${pattern}) [${channel}]: ${msg}`);
-}
+// function handleMessage(channel: string, msg: string) {
+//   console.log(`message [${channel}]: ${msg}`);
+// }
+//
+// function handleMessageBuffer(channelBuffer: Buffer, msgBuffer: Buffer) {
+//   const channel = channelBuffer.toString("utf-8");
+//   console.log(`messageBuffer [${channel}]: ${msgBuffer.toString("utf-8")}`);
+// }
+//
+// function handlePMessage(pattern: string, channel: string, msg: string) {
+//   console.log(`pmessage (${pattern}) [${channel}]: ${msg}`);
+// }
 
 function handlePMessageBuffer(
   pattern: string,
@@ -91,13 +79,33 @@ function handlePMessageBuffer(
   const decodedRequest = decodeMsg(msgBuffer);
   console.log("file: subscriber.ts~line: 87~decodedRequest", decodedRequest);
 
-  if (decodedRequest.$type === "internal.Request") {
-    const decodedRequestRawRequest = decodeProtobuf(
-      getMessageTypeForChannel(channel),
-      decodedRequest.rawRequest,
-    );
+  const [service, method, _topic] = channel.split("|");
 
-    console.log("DECODED VALUE: ", decodedRequestRawRequest);
+  if (decodedRequest.$type === "internal.Request") {
+    try {
+      if (
+        service === "IOInfo" &&
+        typedIncludes(["CreateEgress", "UpdateIngress"], method) &&
+        "rawRequest" in decodedRequest &&
+        decodedRequest.rawRequest
+      ) {
+        console.log(
+          `@livekit/protocol decoding for ${method}: `,
+          ProtocolEgressInfo.fromBinary(decodedRequest.rawRequest),
+        );
+      } else {
+        console.log("Unable to decode using @livekit/protocol");
+      }
+
+      const decodedRequestRawRequest = decodeProtobuf(
+        // @ts-expect-error
+        getMessageTypeForChannel(channel),
+        decodedRequest.rawRequest,
+      );
+      console.log("DECODED VALUE: ", decodedRequestRawRequest);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   if (decodedRequest.$type === "internal.Response") {
@@ -115,62 +123,18 @@ function getMessageTypeForChannel(channel: string) {
     return StartEgressRequest;
   }
 
+  const [service, method, _topic] = channel.split("|");
+  if (service === "IOInfo") {
+    switch (method) {
+      case "UpdateEgress":
+      case "CreateEgress":
+        return EgressInfo;
+    }
+  }
+
   if (channel.endsWith("CLAIM")) {
     return ClaimRequest;
   }
 
   throw new Error(`Unknown channel: ${channel}`);
-}
-
-const ALL_PROTOS = {
-  ClaimRequest,
-  ClaimResponse,
-  EgressInfo,
-  Msg,
-  KeepalivePing,
-  Request,
-  Response,
-  StartEgressRequest,
-  StopEgressRequest,
-  Stream,
-  StreamOpen,
-  StreamOutput,
-  WebEgressRequest,
-};
-
-export function parseMsgFromAllTypes(msg: Buffer, type?: string) {
-  const results = {};
-
-  for (const [key, proto] of Object.entries(ALL_PROTOS)) {
-    try {
-      if (type && !type.includes(key)) {
-        continue;
-      }
-
-      let decoded = proto.decode(msg);
-
-      // if ("token" in decoded) {
-      //   decoded.token = parseMsgFromAllTypes(
-      //     typeof decoded.token === "string"
-      //       ? Buffer.from(decoded.token)
-      //       : decoded.token,
-      //   );
-      // }
-      //
-      // if ("value" in decoded && typeof decoded.value !== "string") {
-      //   decoded.value = parseMsgFromAllTypes(decoded.value);
-      // }
-      //
-      // if ("rawRequest" in decoded && typeof decoded.rawRequest !== "string") {
-      //   decoded.rawRequestString = decoded.rawRequest.toString("utf-8");
-      //   // decoded.rawRequest = parseMsgFromAllTypes(decoded.rawRequest);
-      // }
-
-      results[key] = decoded;
-    } catch (err) {
-      results[key] = err instanceof Error ? err.message : String(err);
-    }
-  }
-
-  return results;
 }

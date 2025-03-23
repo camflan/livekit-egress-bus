@@ -17,7 +17,7 @@ export function NewStreamID() {
   return formatID("STR_");
 }
 
-function formatID(prefix: string) {
+export function formatID(prefix: string) {
   return prefix + readIDChars(10);
 }
 

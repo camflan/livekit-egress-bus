@@ -5,12 +5,14 @@ import { safeJoin } from "@uplift-ltd/strings";
 
 type LKService = "EgressInternal";
 
-type LivekitRequestInfo = {
+export type LivekitRequestInfo = {
   service: string;
   method: string;
   topic: string[];
-  queue?: boolean;
+  affinityEnabled?: boolean;
   multi?: boolean;
+  queue?: boolean;
+  requireClaim?: boolean;
 };
 
 const safeJoinWithPeriod = safeJoin(".");
