@@ -60,14 +60,6 @@ export class RPCClient {
         InternalClaimRequest,
       );
 
-      responses.msgChannel.addReceiver((msg, done) => {
-        console.debug("RESPONSES", { msg, done });
-      });
-
-      claims.msgChannel.addReceiver((msg, done) => {
-        console.debug("CLAIMS", { msg, done });
-      });
-
       const select = new Select([
         recv(this.#abortChannel),
         recv(responses.msgChannel),

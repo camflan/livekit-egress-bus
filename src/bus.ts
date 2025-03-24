@@ -21,43 +21,12 @@ export class MessageBus {
     this.#client = valkey;
     this.#subscriber = this.#client.duplicate();
 
-    this.#subscriber.on(
-      "messageBuffer",
-      this.#handleMessageBuffer.bind(this),
-      // (channelBuffer: Buffer, messageBuffer: Buffer) => {
-      //   const channel = channelBuffer.toString("utf-8");
-      //   const decodedMsg = Msg.decode(messageBuffer);
-      //   const msgValueType = messageTypeRegistry.get(
-      //     decodedMsg.typeUrl.slice(GOOGLE_TYPEURL_PREFIX.length),
-      //   );
-      //
-      //   if (!msgValueType) {
-      //     throw new Error(`Unsupported message type: ${decodedMsg.typeUrl}!`);
-      //   }
-      //
-      //   const decodedValue = msgValueType.decode(decodedMsg.value);
-      //
-      //   try {
-      //     const valueToDecode = getInnerValue(decodedValue);
-      //     if (Buffer.isBuffer(valueToDecode)) {
-      //       const decoded = messageFns.decode(valueToDecode);
-      //       console.log("file: bus.ts~line: 65~decoded", decoded);
-      //       msgChannel.trySend(decoded);
-      //       return;
-      //     }
-      //
-      //     msgChannel.trySend(decodedValue as T);
-      //   } catch (err) {
-      //     const error = ensureError(err);
-      //     console.log("file: bus.ts~line: 64~error", error);
-      //   }
-      // },
-    );
+    this.#subscriber.on("messageBuffer", this.#handleMessageBuffer.bind(this));
   }
 
   publish<T extends UnknownMessage>(channel: string, msg: T) {
     const msgType = messageTypeRegistry.get(msg.$type);
-    // console.debug("PUBLISH", { channel, msgType });
+    console.debug("PUBLISH", { channel, msgType, msg });
 
     if (!msgType) {
       throw new Error(`Unsupported message type: ${msg.$type}!`);
