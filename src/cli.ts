@@ -1,30 +1,27 @@
 import { getValkeyClient } from "./valkey";
 
-import { EgressInfo, EncodingOptionsPreset } from "./generated/livekit_egress";
+import {
+  EgressInfo,
+  EncodingOptionsPreset,
+  ListEgressRequest,
+  ListEgressResponse,
+} from "./generated/livekit_egress";
 import { StartEgressRequest } from "./generated/rpc/egress";
-import {
-  ClaimRequest,
-  ClaimResponse,
-  Msg,
-  Request,
-  Response,
-} from "./generated/internal";
-import { formatID, newClientID, NewRequestID } from "./helpers/ids";
-import {
-  getClaimRequestChannel,
-  getClaimResponseChannel,
-  startEgressRequestChannel,
-} from "./helpers/channels";
-import { decodeMsg, decodeProtobuf } from "./serdes";
-import { parseMsgFromAllTypes } from "./helpers/parse-from-all";
+import { formatID } from "./helpers/ids";
 import { ensureError } from "@uplift-ltd/ts-helpers";
-import { loadEgress, storeEgress, updateEgress } from "./redis-store";
-import { msToNanosecondsBigInt } from "./helpers/datetimes";
 import { RPCClient } from "./rpc-client";
 import { MessageBus } from "./bus";
 import { getLogger } from "./helpers/logger";
 import { RPCServer } from "./rpc-server";
 import { Empty } from "./generated/google/protobuf/empty";
+import {
+  listEgress,
+  loadEgress,
+  storeEgress,
+  updateEgress,
+} from "./redis-store";
+import { GetEgressRequest, UpdateMetricsRequest } from "./generated/rpc/io";
+import { NotFoundError } from "./errors";
 
 const logger = getLogger("cli");
 
@@ -68,15 +65,88 @@ async function main() {
 
   // TODO: pull out of here
   server.registerHandler({
-    async handlerFn(req) {
-      console.log("file: cli.ts~line: 70~req", req);
+    async handlerFn(egressInfo) {
+      const existingEgress = await loadEgress(egressInfo.egressId);
+      if (existingEgress) {
+        return Empty;
+      }
+
+      await storeEgress(egressInfo);
+      // TODO: telemetry?
+
       return Empty;
     },
+
     rpc: "CreateEgress",
     requestMessageFns: EgressInfo,
     responseMessageFns: Empty,
+    service: "IOInfo",
     topic: [],
   });
+
+  server.registerHandler({
+    async handlerFn(egressInfo) {
+      await updateEgress(egressInfo);
+
+      // TODO: report telemetry?
+
+      return Empty;
+    },
+    rpc: "UpdateEgress",
+    requestMessageFns: EgressInfo,
+    responseMessageFns: Empty,
+    service: "IOInfo",
+    topic: [],
+  });
+
+  server.registerHandler({
+    async handlerFn(req) {
+      return await loadEgress(req.egressId);
+    },
+    rpc: "GetEgress",
+    requestMessageFns: GetEgressRequest,
+    responseMessageFns: EgressInfo,
+    service: "IOInfo",
+    topic: [],
+  });
+
+  server.registerHandler({
+    rpc: "ListEgress",
+    service: "IOInfo",
+    topic: [],
+    requestMessageFns: ListEgressRequest,
+    responseMessageFns: ListEgressResponse,
+    async handlerFn(listRequest) {
+      const egresses = await listEgress(
+        listRequest.roomName,
+        listRequest.active,
+      );
+
+      return {
+        $type: "livekit.ListEgressResponse",
+        items: egresses,
+      };
+    },
+  });
+
+  server.registerHandler({
+    rpc: "UpdateMetrics",
+    service: "IOInfo",
+    topic: [],
+    requestMessageFns: UpdateMetricsRequest,
+    responseMessageFns: Empty,
+    async handlerFn(metrics) {
+      logger.info("received egress metrics", {
+        egressId: metrics.info?.egressId,
+        avgCpu: metrics.avgCpuUsage,
+        maxCpu: metrics.maxCpuUsage,
+      });
+
+      return Empty;
+    },
+  });
+
+  const serverPromise = server.start();
 
   const client = new RPCClient({
     abort,
@@ -102,6 +172,7 @@ async function main() {
     }),
     requestMessageFns: StartEgressRequest,
     rpc: "StartEgress",
+    service: "EgressInternal",
     topic: [],
     options: {
       timeoutMs: 500,
@@ -109,234 +180,6 @@ async function main() {
   });
 
   logger.debug("RPC Response!", response);
-}
 
-// STEPS
-// 1. Create EgressID
-// 2. Store Egress data to egress.egressID field
-// 3. Start Egress
-async function main2() {
-  logger.debug("Starting…");
-  // const valkey = getValkeyClient({});
-
-  const clientId = newClientID();
-  const egressId = formatID("EG_");
-
-  handleIoInfoRequests();
-
-  // 1. Send StartEgressRequest, wait for response from LK Egress workers
-  const channel = startEgressRequestChannel;
-  // Encode content for the Request, which gets wrapped into a Msg
-  const req = Buffer.from(
-    StartEgressRequest.encode(
-      StartEgressRequest.create({
-        egressId,
-        web: {
-          preset: EncodingOptionsPreset.H264_1080P_60,
-          streamOutputs: [
-            {
-              urls: [
-                "rtmps://12b43280e4c2.global-contribute.live-video.net:443/app/sk_us-east-1_Zyl6qUz90C1L_Kof1rfclunFfJ9UdhiaXv02zJ8ltDA",
-              ],
-            },
-          ],
-          url: "https://videojs.github.io/autoplay-tests/plain/attr/autoplay-playsinline.html",
-        },
-      }),
-    ).finish(),
-  );
-  const encodedMsg = encodeRequestMsg(req, clientId);
-
-  // Publish the Msg and wait for an Egress worker to respond with a ClaimRequest
-  // Egress workers send an affinity. I think this can be used by our process to pick
-  // which Egress worker gets it?
-  //
-  const decodedResponseMsg = await publishWithResponse(
-    channel.Legacy,
-    clientId,
-    Buffer.from(encodedMsg),
-  );
-
-  if (decodedResponseMsg.$type !== "internal.ClaimRequest") {
-    throw new Error("Unexpected response: " + decodedResponseMsg.$type);
-  }
-
-  logger.debug(
-    "file: index.ts~line: 57~decodedResponseMsg",
-    decodedResponseMsg,
-  );
-
-  // 2. After we get responses from the E workers, we'll pick one and publish that
-  // RequestId + ServerId pair back to the channel
-  const claimResponseResponse = await publishWithResponse(
-    getClaimResponseChannel({
-      topic: [],
-      service: "EgressInternal",
-      method: "StartEgress",
-    }).Legacy,
-    clientId,
-    encodeClaimResponseMsg(
-      decodedResponseMsg.requestId,
-      decodedResponseMsg.serverId,
-    ),
-  );
-
-  if (claimResponseResponse.$type !== "internal.Response") {
-    throw new Error("Unexpected response: " + claimResponseResponse.$type);
-  }
-
-  logger.debug(claimResponseResponse);
-  logger.debug(parseMsgFromAllTypes(claimResponseResponse.rawResponse));
-}
-
-// TODO: Replace with single listener and a req/res map?
-async function publishWithResponse<
-  T extends Request | Response | ClaimRequest | ClaimResponse,
->(channel: string, clientId: string, msg: Buffer) {
-  const publisher = getValkeyClient({});
-  const subscriber = getValkeyClient({});
-
-  const responsePromise = new Promise<T>(async (resolve) => {
-    subscriber.on("messageBuffer", (channel: Buffer, msg: Buffer) => {
-      const msgString = msg.toString("utf-8");
-      logger.debug(`[${channel.toString("utf-8")}]: ${msgString}`);
-
-      subscriber.unsubscribe();
-      resolve(decodeMsg(msg) as T);
-    });
-
-    const claimRequestChannel = getClaimRequestChannel(
-      "EgressInternal",
-      clientId,
-    ).Legacy;
-
-    await subscriber.subscribe(claimRequestChannel, (err, count) => {
-      if (err) {
-        logger.error("ERR: ", err);
-      } else {
-        logger.debug(`Subscribed to ${count} channels`);
-      }
-    });
-  });
-
-  logger.debug(`Publishing msg to ${channel}`);
-  await publisher.publish(channel, msg);
-
-  return responsePromise;
-}
-
-function encodeRequestMsg(msg: Buffer, clientId: string) {
-  const sentAt = Date.now();
-  const request = Request.create({
-    $type: "internal.Request",
-    metadata: {},
-    request: undefined,
-    clientId,
-    requestId: NewRequestID(),
-    multi: false,
-    sentAt: msToNanosecondsBigInt(sentAt),
-    expiry: msToNanosecondsBigInt(sentAt + DEFAULT_EXPIRY_MS),
-    rawRequest: msg,
-  });
-  const requestReq = Buffer.from(Request.encode(request).finish());
-
-  return Buffer.from(
-    Msg.encode(
-      Msg.create({
-        channel: "",
-        // pull this type from the value's protobuf?
-        typeUrl: `type.googleapis.com/${request.$type}`,
-        value: requestReq,
-      }),
-    ).finish(),
-  );
-}
-
-function encodeClaimResponseMsg(requestId: string, serverId: string) {
-  const request = ClaimResponse.create({
-    requestId,
-    serverId,
-  });
-  const requestReq = Buffer.from(ClaimResponse.encode(request).finish());
-
-  return Buffer.from(
-    Msg.encode(
-      Msg.create({
-        channel: "",
-        // pull this type from the value's protobuf?
-        typeUrl: `type.googleapis.com/${request.$type}`,
-        value: requestReq,
-      }),
-    ).finish(),
-  );
-}
-
-function handleIoInfoRequests() {
-  const sub = getValkeyClient({ lazyConnect: false });
-
-  sub.on("pmessageBuffer", async (pattern, channel, msg) => {
-    const channelName = channel.toString("utf-8");
-    const [service, method, _topic] = channelName.split("|");
-    if (service != "IOInfo") {
-      logger.warn(`Unknown pattern for msg: ${pattern}`);
-      return;
-    }
-
-    logger.debug(`MSG recieved on ${channelName}`, msg.toString("utf-8"));
-
-    const valkey = getValkeyClient({ lazyConnect: false });
-    const decodedMsg = decodeMsg(msg);
-
-    switch (method) {
-      case "UpdateEgress": {
-        const info =
-          decodedMsg.$type === "internal.Request"
-            ? decodeProtobuf(EgressInfo, decodedMsg.rawRequest)
-            : null;
-
-        if (!info) {
-          logger.warn("Unable to load EgressInfo from req");
-          break;
-        }
-
-        await updateEgress(info, valkey);
-
-        break;
-      }
-      case "CreateEgress": {
-        const info =
-          decodedMsg.$type === "internal.Request"
-            ? decodeProtobuf(EgressInfo, decodedMsg.rawRequest)
-            : null;
-
-        if (!info) {
-          logger.warn("Unable to load EgressInfo from req");
-          break;
-        }
-
-        const egress = await loadEgress(info?.egressId, valkey);
-
-        if (!egress) {
-          await storeEgress(info, valkey);
-        }
-
-        break;
-      }
-      default:
-        logger.warn(`Unhandled method: ${method}`);
-    }
-  });
-
-  sub.psubscribe("IOInfo*", (err, count) => {
-    if (err) {
-      logger.error(ensureError(err).message);
-    } else {
-      logger.debug(`Now subscribed to ${count} channels`);
-    }
-  });
-
-  return async function () {
-    logger.debug("Shutting down IOInfo handler…");
-    await sub.punsubscribe();
-  };
+  await serverPromise;
 }
