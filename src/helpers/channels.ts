@@ -3,7 +3,7 @@
  */
 import { safeJoin } from "@uplift-ltd/strings";
 
-type LKService = "EgressInternal";
+type LKService = string; // "EgressInternal";
 
 export type LivekitRequestInfo = {
   service: string;

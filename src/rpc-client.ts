@@ -15,7 +15,7 @@ import {
   Request as InternalRequest,
   ClaimResponse as InternalClaimResponse,
 } from "./generated/internal";
-import { getInfo, RPCKey } from "./info";
+import { getInfo, RPCKey, Service } from "./info";
 import { ensureError } from "@uplift-ltd/ts-helpers";
 import { getLogger } from "./helpers/logger";
 
@@ -148,9 +148,11 @@ export class RPCClient {
     responseMessageFns,
     msg,
     rpc,
+    service,
     topic,
     options: providedOptions,
   }: {
+    service: Service;
     rpc: RPCKey;
     topic: string[];
     msg: Partial<RequestMsg>;
@@ -163,7 +165,7 @@ export class RPCClient {
     }
 
     const options = { ...DEFAULT_REQUEST_OPTIONS, ...providedOptions };
-    const info = getInfo(rpc, topic);
+    const info = getInfo({ rpc, topic, service });
 
     const requestId = NewRequestID();
     const b = Buffer.from(

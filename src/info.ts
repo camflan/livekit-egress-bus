@@ -1,4 +1,4 @@
-const service = "EgressInternal";
+export type Service = "EgressInternal" | "IOInfo";
 
 type MethodInfo = {
   affinityEnabled: boolean;
@@ -69,12 +69,17 @@ export type ServerRPCKey = keyof typeof serverServiceDefinitions;
 
 export type RPCKey = ClientRPCKey | ServerRPCKey;
 
-export function getInfo(
+export function getInfo({
+  rpc,
+  topic,
+  service,
+}: {
   rpc:
     | keyof typeof clientServiceDefinitions
-    | keyof typeof serverServiceDefinitions,
-  topic: string[],
-) {
+    | keyof typeof serverServiceDefinitions;
+  topic: string[];
+  service: Service;
+}) {
   const method = isClientRPCKey(rpc)
     ? clientServiceDefinitions[rpc]
     : serverServiceDefinitions[rpc];
