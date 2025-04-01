@@ -108,27 +108,27 @@ export class MessageBus {
     const channel = channelBuffer.toString("utf-8");
 
     const decodedMsg = Msg.decode(messageBuffer);
+    logger.debug("#handleMessageBuffer:DECODED MSG", channel, decodedMsg);
     const msgValueType = messageTypeRegistry.get(
       decodedMsg.typeUrl.slice(GOOGLE_TYPEURL_PREFIX.length),
     );
+    logger.debug("#handleMessageBuffer: msgValueType", msgValueType);
 
     if (!msgValueType) {
       throw new Error(`Unsupported message type: ${decodedMsg.typeUrl}!`);
     }
 
-    const decodedValue = msgValueType.decode(decodedMsg.value);
+    const payload = msgValueType.decode(decodedMsg.value) as UnknownMessage;
 
     try {
-      const payload = getInnerValue(decodedValue) ?? decodedValue;
-
       const subList = this.#subscriptions.get(channel);
       if (subList) {
-        this.#dispatch(subList, payload as UnknownMessage);
+        this.#dispatch(subList, payload);
       }
 
       const queueSubList = this.#queues.get(channel);
       if (queueSubList) {
-        this.#dispatchQueue(queueSubList, payload as UnknownMessage);
+        this.#dispatchQueue(queueSubList, payload);
       }
     } catch (err) {
       const error = ensureError(err);
@@ -243,28 +243,4 @@ export class MessageBus {
       queue: false,
     };
   }
-}
-
-function getInnerValue(msg: UnknownMessage) {
-  if ("rawRequest" in msg) {
-    return msg.rawRequest;
-  }
-
-  if ("rawResponse" in msg) {
-    return msg.rawResponse;
-  }
-
-  if ("raw" in msg) {
-    return msg.raw;
-  }
-
-  if ("value" in msg) {
-    return msg.value;
-  }
-
-  if ("content" in msg) {
-    return msg.content;
-  }
-
-  return null;
 }
