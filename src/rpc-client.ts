@@ -17,6 +17,9 @@ import {
 } from "./generated/internal";
 import { getInfo, RPCKey } from "./info";
 import { ensureError } from "@uplift-ltd/ts-helpers";
+import { getLogger } from "./helpers/logger";
+
+const logger = getLogger("rpc.client");
 
 // copied from LK, converted to ms
 const DefaultClientTimeoutMs = 3 * 1000;
@@ -49,7 +52,7 @@ export class RPCClient {
   }
 
   async work() {
-    console.debug("Starting work");
+    logger.debug("Starting work");
     try {
       const responses = this.#bus.subscribe(
         getResponseChannel("EgressInternal", this.#clientID).Legacy,
@@ -73,7 +76,7 @@ export class RPCClient {
           // Abort
           case 0: {
             const reason = select.recv(select.cases[resultIdx]).value;
-            console.log("file: rpc-client.ts~line: 76~reason", reason);
+            logger.debug("file: rpc-client.ts~line: 76~reason", reason);
 
             if (reason) {
               responses.close();
@@ -85,7 +88,7 @@ export class RPCClient {
           // responses
           case 1: {
             const res = select.recv(select.cases[resultIdx]).value;
-            console.log("file: rpc-client.ts~line: 88~res", res);
+            logger.debug("file: rpc-client.ts~line: 88~res", res);
 
             if (!res) {
               this.close();
@@ -103,7 +106,7 @@ export class RPCClient {
           // claims
           case 2: {
             const claim = select.recv(select.cases[resultIdx]).value;
-            console.log("file: rpc-client.ts~line: 106~claim", claim);
+            logger.debug("file: rpc-client.ts~line: 106~claim", claim);
 
             if (!claim) {
               this.close();
@@ -124,7 +127,7 @@ export class RPCClient {
       }
     } catch (err) {
       const error = ensureError(err);
-      console.log("file: rpc-client.ts~line: 122~error", error);
+      logger.error("file: rpc-client.ts~line: 122~error", error);
       throw err;
     }
   }
@@ -169,7 +172,7 @@ export class RPCClient {
     );
     const now = Date.now();
 
-    console.log(`REQ [${requestId}]`, { info, options });
+    logger.debug(`REQ [${requestId}]`, { info, options });
     const req = InternalRequest.create({
       clientId: this.#clientID,
       requestId,
@@ -183,7 +186,7 @@ export class RPCClient {
     const resChannel = new Chan<InternalResponse>(1);
 
     const close = () => {
-      console.debug("CLOSING UP SHOP");
+      logger.debug("CLOSING UP SHOP");
       this.#claimRequests.delete(requestId);
       this.#responseChannels.delete(requestId);
       claimChannel.close();
@@ -197,7 +200,7 @@ export class RPCClient {
 
     this.#responseChannels.set(requestId, resChannel);
 
-    console.debug(`Publishing req [${requestId}]`);
+    logger.debug(`Publishing req [${requestId}]`);
     const result = await this.#bus
       .publish(getRPCChannel(info).Legacy, req)
       .catch((err) => {
@@ -211,6 +214,7 @@ export class RPCClient {
 
         return new Error("Unknown error occurred", { cause: err });
       });
+    logger.debug("RPC RESULT", result);
 
     if (result instanceof Error) {
       close();
@@ -229,14 +233,14 @@ export class RPCClient {
     });
 
     if (info.requireClaim) {
-      console.debug("REQUIRES CLAIM");
+      logger.debug("REQUIRES CLAIM");
       const response = await selectServer(
         this.#abortController.signal,
         claimChannel,
         resChannel,
         options.selectionOptions,
       );
-      console.log("file: rpc-client.ts~line: 239~response", response);
+      logger.debug("file: rpc-client.ts~line: 239~response", response);
 
       if (typeof response !== "string") {
         throw response;
@@ -260,19 +264,20 @@ export class RPCClient {
         // abort
         case 0: {
           const abort = select.recv(select.cases[resultIdx]).value;
-          console.log("file: rpc-client.ts~line: 261~abort", abort);
-          break;
+          logger.debug("file: rpc-client.ts~line: 261~abort", abort);
+          return abort;
         }
 
         // responses
         case 1: {
           const res = select.recv(select.cases[resultIdx]).value;
-          console.log("file: rpc-client.ts~line: 254~res", res);
+          logger.debug("file: rpc-client.ts~line: 254~res", res);
           if (!res) break;
 
           if (res.rawResponse && responseMessageFns) {
             const response = responseMessageFns.decode(res.rawResponse);
-            console.log("file: rpc-client.ts~line: 258~response", response);
+            logger.debug("file: rpc-client.ts~line: 258~response", response);
+            return response;
           }
         }
       }
@@ -324,6 +329,7 @@ const DEFAULT_SELECTION_OPTIONS = {
   shortCircuitTimeout: DefaultAffinityShortCircuitMs,
 } satisfies SelectionOptions;
 
+// TODO: implement parent/child aborts?
 async function selectServer(
   parentSignal: AbortSignal,
   claimChannel: ClaimRequestChannel,
@@ -378,13 +384,13 @@ async function selectServer(
   while (true) {
     // TODO: maybe remove the signal and just use the abortChannel?
     const resultIdx = await select.wait();
-    console.log("file: rpc-client.ts~line: 378~resultIdx", resultIdx);
+    logger.debug("file: rpc-client.ts~line: 378~resultIdx", resultIdx);
 
     switch (resultIdx) {
       // abort
       case 0: {
         const abortReason = select.recv(select.cases[resultIdx]).value;
-        console.log("file: rpc-client.ts~line: 384~abortReason", abortReason);
+        logger.debug("file: rpc-client.ts~line: 384~abortReason", abortReason);
 
         if (selectionFunction) {
           return selectionFunction(claims);
@@ -410,7 +416,7 @@ async function selectServer(
       // claims
       case 1: {
         const claim = select.recv(select.cases[resultIdx]).value;
-        console.log("file: rpc-client.ts~line: 407~claim", claim);
+        logger.debug("file: rpc-client.ts~line: 407~claim", claim);
 
         if (!claim) break;
         claimCount += 1;
@@ -449,7 +455,7 @@ async function selectServer(
       case 2: {
         // will only happen with malformed requests
         const response = select.recv(select.cases[resultIdx]).value;
-        console.log("file: rpc-client.ts~line: 446~response", response);
+        logger.debug("file: rpc-client.ts~line: 446~response", response);
         resError = new Error("Invalid response recieved", { cause: response });
 
         break;
@@ -495,61 +501,7 @@ function makeAbortChannel() {
     };
   } catch (err) {
     const error = ensureError(err);
-    console.log("file: rpc-client.ts~line: 465~error", error);
+    logger.debug("file: rpc-client.ts~line: 465~error", error);
     throw error;
   }
 }
-
-// RequestClient
-// 1. Serialize message payload
-// 2. If claim, Start listening to response channel
-// 3. Send request
-// 4. If claim,
-//      a. Wait for X ms for claim requests
-//      b. Select claim
-//      c. Send claim response
-// 3. Send response (if claimed, send to selected server)
-//
-
-// export async function newRPC<
-//   RequestType extends UnknownMessage,
-//   ResponseType extends UnknownMessage,
-// >(info: LivekitRequestInfo) {
-//   const requestClient = getValkeyClient({ lazyConnect: true });
-//   const responseClient = getValkeyClient({ lazyConnect: true });
-//
-//   const requestChannel = getRPCChannel(info);
-//   requestClient.subscribe(requestChannel.Legacy, (err) => {
-//     if (err) {
-//       const error = ensureError(err);
-//       console.error(error);
-//       throw error;
-//     }
-//   });
-//
-//   return async function (request: RequestType) {
-//     const requestID = NewRequestID();
-//     const nowMs = Date.now();
-//
-//     const req = {
-//       nowNano: msToNanosecondsBigInt(nowMs),
-//       expiryNano: msToNanosecondsBigInt(nowMs + DefaultClientTimeoutMs),
-//       multi: false,
-//       rawRequest: request, // TODO: NEEDS TO BE ENCODED!
-//       metadata: {},
-//     };
-//
-//     const claimChannel = undefined;
-//     const responseChannel = {};
-//
-//     if (info.requireClaim) {
-//       claimChannel = {};
-//       claimRequests.set(requestID, claimChannel);
-//     }
-//     responseChannels.set(requestID, responseChannel);
-//
-//     claimRequests.delete(requestID);
-//     responseChannels.delete(requestID);
-//     return;
-//   };
-// }

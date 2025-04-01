@@ -4,6 +4,9 @@ import Redis from "iovalkey";
 import { getValkeyClient } from "./valkey";
 import { ensureError } from "@uplift-ltd/ts-helpers";
 import { EgressInfo, EgressStatus } from "./generated/livekit_egress";
+import { getLogger } from "loglevel";
+
+const logger = getLogger("redis-store");
 
 const VersionKey = "livekit_version";
 
@@ -49,7 +52,7 @@ export async function storeEgress(
     await pipeline.exec();
   } catch (err) {
     const error = ensureError(err);
-    console.error(error);
+    logger.error(error);
     throw error;
   }
 }
@@ -68,7 +71,7 @@ export async function loadEgress(
     return EgressInfo.decode(data);
   } catch (err) {
     const error = ensureError(err);
-    console.error(err);
+    logger.error(err);
     throw error;
   }
 }
@@ -107,7 +110,7 @@ export async function listEgress(
     });
   } catch (err) {
     const error = ensureError(err);
-    console.error(error);
+    logger.error(error);
     throw error;
   }
 }
@@ -133,7 +136,7 @@ export async function updateEgress(
     await pipeline.exec();
   } catch (err) {
     const error = ensureError(err);
-    console.error(error);
+    logger.error(error);
     throw error;
   }
 }

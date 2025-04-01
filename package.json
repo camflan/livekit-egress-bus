@@ -16,6 +16,7 @@
     "@uplift-ltd/strings": "^4.0.0",
     "@uplift-ltd/ts-helpers": "^3.0.0",
     "iovalkey": "^0.3.1",
+    "loglevel": "^1.9.2",
     "ts-chan": "^0.6.0",
     "ts-proto": "^2.6.1"
   },

@@ -22,6 +22,11 @@ import { loadEgress, storeEgress, updateEgress } from "./redis-store";
 import { msToNanosecondsBigInt } from "./helpers/datetimes";
 import { RPCClient } from "./rpc-client";
 import { MessageBus } from "./bus";
+import { getLogger } from "./helpers/logger";
+import { RPCServer } from "./rpc-server";
+import { Empty } from "./generated/google/protobuf/empty";
+
+const logger = getLogger("cli");
 
 const DEFAULT_EXPIRY_MS = 1_000 * 60 * 60; // 1 minute
 
@@ -33,7 +38,7 @@ function exit(err?: string | Error) {
 
   if (error) {
     exitCode = 1;
-    console.error(error);
+    logger.error(error);
   }
 
   abort.abort(error);
@@ -41,12 +46,12 @@ function exit(err?: string | Error) {
 }
 
 process.once("SIGINT", function () {
-  console.log("SIGINT received…");
+  logger.debug("SIGINT received…");
   exit("SIGINT");
 });
 
 main()
-  .then(console.log)
+  .then(logger.debug)
   .catch(async (err) => {
     exit(await err);
   })
@@ -56,13 +61,30 @@ async function main() {
   const valkey = getValkeyClient({ lazyConnect: false });
   const bus = new MessageBus(valkey);
 
+  const server = new RPCServer({
+    abort,
+    bus,
+  });
+
+  // TODO: pull out of here
+  server.registerHandler({
+    async handlerFn(req) {
+      console.log("file: cli.ts~line: 70~req", req);
+      return Empty;
+    },
+    rpc: "CreateEgress",
+    requestMessageFns: EgressInfo,
+    responseMessageFns: Empty,
+    topic: [],
+  });
+
   const client = new RPCClient({
     abort,
     bus,
   });
   const egressId = formatID("EG_");
 
-  console.log(`Calling server for egressId: ${egressId}`);
+  logger.debug(`Calling server for egressId: ${egressId}`);
   const response = await client.requestSingle({
     msg: StartEgressRequest.create({
       egressId,
@@ -86,7 +108,7 @@ async function main() {
     },
   });
 
-  console.log("RPC Response!", response);
+  logger.debug("RPC Response!", response);
 }
 
 // STEPS
@@ -94,7 +116,7 @@ async function main() {
 // 2. Store Egress data to egress.egressID field
 // 3. Start Egress
 async function main2() {
-  console.log("Starting…");
+  logger.debug("Starting…");
   // const valkey = getValkeyClient({});
 
   const clientId = newClientID();
@@ -139,7 +161,10 @@ async function main2() {
     throw new Error("Unexpected response: " + decodedResponseMsg.$type);
   }
 
-  console.log("file: index.ts~line: 57~decodedResponseMsg", decodedResponseMsg);
+  logger.debug(
+    "file: index.ts~line: 57~decodedResponseMsg",
+    decodedResponseMsg,
+  );
 
   // 2. After we get responses from the E workers, we'll pick one and publish that
   // RequestId + ServerId pair back to the channel
@@ -160,8 +185,8 @@ async function main2() {
     throw new Error("Unexpected response: " + claimResponseResponse.$type);
   }
 
-  console.log(claimResponseResponse);
-  console.log(parseMsgFromAllTypes(claimResponseResponse.rawResponse));
+  logger.debug(claimResponseResponse);
+  logger.debug(parseMsgFromAllTypes(claimResponseResponse.rawResponse));
 }
 
 // TODO: Replace with single listener and a req/res map?
@@ -174,7 +199,7 @@ async function publishWithResponse<
   const responsePromise = new Promise<T>(async (resolve) => {
     subscriber.on("messageBuffer", (channel: Buffer, msg: Buffer) => {
       const msgString = msg.toString("utf-8");
-      console.log(`[${channel.toString("utf-8")}]: ${msgString}`);
+      logger.debug(`[${channel.toString("utf-8")}]: ${msgString}`);
 
       subscriber.unsubscribe();
       resolve(decodeMsg(msg) as T);
@@ -187,14 +212,14 @@ async function publishWithResponse<
 
     await subscriber.subscribe(claimRequestChannel, (err, count) => {
       if (err) {
-        console.error("ERR: ", err);
+        logger.error("ERR: ", err);
       } else {
-        console.log(`Subscribed to ${count} channels`);
+        logger.debug(`Subscribed to ${count} channels`);
       }
     });
   });
 
-  console.log(`Publishing msg to ${channel}`);
+  logger.debug(`Publishing msg to ${channel}`);
   await publisher.publish(channel, msg);
 
   return responsePromise;
@@ -253,11 +278,11 @@ function handleIoInfoRequests() {
     const channelName = channel.toString("utf-8");
     const [service, method, _topic] = channelName.split("|");
     if (service != "IOInfo") {
-      console.warn(`Unknown pattern for msg: ${pattern}`);
+      logger.warn(`Unknown pattern for msg: ${pattern}`);
       return;
     }
 
-    console.info(`MSG recieved on ${channelName}`, msg.toString("utf-8"));
+    logger.debug(`MSG recieved on ${channelName}`, msg.toString("utf-8"));
 
     const valkey = getValkeyClient({ lazyConnect: false });
     const decodedMsg = decodeMsg(msg);
@@ -270,7 +295,7 @@ function handleIoInfoRequests() {
             : null;
 
         if (!info) {
-          console.warn("Unable to load EgressInfo from req");
+          logger.warn("Unable to load EgressInfo from req");
           break;
         }
 
@@ -285,7 +310,7 @@ function handleIoInfoRequests() {
             : null;
 
         if (!info) {
-          console.warn("Unable to load EgressInfo from req");
+          logger.warn("Unable to load EgressInfo from req");
           break;
         }
 
@@ -298,20 +323,20 @@ function handleIoInfoRequests() {
         break;
       }
       default:
-        console.warn(`Unhandled method: ${method}`);
+        logger.warn(`Unhandled method: ${method}`);
     }
   });
 
   sub.psubscribe("IOInfo*", (err, count) => {
     if (err) {
-      console.error(ensureError(err).message);
+      logger.error(ensureError(err).message);
     } else {
-      console.info(`Now subscribed to ${count} channels`);
+      logger.debug(`Now subscribed to ${count} channels`);
     }
   });
 
   return async function () {
-    console.info("Shutting down IOInfo handler…");
+    logger.debug("Shutting down IOInfo handler…");
     await sub.punsubscribe();
   };
 }
