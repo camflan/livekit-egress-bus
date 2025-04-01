@@ -2,7 +2,7 @@ import Valkey, { RedisOptions as ValkeyOptions } from "iovalkey";
 
 type GetValkeyClientOptions = Omit<ValkeyOptions, "tls"> & { ssl?: boolean };
 
-export function getValkeyClient(options: GetValkeyClientOptions) {
+export function getValkeyClient(options?: GetValkeyClientOptions) {
   const resolvedOptions = getValkeyClientConfig(options);
   return new Valkey(resolvedOptions);
 }
