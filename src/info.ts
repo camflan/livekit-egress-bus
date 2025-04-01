@@ -7,7 +7,7 @@ type MethodInfo = {
   queue: boolean;
 };
 
-const serviceDefinitions = {
+const clientServiceDefinitions = {
   StartEgress: {
     affinityEnabled: true,
     multi: false,
@@ -22,10 +22,63 @@ const serviceDefinitions = {
   },
 } as const satisfies Record<string, MethodInfo>;
 
-export type RPCKey = keyof typeof serviceDefinitions;
+type ClientRPCKey = keyof typeof clientServiceDefinitions;
 
-export function getInfo(rpc: RPCKey, topic: string[]) {
-  const method = serviceDefinitions[rpc];
+function isClientRPCKey(
+  variableToCheck: unknown,
+): variableToCheck is ClientRPCKey {
+  return (
+    typeof variableToCheck === "string" &&
+    variableToCheck in clientServiceDefinitions
+  );
+}
+
+const serverServiceDefinitions = {
+  CreateEgress: {
+    affinityEnabled: false,
+    multi: false,
+    requireClaim: true,
+    queue: true,
+  },
+  UpdateEgress: {
+    affinityEnabled: false,
+    multi: false,
+    requireClaim: true,
+    queue: true,
+  },
+  GetEgress: {
+    affinityEnabled: false,
+    multi: false,
+    requireClaim: true,
+    queue: true,
+  },
+  ListEgress: {
+    affinityEnabled: false,
+    multi: false,
+    requireClaim: true,
+    queue: true,
+  },
+  UpdateMetrics: {
+    affinityEnabled: false,
+    multi: false,
+    requireClaim: true,
+    queue: true,
+  },
+} as const satisfies Record<string, MethodInfo>;
+export type ServerRPCKey = keyof typeof serverServiceDefinitions;
+
+export type RPCKey = ClientRPCKey | ServerRPCKey;
+
+export function getInfo(
+  rpc:
+    | keyof typeof clientServiceDefinitions
+    | keyof typeof serverServiceDefinitions,
+  topic: string[],
+) {
+  const method = isClientRPCKey(rpc)
+    ? clientServiceDefinitions[rpc]
+    : serverServiceDefinitions[rpc];
+
   const rpcInfo = {
     service,
     method: rpc,
@@ -41,3 +94,5 @@ export function getInfo(rpc: RPCKey, topic: string[]) {
     queue: method.queue ?? false,
   };
 }
+
+export type RequestInfo = ReturnType<typeof getInfo>;
