@@ -7,7 +7,10 @@
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { FileDescriptorProto as FileDescriptorProto1 } from "ts-proto-descriptors";
-import { Duration, protoMetadata as protoMetadata1 } from "./google/protobuf/duration";
+import {
+  Duration,
+  protoMetadata as protoMetadata1,
+} from "./google/protobuf/duration";
 import { protoMetadata as protoMetadata2 } from "./google/protobuf/empty";
 import {
   DisconnectReason,
@@ -16,7 +19,10 @@ import {
   Pagination,
   protoMetadata as protoMetadata3,
 } from "./livekit_models";
-import { protoMetadata as protoMetadata4, RoomConfiguration } from "./livekit_room";
+import {
+  protoMetadata as protoMetadata4,
+  RoomConfiguration,
+} from "./livekit_room";
 import { messageTypeRegistry } from "./typeRegistry";
 
 export const protobufPackage = "livekit";
@@ -74,61 +80,94 @@ export const SIPStatusCode = {
   UNRECOGNIZED: -1,
 } as const;
 
-export type SIPStatusCode = typeof SIPStatusCode[keyof typeof SIPStatusCode];
+export type SIPStatusCode = (typeof SIPStatusCode)[keyof typeof SIPStatusCode];
 
 export namespace SIPStatusCode {
   export type SIP_STATUS_UNKNOWN = typeof SIPStatusCode.SIP_STATUS_UNKNOWN;
   export type SIP_STATUS_TRYING = typeof SIPStatusCode.SIP_STATUS_TRYING;
   export type SIP_STATUS_RINGING = typeof SIPStatusCode.SIP_STATUS_RINGING;
-  export type SIP_STATUS_CALL_IS_FORWARDED = typeof SIPStatusCode.SIP_STATUS_CALL_IS_FORWARDED;
+  export type SIP_STATUS_CALL_IS_FORWARDED =
+    typeof SIPStatusCode.SIP_STATUS_CALL_IS_FORWARDED;
   export type SIP_STATUS_QUEUED = typeof SIPStatusCode.SIP_STATUS_QUEUED;
-  export type SIP_STATUS_SESSION_PROGRESS = typeof SIPStatusCode.SIP_STATUS_SESSION_PROGRESS;
+  export type SIP_STATUS_SESSION_PROGRESS =
+    typeof SIPStatusCode.SIP_STATUS_SESSION_PROGRESS;
   export type SIP_STATUS_OK = typeof SIPStatusCode.SIP_STATUS_OK;
   export type SIP_STATUS_ACCEPTED = typeof SIPStatusCode.SIP_STATUS_ACCEPTED;
-  export type SIP_STATUS_MOVED_PERMANENTLY = typeof SIPStatusCode.SIP_STATUS_MOVED_PERMANENTLY;
-  export type SIP_STATUS_MOVED_TEMPORARILY = typeof SIPStatusCode.SIP_STATUS_MOVED_TEMPORARILY;
+  export type SIP_STATUS_MOVED_PERMANENTLY =
+    typeof SIPStatusCode.SIP_STATUS_MOVED_PERMANENTLY;
+  export type SIP_STATUS_MOVED_TEMPORARILY =
+    typeof SIPStatusCode.SIP_STATUS_MOVED_TEMPORARILY;
   export type SIP_STATUS_USE_PROXY = typeof SIPStatusCode.SIP_STATUS_USE_PROXY;
-  export type SIP_STATUS_BAD_REQUEST = typeof SIPStatusCode.SIP_STATUS_BAD_REQUEST;
-  export type SIP_STATUS_UNAUTHORIZED = typeof SIPStatusCode.SIP_STATUS_UNAUTHORIZED;
-  export type SIP_STATUS_PAYMENT_REQUIRED = typeof SIPStatusCode.SIP_STATUS_PAYMENT_REQUIRED;
+  export type SIP_STATUS_BAD_REQUEST =
+    typeof SIPStatusCode.SIP_STATUS_BAD_REQUEST;
+  export type SIP_STATUS_UNAUTHORIZED =
+    typeof SIPStatusCode.SIP_STATUS_UNAUTHORIZED;
+  export type SIP_STATUS_PAYMENT_REQUIRED =
+    typeof SIPStatusCode.SIP_STATUS_PAYMENT_REQUIRED;
   export type SIP_STATUS_FORBIDDEN = typeof SIPStatusCode.SIP_STATUS_FORBIDDEN;
   export type SIP_STATUS_NOTFOUND = typeof SIPStatusCode.SIP_STATUS_NOTFOUND;
-  export type SIP_STATUS_METHOD_NOT_ALLOWED = typeof SIPStatusCode.SIP_STATUS_METHOD_NOT_ALLOWED;
-  export type SIP_STATUS_NOT_ACCEPTABLE = typeof SIPStatusCode.SIP_STATUS_NOT_ACCEPTABLE;
-  export type SIP_STATUS_PROXY_AUTH_REQUIRED = typeof SIPStatusCode.SIP_STATUS_PROXY_AUTH_REQUIRED;
-  export type SIP_STATUS_REQUEST_TIMEOUT = typeof SIPStatusCode.SIP_STATUS_REQUEST_TIMEOUT;
+  export type SIP_STATUS_METHOD_NOT_ALLOWED =
+    typeof SIPStatusCode.SIP_STATUS_METHOD_NOT_ALLOWED;
+  export type SIP_STATUS_NOT_ACCEPTABLE =
+    typeof SIPStatusCode.SIP_STATUS_NOT_ACCEPTABLE;
+  export type SIP_STATUS_PROXY_AUTH_REQUIRED =
+    typeof SIPStatusCode.SIP_STATUS_PROXY_AUTH_REQUIRED;
+  export type SIP_STATUS_REQUEST_TIMEOUT =
+    typeof SIPStatusCode.SIP_STATUS_REQUEST_TIMEOUT;
   export type SIP_STATUS_CONFLICT = typeof SIPStatusCode.SIP_STATUS_CONFLICT;
   export type SIP_STATUS_GONE = typeof SIPStatusCode.SIP_STATUS_GONE;
-  export type SIP_STATUS_REQUEST_ENTITY_TOO_LARGE = typeof SIPStatusCode.SIP_STATUS_REQUEST_ENTITY_TOO_LARGE;
-  export type SIP_STATUS_REQUEST_URI_TOO_LONG = typeof SIPStatusCode.SIP_STATUS_REQUEST_URI_TOO_LONG;
-  export type SIP_STATUS_UNSUPPORTED_MEDIA_TYPE = typeof SIPStatusCode.SIP_STATUS_UNSUPPORTED_MEDIA_TYPE;
+  export type SIP_STATUS_REQUEST_ENTITY_TOO_LARGE =
+    typeof SIPStatusCode.SIP_STATUS_REQUEST_ENTITY_TOO_LARGE;
+  export type SIP_STATUS_REQUEST_URI_TOO_LONG =
+    typeof SIPStatusCode.SIP_STATUS_REQUEST_URI_TOO_LONG;
+  export type SIP_STATUS_UNSUPPORTED_MEDIA_TYPE =
+    typeof SIPStatusCode.SIP_STATUS_UNSUPPORTED_MEDIA_TYPE;
   export type SIP_STATUS_REQUESTED_RANGE_NOT_SATISFIABLE =
     typeof SIPStatusCode.SIP_STATUS_REQUESTED_RANGE_NOT_SATISFIABLE;
-  export type SIP_STATUS_BAD_EXTENSION = typeof SIPStatusCode.SIP_STATUS_BAD_EXTENSION;
-  export type SIP_STATUS_EXTENSION_REQUIRED = typeof SIPStatusCode.SIP_STATUS_EXTENSION_REQUIRED;
-  export type SIP_STATUS_INTERVAL_TOO_BRIEF = typeof SIPStatusCode.SIP_STATUS_INTERVAL_TOO_BRIEF;
-  export type SIP_STATUS_TEMPORARILY_UNAVAILABLE = typeof SIPStatusCode.SIP_STATUS_TEMPORARILY_UNAVAILABLE;
+  export type SIP_STATUS_BAD_EXTENSION =
+    typeof SIPStatusCode.SIP_STATUS_BAD_EXTENSION;
+  export type SIP_STATUS_EXTENSION_REQUIRED =
+    typeof SIPStatusCode.SIP_STATUS_EXTENSION_REQUIRED;
+  export type SIP_STATUS_INTERVAL_TOO_BRIEF =
+    typeof SIPStatusCode.SIP_STATUS_INTERVAL_TOO_BRIEF;
+  export type SIP_STATUS_TEMPORARILY_UNAVAILABLE =
+    typeof SIPStatusCode.SIP_STATUS_TEMPORARILY_UNAVAILABLE;
   export type SIP_STATUS_CALL_TRANSACTION_DOES_NOT_EXISTS =
     typeof SIPStatusCode.SIP_STATUS_CALL_TRANSACTION_DOES_NOT_EXISTS;
-  export type SIP_STATUS_LOOP_DETECTED = typeof SIPStatusCode.SIP_STATUS_LOOP_DETECTED;
-  export type SIP_STATUS_TOO_MANY_HOPS = typeof SIPStatusCode.SIP_STATUS_TOO_MANY_HOPS;
-  export type SIP_STATUS_ADDRESS_INCOMPLETE = typeof SIPStatusCode.SIP_STATUS_ADDRESS_INCOMPLETE;
+  export type SIP_STATUS_LOOP_DETECTED =
+    typeof SIPStatusCode.SIP_STATUS_LOOP_DETECTED;
+  export type SIP_STATUS_TOO_MANY_HOPS =
+    typeof SIPStatusCode.SIP_STATUS_TOO_MANY_HOPS;
+  export type SIP_STATUS_ADDRESS_INCOMPLETE =
+    typeof SIPStatusCode.SIP_STATUS_ADDRESS_INCOMPLETE;
   export type SIP_STATUS_AMBIGUOUS = typeof SIPStatusCode.SIP_STATUS_AMBIGUOUS;
   export type SIP_STATUS_BUSY_HERE = typeof SIPStatusCode.SIP_STATUS_BUSY_HERE;
-  export type SIP_STATUS_REQUEST_TERMINATED = typeof SIPStatusCode.SIP_STATUS_REQUEST_TERMINATED;
-  export type SIP_STATUS_NOT_ACCEPTABLE_HERE = typeof SIPStatusCode.SIP_STATUS_NOT_ACCEPTABLE_HERE;
-  export type SIP_STATUS_INTERNAL_SERVER_ERROR = typeof SIPStatusCode.SIP_STATUS_INTERNAL_SERVER_ERROR;
-  export type SIP_STATUS_NOT_IMPLEMENTED = typeof SIPStatusCode.SIP_STATUS_NOT_IMPLEMENTED;
-  export type SIP_STATUS_BAD_GATEWAY = typeof SIPStatusCode.SIP_STATUS_BAD_GATEWAY;
-  export type SIP_STATUS_SERVICE_UNAVAILABLE = typeof SIPStatusCode.SIP_STATUS_SERVICE_UNAVAILABLE;
-  export type SIP_STATUS_GATEWAY_TIMEOUT = typeof SIPStatusCode.SIP_STATUS_GATEWAY_TIMEOUT;
-  export type SIP_STATUS_VERSION_NOT_SUPPORTED = typeof SIPStatusCode.SIP_STATUS_VERSION_NOT_SUPPORTED;
-  export type SIP_STATUS_MESSAGE_TOO_LARGE = typeof SIPStatusCode.SIP_STATUS_MESSAGE_TOO_LARGE;
-  export type SIP_STATUS_GLOBAL_BUSY_EVERYWHERE = typeof SIPStatusCode.SIP_STATUS_GLOBAL_BUSY_EVERYWHERE;
-  export type SIP_STATUS_GLOBAL_DECLINE = typeof SIPStatusCode.SIP_STATUS_GLOBAL_DECLINE;
+  export type SIP_STATUS_REQUEST_TERMINATED =
+    typeof SIPStatusCode.SIP_STATUS_REQUEST_TERMINATED;
+  export type SIP_STATUS_NOT_ACCEPTABLE_HERE =
+    typeof SIPStatusCode.SIP_STATUS_NOT_ACCEPTABLE_HERE;
+  export type SIP_STATUS_INTERNAL_SERVER_ERROR =
+    typeof SIPStatusCode.SIP_STATUS_INTERNAL_SERVER_ERROR;
+  export type SIP_STATUS_NOT_IMPLEMENTED =
+    typeof SIPStatusCode.SIP_STATUS_NOT_IMPLEMENTED;
+  export type SIP_STATUS_BAD_GATEWAY =
+    typeof SIPStatusCode.SIP_STATUS_BAD_GATEWAY;
+  export type SIP_STATUS_SERVICE_UNAVAILABLE =
+    typeof SIPStatusCode.SIP_STATUS_SERVICE_UNAVAILABLE;
+  export type SIP_STATUS_GATEWAY_TIMEOUT =
+    typeof SIPStatusCode.SIP_STATUS_GATEWAY_TIMEOUT;
+  export type SIP_STATUS_VERSION_NOT_SUPPORTED =
+    typeof SIPStatusCode.SIP_STATUS_VERSION_NOT_SUPPORTED;
+  export type SIP_STATUS_MESSAGE_TOO_LARGE =
+    typeof SIPStatusCode.SIP_STATUS_MESSAGE_TOO_LARGE;
+  export type SIP_STATUS_GLOBAL_BUSY_EVERYWHERE =
+    typeof SIPStatusCode.SIP_STATUS_GLOBAL_BUSY_EVERYWHERE;
+  export type SIP_STATUS_GLOBAL_DECLINE =
+    typeof SIPStatusCode.SIP_STATUS_GLOBAL_DECLINE;
   export type SIP_STATUS_GLOBAL_DOES_NOT_EXIST_ANYWHERE =
     typeof SIPStatusCode.SIP_STATUS_GLOBAL_DOES_NOT_EXIST_ANYWHERE;
-  export type SIP_STATUS_GLOBAL_NOT_ACCEPTABLE = typeof SIPStatusCode.SIP_STATUS_GLOBAL_NOT_ACCEPTABLE;
+  export type SIP_STATUS_GLOBAL_NOT_ACCEPTABLE =
+    typeof SIPStatusCode.SIP_STATUS_GLOBAL_NOT_ACCEPTABLE;
   export type UNRECOGNIZED = typeof SIPStatusCode.UNRECOGNIZED;
 }
 
@@ -402,7 +441,7 @@ export const SIPTransport = {
   UNRECOGNIZED: -1,
 } as const;
 
-export type SIPTransport = typeof SIPTransport[keyof typeof SIPTransport];
+export type SIPTransport = (typeof SIPTransport)[keyof typeof SIPTransport];
 
 export namespace SIPTransport {
   export type SIP_TRANSPORT_AUTO = typeof SIPTransport.SIP_TRANSPORT_AUTO;
@@ -459,7 +498,8 @@ export const SIPHeaderOptions = {
   UNRECOGNIZED: -1,
 } as const;
 
-export type SIPHeaderOptions = typeof SIPHeaderOptions[keyof typeof SIPHeaderOptions];
+export type SIPHeaderOptions =
+  (typeof SIPHeaderOptions)[keyof typeof SIPHeaderOptions];
 
 export namespace SIPHeaderOptions {
   export type SIP_NO_HEADERS = typeof SIPHeaderOptions.SIP_NO_HEADERS;
@@ -510,12 +550,16 @@ export const SIPMediaEncryption = {
   UNRECOGNIZED: -1,
 } as const;
 
-export type SIPMediaEncryption = typeof SIPMediaEncryption[keyof typeof SIPMediaEncryption];
+export type SIPMediaEncryption =
+  (typeof SIPMediaEncryption)[keyof typeof SIPMediaEncryption];
 
 export namespace SIPMediaEncryption {
-  export type SIP_MEDIA_ENCRYPT_DISABLE = typeof SIPMediaEncryption.SIP_MEDIA_ENCRYPT_DISABLE;
-  export type SIP_MEDIA_ENCRYPT_ALLOW = typeof SIPMediaEncryption.SIP_MEDIA_ENCRYPT_ALLOW;
-  export type SIP_MEDIA_ENCRYPT_REQUIRE = typeof SIPMediaEncryption.SIP_MEDIA_ENCRYPT_REQUIRE;
+  export type SIP_MEDIA_ENCRYPT_DISABLE =
+    typeof SIPMediaEncryption.SIP_MEDIA_ENCRYPT_DISABLE;
+  export type SIP_MEDIA_ENCRYPT_ALLOW =
+    typeof SIPMediaEncryption.SIP_MEDIA_ENCRYPT_ALLOW;
+  export type SIP_MEDIA_ENCRYPT_REQUIRE =
+    typeof SIPMediaEncryption.SIP_MEDIA_ENCRYPT_REQUIRE;
   export type UNRECOGNIZED = typeof SIPMediaEncryption.UNRECOGNIZED;
 }
 
@@ -565,11 +609,12 @@ export const SIPCallStatus = {
   UNRECOGNIZED: -1,
 } as const;
 
-export type SIPCallStatus = typeof SIPCallStatus[keyof typeof SIPCallStatus];
+export type SIPCallStatus = (typeof SIPCallStatus)[keyof typeof SIPCallStatus];
 
 export namespace SIPCallStatus {
   export type SCS_CALL_INCOMING = typeof SIPCallStatus.SCS_CALL_INCOMING;
-  export type SCS_PARTICIPANT_JOINED = typeof SIPCallStatus.SCS_PARTICIPANT_JOINED;
+  export type SCS_PARTICIPANT_JOINED =
+    typeof SIPCallStatus.SCS_PARTICIPANT_JOINED;
   export type SCS_ACTIVE = typeof SIPCallStatus.SCS_ACTIVE;
   export type SCS_DISCONNECTED = typeof SIPCallStatus.SCS_DISCONNECTED;
   export type SCS_ERROR = typeof SIPCallStatus.SCS_ERROR;
@@ -618,9 +663,13 @@ export function sIPCallStatusToJSON(object: SIPCallStatus): string {
   }
 }
 
-export const SIPFeature = { NONE: 0, KRISP_ENABLED: 1, UNRECOGNIZED: -1 } as const;
+export const SIPFeature = {
+  NONE: 0,
+  KRISP_ENABLED: 1,
+  UNRECOGNIZED: -1,
+} as const;
 
-export type SIPFeature = typeof SIPFeature[keyof typeof SIPFeature];
+export type SIPFeature = (typeof SIPFeature)[keyof typeof SIPFeature];
 
 export namespace SIPFeature {
   export type NONE = typeof SIPFeature.NONE;
@@ -655,9 +704,15 @@ export function sIPFeatureToJSON(object: SIPFeature): string {
   }
 }
 
-export const SIPCallDirection = { SCD_UNKNOWN: 0, SCD_INBOUND: 1, SCD_OUTBOUND: 2, UNRECOGNIZED: -1 } as const;
+export const SIPCallDirection = {
+  SCD_UNKNOWN: 0,
+  SCD_INBOUND: 1,
+  SCD_OUTBOUND: 2,
+  UNRECOGNIZED: -1,
+} as const;
 
-export type SIPCallDirection = typeof SIPCallDirection[keyof typeof SIPCallDirection];
+export type SIPCallDirection =
+  (typeof SIPCallDirection)[keyof typeof SIPCallDirection];
 
 export namespace SIPCallDirection {
   export type SCD_UNKNOWN = typeof SIPCallDirection.SCD_UNKNOWN;
@@ -784,7 +839,8 @@ export const SIPTrunkInfo_TrunkKind = {
   UNRECOGNIZED: -1,
 } as const;
 
-export type SIPTrunkInfo_TrunkKind = typeof SIPTrunkInfo_TrunkKind[keyof typeof SIPTrunkInfo_TrunkKind];
+export type SIPTrunkInfo_TrunkKind =
+  (typeof SIPTrunkInfo_TrunkKind)[keyof typeof SIPTrunkInfo_TrunkKind];
 
 export namespace SIPTrunkInfo_TrunkKind {
   export type TRUNK_LEGACY = typeof SIPTrunkInfo_TrunkKind.TRUNK_LEGACY;
@@ -793,7 +849,9 @@ export namespace SIPTrunkInfo_TrunkKind {
   export type UNRECOGNIZED = typeof SIPTrunkInfo_TrunkKind.UNRECOGNIZED;
 }
 
-export function sIPTrunkInfo_TrunkKindFromJSON(object: any): SIPTrunkInfo_TrunkKind {
+export function sIPTrunkInfo_TrunkKindFromJSON(
+  object: any,
+): SIPTrunkInfo_TrunkKind {
   switch (object) {
     case 0:
     case "TRUNK_LEGACY":
@@ -811,7 +869,9 @@ export function sIPTrunkInfo_TrunkKindFromJSON(object: any): SIPTrunkInfo_TrunkK
   }
 }
 
-export function sIPTrunkInfo_TrunkKindToJSON(object: SIPTrunkInfo_TrunkKind): string {
+export function sIPTrunkInfo_TrunkKindToJSON(
+  object: SIPTrunkInfo_TrunkKind,
+): string {
   switch (object) {
     case SIPTrunkInfo_TrunkKind.TRUNK_LEGACY:
       return "TRUNK_LEGACY";
@@ -878,9 +938,7 @@ export interface SIPInboundTrunkInfo {
    */
   includeHeaders: SIPHeaderOptions;
   /** Max time for the caller to wait for track subscription. */
-  ringingTimeout:
-    | Duration
-    | undefined;
+  ringingTimeout: Duration | undefined;
   /** Max call duration. */
   maxCallDuration: Duration | undefined;
   krispEnabled: boolean;
@@ -1013,9 +1071,7 @@ export interface ListSIPTrunkResponse {
 /** ListSIPInboundTrunkRequest lists inbound trunks for given filters. If no filters are set, all trunks are listed. */
 export interface ListSIPInboundTrunkRequest {
   $type: "livekit.ListSIPInboundTrunkRequest";
-  page:
-    | Pagination
-    | undefined;
+  page: Pagination | undefined;
   /**
    * Trunk IDs to list. If this option is set, the response will contains trunks in the same order.
    * If any of the trunks is missing, a nil item in that position will be sent in the response.
@@ -1033,9 +1089,7 @@ export interface ListSIPInboundTrunkResponse {
 /** ListSIPOutboundTrunkRequest lists outbound trunks for given filters. If no filters are set, all trunks are listed. */
 export interface ListSIPOutboundTrunkRequest {
   $type: "livekit.ListSIPOutboundTrunkRequest";
-  page:
-    | Pagination
-    | undefined;
+  page: Pagination | undefined;
   /**
    * Trunk IDs to list. If this option is set, the response will contains trunks in the same order.
    * If any of the trunks is missing, a nil item in that position will be sent in the response.
@@ -1088,22 +1142,16 @@ export interface SIPDispatchRule {
    * This places users into an existing room. Optionally you can require a pin before a user can
    * enter the room
    */
-  dispatchRuleDirect?:
-    | SIPDispatchRuleDirect
-    | undefined;
+  dispatchRuleDirect?: SIPDispatchRuleDirect | undefined;
   /** SIPDispatchRuleIndividual is a `SIP Dispatch Rule` that creates a new room for each caller. */
-  dispatchRuleIndividual?:
-    | SIPDispatchRuleIndividual
-    | undefined;
+  dispatchRuleIndividual?: SIPDispatchRuleIndividual | undefined;
   /** SIPDispatchRuleCallee is a `SIP Dispatch Rule` that creates a new room for each callee. */
   dispatchRuleCallee?: SIPDispatchRuleCallee | undefined;
 }
 
 export interface CreateSIPDispatchRuleRequest {
   $type: "livekit.CreateSIPDispatchRuleRequest";
-  rule:
-    | SIPDispatchRule
-    | undefined;
+  rule: SIPDispatchRule | undefined;
   /**
    * What trunks are accepted for this dispatch rule
    * If empty all trunks will match this dispatch rule
@@ -1178,9 +1226,7 @@ export interface SIPDispatchRuleInfo_AttributesEntry {
 /** ListSIPDispatchRuleRequest lists dispatch rules for given filters. If no filters are set, all rules are listed. */
 export interface ListSIPDispatchRuleRequest {
   $type: "livekit.ListSIPDispatchRuleRequest";
-  page:
-    | Pagination
-    | undefined;
+  page: Pagination | undefined;
   /**
    * Rule IDs to list. If this option is set, the response will contains rules in the same order.
    * If any of the rules is missing, a nil item in that position will be sent in the response.
@@ -1244,9 +1290,7 @@ export interface CreateSIPParticipantRequest {
   $type: "livekit.CreateSIPParticipantRequest";
   /** What SIP Trunk should be used to dial the user */
   sipTrunkId: string;
-  trunk:
-    | SIPOutboundConfig
-    | undefined;
+  trunk: SIPOutboundConfig | undefined;
   /** What number should be dialed via SIP */
   sipCallTo: string;
   /** Optional SIP From number to use. If empty, trunk number is used. */
@@ -1290,13 +1334,9 @@ export interface CreateSIPParticipantRequest {
    */
   includeHeaders: SIPHeaderOptions;
   /** Max time for the callee to answer the call. */
-  ringingTimeout:
-    | Duration
-    | undefined;
+  ringingTimeout: Duration | undefined;
   /** Max call duration. */
-  maxCallDuration:
-    | Duration
-    | undefined;
+  maxCallDuration: Duration | undefined;
   /** Enable voice isolation for the callee. */
   krispEnabled: boolean;
   mediaEncryption: SIPMediaEncryption;
@@ -1353,9 +1393,7 @@ export interface SIPCallInfo {
   participantIdentity: string;
   participantAttributes: { [key: string]: string };
   fromUri: SIPUri | undefined;
-  toUri:
-    | SIPUri
-    | undefined;
+  toUri: SIPUri | undefined;
   /** @deprecated */
   createdAt: bigint;
   /** @deprecated */
@@ -1397,7 +1435,10 @@ function createBaseSIPStatus(): SIPStatus {
 export const SIPStatus: MessageFns<SIPStatus, "livekit.SIPStatus"> = {
   $type: "livekit.SIPStatus" as const,
 
-  encode(message: SIPStatus, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPStatus,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.code !== 0) {
       writer.uint32(8).int32(message.code);
     }
@@ -1408,7 +1449,8 @@ export const SIPStatus: MessageFns<SIPStatus, "livekit.SIPStatus"> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): SIPStatus {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPStatus();
     while (reader.pos < end) {
@@ -1461,7 +1503,9 @@ export const SIPStatus: MessageFns<SIPStatus, "livekit.SIPStatus"> = {
   create<I extends Exact<DeepPartial<SIPStatus>, I>>(base?: I): SIPStatus {
     return SIPStatus.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPStatus>, I>>(object: I): SIPStatus {
+  fromPartial<I extends Exact<DeepPartial<SIPStatus>, I>>(
+    object: I,
+  ): SIPStatus {
     const message = createBaseSIPStatus();
     message.code = object.code ?? 0;
     message.status = object.status ?? "";
@@ -1488,10 +1532,16 @@ function createBaseCreateSIPTrunkRequest(): CreateSIPTrunkRequest {
   };
 }
 
-export const CreateSIPTrunkRequest: MessageFns<CreateSIPTrunkRequest, "livekit.CreateSIPTrunkRequest"> = {
+export const CreateSIPTrunkRequest: MessageFns<
+  CreateSIPTrunkRequest,
+  "livekit.CreateSIPTrunkRequest"
+> = {
   $type: "livekit.CreateSIPTrunkRequest" as const,
 
-  encode(message: CreateSIPTrunkRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: CreateSIPTrunkRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     for (const v of message.inboundAddresses) {
       writer.uint32(10).string(v!);
     }
@@ -1528,8 +1578,12 @@ export const CreateSIPTrunkRequest: MessageFns<CreateSIPTrunkRequest, "livekit.C
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): CreateSIPTrunkRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): CreateSIPTrunkRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateSIPTrunkRequest();
     while (reader.pos < end) {
@@ -1638,20 +1692,34 @@ export const CreateSIPTrunkRequest: MessageFns<CreateSIPTrunkRequest, "livekit.C
       inboundAddresses: globalThis.Array.isArray(object?.inboundAddresses)
         ? object.inboundAddresses.map((e: any) => globalThis.String(e))
         : [],
-      outboundAddress: isSet(object.outboundAddress) ? globalThis.String(object.outboundAddress) : "",
-      outboundNumber: isSet(object.outboundNumber) ? globalThis.String(object.outboundNumber) : "",
+      outboundAddress: isSet(object.outboundAddress)
+        ? globalThis.String(object.outboundAddress)
+        : "",
+      outboundNumber: isSet(object.outboundNumber)
+        ? globalThis.String(object.outboundNumber)
+        : "",
       inboundNumbersRegex: globalThis.Array.isArray(object?.inboundNumbersRegex)
         ? object.inboundNumbersRegex.map((e: any) => globalThis.String(e))
         : [],
       inboundNumbers: globalThis.Array.isArray(object?.inboundNumbers)
         ? object.inboundNumbers.map((e: any) => globalThis.String(e))
         : [],
-      inboundUsername: isSet(object.inboundUsername) ? globalThis.String(object.inboundUsername) : "",
-      inboundPassword: isSet(object.inboundPassword) ? globalThis.String(object.inboundPassword) : "",
-      outboundUsername: isSet(object.outboundUsername) ? globalThis.String(object.outboundUsername) : "",
-      outboundPassword: isSet(object.outboundPassword) ? globalThis.String(object.outboundPassword) : "",
+      inboundUsername: isSet(object.inboundUsername)
+        ? globalThis.String(object.inboundUsername)
+        : "",
+      inboundPassword: isSet(object.inboundPassword)
+        ? globalThis.String(object.inboundPassword)
+        : "",
+      outboundUsername: isSet(object.outboundUsername)
+        ? globalThis.String(object.outboundUsername)
+        : "",
+      outboundPassword: isSet(object.outboundPassword)
+        ? globalThis.String(object.outboundPassword)
+        : "",
       name: isSet(object.name) ? globalThis.String(object.name) : "",
-      metadata: isSet(object.metadata) ? globalThis.String(object.metadata) : "",
+      metadata: isSet(object.metadata)
+        ? globalThis.String(object.metadata)
+        : "",
     };
   },
 
@@ -1693,15 +1761,20 @@ export const CreateSIPTrunkRequest: MessageFns<CreateSIPTrunkRequest, "livekit.C
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateSIPTrunkRequest>, I>>(base?: I): CreateSIPTrunkRequest {
+  create<I extends Exact<DeepPartial<CreateSIPTrunkRequest>, I>>(
+    base?: I,
+  ): CreateSIPTrunkRequest {
     return CreateSIPTrunkRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<CreateSIPTrunkRequest>, I>>(object: I): CreateSIPTrunkRequest {
+  fromPartial<I extends Exact<DeepPartial<CreateSIPTrunkRequest>, I>>(
+    object: I,
+  ): CreateSIPTrunkRequest {
     const message = createBaseCreateSIPTrunkRequest();
     message.inboundAddresses = object.inboundAddresses?.map((e) => e) || [];
     message.outboundAddress = object.outboundAddress ?? "";
     message.outboundNumber = object.outboundNumber ?? "";
-    message.inboundNumbersRegex = object.inboundNumbersRegex?.map((e) => e) || [];
+    message.inboundNumbersRegex =
+      object.inboundNumbersRegex?.map((e) => e) || [];
     message.inboundNumbers = object.inboundNumbers?.map((e) => e) || [];
     message.inboundUsername = object.inboundUsername ?? "";
     message.inboundPassword = object.inboundPassword ?? "";
@@ -1738,7 +1811,10 @@ function createBaseSIPTrunkInfo(): SIPTrunkInfo {
 export const SIPTrunkInfo: MessageFns<SIPTrunkInfo, "livekit.SIPTrunkInfo"> = {
   $type: "livekit.SIPTrunkInfo" as const,
 
-  encode(message: SIPTrunkInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPTrunkInfo,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.sipTrunkId !== "") {
       writer.uint32(10).string(message.sipTrunkId);
     }
@@ -1785,7 +1861,8 @@ export const SIPTrunkInfo: MessageFns<SIPTrunkInfo, "livekit.SIPTrunkInfo"> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): SIPTrunkInfo {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPTrunkInfo();
     while (reader.pos < end) {
@@ -1915,26 +1992,46 @@ export const SIPTrunkInfo: MessageFns<SIPTrunkInfo, "livekit.SIPTrunkInfo"> = {
   fromJSON(object: any): SIPTrunkInfo {
     return {
       $type: SIPTrunkInfo.$type,
-      sipTrunkId: isSet(object.sipTrunkId) ? globalThis.String(object.sipTrunkId) : "",
-      kind: isSet(object.kind) ? sIPTrunkInfo_TrunkKindFromJSON(object.kind) : 0,
+      sipTrunkId: isSet(object.sipTrunkId)
+        ? globalThis.String(object.sipTrunkId)
+        : "",
+      kind: isSet(object.kind)
+        ? sIPTrunkInfo_TrunkKindFromJSON(object.kind)
+        : 0,
       inboundAddresses: globalThis.Array.isArray(object?.inboundAddresses)
         ? object.inboundAddresses.map((e: any) => globalThis.String(e))
         : [],
-      outboundAddress: isSet(object.outboundAddress) ? globalThis.String(object.outboundAddress) : "",
-      outboundNumber: isSet(object.outboundNumber) ? globalThis.String(object.outboundNumber) : "",
-      transport: isSet(object.transport) ? sIPTransportFromJSON(object.transport) : 0,
+      outboundAddress: isSet(object.outboundAddress)
+        ? globalThis.String(object.outboundAddress)
+        : "",
+      outboundNumber: isSet(object.outboundNumber)
+        ? globalThis.String(object.outboundNumber)
+        : "",
+      transport: isSet(object.transport)
+        ? sIPTransportFromJSON(object.transport)
+        : 0,
       inboundNumbersRegex: globalThis.Array.isArray(object?.inboundNumbersRegex)
         ? object.inboundNumbersRegex.map((e: any) => globalThis.String(e))
         : [],
       inboundNumbers: globalThis.Array.isArray(object?.inboundNumbers)
         ? object.inboundNumbers.map((e: any) => globalThis.String(e))
         : [],
-      inboundUsername: isSet(object.inboundUsername) ? globalThis.String(object.inboundUsername) : "",
-      inboundPassword: isSet(object.inboundPassword) ? globalThis.String(object.inboundPassword) : "",
-      outboundUsername: isSet(object.outboundUsername) ? globalThis.String(object.outboundUsername) : "",
-      outboundPassword: isSet(object.outboundPassword) ? globalThis.String(object.outboundPassword) : "",
+      inboundUsername: isSet(object.inboundUsername)
+        ? globalThis.String(object.inboundUsername)
+        : "",
+      inboundPassword: isSet(object.inboundPassword)
+        ? globalThis.String(object.inboundPassword)
+        : "",
+      outboundUsername: isSet(object.outboundUsername)
+        ? globalThis.String(object.outboundUsername)
+        : "",
+      outboundPassword: isSet(object.outboundPassword)
+        ? globalThis.String(object.outboundPassword)
+        : "",
       name: isSet(object.name) ? globalThis.String(object.name) : "",
-      metadata: isSet(object.metadata) ? globalThis.String(object.metadata) : "",
+      metadata: isSet(object.metadata)
+        ? globalThis.String(object.metadata)
+        : "",
     };
   },
 
@@ -1985,10 +2082,14 @@ export const SIPTrunkInfo: MessageFns<SIPTrunkInfo, "livekit.SIPTrunkInfo"> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPTrunkInfo>, I>>(base?: I): SIPTrunkInfo {
+  create<I extends Exact<DeepPartial<SIPTrunkInfo>, I>>(
+    base?: I,
+  ): SIPTrunkInfo {
     return SIPTrunkInfo.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPTrunkInfo>, I>>(object: I): SIPTrunkInfo {
+  fromPartial<I extends Exact<DeepPartial<SIPTrunkInfo>, I>>(
+    object: I,
+  ): SIPTrunkInfo {
     const message = createBaseSIPTrunkInfo();
     message.sipTrunkId = object.sipTrunkId ?? "";
     message.kind = object.kind ?? 0;
@@ -1996,7 +2097,8 @@ export const SIPTrunkInfo: MessageFns<SIPTrunkInfo, "livekit.SIPTrunkInfo"> = {
     message.outboundAddress = object.outboundAddress ?? "";
     message.outboundNumber = object.outboundNumber ?? "";
     message.transport = object.transport ?? 0;
-    message.inboundNumbersRegex = object.inboundNumbersRegex?.map((e) => e) || [];
+    message.inboundNumbersRegex =
+      object.inboundNumbersRegex?.map((e) => e) || [];
     message.inboundNumbers = object.inboundNumbers?.map((e) => e) || [];
     message.inboundUsername = object.inboundUsername ?? "";
     message.inboundPassword = object.inboundPassword ?? "";
@@ -2020,15 +2122,25 @@ export const CreateSIPInboundTrunkRequest: MessageFns<
 > = {
   $type: "livekit.CreateSIPInboundTrunkRequest" as const,
 
-  encode(message: CreateSIPInboundTrunkRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: CreateSIPInboundTrunkRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.trunk !== undefined) {
-      SIPInboundTrunkInfo.encode(message.trunk, writer.uint32(10).fork()).join();
+      SIPInboundTrunkInfo.encode(
+        message.trunk,
+        writer.uint32(10).fork(),
+      ).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): CreateSIPInboundTrunkRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): CreateSIPInboundTrunkRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateSIPInboundTrunkRequest();
     while (reader.pos < end) {
@@ -2054,7 +2166,9 @@ export const CreateSIPInboundTrunkRequest: MessageFns<
   fromJSON(object: any): CreateSIPInboundTrunkRequest {
     return {
       $type: CreateSIPInboundTrunkRequest.$type,
-      trunk: isSet(object.trunk) ? SIPInboundTrunkInfo.fromJSON(object.trunk) : undefined,
+      trunk: isSet(object.trunk)
+        ? SIPInboundTrunkInfo.fromJSON(object.trunk)
+        : undefined,
     };
   },
 
@@ -2066,19 +2180,27 @@ export const CreateSIPInboundTrunkRequest: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateSIPInboundTrunkRequest>, I>>(base?: I): CreateSIPInboundTrunkRequest {
+  create<I extends Exact<DeepPartial<CreateSIPInboundTrunkRequest>, I>>(
+    base?: I,
+  ): CreateSIPInboundTrunkRequest {
     return CreateSIPInboundTrunkRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<CreateSIPInboundTrunkRequest>, I>>(object: I): CreateSIPInboundTrunkRequest {
+  fromPartial<I extends Exact<DeepPartial<CreateSIPInboundTrunkRequest>, I>>(
+    object: I,
+  ): CreateSIPInboundTrunkRequest {
     const message = createBaseCreateSIPInboundTrunkRequest();
-    message.trunk = (object.trunk !== undefined && object.trunk !== null)
-      ? SIPInboundTrunkInfo.fromPartial(object.trunk)
-      : undefined;
+    message.trunk =
+      object.trunk !== undefined && object.trunk !== null
+        ? SIPInboundTrunkInfo.fromPartial(object.trunk)
+        : undefined;
     return message;
   },
 };
 
-messageTypeRegistry.set(CreateSIPInboundTrunkRequest.$type, CreateSIPInboundTrunkRequest);
+messageTypeRegistry.set(
+  CreateSIPInboundTrunkRequest.$type,
+  CreateSIPInboundTrunkRequest,
+);
 
 function createBaseSIPInboundTrunkInfo(): SIPInboundTrunkInfo {
   return {
@@ -2102,10 +2224,16 @@ function createBaseSIPInboundTrunkInfo(): SIPInboundTrunkInfo {
   };
 }
 
-export const SIPInboundTrunkInfo: MessageFns<SIPInboundTrunkInfo, "livekit.SIPInboundTrunkInfo"> = {
+export const SIPInboundTrunkInfo: MessageFns<
+  SIPInboundTrunkInfo,
+  "livekit.SIPInboundTrunkInfo"
+> = {
   $type: "livekit.SIPInboundTrunkInfo" as const,
 
-  encode(message: SIPInboundTrunkInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPInboundTrunkInfo,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.sipTrunkId !== "") {
       writer.uint32(10).string(message.sipTrunkId);
     }
@@ -2131,25 +2259,34 @@ export const SIPInboundTrunkInfo: MessageFns<SIPInboundTrunkInfo, "livekit.SIPIn
       writer.uint32(66).string(message.authPassword);
     }
     Object.entries(message.headers).forEach(([key, value]) => {
-      SIPInboundTrunkInfo_HeadersEntry.encode({
-        $type: "livekit.SIPInboundTrunkInfo.HeadersEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(74).fork()).join();
+      SIPInboundTrunkInfo_HeadersEntry.encode(
+        {
+          $type: "livekit.SIPInboundTrunkInfo.HeadersEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(74).fork(),
+      ).join();
     });
     Object.entries(message.headersToAttributes).forEach(([key, value]) => {
-      SIPInboundTrunkInfo_HeadersToAttributesEntry.encode({
-        $type: "livekit.SIPInboundTrunkInfo.HeadersToAttributesEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(82).fork()).join();
+      SIPInboundTrunkInfo_HeadersToAttributesEntry.encode(
+        {
+          $type: "livekit.SIPInboundTrunkInfo.HeadersToAttributesEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(82).fork(),
+      ).join();
     });
     Object.entries(message.attributesToHeaders).forEach(([key, value]) => {
-      SIPInboundTrunkInfo_AttributesToHeadersEntry.encode({
-        $type: "livekit.SIPInboundTrunkInfo.AttributesToHeadersEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(114).fork()).join();
+      SIPInboundTrunkInfo_AttributesToHeadersEntry.encode(
+        {
+          $type: "livekit.SIPInboundTrunkInfo.AttributesToHeadersEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(114).fork(),
+      ).join();
     });
     if (message.includeHeaders !== 0) {
       writer.uint32(120).int32(message.includeHeaders);
@@ -2169,8 +2306,12 @@ export const SIPInboundTrunkInfo: MessageFns<SIPInboundTrunkInfo, "livekit.SIPIn
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPInboundTrunkInfo {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPInboundTrunkInfo {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPInboundTrunkInfo();
     while (reader.pos < end) {
@@ -2245,7 +2386,10 @@ export const SIPInboundTrunkInfo: MessageFns<SIPInboundTrunkInfo, "livekit.SIPIn
             break;
           }
 
-          const entry9 = SIPInboundTrunkInfo_HeadersEntry.decode(reader, reader.uint32());
+          const entry9 = SIPInboundTrunkInfo_HeadersEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry9.value !== undefined) {
             message.headers[entry9.key] = entry9.value;
           }
@@ -2256,7 +2400,10 @@ export const SIPInboundTrunkInfo: MessageFns<SIPInboundTrunkInfo, "livekit.SIPIn
             break;
           }
 
-          const entry10 = SIPInboundTrunkInfo_HeadersToAttributesEntry.decode(reader, reader.uint32());
+          const entry10 = SIPInboundTrunkInfo_HeadersToAttributesEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry10.value !== undefined) {
             message.headersToAttributes[entry10.key] = entry10.value;
           }
@@ -2267,7 +2414,10 @@ export const SIPInboundTrunkInfo: MessageFns<SIPInboundTrunkInfo, "livekit.SIPIn
             break;
           }
 
-          const entry14 = SIPInboundTrunkInfo_AttributesToHeadersEntry.decode(reader, reader.uint32());
+          const entry14 = SIPInboundTrunkInfo_AttributesToHeadersEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry14.value !== undefined) {
             message.attributesToHeaders[entry14.key] = entry14.value;
           }
@@ -2325,41 +2475,68 @@ export const SIPInboundTrunkInfo: MessageFns<SIPInboundTrunkInfo, "livekit.SIPIn
   fromJSON(object: any): SIPInboundTrunkInfo {
     return {
       $type: SIPInboundTrunkInfo.$type,
-      sipTrunkId: isSet(object.sipTrunkId) ? globalThis.String(object.sipTrunkId) : "",
+      sipTrunkId: isSet(object.sipTrunkId)
+        ? globalThis.String(object.sipTrunkId)
+        : "",
       name: isSet(object.name) ? globalThis.String(object.name) : "",
-      metadata: isSet(object.metadata) ? globalThis.String(object.metadata) : "",
-      numbers: globalThis.Array.isArray(object?.numbers) ? object.numbers.map((e: any) => globalThis.String(e)) : [],
+      metadata: isSet(object.metadata)
+        ? globalThis.String(object.metadata)
+        : "",
+      numbers: globalThis.Array.isArray(object?.numbers)
+        ? object.numbers.map((e: any) => globalThis.String(e))
+        : [],
       allowedAddresses: globalThis.Array.isArray(object?.allowedAddresses)
         ? object.allowedAddresses.map((e: any) => globalThis.String(e))
         : [],
       allowedNumbers: globalThis.Array.isArray(object?.allowedNumbers)
         ? object.allowedNumbers.map((e: any) => globalThis.String(e))
         : [],
-      authUsername: isSet(object.authUsername) ? globalThis.String(object.authUsername) : "",
-      authPassword: isSet(object.authPassword) ? globalThis.String(object.authPassword) : "",
+      authUsername: isSet(object.authUsername)
+        ? globalThis.String(object.authUsername)
+        : "",
+      authPassword: isSet(object.authPassword)
+        ? globalThis.String(object.authPassword)
+        : "",
       headers: isObject(object.headers)
-        ? Object.entries(object.headers).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.headers).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {},
+          )
         : {},
       headersToAttributes: isObject(object.headersToAttributes)
-        ? Object.entries(object.headersToAttributes).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.headersToAttributes).reduce<{
+            [key: string]: string;
+          }>((acc, [key, value]) => {
+            acc[key] = String(value);
+            return acc;
+          }, {})
         : {},
       attributesToHeaders: isObject(object.attributesToHeaders)
-        ? Object.entries(object.attributesToHeaders).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.attributesToHeaders).reduce<{
+            [key: string]: string;
+          }>((acc, [key, value]) => {
+            acc[key] = String(value);
+            return acc;
+          }, {})
         : {},
-      includeHeaders: isSet(object.includeHeaders) ? sIPHeaderOptionsFromJSON(object.includeHeaders) : 0,
-      ringingTimeout: isSet(object.ringingTimeout) ? Duration.fromJSON(object.ringingTimeout) : undefined,
-      maxCallDuration: isSet(object.maxCallDuration) ? Duration.fromJSON(object.maxCallDuration) : undefined,
-      krispEnabled: isSet(object.krispEnabled) ? globalThis.Boolean(object.krispEnabled) : false,
-      mediaEncryption: isSet(object.mediaEncryption) ? sIPMediaEncryptionFromJSON(object.mediaEncryption) : 0,
+      includeHeaders: isSet(object.includeHeaders)
+        ? sIPHeaderOptionsFromJSON(object.includeHeaders)
+        : 0,
+      ringingTimeout: isSet(object.ringingTimeout)
+        ? Duration.fromJSON(object.ringingTimeout)
+        : undefined,
+      maxCallDuration: isSet(object.maxCallDuration)
+        ? Duration.fromJSON(object.maxCallDuration)
+        : undefined,
+      krispEnabled: isSet(object.krispEnabled)
+        ? globalThis.Boolean(object.krispEnabled)
+        : false,
+      mediaEncryption: isSet(object.mediaEncryption)
+        ? sIPMediaEncryptionFromJSON(object.mediaEncryption)
+        : 0,
     };
   },
 
@@ -2434,10 +2611,14 @@ export const SIPInboundTrunkInfo: MessageFns<SIPInboundTrunkInfo, "livekit.SIPIn
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPInboundTrunkInfo>, I>>(base?: I): SIPInboundTrunkInfo {
+  create<I extends Exact<DeepPartial<SIPInboundTrunkInfo>, I>>(
+    base?: I,
+  ): SIPInboundTrunkInfo {
     return SIPInboundTrunkInfo.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPInboundTrunkInfo>, I>>(object: I): SIPInboundTrunkInfo {
+  fromPartial<I extends Exact<DeepPartial<SIPInboundTrunkInfo>, I>>(
+    object: I,
+  ): SIPInboundTrunkInfo {
     const message = createBaseSIPInboundTrunkInfo();
     message.sipTrunkId = object.sipTrunkId ?? "";
     message.name = object.name ?? "";
@@ -2447,37 +2628,39 @@ export const SIPInboundTrunkInfo: MessageFns<SIPInboundTrunkInfo, "livekit.SIPIn
     message.allowedNumbers = object.allowedNumbers?.map((e) => e) || [];
     message.authUsername = object.authUsername ?? "";
     message.authPassword = object.authPassword ?? "";
-    message.headers = Object.entries(object.headers ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+    message.headers = Object.entries(object.headers ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
-    message.headersToAttributes = Object.entries(object.headersToAttributes ?? {}).reduce<{ [key: string]: string }>(
-      (acc, [key, value]) => {
-        if (value !== undefined) {
-          acc[key] = globalThis.String(value);
-        }
-        return acc;
-      },
-      {},
-    );
-    message.attributesToHeaders = Object.entries(object.attributesToHeaders ?? {}).reduce<{ [key: string]: string }>(
-      (acc, [key, value]) => {
-        if (value !== undefined) {
-          acc[key] = globalThis.String(value);
-        }
-        return acc;
-      },
-      {},
-    );
+    message.headersToAttributes = Object.entries(
+      object.headersToAttributes ?? {},
+    ).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = globalThis.String(value);
+      }
+      return acc;
+    }, {});
+    message.attributesToHeaders = Object.entries(
+      object.attributesToHeaders ?? {},
+    ).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = globalThis.String(value);
+      }
+      return acc;
+    }, {});
     message.includeHeaders = object.includeHeaders ?? 0;
-    message.ringingTimeout = (object.ringingTimeout !== undefined && object.ringingTimeout !== null)
-      ? Duration.fromPartial(object.ringingTimeout)
-      : undefined;
-    message.maxCallDuration = (object.maxCallDuration !== undefined && object.maxCallDuration !== null)
-      ? Duration.fromPartial(object.maxCallDuration)
-      : undefined;
+    message.ringingTimeout =
+      object.ringingTimeout !== undefined && object.ringingTimeout !== null
+        ? Duration.fromPartial(object.ringingTimeout)
+        : undefined;
+    message.maxCallDuration =
+      object.maxCallDuration !== undefined && object.maxCallDuration !== null
+        ? Duration.fromPartial(object.maxCallDuration)
+        : undefined;
     message.krispEnabled = object.krispEnabled ?? false;
     message.mediaEncryption = object.mediaEncryption ?? 0;
     return message;
@@ -2487,7 +2670,11 @@ export const SIPInboundTrunkInfo: MessageFns<SIPInboundTrunkInfo, "livekit.SIPIn
 messageTypeRegistry.set(SIPInboundTrunkInfo.$type, SIPInboundTrunkInfo);
 
 function createBaseSIPInboundTrunkInfo_HeadersEntry(): SIPInboundTrunkInfo_HeadersEntry {
-  return { $type: "livekit.SIPInboundTrunkInfo.HeadersEntry", key: "", value: "" };
+  return {
+    $type: "livekit.SIPInboundTrunkInfo.HeadersEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const SIPInboundTrunkInfo_HeadersEntry: MessageFns<
@@ -2496,7 +2683,10 @@ export const SIPInboundTrunkInfo_HeadersEntry: MessageFns<
 > = {
   $type: "livekit.SIPInboundTrunkInfo.HeadersEntry" as const,
 
-  encode(message: SIPInboundTrunkInfo_HeadersEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPInboundTrunkInfo_HeadersEntry,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -2506,8 +2696,12 @@ export const SIPInboundTrunkInfo_HeadersEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPInboundTrunkInfo_HeadersEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPInboundTrunkInfo_HeadersEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPInboundTrunkInfo_HeadersEntry();
     while (reader.pos < end) {
@@ -2562,9 +2756,9 @@ export const SIPInboundTrunkInfo_HeadersEntry: MessageFns<
   ): SIPInboundTrunkInfo_HeadersEntry {
     return SIPInboundTrunkInfo_HeadersEntry.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPInboundTrunkInfo_HeadersEntry>, I>>(
-    object: I,
-  ): SIPInboundTrunkInfo_HeadersEntry {
+  fromPartial<
+    I extends Exact<DeepPartial<SIPInboundTrunkInfo_HeadersEntry>, I>,
+  >(object: I): SIPInboundTrunkInfo_HeadersEntry {
     const message = createBaseSIPInboundTrunkInfo_HeadersEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -2572,10 +2766,17 @@ export const SIPInboundTrunkInfo_HeadersEntry: MessageFns<
   },
 };
 
-messageTypeRegistry.set(SIPInboundTrunkInfo_HeadersEntry.$type, SIPInboundTrunkInfo_HeadersEntry);
+messageTypeRegistry.set(
+  SIPInboundTrunkInfo_HeadersEntry.$type,
+  SIPInboundTrunkInfo_HeadersEntry,
+);
 
 function createBaseSIPInboundTrunkInfo_HeadersToAttributesEntry(): SIPInboundTrunkInfo_HeadersToAttributesEntry {
-  return { $type: "livekit.SIPInboundTrunkInfo.HeadersToAttributesEntry", key: "", value: "" };
+  return {
+    $type: "livekit.SIPInboundTrunkInfo.HeadersToAttributesEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const SIPInboundTrunkInfo_HeadersToAttributesEntry: MessageFns<
@@ -2597,8 +2798,12 @@ export const SIPInboundTrunkInfo_HeadersToAttributesEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPInboundTrunkInfo_HeadersToAttributesEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPInboundTrunkInfo_HeadersToAttributesEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPInboundTrunkInfo_HeadersToAttributesEntry();
     while (reader.pos < end) {
@@ -2648,14 +2853,22 @@ export const SIPInboundTrunkInfo_HeadersToAttributesEntry: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPInboundTrunkInfo_HeadersToAttributesEntry>, I>>(
-    base?: I,
-  ): SIPInboundTrunkInfo_HeadersToAttributesEntry {
-    return SIPInboundTrunkInfo_HeadersToAttributesEntry.fromPartial(base ?? ({} as any));
+  create<
+    I extends Exact<
+      DeepPartial<SIPInboundTrunkInfo_HeadersToAttributesEntry>,
+      I
+    >,
+  >(base?: I): SIPInboundTrunkInfo_HeadersToAttributesEntry {
+    return SIPInboundTrunkInfo_HeadersToAttributesEntry.fromPartial(
+      base ?? ({} as any),
+    );
   },
-  fromPartial<I extends Exact<DeepPartial<SIPInboundTrunkInfo_HeadersToAttributesEntry>, I>>(
-    object: I,
-  ): SIPInboundTrunkInfo_HeadersToAttributesEntry {
+  fromPartial<
+    I extends Exact<
+      DeepPartial<SIPInboundTrunkInfo_HeadersToAttributesEntry>,
+      I
+    >,
+  >(object: I): SIPInboundTrunkInfo_HeadersToAttributesEntry {
     const message = createBaseSIPInboundTrunkInfo_HeadersToAttributesEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -2669,7 +2882,11 @@ messageTypeRegistry.set(
 );
 
 function createBaseSIPInboundTrunkInfo_AttributesToHeadersEntry(): SIPInboundTrunkInfo_AttributesToHeadersEntry {
-  return { $type: "livekit.SIPInboundTrunkInfo.AttributesToHeadersEntry", key: "", value: "" };
+  return {
+    $type: "livekit.SIPInboundTrunkInfo.AttributesToHeadersEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const SIPInboundTrunkInfo_AttributesToHeadersEntry: MessageFns<
@@ -2691,8 +2908,12 @@ export const SIPInboundTrunkInfo_AttributesToHeadersEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPInboundTrunkInfo_AttributesToHeadersEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPInboundTrunkInfo_AttributesToHeadersEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPInboundTrunkInfo_AttributesToHeadersEntry();
     while (reader.pos < end) {
@@ -2742,14 +2963,22 @@ export const SIPInboundTrunkInfo_AttributesToHeadersEntry: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPInboundTrunkInfo_AttributesToHeadersEntry>, I>>(
-    base?: I,
-  ): SIPInboundTrunkInfo_AttributesToHeadersEntry {
-    return SIPInboundTrunkInfo_AttributesToHeadersEntry.fromPartial(base ?? ({} as any));
+  create<
+    I extends Exact<
+      DeepPartial<SIPInboundTrunkInfo_AttributesToHeadersEntry>,
+      I
+    >,
+  >(base?: I): SIPInboundTrunkInfo_AttributesToHeadersEntry {
+    return SIPInboundTrunkInfo_AttributesToHeadersEntry.fromPartial(
+      base ?? ({} as any),
+    );
   },
-  fromPartial<I extends Exact<DeepPartial<SIPInboundTrunkInfo_AttributesToHeadersEntry>, I>>(
-    object: I,
-  ): SIPInboundTrunkInfo_AttributesToHeadersEntry {
+  fromPartial<
+    I extends Exact<
+      DeepPartial<SIPInboundTrunkInfo_AttributesToHeadersEntry>,
+      I
+    >,
+  >(object: I): SIPInboundTrunkInfo_AttributesToHeadersEntry {
     const message = createBaseSIPInboundTrunkInfo_AttributesToHeadersEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -2772,15 +3001,25 @@ export const CreateSIPOutboundTrunkRequest: MessageFns<
 > = {
   $type: "livekit.CreateSIPOutboundTrunkRequest" as const,
 
-  encode(message: CreateSIPOutboundTrunkRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: CreateSIPOutboundTrunkRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.trunk !== undefined) {
-      SIPOutboundTrunkInfo.encode(message.trunk, writer.uint32(10).fork()).join();
+      SIPOutboundTrunkInfo.encode(
+        message.trunk,
+        writer.uint32(10).fork(),
+      ).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): CreateSIPOutboundTrunkRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): CreateSIPOutboundTrunkRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateSIPOutboundTrunkRequest();
     while (reader.pos < end) {
@@ -2806,7 +3045,9 @@ export const CreateSIPOutboundTrunkRequest: MessageFns<
   fromJSON(object: any): CreateSIPOutboundTrunkRequest {
     return {
       $type: CreateSIPOutboundTrunkRequest.$type,
-      trunk: isSet(object.trunk) ? SIPOutboundTrunkInfo.fromJSON(object.trunk) : undefined,
+      trunk: isSet(object.trunk)
+        ? SIPOutboundTrunkInfo.fromJSON(object.trunk)
+        : undefined,
     };
   },
 
@@ -2818,21 +3059,27 @@ export const CreateSIPOutboundTrunkRequest: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateSIPOutboundTrunkRequest>, I>>(base?: I): CreateSIPOutboundTrunkRequest {
+  create<I extends Exact<DeepPartial<CreateSIPOutboundTrunkRequest>, I>>(
+    base?: I,
+  ): CreateSIPOutboundTrunkRequest {
     return CreateSIPOutboundTrunkRequest.fromPartial(base ?? ({} as any));
   },
   fromPartial<I extends Exact<DeepPartial<CreateSIPOutboundTrunkRequest>, I>>(
     object: I,
   ): CreateSIPOutboundTrunkRequest {
     const message = createBaseCreateSIPOutboundTrunkRequest();
-    message.trunk = (object.trunk !== undefined && object.trunk !== null)
-      ? SIPOutboundTrunkInfo.fromPartial(object.trunk)
-      : undefined;
+    message.trunk =
+      object.trunk !== undefined && object.trunk !== null
+        ? SIPOutboundTrunkInfo.fromPartial(object.trunk)
+        : undefined;
     return message;
   },
 };
 
-messageTypeRegistry.set(CreateSIPOutboundTrunkRequest.$type, CreateSIPOutboundTrunkRequest);
+messageTypeRegistry.set(
+  CreateSIPOutboundTrunkRequest.$type,
+  CreateSIPOutboundTrunkRequest,
+);
 
 function createBaseSIPOutboundTrunkInfo(): SIPOutboundTrunkInfo {
   return {
@@ -2853,10 +3100,16 @@ function createBaseSIPOutboundTrunkInfo(): SIPOutboundTrunkInfo {
   };
 }
 
-export const SIPOutboundTrunkInfo: MessageFns<SIPOutboundTrunkInfo, "livekit.SIPOutboundTrunkInfo"> = {
+export const SIPOutboundTrunkInfo: MessageFns<
+  SIPOutboundTrunkInfo,
+  "livekit.SIPOutboundTrunkInfo"
+> = {
   $type: "livekit.SIPOutboundTrunkInfo" as const,
 
-  encode(message: SIPOutboundTrunkInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPOutboundTrunkInfo,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.sipTrunkId !== "") {
       writer.uint32(10).string(message.sipTrunkId);
     }
@@ -2882,25 +3135,34 @@ export const SIPOutboundTrunkInfo: MessageFns<SIPOutboundTrunkInfo, "livekit.SIP
       writer.uint32(66).string(message.authPassword);
     }
     Object.entries(message.headers).forEach(([key, value]) => {
-      SIPOutboundTrunkInfo_HeadersEntry.encode({
-        $type: "livekit.SIPOutboundTrunkInfo.HeadersEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(74).fork()).join();
+      SIPOutboundTrunkInfo_HeadersEntry.encode(
+        {
+          $type: "livekit.SIPOutboundTrunkInfo.HeadersEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(74).fork(),
+      ).join();
     });
     Object.entries(message.headersToAttributes).forEach(([key, value]) => {
-      SIPOutboundTrunkInfo_HeadersToAttributesEntry.encode({
-        $type: "livekit.SIPOutboundTrunkInfo.HeadersToAttributesEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(82).fork()).join();
+      SIPOutboundTrunkInfo_HeadersToAttributesEntry.encode(
+        {
+          $type: "livekit.SIPOutboundTrunkInfo.HeadersToAttributesEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(82).fork(),
+      ).join();
     });
     Object.entries(message.attributesToHeaders).forEach(([key, value]) => {
-      SIPOutboundTrunkInfo_AttributesToHeadersEntry.encode({
-        $type: "livekit.SIPOutboundTrunkInfo.AttributesToHeadersEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(90).fork()).join();
+      SIPOutboundTrunkInfo_AttributesToHeadersEntry.encode(
+        {
+          $type: "livekit.SIPOutboundTrunkInfo.AttributesToHeadersEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(90).fork(),
+      ).join();
     });
     if (message.includeHeaders !== 0) {
       writer.uint32(96).int32(message.includeHeaders);
@@ -2911,8 +3173,12 @@ export const SIPOutboundTrunkInfo: MessageFns<SIPOutboundTrunkInfo, "livekit.SIP
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPOutboundTrunkInfo {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPOutboundTrunkInfo {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPOutboundTrunkInfo();
     while (reader.pos < end) {
@@ -2987,7 +3253,10 @@ export const SIPOutboundTrunkInfo: MessageFns<SIPOutboundTrunkInfo, "livekit.SIP
             break;
           }
 
-          const entry9 = SIPOutboundTrunkInfo_HeadersEntry.decode(reader, reader.uint32());
+          const entry9 = SIPOutboundTrunkInfo_HeadersEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry9.value !== undefined) {
             message.headers[entry9.key] = entry9.value;
           }
@@ -2998,7 +3267,10 @@ export const SIPOutboundTrunkInfo: MessageFns<SIPOutboundTrunkInfo, "livekit.SIP
             break;
           }
 
-          const entry10 = SIPOutboundTrunkInfo_HeadersToAttributesEntry.decode(reader, reader.uint32());
+          const entry10 = SIPOutboundTrunkInfo_HeadersToAttributesEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry10.value !== undefined) {
             message.headersToAttributes[entry10.key] = entry10.value;
           }
@@ -3009,7 +3281,10 @@ export const SIPOutboundTrunkInfo: MessageFns<SIPOutboundTrunkInfo, "livekit.SIP
             break;
           }
 
-          const entry11 = SIPOutboundTrunkInfo_AttributesToHeadersEntry.decode(reader, reader.uint32());
+          const entry11 = SIPOutboundTrunkInfo_AttributesToHeadersEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry11.value !== undefined) {
             message.attributesToHeaders[entry11.key] = entry11.value;
           }
@@ -3043,34 +3318,57 @@ export const SIPOutboundTrunkInfo: MessageFns<SIPOutboundTrunkInfo, "livekit.SIP
   fromJSON(object: any): SIPOutboundTrunkInfo {
     return {
       $type: SIPOutboundTrunkInfo.$type,
-      sipTrunkId: isSet(object.sipTrunkId) ? globalThis.String(object.sipTrunkId) : "",
+      sipTrunkId: isSet(object.sipTrunkId)
+        ? globalThis.String(object.sipTrunkId)
+        : "",
       name: isSet(object.name) ? globalThis.String(object.name) : "",
-      metadata: isSet(object.metadata) ? globalThis.String(object.metadata) : "",
+      metadata: isSet(object.metadata)
+        ? globalThis.String(object.metadata)
+        : "",
       address: isSet(object.address) ? globalThis.String(object.address) : "",
-      transport: isSet(object.transport) ? sIPTransportFromJSON(object.transport) : 0,
-      numbers: globalThis.Array.isArray(object?.numbers) ? object.numbers.map((e: any) => globalThis.String(e)) : [],
-      authUsername: isSet(object.authUsername) ? globalThis.String(object.authUsername) : "",
-      authPassword: isSet(object.authPassword) ? globalThis.String(object.authPassword) : "",
+      transport: isSet(object.transport)
+        ? sIPTransportFromJSON(object.transport)
+        : 0,
+      numbers: globalThis.Array.isArray(object?.numbers)
+        ? object.numbers.map((e: any) => globalThis.String(e))
+        : [],
+      authUsername: isSet(object.authUsername)
+        ? globalThis.String(object.authUsername)
+        : "",
+      authPassword: isSet(object.authPassword)
+        ? globalThis.String(object.authPassword)
+        : "",
       headers: isObject(object.headers)
-        ? Object.entries(object.headers).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.headers).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {},
+          )
         : {},
       headersToAttributes: isObject(object.headersToAttributes)
-        ? Object.entries(object.headersToAttributes).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.headersToAttributes).reduce<{
+            [key: string]: string;
+          }>((acc, [key, value]) => {
+            acc[key] = String(value);
+            return acc;
+          }, {})
         : {},
       attributesToHeaders: isObject(object.attributesToHeaders)
-        ? Object.entries(object.attributesToHeaders).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.attributesToHeaders).reduce<{
+            [key: string]: string;
+          }>((acc, [key, value]) => {
+            acc[key] = String(value);
+            return acc;
+          }, {})
         : {},
-      includeHeaders: isSet(object.includeHeaders) ? sIPHeaderOptionsFromJSON(object.includeHeaders) : 0,
-      mediaEncryption: isSet(object.mediaEncryption) ? sIPMediaEncryptionFromJSON(object.mediaEncryption) : 0,
+      includeHeaders: isSet(object.includeHeaders)
+        ? sIPHeaderOptionsFromJSON(object.includeHeaders)
+        : 0,
+      mediaEncryption: isSet(object.mediaEncryption)
+        ? sIPMediaEncryptionFromJSON(object.mediaEncryption)
+        : 0,
     };
   },
 
@@ -3136,10 +3434,14 @@ export const SIPOutboundTrunkInfo: MessageFns<SIPOutboundTrunkInfo, "livekit.SIP
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPOutboundTrunkInfo>, I>>(base?: I): SIPOutboundTrunkInfo {
+  create<I extends Exact<DeepPartial<SIPOutboundTrunkInfo>, I>>(
+    base?: I,
+  ): SIPOutboundTrunkInfo {
     return SIPOutboundTrunkInfo.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPOutboundTrunkInfo>, I>>(object: I): SIPOutboundTrunkInfo {
+  fromPartial<I extends Exact<DeepPartial<SIPOutboundTrunkInfo>, I>>(
+    object: I,
+  ): SIPOutboundTrunkInfo {
     const message = createBaseSIPOutboundTrunkInfo();
     message.sipTrunkId = object.sipTrunkId ?? "";
     message.name = object.name ?? "";
@@ -3149,30 +3451,30 @@ export const SIPOutboundTrunkInfo: MessageFns<SIPOutboundTrunkInfo, "livekit.SIP
     message.numbers = object.numbers?.map((e) => e) || [];
     message.authUsername = object.authUsername ?? "";
     message.authPassword = object.authPassword ?? "";
-    message.headers = Object.entries(object.headers ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+    message.headers = Object.entries(object.headers ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
-    message.headersToAttributes = Object.entries(object.headersToAttributes ?? {}).reduce<{ [key: string]: string }>(
-      (acc, [key, value]) => {
-        if (value !== undefined) {
-          acc[key] = globalThis.String(value);
-        }
-        return acc;
-      },
-      {},
-    );
-    message.attributesToHeaders = Object.entries(object.attributesToHeaders ?? {}).reduce<{ [key: string]: string }>(
-      (acc, [key, value]) => {
-        if (value !== undefined) {
-          acc[key] = globalThis.String(value);
-        }
-        return acc;
-      },
-      {},
-    );
+    message.headersToAttributes = Object.entries(
+      object.headersToAttributes ?? {},
+    ).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = globalThis.String(value);
+      }
+      return acc;
+    }, {});
+    message.attributesToHeaders = Object.entries(
+      object.attributesToHeaders ?? {},
+    ).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = globalThis.String(value);
+      }
+      return acc;
+    }, {});
     message.includeHeaders = object.includeHeaders ?? 0;
     message.mediaEncryption = object.mediaEncryption ?? 0;
     return message;
@@ -3182,7 +3484,11 @@ export const SIPOutboundTrunkInfo: MessageFns<SIPOutboundTrunkInfo, "livekit.SIP
 messageTypeRegistry.set(SIPOutboundTrunkInfo.$type, SIPOutboundTrunkInfo);
 
 function createBaseSIPOutboundTrunkInfo_HeadersEntry(): SIPOutboundTrunkInfo_HeadersEntry {
-  return { $type: "livekit.SIPOutboundTrunkInfo.HeadersEntry", key: "", value: "" };
+  return {
+    $type: "livekit.SIPOutboundTrunkInfo.HeadersEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const SIPOutboundTrunkInfo_HeadersEntry: MessageFns<
@@ -3191,7 +3497,10 @@ export const SIPOutboundTrunkInfo_HeadersEntry: MessageFns<
 > = {
   $type: "livekit.SIPOutboundTrunkInfo.HeadersEntry" as const,
 
-  encode(message: SIPOutboundTrunkInfo_HeadersEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPOutboundTrunkInfo_HeadersEntry,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -3201,8 +3510,12 @@ export const SIPOutboundTrunkInfo_HeadersEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPOutboundTrunkInfo_HeadersEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPOutboundTrunkInfo_HeadersEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPOutboundTrunkInfo_HeadersEntry();
     while (reader.pos < end) {
@@ -3257,9 +3570,9 @@ export const SIPOutboundTrunkInfo_HeadersEntry: MessageFns<
   ): SIPOutboundTrunkInfo_HeadersEntry {
     return SIPOutboundTrunkInfo_HeadersEntry.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPOutboundTrunkInfo_HeadersEntry>, I>>(
-    object: I,
-  ): SIPOutboundTrunkInfo_HeadersEntry {
+  fromPartial<
+    I extends Exact<DeepPartial<SIPOutboundTrunkInfo_HeadersEntry>, I>,
+  >(object: I): SIPOutboundTrunkInfo_HeadersEntry {
     const message = createBaseSIPOutboundTrunkInfo_HeadersEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -3267,10 +3580,17 @@ export const SIPOutboundTrunkInfo_HeadersEntry: MessageFns<
   },
 };
 
-messageTypeRegistry.set(SIPOutboundTrunkInfo_HeadersEntry.$type, SIPOutboundTrunkInfo_HeadersEntry);
+messageTypeRegistry.set(
+  SIPOutboundTrunkInfo_HeadersEntry.$type,
+  SIPOutboundTrunkInfo_HeadersEntry,
+);
 
 function createBaseSIPOutboundTrunkInfo_HeadersToAttributesEntry(): SIPOutboundTrunkInfo_HeadersToAttributesEntry {
-  return { $type: "livekit.SIPOutboundTrunkInfo.HeadersToAttributesEntry", key: "", value: "" };
+  return {
+    $type: "livekit.SIPOutboundTrunkInfo.HeadersToAttributesEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const SIPOutboundTrunkInfo_HeadersToAttributesEntry: MessageFns<
@@ -3292,8 +3612,12 @@ export const SIPOutboundTrunkInfo_HeadersToAttributesEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPOutboundTrunkInfo_HeadersToAttributesEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPOutboundTrunkInfo_HeadersToAttributesEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPOutboundTrunkInfo_HeadersToAttributesEntry();
     while (reader.pos < end) {
@@ -3343,14 +3667,22 @@ export const SIPOutboundTrunkInfo_HeadersToAttributesEntry: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPOutboundTrunkInfo_HeadersToAttributesEntry>, I>>(
-    base?: I,
-  ): SIPOutboundTrunkInfo_HeadersToAttributesEntry {
-    return SIPOutboundTrunkInfo_HeadersToAttributesEntry.fromPartial(base ?? ({} as any));
+  create<
+    I extends Exact<
+      DeepPartial<SIPOutboundTrunkInfo_HeadersToAttributesEntry>,
+      I
+    >,
+  >(base?: I): SIPOutboundTrunkInfo_HeadersToAttributesEntry {
+    return SIPOutboundTrunkInfo_HeadersToAttributesEntry.fromPartial(
+      base ?? ({} as any),
+    );
   },
-  fromPartial<I extends Exact<DeepPartial<SIPOutboundTrunkInfo_HeadersToAttributesEntry>, I>>(
-    object: I,
-  ): SIPOutboundTrunkInfo_HeadersToAttributesEntry {
+  fromPartial<
+    I extends Exact<
+      DeepPartial<SIPOutboundTrunkInfo_HeadersToAttributesEntry>,
+      I
+    >,
+  >(object: I): SIPOutboundTrunkInfo_HeadersToAttributesEntry {
     const message = createBaseSIPOutboundTrunkInfo_HeadersToAttributesEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -3364,7 +3696,11 @@ messageTypeRegistry.set(
 );
 
 function createBaseSIPOutboundTrunkInfo_AttributesToHeadersEntry(): SIPOutboundTrunkInfo_AttributesToHeadersEntry {
-  return { $type: "livekit.SIPOutboundTrunkInfo.AttributesToHeadersEntry", key: "", value: "" };
+  return {
+    $type: "livekit.SIPOutboundTrunkInfo.AttributesToHeadersEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const SIPOutboundTrunkInfo_AttributesToHeadersEntry: MessageFns<
@@ -3386,8 +3722,12 @@ export const SIPOutboundTrunkInfo_AttributesToHeadersEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPOutboundTrunkInfo_AttributesToHeadersEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPOutboundTrunkInfo_AttributesToHeadersEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPOutboundTrunkInfo_AttributesToHeadersEntry();
     while (reader.pos < end) {
@@ -3437,14 +3777,22 @@ export const SIPOutboundTrunkInfo_AttributesToHeadersEntry: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPOutboundTrunkInfo_AttributesToHeadersEntry>, I>>(
-    base?: I,
-  ): SIPOutboundTrunkInfo_AttributesToHeadersEntry {
-    return SIPOutboundTrunkInfo_AttributesToHeadersEntry.fromPartial(base ?? ({} as any));
+  create<
+    I extends Exact<
+      DeepPartial<SIPOutboundTrunkInfo_AttributesToHeadersEntry>,
+      I
+    >,
+  >(base?: I): SIPOutboundTrunkInfo_AttributesToHeadersEntry {
+    return SIPOutboundTrunkInfo_AttributesToHeadersEntry.fromPartial(
+      base ?? ({} as any),
+    );
   },
-  fromPartial<I extends Exact<DeepPartial<SIPOutboundTrunkInfo_AttributesToHeadersEntry>, I>>(
-    object: I,
-  ): SIPOutboundTrunkInfo_AttributesToHeadersEntry {
+  fromPartial<
+    I extends Exact<
+      DeepPartial<SIPOutboundTrunkInfo_AttributesToHeadersEntry>,
+      I
+    >,
+  >(object: I): SIPOutboundTrunkInfo_AttributesToHeadersEntry {
     const message = createBaseSIPOutboundTrunkInfo_AttributesToHeadersEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -3461,18 +3809,28 @@ function createBaseGetSIPInboundTrunkRequest(): GetSIPInboundTrunkRequest {
   return { $type: "livekit.GetSIPInboundTrunkRequest", sipTrunkId: "" };
 }
 
-export const GetSIPInboundTrunkRequest: MessageFns<GetSIPInboundTrunkRequest, "livekit.GetSIPInboundTrunkRequest"> = {
+export const GetSIPInboundTrunkRequest: MessageFns<
+  GetSIPInboundTrunkRequest,
+  "livekit.GetSIPInboundTrunkRequest"
+> = {
   $type: "livekit.GetSIPInboundTrunkRequest" as const,
 
-  encode(message: GetSIPInboundTrunkRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: GetSIPInboundTrunkRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.sipTrunkId !== "") {
       writer.uint32(10).string(message.sipTrunkId);
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): GetSIPInboundTrunkRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): GetSIPInboundTrunkRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetSIPInboundTrunkRequest();
     while (reader.pos < end) {
@@ -3498,7 +3856,9 @@ export const GetSIPInboundTrunkRequest: MessageFns<GetSIPInboundTrunkRequest, "l
   fromJSON(object: any): GetSIPInboundTrunkRequest {
     return {
       $type: GetSIPInboundTrunkRequest.$type,
-      sipTrunkId: isSet(object.sipTrunkId) ? globalThis.String(object.sipTrunkId) : "",
+      sipTrunkId: isSet(object.sipTrunkId)
+        ? globalThis.String(object.sipTrunkId)
+        : "",
     };
   },
 
@@ -3510,151 +3870,198 @@ export const GetSIPInboundTrunkRequest: MessageFns<GetSIPInboundTrunkRequest, "l
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<GetSIPInboundTrunkRequest>, I>>(base?: I): GetSIPInboundTrunkRequest {
+  create<I extends Exact<DeepPartial<GetSIPInboundTrunkRequest>, I>>(
+    base?: I,
+  ): GetSIPInboundTrunkRequest {
     return GetSIPInboundTrunkRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<GetSIPInboundTrunkRequest>, I>>(object: I): GetSIPInboundTrunkRequest {
+  fromPartial<I extends Exact<DeepPartial<GetSIPInboundTrunkRequest>, I>>(
+    object: I,
+  ): GetSIPInboundTrunkRequest {
     const message = createBaseGetSIPInboundTrunkRequest();
     message.sipTrunkId = object.sipTrunkId ?? "";
     return message;
   },
 };
 
-messageTypeRegistry.set(GetSIPInboundTrunkRequest.$type, GetSIPInboundTrunkRequest);
+messageTypeRegistry.set(
+  GetSIPInboundTrunkRequest.$type,
+  GetSIPInboundTrunkRequest,
+);
 
 function createBaseGetSIPInboundTrunkResponse(): GetSIPInboundTrunkResponse {
   return { $type: "livekit.GetSIPInboundTrunkResponse", trunk: undefined };
 }
 
-export const GetSIPInboundTrunkResponse: MessageFns<GetSIPInboundTrunkResponse, "livekit.GetSIPInboundTrunkResponse"> =
-  {
-    $type: "livekit.GetSIPInboundTrunkResponse" as const,
+export const GetSIPInboundTrunkResponse: MessageFns<
+  GetSIPInboundTrunkResponse,
+  "livekit.GetSIPInboundTrunkResponse"
+> = {
+  $type: "livekit.GetSIPInboundTrunkResponse" as const,
 
-    encode(message: GetSIPInboundTrunkResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-      if (message.trunk !== undefined) {
-        SIPInboundTrunkInfo.encode(message.trunk, writer.uint32(10).fork()).join();
-      }
-      return writer;
-    },
+  encode(
+    message: GetSIPInboundTrunkResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
+    if (message.trunk !== undefined) {
+      SIPInboundTrunkInfo.encode(
+        message.trunk,
+        writer.uint32(10).fork(),
+      ).join();
+    }
+    return writer;
+  },
 
-    decode(input: BinaryReader | Uint8Array, length?: number): GetSIPInboundTrunkResponse {
-      const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-      let end = length === undefined ? reader.len : reader.pos + length;
-      const message = createBaseGetSIPInboundTrunkResponse();
-      while (reader.pos < end) {
-        const tag = reader.uint32();
-        switch (tag >>> 3) {
-          case 1: {
-            if (tag !== 10) {
-              break;
-            }
-
-            message.trunk = SIPInboundTrunkInfo.decode(reader, reader.uint32());
-            continue;
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): GetSIPInboundTrunkResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetSIPInboundTrunkResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
           }
+
+          message.trunk = SIPInboundTrunkInfo.decode(reader, reader.uint32());
+          continue;
         }
-        if ((tag & 7) === 4 || tag === 0) {
-          break;
-        }
-        reader.skip(tag & 7);
       }
-      return message;
-    },
-
-    fromJSON(object: any): GetSIPInboundTrunkResponse {
-      return {
-        $type: GetSIPInboundTrunkResponse.$type,
-        trunk: isSet(object.trunk) ? SIPInboundTrunkInfo.fromJSON(object.trunk) : undefined,
-      };
-    },
-
-    toJSON(message: GetSIPInboundTrunkResponse): unknown {
-      const obj: any = {};
-      if (message.trunk !== undefined) {
-        obj.trunk = SIPInboundTrunkInfo.toJSON(message.trunk);
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
       }
-      return obj;
-    },
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-    create<I extends Exact<DeepPartial<GetSIPInboundTrunkResponse>, I>>(base?: I): GetSIPInboundTrunkResponse {
-      return GetSIPInboundTrunkResponse.fromPartial(base ?? ({} as any));
-    },
-    fromPartial<I extends Exact<DeepPartial<GetSIPInboundTrunkResponse>, I>>(object: I): GetSIPInboundTrunkResponse {
-      const message = createBaseGetSIPInboundTrunkResponse();
-      message.trunk = (object.trunk !== undefined && object.trunk !== null)
+  fromJSON(object: any): GetSIPInboundTrunkResponse {
+    return {
+      $type: GetSIPInboundTrunkResponse.$type,
+      trunk: isSet(object.trunk)
+        ? SIPInboundTrunkInfo.fromJSON(object.trunk)
+        : undefined,
+    };
+  },
+
+  toJSON(message: GetSIPInboundTrunkResponse): unknown {
+    const obj: any = {};
+    if (message.trunk !== undefined) {
+      obj.trunk = SIPInboundTrunkInfo.toJSON(message.trunk);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GetSIPInboundTrunkResponse>, I>>(
+    base?: I,
+  ): GetSIPInboundTrunkResponse {
+    return GetSIPInboundTrunkResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<GetSIPInboundTrunkResponse>, I>>(
+    object: I,
+  ): GetSIPInboundTrunkResponse {
+    const message = createBaseGetSIPInboundTrunkResponse();
+    message.trunk =
+      object.trunk !== undefined && object.trunk !== null
         ? SIPInboundTrunkInfo.fromPartial(object.trunk)
         : undefined;
-      return message;
-    },
-  };
+    return message;
+  },
+};
 
-messageTypeRegistry.set(GetSIPInboundTrunkResponse.$type, GetSIPInboundTrunkResponse);
+messageTypeRegistry.set(
+  GetSIPInboundTrunkResponse.$type,
+  GetSIPInboundTrunkResponse,
+);
 
 function createBaseGetSIPOutboundTrunkRequest(): GetSIPOutboundTrunkRequest {
   return { $type: "livekit.GetSIPOutboundTrunkRequest", sipTrunkId: "" };
 }
 
-export const GetSIPOutboundTrunkRequest: MessageFns<GetSIPOutboundTrunkRequest, "livekit.GetSIPOutboundTrunkRequest"> =
-  {
-    $type: "livekit.GetSIPOutboundTrunkRequest" as const,
+export const GetSIPOutboundTrunkRequest: MessageFns<
+  GetSIPOutboundTrunkRequest,
+  "livekit.GetSIPOutboundTrunkRequest"
+> = {
+  $type: "livekit.GetSIPOutboundTrunkRequest" as const,
 
-    encode(message: GetSIPOutboundTrunkRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-      if (message.sipTrunkId !== "") {
-        writer.uint32(10).string(message.sipTrunkId);
-      }
-      return writer;
-    },
+  encode(
+    message: GetSIPOutboundTrunkRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
+    if (message.sipTrunkId !== "") {
+      writer.uint32(10).string(message.sipTrunkId);
+    }
+    return writer;
+  },
 
-    decode(input: BinaryReader | Uint8Array, length?: number): GetSIPOutboundTrunkRequest {
-      const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-      let end = length === undefined ? reader.len : reader.pos + length;
-      const message = createBaseGetSIPOutboundTrunkRequest();
-      while (reader.pos < end) {
-        const tag = reader.uint32();
-        switch (tag >>> 3) {
-          case 1: {
-            if (tag !== 10) {
-              break;
-            }
-
-            message.sipTrunkId = reader.string();
-            continue;
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): GetSIPOutboundTrunkRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetSIPOutboundTrunkRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
           }
+
+          message.sipTrunkId = reader.string();
+          continue;
         }
-        if ((tag & 7) === 4 || tag === 0) {
-          break;
-        }
-        reader.skip(tag & 7);
       }
-      return message;
-    },
-
-    fromJSON(object: any): GetSIPOutboundTrunkRequest {
-      return {
-        $type: GetSIPOutboundTrunkRequest.$type,
-        sipTrunkId: isSet(object.sipTrunkId) ? globalThis.String(object.sipTrunkId) : "",
-      };
-    },
-
-    toJSON(message: GetSIPOutboundTrunkRequest): unknown {
-      const obj: any = {};
-      if (message.sipTrunkId !== "") {
-        obj.sipTrunkId = message.sipTrunkId;
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
       }
-      return obj;
-    },
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-    create<I extends Exact<DeepPartial<GetSIPOutboundTrunkRequest>, I>>(base?: I): GetSIPOutboundTrunkRequest {
-      return GetSIPOutboundTrunkRequest.fromPartial(base ?? ({} as any));
-    },
-    fromPartial<I extends Exact<DeepPartial<GetSIPOutboundTrunkRequest>, I>>(object: I): GetSIPOutboundTrunkRequest {
-      const message = createBaseGetSIPOutboundTrunkRequest();
-      message.sipTrunkId = object.sipTrunkId ?? "";
-      return message;
-    },
-  };
+  fromJSON(object: any): GetSIPOutboundTrunkRequest {
+    return {
+      $type: GetSIPOutboundTrunkRequest.$type,
+      sipTrunkId: isSet(object.sipTrunkId)
+        ? globalThis.String(object.sipTrunkId)
+        : "",
+    };
+  },
 
-messageTypeRegistry.set(GetSIPOutboundTrunkRequest.$type, GetSIPOutboundTrunkRequest);
+  toJSON(message: GetSIPOutboundTrunkRequest): unknown {
+    const obj: any = {};
+    if (message.sipTrunkId !== "") {
+      obj.sipTrunkId = message.sipTrunkId;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GetSIPOutboundTrunkRequest>, I>>(
+    base?: I,
+  ): GetSIPOutboundTrunkRequest {
+    return GetSIPOutboundTrunkRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<GetSIPOutboundTrunkRequest>, I>>(
+    object: I,
+  ): GetSIPOutboundTrunkRequest {
+    const message = createBaseGetSIPOutboundTrunkRequest();
+    message.sipTrunkId = object.sipTrunkId ?? "";
+    return message;
+  },
+};
+
+messageTypeRegistry.set(
+  GetSIPOutboundTrunkRequest.$type,
+  GetSIPOutboundTrunkRequest,
+);
 
 function createBaseGetSIPOutboundTrunkResponse(): GetSIPOutboundTrunkResponse {
   return { $type: "livekit.GetSIPOutboundTrunkResponse", trunk: undefined };
@@ -3666,15 +4073,25 @@ export const GetSIPOutboundTrunkResponse: MessageFns<
 > = {
   $type: "livekit.GetSIPOutboundTrunkResponse" as const,
 
-  encode(message: GetSIPOutboundTrunkResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: GetSIPOutboundTrunkResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.trunk !== undefined) {
-      SIPOutboundTrunkInfo.encode(message.trunk, writer.uint32(10).fork()).join();
+      SIPOutboundTrunkInfo.encode(
+        message.trunk,
+        writer.uint32(10).fork(),
+      ).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): GetSIPOutboundTrunkResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): GetSIPOutboundTrunkResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGetSIPOutboundTrunkResponse();
     while (reader.pos < end) {
@@ -3700,7 +4117,9 @@ export const GetSIPOutboundTrunkResponse: MessageFns<
   fromJSON(object: any): GetSIPOutboundTrunkResponse {
     return {
       $type: GetSIPOutboundTrunkResponse.$type,
-      trunk: isSet(object.trunk) ? SIPOutboundTrunkInfo.fromJSON(object.trunk) : undefined,
+      trunk: isSet(object.trunk)
+        ? SIPOutboundTrunkInfo.fromJSON(object.trunk)
+        : undefined,
     };
   },
 
@@ -3712,36 +4131,54 @@ export const GetSIPOutboundTrunkResponse: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<GetSIPOutboundTrunkResponse>, I>>(base?: I): GetSIPOutboundTrunkResponse {
+  create<I extends Exact<DeepPartial<GetSIPOutboundTrunkResponse>, I>>(
+    base?: I,
+  ): GetSIPOutboundTrunkResponse {
     return GetSIPOutboundTrunkResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<GetSIPOutboundTrunkResponse>, I>>(object: I): GetSIPOutboundTrunkResponse {
+  fromPartial<I extends Exact<DeepPartial<GetSIPOutboundTrunkResponse>, I>>(
+    object: I,
+  ): GetSIPOutboundTrunkResponse {
     const message = createBaseGetSIPOutboundTrunkResponse();
-    message.trunk = (object.trunk !== undefined && object.trunk !== null)
-      ? SIPOutboundTrunkInfo.fromPartial(object.trunk)
-      : undefined;
+    message.trunk =
+      object.trunk !== undefined && object.trunk !== null
+        ? SIPOutboundTrunkInfo.fromPartial(object.trunk)
+        : undefined;
     return message;
   },
 };
 
-messageTypeRegistry.set(GetSIPOutboundTrunkResponse.$type, GetSIPOutboundTrunkResponse);
+messageTypeRegistry.set(
+  GetSIPOutboundTrunkResponse.$type,
+  GetSIPOutboundTrunkResponse,
+);
 
 function createBaseListSIPTrunkRequest(): ListSIPTrunkRequest {
   return { $type: "livekit.ListSIPTrunkRequest", page: undefined };
 }
 
-export const ListSIPTrunkRequest: MessageFns<ListSIPTrunkRequest, "livekit.ListSIPTrunkRequest"> = {
+export const ListSIPTrunkRequest: MessageFns<
+  ListSIPTrunkRequest,
+  "livekit.ListSIPTrunkRequest"
+> = {
   $type: "livekit.ListSIPTrunkRequest" as const,
 
-  encode(message: ListSIPTrunkRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: ListSIPTrunkRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.page !== undefined) {
       Pagination.encode(message.page, writer.uint32(10).fork()).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): ListSIPTrunkRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): ListSIPTrunkRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseListSIPTrunkRequest();
     while (reader.pos < end) {
@@ -3779,14 +4216,19 @@ export const ListSIPTrunkRequest: MessageFns<ListSIPTrunkRequest, "livekit.ListS
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ListSIPTrunkRequest>, I>>(base?: I): ListSIPTrunkRequest {
+  create<I extends Exact<DeepPartial<ListSIPTrunkRequest>, I>>(
+    base?: I,
+  ): ListSIPTrunkRequest {
     return ListSIPTrunkRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ListSIPTrunkRequest>, I>>(object: I): ListSIPTrunkRequest {
+  fromPartial<I extends Exact<DeepPartial<ListSIPTrunkRequest>, I>>(
+    object: I,
+  ): ListSIPTrunkRequest {
     const message = createBaseListSIPTrunkRequest();
-    message.page = (object.page !== undefined && object.page !== null)
-      ? Pagination.fromPartial(object.page)
-      : undefined;
+    message.page =
+      object.page !== undefined && object.page !== null
+        ? Pagination.fromPartial(object.page)
+        : undefined;
     return message;
   },
 };
@@ -3797,18 +4239,28 @@ function createBaseListSIPTrunkResponse(): ListSIPTrunkResponse {
   return { $type: "livekit.ListSIPTrunkResponse", items: [] };
 }
 
-export const ListSIPTrunkResponse: MessageFns<ListSIPTrunkResponse, "livekit.ListSIPTrunkResponse"> = {
+export const ListSIPTrunkResponse: MessageFns<
+  ListSIPTrunkResponse,
+  "livekit.ListSIPTrunkResponse"
+> = {
   $type: "livekit.ListSIPTrunkResponse" as const,
 
-  encode(message: ListSIPTrunkResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: ListSIPTrunkResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     for (const v of message.items) {
       SIPTrunkInfo.encode(v!, writer.uint32(10).fork()).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): ListSIPTrunkResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): ListSIPTrunkResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseListSIPTrunkResponse();
     while (reader.pos < end) {
@@ -3834,7 +4286,9 @@ export const ListSIPTrunkResponse: MessageFns<ListSIPTrunkResponse, "livekit.Lis
   fromJSON(object: any): ListSIPTrunkResponse {
     return {
       $type: ListSIPTrunkResponse.$type,
-      items: globalThis.Array.isArray(object?.items) ? object.items.map((e: any) => SIPTrunkInfo.fromJSON(e)) : [],
+      items: globalThis.Array.isArray(object?.items)
+        ? object.items.map((e: any) => SIPTrunkInfo.fromJSON(e))
+        : [],
     };
   },
 
@@ -3846,10 +4300,14 @@ export const ListSIPTrunkResponse: MessageFns<ListSIPTrunkResponse, "livekit.Lis
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ListSIPTrunkResponse>, I>>(base?: I): ListSIPTrunkResponse {
+  create<I extends Exact<DeepPartial<ListSIPTrunkResponse>, I>>(
+    base?: I,
+  ): ListSIPTrunkResponse {
     return ListSIPTrunkResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ListSIPTrunkResponse>, I>>(object: I): ListSIPTrunkResponse {
+  fromPartial<I extends Exact<DeepPartial<ListSIPTrunkResponse>, I>>(
+    object: I,
+  ): ListSIPTrunkResponse {
     const message = createBaseListSIPTrunkResponse();
     message.items = object.items?.map((e) => SIPTrunkInfo.fromPartial(e)) || [];
     return message;
@@ -3859,106 +4317,130 @@ export const ListSIPTrunkResponse: MessageFns<ListSIPTrunkResponse, "livekit.Lis
 messageTypeRegistry.set(ListSIPTrunkResponse.$type, ListSIPTrunkResponse);
 
 function createBaseListSIPInboundTrunkRequest(): ListSIPInboundTrunkRequest {
-  return { $type: "livekit.ListSIPInboundTrunkRequest", page: undefined, trunkIds: [], numbers: [] };
+  return {
+    $type: "livekit.ListSIPInboundTrunkRequest",
+    page: undefined,
+    trunkIds: [],
+    numbers: [],
+  };
 }
 
-export const ListSIPInboundTrunkRequest: MessageFns<ListSIPInboundTrunkRequest, "livekit.ListSIPInboundTrunkRequest"> =
-  {
-    $type: "livekit.ListSIPInboundTrunkRequest" as const,
+export const ListSIPInboundTrunkRequest: MessageFns<
+  ListSIPInboundTrunkRequest,
+  "livekit.ListSIPInboundTrunkRequest"
+> = {
+  $type: "livekit.ListSIPInboundTrunkRequest" as const,
 
-    encode(message: ListSIPInboundTrunkRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-      if (message.page !== undefined) {
-        Pagination.encode(message.page, writer.uint32(26).fork()).join();
-      }
-      for (const v of message.trunkIds) {
-        writer.uint32(10).string(v!);
-      }
-      for (const v of message.numbers) {
-        writer.uint32(18).string(v!);
-      }
-      return writer;
-    },
+  encode(
+    message: ListSIPInboundTrunkRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
+    if (message.page !== undefined) {
+      Pagination.encode(message.page, writer.uint32(26).fork()).join();
+    }
+    for (const v of message.trunkIds) {
+      writer.uint32(10).string(v!);
+    }
+    for (const v of message.numbers) {
+      writer.uint32(18).string(v!);
+    }
+    return writer;
+  },
 
-    decode(input: BinaryReader | Uint8Array, length?: number): ListSIPInboundTrunkRequest {
-      const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-      let end = length === undefined ? reader.len : reader.pos + length;
-      const message = createBaseListSIPInboundTrunkRequest();
-      while (reader.pos < end) {
-        const tag = reader.uint32();
-        switch (tag >>> 3) {
-          case 3: {
-            if (tag !== 26) {
-              break;
-            }
-
-            message.page = Pagination.decode(reader, reader.uint32());
-            continue;
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): ListSIPInboundTrunkRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseListSIPInboundTrunkRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 3: {
+          if (tag !== 26) {
+            break;
           }
-          case 1: {
-            if (tag !== 10) {
-              break;
-            }
 
-            message.trunkIds.push(reader.string());
-            continue;
-          }
-          case 2: {
-            if (tag !== 18) {
-              break;
-            }
-
-            message.numbers.push(reader.string());
-            continue;
-          }
+          message.page = Pagination.decode(reader, reader.uint32());
+          continue;
         }
-        if ((tag & 7) === 4 || tag === 0) {
-          break;
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.trunkIds.push(reader.string());
+          continue;
         }
-        reader.skip(tag & 7);
-      }
-      return message;
-    },
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
 
-    fromJSON(object: any): ListSIPInboundTrunkRequest {
-      return {
-        $type: ListSIPInboundTrunkRequest.$type,
-        page: isSet(object.page) ? Pagination.fromJSON(object.page) : undefined,
-        trunkIds: globalThis.Array.isArray(object?.trunkIds)
-          ? object.trunkIds.map((e: any) => globalThis.String(e))
-          : [],
-        numbers: globalThis.Array.isArray(object?.numbers) ? object.numbers.map((e: any) => globalThis.String(e)) : [],
-      };
-    },
+          message.numbers.push(reader.string());
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-    toJSON(message: ListSIPInboundTrunkRequest): unknown {
-      const obj: any = {};
-      if (message.page !== undefined) {
-        obj.page = Pagination.toJSON(message.page);
-      }
-      if (message.trunkIds?.length) {
-        obj.trunkIds = message.trunkIds;
-      }
-      if (message.numbers?.length) {
-        obj.numbers = message.numbers;
-      }
-      return obj;
-    },
+  fromJSON(object: any): ListSIPInboundTrunkRequest {
+    return {
+      $type: ListSIPInboundTrunkRequest.$type,
+      page: isSet(object.page) ? Pagination.fromJSON(object.page) : undefined,
+      trunkIds: globalThis.Array.isArray(object?.trunkIds)
+        ? object.trunkIds.map((e: any) => globalThis.String(e))
+        : [],
+      numbers: globalThis.Array.isArray(object?.numbers)
+        ? object.numbers.map((e: any) => globalThis.String(e))
+        : [],
+    };
+  },
 
-    create<I extends Exact<DeepPartial<ListSIPInboundTrunkRequest>, I>>(base?: I): ListSIPInboundTrunkRequest {
-      return ListSIPInboundTrunkRequest.fromPartial(base ?? ({} as any));
-    },
-    fromPartial<I extends Exact<DeepPartial<ListSIPInboundTrunkRequest>, I>>(object: I): ListSIPInboundTrunkRequest {
-      const message = createBaseListSIPInboundTrunkRequest();
-      message.page = (object.page !== undefined && object.page !== null)
+  toJSON(message: ListSIPInboundTrunkRequest): unknown {
+    const obj: any = {};
+    if (message.page !== undefined) {
+      obj.page = Pagination.toJSON(message.page);
+    }
+    if (message.trunkIds?.length) {
+      obj.trunkIds = message.trunkIds;
+    }
+    if (message.numbers?.length) {
+      obj.numbers = message.numbers;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ListSIPInboundTrunkRequest>, I>>(
+    base?: I,
+  ): ListSIPInboundTrunkRequest {
+    return ListSIPInboundTrunkRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<ListSIPInboundTrunkRequest>, I>>(
+    object: I,
+  ): ListSIPInboundTrunkRequest {
+    const message = createBaseListSIPInboundTrunkRequest();
+    message.page =
+      object.page !== undefined && object.page !== null
         ? Pagination.fromPartial(object.page)
         : undefined;
-      message.trunkIds = object.trunkIds?.map((e) => e) || [];
-      message.numbers = object.numbers?.map((e) => e) || [];
-      return message;
-    },
-  };
+    message.trunkIds = object.trunkIds?.map((e) => e) || [];
+    message.numbers = object.numbers?.map((e) => e) || [];
+    return message;
+  },
+};
 
-messageTypeRegistry.set(ListSIPInboundTrunkRequest.$type, ListSIPInboundTrunkRequest);
+messageTypeRegistry.set(
+  ListSIPInboundTrunkRequest.$type,
+  ListSIPInboundTrunkRequest,
+);
 
 function createBaseListSIPInboundTrunkResponse(): ListSIPInboundTrunkResponse {
   return { $type: "livekit.ListSIPInboundTrunkResponse", items: [] };
@@ -3970,15 +4452,22 @@ export const ListSIPInboundTrunkResponse: MessageFns<
 > = {
   $type: "livekit.ListSIPInboundTrunkResponse" as const,
 
-  encode(message: ListSIPInboundTrunkResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: ListSIPInboundTrunkResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     for (const v of message.items) {
       SIPInboundTrunkInfo.encode(v!, writer.uint32(10).fork()).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): ListSIPInboundTrunkResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): ListSIPInboundTrunkResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseListSIPInboundTrunkResponse();
     while (reader.pos < end) {
@@ -3989,7 +4478,9 @@ export const ListSIPInboundTrunkResponse: MessageFns<
             break;
           }
 
-          message.items.push(SIPInboundTrunkInfo.decode(reader, reader.uint32()));
+          message.items.push(
+            SIPInboundTrunkInfo.decode(reader, reader.uint32()),
+          );
           continue;
         }
       }
@@ -4018,20 +4509,33 @@ export const ListSIPInboundTrunkResponse: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ListSIPInboundTrunkResponse>, I>>(base?: I): ListSIPInboundTrunkResponse {
+  create<I extends Exact<DeepPartial<ListSIPInboundTrunkResponse>, I>>(
+    base?: I,
+  ): ListSIPInboundTrunkResponse {
     return ListSIPInboundTrunkResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ListSIPInboundTrunkResponse>, I>>(object: I): ListSIPInboundTrunkResponse {
+  fromPartial<I extends Exact<DeepPartial<ListSIPInboundTrunkResponse>, I>>(
+    object: I,
+  ): ListSIPInboundTrunkResponse {
     const message = createBaseListSIPInboundTrunkResponse();
-    message.items = object.items?.map((e) => SIPInboundTrunkInfo.fromPartial(e)) || [];
+    message.items =
+      object.items?.map((e) => SIPInboundTrunkInfo.fromPartial(e)) || [];
     return message;
   },
 };
 
-messageTypeRegistry.set(ListSIPInboundTrunkResponse.$type, ListSIPInboundTrunkResponse);
+messageTypeRegistry.set(
+  ListSIPInboundTrunkResponse.$type,
+  ListSIPInboundTrunkResponse,
+);
 
 function createBaseListSIPOutboundTrunkRequest(): ListSIPOutboundTrunkRequest {
-  return { $type: "livekit.ListSIPOutboundTrunkRequest", page: undefined, trunkIds: [], numbers: [] };
+  return {
+    $type: "livekit.ListSIPOutboundTrunkRequest",
+    page: undefined,
+    trunkIds: [],
+    numbers: [],
+  };
 }
 
 export const ListSIPOutboundTrunkRequest: MessageFns<
@@ -4040,7 +4544,10 @@ export const ListSIPOutboundTrunkRequest: MessageFns<
 > = {
   $type: "livekit.ListSIPOutboundTrunkRequest" as const,
 
-  encode(message: ListSIPOutboundTrunkRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: ListSIPOutboundTrunkRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.page !== undefined) {
       Pagination.encode(message.page, writer.uint32(26).fork()).join();
     }
@@ -4053,8 +4560,12 @@ export const ListSIPOutboundTrunkRequest: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): ListSIPOutboundTrunkRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): ListSIPOutboundTrunkRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseListSIPOutboundTrunkRequest();
     while (reader.pos < end) {
@@ -4097,8 +4608,12 @@ export const ListSIPOutboundTrunkRequest: MessageFns<
     return {
       $type: ListSIPOutboundTrunkRequest.$type,
       page: isSet(object.page) ? Pagination.fromJSON(object.page) : undefined,
-      trunkIds: globalThis.Array.isArray(object?.trunkIds) ? object.trunkIds.map((e: any) => globalThis.String(e)) : [],
-      numbers: globalThis.Array.isArray(object?.numbers) ? object.numbers.map((e: any) => globalThis.String(e)) : [],
+      trunkIds: globalThis.Array.isArray(object?.trunkIds)
+        ? object.trunkIds.map((e: any) => globalThis.String(e))
+        : [],
+      numbers: globalThis.Array.isArray(object?.numbers)
+        ? object.numbers.map((e: any) => globalThis.String(e))
+        : [],
     };
   },
 
@@ -4116,21 +4631,29 @@ export const ListSIPOutboundTrunkRequest: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ListSIPOutboundTrunkRequest>, I>>(base?: I): ListSIPOutboundTrunkRequest {
+  create<I extends Exact<DeepPartial<ListSIPOutboundTrunkRequest>, I>>(
+    base?: I,
+  ): ListSIPOutboundTrunkRequest {
     return ListSIPOutboundTrunkRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ListSIPOutboundTrunkRequest>, I>>(object: I): ListSIPOutboundTrunkRequest {
+  fromPartial<I extends Exact<DeepPartial<ListSIPOutboundTrunkRequest>, I>>(
+    object: I,
+  ): ListSIPOutboundTrunkRequest {
     const message = createBaseListSIPOutboundTrunkRequest();
-    message.page = (object.page !== undefined && object.page !== null)
-      ? Pagination.fromPartial(object.page)
-      : undefined;
+    message.page =
+      object.page !== undefined && object.page !== null
+        ? Pagination.fromPartial(object.page)
+        : undefined;
     message.trunkIds = object.trunkIds?.map((e) => e) || [];
     message.numbers = object.numbers?.map((e) => e) || [];
     return message;
   },
 };
 
-messageTypeRegistry.set(ListSIPOutboundTrunkRequest.$type, ListSIPOutboundTrunkRequest);
+messageTypeRegistry.set(
+  ListSIPOutboundTrunkRequest.$type,
+  ListSIPOutboundTrunkRequest,
+);
 
 function createBaseListSIPOutboundTrunkResponse(): ListSIPOutboundTrunkResponse {
   return { $type: "livekit.ListSIPOutboundTrunkResponse", items: [] };
@@ -4142,15 +4665,22 @@ export const ListSIPOutboundTrunkResponse: MessageFns<
 > = {
   $type: "livekit.ListSIPOutboundTrunkResponse" as const,
 
-  encode(message: ListSIPOutboundTrunkResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: ListSIPOutboundTrunkResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     for (const v of message.items) {
       SIPOutboundTrunkInfo.encode(v!, writer.uint32(10).fork()).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): ListSIPOutboundTrunkResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): ListSIPOutboundTrunkResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseListSIPOutboundTrunkResponse();
     while (reader.pos < end) {
@@ -4161,7 +4691,9 @@ export const ListSIPOutboundTrunkResponse: MessageFns<
             break;
           }
 
-          message.items.push(SIPOutboundTrunkInfo.decode(reader, reader.uint32()));
+          message.items.push(
+            SIPOutboundTrunkInfo.decode(reader, reader.uint32()),
+          );
           continue;
         }
       }
@@ -4190,34 +4722,52 @@ export const ListSIPOutboundTrunkResponse: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ListSIPOutboundTrunkResponse>, I>>(base?: I): ListSIPOutboundTrunkResponse {
+  create<I extends Exact<DeepPartial<ListSIPOutboundTrunkResponse>, I>>(
+    base?: I,
+  ): ListSIPOutboundTrunkResponse {
     return ListSIPOutboundTrunkResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ListSIPOutboundTrunkResponse>, I>>(object: I): ListSIPOutboundTrunkResponse {
+  fromPartial<I extends Exact<DeepPartial<ListSIPOutboundTrunkResponse>, I>>(
+    object: I,
+  ): ListSIPOutboundTrunkResponse {
     const message = createBaseListSIPOutboundTrunkResponse();
-    message.items = object.items?.map((e) => SIPOutboundTrunkInfo.fromPartial(e)) || [];
+    message.items =
+      object.items?.map((e) => SIPOutboundTrunkInfo.fromPartial(e)) || [];
     return message;
   },
 };
 
-messageTypeRegistry.set(ListSIPOutboundTrunkResponse.$type, ListSIPOutboundTrunkResponse);
+messageTypeRegistry.set(
+  ListSIPOutboundTrunkResponse.$type,
+  ListSIPOutboundTrunkResponse,
+);
 
 function createBaseDeleteSIPTrunkRequest(): DeleteSIPTrunkRequest {
   return { $type: "livekit.DeleteSIPTrunkRequest", sipTrunkId: "" };
 }
 
-export const DeleteSIPTrunkRequest: MessageFns<DeleteSIPTrunkRequest, "livekit.DeleteSIPTrunkRequest"> = {
+export const DeleteSIPTrunkRequest: MessageFns<
+  DeleteSIPTrunkRequest,
+  "livekit.DeleteSIPTrunkRequest"
+> = {
   $type: "livekit.DeleteSIPTrunkRequest" as const,
 
-  encode(message: DeleteSIPTrunkRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: DeleteSIPTrunkRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.sipTrunkId !== "") {
       writer.uint32(10).string(message.sipTrunkId);
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): DeleteSIPTrunkRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): DeleteSIPTrunkRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDeleteSIPTrunkRequest();
     while (reader.pos < end) {
@@ -4243,7 +4793,9 @@ export const DeleteSIPTrunkRequest: MessageFns<DeleteSIPTrunkRequest, "livekit.D
   fromJSON(object: any): DeleteSIPTrunkRequest {
     return {
       $type: DeleteSIPTrunkRequest.$type,
-      sipTrunkId: isSet(object.sipTrunkId) ? globalThis.String(object.sipTrunkId) : "",
+      sipTrunkId: isSet(object.sipTrunkId)
+        ? globalThis.String(object.sipTrunkId)
+        : "",
     };
   },
 
@@ -4255,10 +4807,14 @@ export const DeleteSIPTrunkRequest: MessageFns<DeleteSIPTrunkRequest, "livekit.D
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<DeleteSIPTrunkRequest>, I>>(base?: I): DeleteSIPTrunkRequest {
+  create<I extends Exact<DeepPartial<DeleteSIPTrunkRequest>, I>>(
+    base?: I,
+  ): DeleteSIPTrunkRequest {
     return DeleteSIPTrunkRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<DeleteSIPTrunkRequest>, I>>(object: I): DeleteSIPTrunkRequest {
+  fromPartial<I extends Exact<DeepPartial<DeleteSIPTrunkRequest>, I>>(
+    object: I,
+  ): DeleteSIPTrunkRequest {
     const message = createBaseDeleteSIPTrunkRequest();
     message.sipTrunkId = object.sipTrunkId ?? "";
     return message;
@@ -4271,10 +4827,16 @@ function createBaseSIPDispatchRuleDirect(): SIPDispatchRuleDirect {
   return { $type: "livekit.SIPDispatchRuleDirect", roomName: "", pin: "" };
 }
 
-export const SIPDispatchRuleDirect: MessageFns<SIPDispatchRuleDirect, "livekit.SIPDispatchRuleDirect"> = {
+export const SIPDispatchRuleDirect: MessageFns<
+  SIPDispatchRuleDirect,
+  "livekit.SIPDispatchRuleDirect"
+> = {
   $type: "livekit.SIPDispatchRuleDirect" as const,
 
-  encode(message: SIPDispatchRuleDirect, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPDispatchRuleDirect,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.roomName !== "") {
       writer.uint32(10).string(message.roomName);
     }
@@ -4284,8 +4846,12 @@ export const SIPDispatchRuleDirect: MessageFns<SIPDispatchRuleDirect, "livekit.S
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPDispatchRuleDirect {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPDispatchRuleDirect {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPDispatchRuleDirect();
     while (reader.pos < end) {
@@ -4319,7 +4885,9 @@ export const SIPDispatchRuleDirect: MessageFns<SIPDispatchRuleDirect, "livekit.S
   fromJSON(object: any): SIPDispatchRuleDirect {
     return {
       $type: SIPDispatchRuleDirect.$type,
-      roomName: isSet(object.roomName) ? globalThis.String(object.roomName) : "",
+      roomName: isSet(object.roomName)
+        ? globalThis.String(object.roomName)
+        : "",
       pin: isSet(object.pin) ? globalThis.String(object.pin) : "",
     };
   },
@@ -4335,10 +4903,14 @@ export const SIPDispatchRuleDirect: MessageFns<SIPDispatchRuleDirect, "livekit.S
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPDispatchRuleDirect>, I>>(base?: I): SIPDispatchRuleDirect {
+  create<I extends Exact<DeepPartial<SIPDispatchRuleDirect>, I>>(
+    base?: I,
+  ): SIPDispatchRuleDirect {
     return SIPDispatchRuleDirect.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPDispatchRuleDirect>, I>>(object: I): SIPDispatchRuleDirect {
+  fromPartial<I extends Exact<DeepPartial<SIPDispatchRuleDirect>, I>>(
+    object: I,
+  ): SIPDispatchRuleDirect {
     const message = createBaseSIPDispatchRuleDirect();
     message.roomName = object.roomName ?? "";
     message.pin = object.pin ?? "";
@@ -4349,13 +4921,23 @@ export const SIPDispatchRuleDirect: MessageFns<SIPDispatchRuleDirect, "livekit.S
 messageTypeRegistry.set(SIPDispatchRuleDirect.$type, SIPDispatchRuleDirect);
 
 function createBaseSIPDispatchRuleIndividual(): SIPDispatchRuleIndividual {
-  return { $type: "livekit.SIPDispatchRuleIndividual", roomPrefix: "", pin: "" };
+  return {
+    $type: "livekit.SIPDispatchRuleIndividual",
+    roomPrefix: "",
+    pin: "",
+  };
 }
 
-export const SIPDispatchRuleIndividual: MessageFns<SIPDispatchRuleIndividual, "livekit.SIPDispatchRuleIndividual"> = {
+export const SIPDispatchRuleIndividual: MessageFns<
+  SIPDispatchRuleIndividual,
+  "livekit.SIPDispatchRuleIndividual"
+> = {
   $type: "livekit.SIPDispatchRuleIndividual" as const,
 
-  encode(message: SIPDispatchRuleIndividual, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPDispatchRuleIndividual,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.roomPrefix !== "") {
       writer.uint32(10).string(message.roomPrefix);
     }
@@ -4365,8 +4947,12 @@ export const SIPDispatchRuleIndividual: MessageFns<SIPDispatchRuleIndividual, "l
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPDispatchRuleIndividual {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPDispatchRuleIndividual {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPDispatchRuleIndividual();
     while (reader.pos < end) {
@@ -4400,7 +4986,9 @@ export const SIPDispatchRuleIndividual: MessageFns<SIPDispatchRuleIndividual, "l
   fromJSON(object: any): SIPDispatchRuleIndividual {
     return {
       $type: SIPDispatchRuleIndividual.$type,
-      roomPrefix: isSet(object.roomPrefix) ? globalThis.String(object.roomPrefix) : "",
+      roomPrefix: isSet(object.roomPrefix)
+        ? globalThis.String(object.roomPrefix)
+        : "",
       pin: isSet(object.pin) ? globalThis.String(object.pin) : "",
     };
   },
@@ -4416,10 +5004,14 @@ export const SIPDispatchRuleIndividual: MessageFns<SIPDispatchRuleIndividual, "l
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPDispatchRuleIndividual>, I>>(base?: I): SIPDispatchRuleIndividual {
+  create<I extends Exact<DeepPartial<SIPDispatchRuleIndividual>, I>>(
+    base?: I,
+  ): SIPDispatchRuleIndividual {
     return SIPDispatchRuleIndividual.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPDispatchRuleIndividual>, I>>(object: I): SIPDispatchRuleIndividual {
+  fromPartial<I extends Exact<DeepPartial<SIPDispatchRuleIndividual>, I>>(
+    object: I,
+  ): SIPDispatchRuleIndividual {
     const message = createBaseSIPDispatchRuleIndividual();
     message.roomPrefix = object.roomPrefix ?? "";
     message.pin = object.pin ?? "";
@@ -4427,16 +5019,30 @@ export const SIPDispatchRuleIndividual: MessageFns<SIPDispatchRuleIndividual, "l
   },
 };
 
-messageTypeRegistry.set(SIPDispatchRuleIndividual.$type, SIPDispatchRuleIndividual);
+messageTypeRegistry.set(
+  SIPDispatchRuleIndividual.$type,
+  SIPDispatchRuleIndividual,
+);
 
 function createBaseSIPDispatchRuleCallee(): SIPDispatchRuleCallee {
-  return { $type: "livekit.SIPDispatchRuleCallee", roomPrefix: "", pin: "", randomize: false };
+  return {
+    $type: "livekit.SIPDispatchRuleCallee",
+    roomPrefix: "",
+    pin: "",
+    randomize: false,
+  };
 }
 
-export const SIPDispatchRuleCallee: MessageFns<SIPDispatchRuleCallee, "livekit.SIPDispatchRuleCallee"> = {
+export const SIPDispatchRuleCallee: MessageFns<
+  SIPDispatchRuleCallee,
+  "livekit.SIPDispatchRuleCallee"
+> = {
   $type: "livekit.SIPDispatchRuleCallee" as const,
 
-  encode(message: SIPDispatchRuleCallee, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPDispatchRuleCallee,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.roomPrefix !== "") {
       writer.uint32(10).string(message.roomPrefix);
     }
@@ -4449,8 +5055,12 @@ export const SIPDispatchRuleCallee: MessageFns<SIPDispatchRuleCallee, "livekit.S
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPDispatchRuleCallee {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPDispatchRuleCallee {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPDispatchRuleCallee();
     while (reader.pos < end) {
@@ -4492,9 +5102,13 @@ export const SIPDispatchRuleCallee: MessageFns<SIPDispatchRuleCallee, "livekit.S
   fromJSON(object: any): SIPDispatchRuleCallee {
     return {
       $type: SIPDispatchRuleCallee.$type,
-      roomPrefix: isSet(object.roomPrefix) ? globalThis.String(object.roomPrefix) : "",
+      roomPrefix: isSet(object.roomPrefix)
+        ? globalThis.String(object.roomPrefix)
+        : "",
       pin: isSet(object.pin) ? globalThis.String(object.pin) : "",
-      randomize: isSet(object.randomize) ? globalThis.Boolean(object.randomize) : false,
+      randomize: isSet(object.randomize)
+        ? globalThis.Boolean(object.randomize)
+        : false,
     };
   },
 
@@ -4512,10 +5126,14 @@ export const SIPDispatchRuleCallee: MessageFns<SIPDispatchRuleCallee, "livekit.S
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPDispatchRuleCallee>, I>>(base?: I): SIPDispatchRuleCallee {
+  create<I extends Exact<DeepPartial<SIPDispatchRuleCallee>, I>>(
+    base?: I,
+  ): SIPDispatchRuleCallee {
     return SIPDispatchRuleCallee.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPDispatchRuleCallee>, I>>(object: I): SIPDispatchRuleCallee {
+  fromPartial<I extends Exact<DeepPartial<SIPDispatchRuleCallee>, I>>(
+    object: I,
+  ): SIPDispatchRuleCallee {
     const message = createBaseSIPDispatchRuleCallee();
     message.roomPrefix = object.roomPrefix ?? "";
     message.pin = object.pin ?? "";
@@ -4535,24 +5153,40 @@ function createBaseSIPDispatchRule(): SIPDispatchRule {
   };
 }
 
-export const SIPDispatchRule: MessageFns<SIPDispatchRule, "livekit.SIPDispatchRule"> = {
+export const SIPDispatchRule: MessageFns<
+  SIPDispatchRule,
+  "livekit.SIPDispatchRule"
+> = {
   $type: "livekit.SIPDispatchRule" as const,
 
-  encode(message: SIPDispatchRule, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPDispatchRule,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.dispatchRuleDirect !== undefined) {
-      SIPDispatchRuleDirect.encode(message.dispatchRuleDirect, writer.uint32(10).fork()).join();
+      SIPDispatchRuleDirect.encode(
+        message.dispatchRuleDirect,
+        writer.uint32(10).fork(),
+      ).join();
     }
     if (message.dispatchRuleIndividual !== undefined) {
-      SIPDispatchRuleIndividual.encode(message.dispatchRuleIndividual, writer.uint32(18).fork()).join();
+      SIPDispatchRuleIndividual.encode(
+        message.dispatchRuleIndividual,
+        writer.uint32(18).fork(),
+      ).join();
     }
     if (message.dispatchRuleCallee !== undefined) {
-      SIPDispatchRuleCallee.encode(message.dispatchRuleCallee, writer.uint32(26).fork()).join();
+      SIPDispatchRuleCallee.encode(
+        message.dispatchRuleCallee,
+        writer.uint32(26).fork(),
+      ).join();
     }
     return writer;
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): SIPDispatchRule {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPDispatchRule();
     while (reader.pos < end) {
@@ -4563,7 +5197,10 @@ export const SIPDispatchRule: MessageFns<SIPDispatchRule, "livekit.SIPDispatchRu
             break;
           }
 
-          message.dispatchRuleDirect = SIPDispatchRuleDirect.decode(reader, reader.uint32());
+          message.dispatchRuleDirect = SIPDispatchRuleDirect.decode(
+            reader,
+            reader.uint32(),
+          );
           continue;
         }
         case 2: {
@@ -4571,7 +5208,10 @@ export const SIPDispatchRule: MessageFns<SIPDispatchRule, "livekit.SIPDispatchRu
             break;
           }
 
-          message.dispatchRuleIndividual = SIPDispatchRuleIndividual.decode(reader, reader.uint32());
+          message.dispatchRuleIndividual = SIPDispatchRuleIndividual.decode(
+            reader,
+            reader.uint32(),
+          );
           continue;
         }
         case 3: {
@@ -4579,7 +5219,10 @@ export const SIPDispatchRule: MessageFns<SIPDispatchRule, "livekit.SIPDispatchRu
             break;
           }
 
-          message.dispatchRuleCallee = SIPDispatchRuleCallee.decode(reader, reader.uint32());
+          message.dispatchRuleCallee = SIPDispatchRuleCallee.decode(
+            reader,
+            reader.uint32(),
+          );
           continue;
         }
       }
@@ -4609,32 +5252,47 @@ export const SIPDispatchRule: MessageFns<SIPDispatchRule, "livekit.SIPDispatchRu
   toJSON(message: SIPDispatchRule): unknown {
     const obj: any = {};
     if (message.dispatchRuleDirect !== undefined) {
-      obj.dispatchRuleDirect = SIPDispatchRuleDirect.toJSON(message.dispatchRuleDirect);
+      obj.dispatchRuleDirect = SIPDispatchRuleDirect.toJSON(
+        message.dispatchRuleDirect,
+      );
     }
     if (message.dispatchRuleIndividual !== undefined) {
-      obj.dispatchRuleIndividual = SIPDispatchRuleIndividual.toJSON(message.dispatchRuleIndividual);
+      obj.dispatchRuleIndividual = SIPDispatchRuleIndividual.toJSON(
+        message.dispatchRuleIndividual,
+      );
     }
     if (message.dispatchRuleCallee !== undefined) {
-      obj.dispatchRuleCallee = SIPDispatchRuleCallee.toJSON(message.dispatchRuleCallee);
+      obj.dispatchRuleCallee = SIPDispatchRuleCallee.toJSON(
+        message.dispatchRuleCallee,
+      );
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPDispatchRule>, I>>(base?: I): SIPDispatchRule {
+  create<I extends Exact<DeepPartial<SIPDispatchRule>, I>>(
+    base?: I,
+  ): SIPDispatchRule {
     return SIPDispatchRule.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPDispatchRule>, I>>(object: I): SIPDispatchRule {
+  fromPartial<I extends Exact<DeepPartial<SIPDispatchRule>, I>>(
+    object: I,
+  ): SIPDispatchRule {
     const message = createBaseSIPDispatchRule();
-    message.dispatchRuleDirect = (object.dispatchRuleDirect !== undefined && object.dispatchRuleDirect !== null)
-      ? SIPDispatchRuleDirect.fromPartial(object.dispatchRuleDirect)
-      : undefined;
+    message.dispatchRuleDirect =
+      object.dispatchRuleDirect !== undefined &&
+      object.dispatchRuleDirect !== null
+        ? SIPDispatchRuleDirect.fromPartial(object.dispatchRuleDirect)
+        : undefined;
     message.dispatchRuleIndividual =
-      (object.dispatchRuleIndividual !== undefined && object.dispatchRuleIndividual !== null)
+      object.dispatchRuleIndividual !== undefined &&
+      object.dispatchRuleIndividual !== null
         ? SIPDispatchRuleIndividual.fromPartial(object.dispatchRuleIndividual)
         : undefined;
-    message.dispatchRuleCallee = (object.dispatchRuleCallee !== undefined && object.dispatchRuleCallee !== null)
-      ? SIPDispatchRuleCallee.fromPartial(object.dispatchRuleCallee)
-      : undefined;
+    message.dispatchRuleCallee =
+      object.dispatchRuleCallee !== undefined &&
+      object.dispatchRuleCallee !== null
+        ? SIPDispatchRuleCallee.fromPartial(object.dispatchRuleCallee)
+        : undefined;
     return message;
   },
 };
@@ -4662,7 +5320,10 @@ export const CreateSIPDispatchRuleRequest: MessageFns<
 > = {
   $type: "livekit.CreateSIPDispatchRuleRequest" as const,
 
-  encode(message: CreateSIPDispatchRuleRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: CreateSIPDispatchRuleRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.rule !== undefined) {
       SIPDispatchRule.encode(message.rule, writer.uint32(10).fork()).join();
     }
@@ -4682,23 +5343,33 @@ export const CreateSIPDispatchRuleRequest: MessageFns<
       writer.uint32(42).string(message.metadata);
     }
     Object.entries(message.attributes).forEach(([key, value]) => {
-      CreateSIPDispatchRuleRequest_AttributesEntry.encode({
-        $type: "livekit.CreateSIPDispatchRuleRequest.AttributesEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(58).fork()).join();
+      CreateSIPDispatchRuleRequest_AttributesEntry.encode(
+        {
+          $type: "livekit.CreateSIPDispatchRuleRequest.AttributesEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(58).fork(),
+      ).join();
     });
     if (message.roomPreset !== "") {
       writer.uint32(66).string(message.roomPreset);
     }
     if (message.roomConfig !== undefined) {
-      RoomConfiguration.encode(message.roomConfig, writer.uint32(74).fork()).join();
+      RoomConfiguration.encode(
+        message.roomConfig,
+        writer.uint32(74).fork(),
+      ).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): CreateSIPDispatchRuleRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): CreateSIPDispatchRuleRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateSIPDispatchRuleRequest();
     while (reader.pos < end) {
@@ -4757,7 +5428,10 @@ export const CreateSIPDispatchRuleRequest: MessageFns<
             break;
           }
 
-          const entry7 = CreateSIPDispatchRuleRequest_AttributesEntry.decode(reader, reader.uint32());
+          const entry7 = CreateSIPDispatchRuleRequest_AttributesEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry7.value !== undefined) {
             message.attributes[entry7.key] = entry7.value;
           }
@@ -4776,7 +5450,10 @@ export const CreateSIPDispatchRuleRequest: MessageFns<
             break;
           }
 
-          message.roomConfig = RoomConfiguration.decode(reader, reader.uint32());
+          message.roomConfig = RoomConfiguration.decode(
+            reader,
+            reader.uint32(),
+          );
           continue;
         }
       }
@@ -4791,22 +5468,37 @@ export const CreateSIPDispatchRuleRequest: MessageFns<
   fromJSON(object: any): CreateSIPDispatchRuleRequest {
     return {
       $type: CreateSIPDispatchRuleRequest.$type,
-      rule: isSet(object.rule) ? SIPDispatchRule.fromJSON(object.rule) : undefined,
-      trunkIds: globalThis.Array.isArray(object?.trunkIds) ? object.trunkIds.map((e: any) => globalThis.String(e)) : [],
-      hidePhoneNumber: isSet(object.hidePhoneNumber) ? globalThis.Boolean(object.hidePhoneNumber) : false,
+      rule: isSet(object.rule)
+        ? SIPDispatchRule.fromJSON(object.rule)
+        : undefined,
+      trunkIds: globalThis.Array.isArray(object?.trunkIds)
+        ? object.trunkIds.map((e: any) => globalThis.String(e))
+        : [],
+      hidePhoneNumber: isSet(object.hidePhoneNumber)
+        ? globalThis.Boolean(object.hidePhoneNumber)
+        : false,
       inboundNumbers: globalThis.Array.isArray(object?.inboundNumbers)
         ? object.inboundNumbers.map((e: any) => globalThis.String(e))
         : [],
       name: isSet(object.name) ? globalThis.String(object.name) : "",
-      metadata: isSet(object.metadata) ? globalThis.String(object.metadata) : "",
+      metadata: isSet(object.metadata)
+        ? globalThis.String(object.metadata)
+        : "",
       attributes: isObject(object.attributes)
-        ? Object.entries(object.attributes).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.attributes).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {},
+          )
         : {},
-      roomPreset: isSet(object.roomPreset) ? globalThis.String(object.roomPreset) : "",
-      roomConfig: isSet(object.roomConfig) ? RoomConfiguration.fromJSON(object.roomConfig) : undefined,
+      roomPreset: isSet(object.roomPreset)
+        ? globalThis.String(object.roomPreset)
+        : "",
+      roomConfig: isSet(object.roomConfig)
+        ? RoomConfiguration.fromJSON(object.roomConfig)
+        : undefined,
     };
   },
 
@@ -4848,40 +5540,52 @@ export const CreateSIPDispatchRuleRequest: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateSIPDispatchRuleRequest>, I>>(base?: I): CreateSIPDispatchRuleRequest {
+  create<I extends Exact<DeepPartial<CreateSIPDispatchRuleRequest>, I>>(
+    base?: I,
+  ): CreateSIPDispatchRuleRequest {
     return CreateSIPDispatchRuleRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<CreateSIPDispatchRuleRequest>, I>>(object: I): CreateSIPDispatchRuleRequest {
+  fromPartial<I extends Exact<DeepPartial<CreateSIPDispatchRuleRequest>, I>>(
+    object: I,
+  ): CreateSIPDispatchRuleRequest {
     const message = createBaseCreateSIPDispatchRuleRequest();
-    message.rule = (object.rule !== undefined && object.rule !== null)
-      ? SIPDispatchRule.fromPartial(object.rule)
-      : undefined;
+    message.rule =
+      object.rule !== undefined && object.rule !== null
+        ? SIPDispatchRule.fromPartial(object.rule)
+        : undefined;
     message.trunkIds = object.trunkIds?.map((e) => e) || [];
     message.hidePhoneNumber = object.hidePhoneNumber ?? false;
     message.inboundNumbers = object.inboundNumbers?.map((e) => e) || [];
     message.name = object.name ?? "";
     message.metadata = object.metadata ?? "";
-    message.attributes = Object.entries(object.attributes ?? {}).reduce<{ [key: string]: string }>(
-      (acc, [key, value]) => {
-        if (value !== undefined) {
-          acc[key] = globalThis.String(value);
-        }
-        return acc;
-      },
-      {},
-    );
+    message.attributes = Object.entries(object.attributes ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = globalThis.String(value);
+      }
+      return acc;
+    }, {});
     message.roomPreset = object.roomPreset ?? "";
-    message.roomConfig = (object.roomConfig !== undefined && object.roomConfig !== null)
-      ? RoomConfiguration.fromPartial(object.roomConfig)
-      : undefined;
+    message.roomConfig =
+      object.roomConfig !== undefined && object.roomConfig !== null
+        ? RoomConfiguration.fromPartial(object.roomConfig)
+        : undefined;
     return message;
   },
 };
 
-messageTypeRegistry.set(CreateSIPDispatchRuleRequest.$type, CreateSIPDispatchRuleRequest);
+messageTypeRegistry.set(
+  CreateSIPDispatchRuleRequest.$type,
+  CreateSIPDispatchRuleRequest,
+);
 
 function createBaseCreateSIPDispatchRuleRequest_AttributesEntry(): CreateSIPDispatchRuleRequest_AttributesEntry {
-  return { $type: "livekit.CreateSIPDispatchRuleRequest.AttributesEntry", key: "", value: "" };
+  return {
+    $type: "livekit.CreateSIPDispatchRuleRequest.AttributesEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const CreateSIPDispatchRuleRequest_AttributesEntry: MessageFns<
@@ -4903,8 +5607,12 @@ export const CreateSIPDispatchRuleRequest_AttributesEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): CreateSIPDispatchRuleRequest_AttributesEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): CreateSIPDispatchRuleRequest_AttributesEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateSIPDispatchRuleRequest_AttributesEntry();
     while (reader.pos < end) {
@@ -4954,14 +5662,22 @@ export const CreateSIPDispatchRuleRequest_AttributesEntry: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateSIPDispatchRuleRequest_AttributesEntry>, I>>(
-    base?: I,
-  ): CreateSIPDispatchRuleRequest_AttributesEntry {
-    return CreateSIPDispatchRuleRequest_AttributesEntry.fromPartial(base ?? ({} as any));
+  create<
+    I extends Exact<
+      DeepPartial<CreateSIPDispatchRuleRequest_AttributesEntry>,
+      I
+    >,
+  >(base?: I): CreateSIPDispatchRuleRequest_AttributesEntry {
+    return CreateSIPDispatchRuleRequest_AttributesEntry.fromPartial(
+      base ?? ({} as any),
+    );
   },
-  fromPartial<I extends Exact<DeepPartial<CreateSIPDispatchRuleRequest_AttributesEntry>, I>>(
-    object: I,
-  ): CreateSIPDispatchRuleRequest_AttributesEntry {
+  fromPartial<
+    I extends Exact<
+      DeepPartial<CreateSIPDispatchRuleRequest_AttributesEntry>,
+      I
+    >,
+  >(object: I): CreateSIPDispatchRuleRequest_AttributesEntry {
     const message = createBaseCreateSIPDispatchRuleRequest_AttributesEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -4992,10 +5708,16 @@ function createBaseSIPDispatchRuleInfo(): SIPDispatchRuleInfo {
   };
 }
 
-export const SIPDispatchRuleInfo: MessageFns<SIPDispatchRuleInfo, "livekit.SIPDispatchRuleInfo"> = {
+export const SIPDispatchRuleInfo: MessageFns<
+  SIPDispatchRuleInfo,
+  "livekit.SIPDispatchRuleInfo"
+> = {
   $type: "livekit.SIPDispatchRuleInfo" as const,
 
-  encode(message: SIPDispatchRuleInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPDispatchRuleInfo,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.sipDispatchRuleId !== "") {
       writer.uint32(10).string(message.sipDispatchRuleId);
     }
@@ -5018,17 +5740,23 @@ export const SIPDispatchRuleInfo: MessageFns<SIPDispatchRuleInfo, "livekit.SIPDi
       writer.uint32(50).string(message.metadata);
     }
     Object.entries(message.attributes).forEach(([key, value]) => {
-      SIPDispatchRuleInfo_AttributesEntry.encode({
-        $type: "livekit.SIPDispatchRuleInfo.AttributesEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(66).fork()).join();
+      SIPDispatchRuleInfo_AttributesEntry.encode(
+        {
+          $type: "livekit.SIPDispatchRuleInfo.AttributesEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(66).fork(),
+      ).join();
     });
     if (message.roomPreset !== "") {
       writer.uint32(74).string(message.roomPreset);
     }
     if (message.roomConfig !== undefined) {
-      RoomConfiguration.encode(message.roomConfig, writer.uint32(82).fork()).join();
+      RoomConfiguration.encode(
+        message.roomConfig,
+        writer.uint32(82).fork(),
+      ).join();
     }
     if (message.krispEnabled !== false) {
       writer.uint32(88).bool(message.krispEnabled);
@@ -5039,8 +5767,12 @@ export const SIPDispatchRuleInfo: MessageFns<SIPDispatchRuleInfo, "livekit.SIPDi
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPDispatchRuleInfo {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPDispatchRuleInfo {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPDispatchRuleInfo();
     while (reader.pos < end) {
@@ -5107,7 +5839,10 @@ export const SIPDispatchRuleInfo: MessageFns<SIPDispatchRuleInfo, "livekit.SIPDi
             break;
           }
 
-          const entry8 = SIPDispatchRuleInfo_AttributesEntry.decode(reader, reader.uint32());
+          const entry8 = SIPDispatchRuleInfo_AttributesEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry8.value !== undefined) {
             message.attributes[entry8.key] = entry8.value;
           }
@@ -5126,7 +5861,10 @@ export const SIPDispatchRuleInfo: MessageFns<SIPDispatchRuleInfo, "livekit.SIPDi
             break;
           }
 
-          message.roomConfig = RoomConfiguration.decode(reader, reader.uint32());
+          message.roomConfig = RoomConfiguration.decode(
+            reader,
+            reader.uint32(),
+          );
           continue;
         }
         case 11: {
@@ -5157,25 +5895,46 @@ export const SIPDispatchRuleInfo: MessageFns<SIPDispatchRuleInfo, "livekit.SIPDi
   fromJSON(object: any): SIPDispatchRuleInfo {
     return {
       $type: SIPDispatchRuleInfo.$type,
-      sipDispatchRuleId: isSet(object.sipDispatchRuleId) ? globalThis.String(object.sipDispatchRuleId) : "",
-      rule: isSet(object.rule) ? SIPDispatchRule.fromJSON(object.rule) : undefined,
-      trunkIds: globalThis.Array.isArray(object?.trunkIds) ? object.trunkIds.map((e: any) => globalThis.String(e)) : [],
-      hidePhoneNumber: isSet(object.hidePhoneNumber) ? globalThis.Boolean(object.hidePhoneNumber) : false,
+      sipDispatchRuleId: isSet(object.sipDispatchRuleId)
+        ? globalThis.String(object.sipDispatchRuleId)
+        : "",
+      rule: isSet(object.rule)
+        ? SIPDispatchRule.fromJSON(object.rule)
+        : undefined,
+      trunkIds: globalThis.Array.isArray(object?.trunkIds)
+        ? object.trunkIds.map((e: any) => globalThis.String(e))
+        : [],
+      hidePhoneNumber: isSet(object.hidePhoneNumber)
+        ? globalThis.Boolean(object.hidePhoneNumber)
+        : false,
       inboundNumbers: globalThis.Array.isArray(object?.inboundNumbers)
         ? object.inboundNumbers.map((e: any) => globalThis.String(e))
         : [],
       name: isSet(object.name) ? globalThis.String(object.name) : "",
-      metadata: isSet(object.metadata) ? globalThis.String(object.metadata) : "",
+      metadata: isSet(object.metadata)
+        ? globalThis.String(object.metadata)
+        : "",
       attributes: isObject(object.attributes)
-        ? Object.entries(object.attributes).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.attributes).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {},
+          )
         : {},
-      roomPreset: isSet(object.roomPreset) ? globalThis.String(object.roomPreset) : "",
-      roomConfig: isSet(object.roomConfig) ? RoomConfiguration.fromJSON(object.roomConfig) : undefined,
-      krispEnabled: isSet(object.krispEnabled) ? globalThis.Boolean(object.krispEnabled) : false,
-      mediaEncryption: isSet(object.mediaEncryption) ? sIPMediaEncryptionFromJSON(object.mediaEncryption) : 0,
+      roomPreset: isSet(object.roomPreset)
+        ? globalThis.String(object.roomPreset)
+        : "",
+      roomConfig: isSet(object.roomConfig)
+        ? RoomConfiguration.fromJSON(object.roomConfig)
+        : undefined,
+      krispEnabled: isSet(object.krispEnabled)
+        ? globalThis.Boolean(object.krispEnabled)
+        : false,
+      mediaEncryption: isSet(object.mediaEncryption)
+        ? sIPMediaEncryptionFromJSON(object.mediaEncryption)
+        : 0,
     };
   },
 
@@ -5226,33 +5985,38 @@ export const SIPDispatchRuleInfo: MessageFns<SIPDispatchRuleInfo, "livekit.SIPDi
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPDispatchRuleInfo>, I>>(base?: I): SIPDispatchRuleInfo {
+  create<I extends Exact<DeepPartial<SIPDispatchRuleInfo>, I>>(
+    base?: I,
+  ): SIPDispatchRuleInfo {
     return SIPDispatchRuleInfo.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPDispatchRuleInfo>, I>>(object: I): SIPDispatchRuleInfo {
+  fromPartial<I extends Exact<DeepPartial<SIPDispatchRuleInfo>, I>>(
+    object: I,
+  ): SIPDispatchRuleInfo {
     const message = createBaseSIPDispatchRuleInfo();
     message.sipDispatchRuleId = object.sipDispatchRuleId ?? "";
-    message.rule = (object.rule !== undefined && object.rule !== null)
-      ? SIPDispatchRule.fromPartial(object.rule)
-      : undefined;
+    message.rule =
+      object.rule !== undefined && object.rule !== null
+        ? SIPDispatchRule.fromPartial(object.rule)
+        : undefined;
     message.trunkIds = object.trunkIds?.map((e) => e) || [];
     message.hidePhoneNumber = object.hidePhoneNumber ?? false;
     message.inboundNumbers = object.inboundNumbers?.map((e) => e) || [];
     message.name = object.name ?? "";
     message.metadata = object.metadata ?? "";
-    message.attributes = Object.entries(object.attributes ?? {}).reduce<{ [key: string]: string }>(
-      (acc, [key, value]) => {
-        if (value !== undefined) {
-          acc[key] = globalThis.String(value);
-        }
-        return acc;
-      },
-      {},
-    );
+    message.attributes = Object.entries(object.attributes ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = globalThis.String(value);
+      }
+      return acc;
+    }, {});
     message.roomPreset = object.roomPreset ?? "";
-    message.roomConfig = (object.roomConfig !== undefined && object.roomConfig !== null)
-      ? RoomConfiguration.fromPartial(object.roomConfig)
-      : undefined;
+    message.roomConfig =
+      object.roomConfig !== undefined && object.roomConfig !== null
+        ? RoomConfiguration.fromPartial(object.roomConfig)
+        : undefined;
     message.krispEnabled = object.krispEnabled ?? false;
     message.mediaEncryption = object.mediaEncryption ?? 0;
     return message;
@@ -5262,7 +6026,11 @@ export const SIPDispatchRuleInfo: MessageFns<SIPDispatchRuleInfo, "livekit.SIPDi
 messageTypeRegistry.set(SIPDispatchRuleInfo.$type, SIPDispatchRuleInfo);
 
 function createBaseSIPDispatchRuleInfo_AttributesEntry(): SIPDispatchRuleInfo_AttributesEntry {
-  return { $type: "livekit.SIPDispatchRuleInfo.AttributesEntry", key: "", value: "" };
+  return {
+    $type: "livekit.SIPDispatchRuleInfo.AttributesEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const SIPDispatchRuleInfo_AttributesEntry: MessageFns<
@@ -5271,7 +6039,10 @@ export const SIPDispatchRuleInfo_AttributesEntry: MessageFns<
 > = {
   $type: "livekit.SIPDispatchRuleInfo.AttributesEntry" as const,
 
-  encode(message: SIPDispatchRuleInfo_AttributesEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPDispatchRuleInfo_AttributesEntry,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -5281,8 +6052,12 @@ export const SIPDispatchRuleInfo_AttributesEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPDispatchRuleInfo_AttributesEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPDispatchRuleInfo_AttributesEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPDispatchRuleInfo_AttributesEntry();
     while (reader.pos < end) {
@@ -5337,9 +6112,9 @@ export const SIPDispatchRuleInfo_AttributesEntry: MessageFns<
   ): SIPDispatchRuleInfo_AttributesEntry {
     return SIPDispatchRuleInfo_AttributesEntry.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPDispatchRuleInfo_AttributesEntry>, I>>(
-    object: I,
-  ): SIPDispatchRuleInfo_AttributesEntry {
+  fromPartial<
+    I extends Exact<DeepPartial<SIPDispatchRuleInfo_AttributesEntry>, I>,
+  >(object: I): SIPDispatchRuleInfo_AttributesEntry {
     const message = createBaseSIPDispatchRuleInfo_AttributesEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -5347,111 +6122,136 @@ export const SIPDispatchRuleInfo_AttributesEntry: MessageFns<
   },
 };
 
-messageTypeRegistry.set(SIPDispatchRuleInfo_AttributesEntry.$type, SIPDispatchRuleInfo_AttributesEntry);
+messageTypeRegistry.set(
+  SIPDispatchRuleInfo_AttributesEntry.$type,
+  SIPDispatchRuleInfo_AttributesEntry,
+);
 
 function createBaseListSIPDispatchRuleRequest(): ListSIPDispatchRuleRequest {
-  return { $type: "livekit.ListSIPDispatchRuleRequest", page: undefined, dispatchRuleIds: [], trunkIds: [] };
+  return {
+    $type: "livekit.ListSIPDispatchRuleRequest",
+    page: undefined,
+    dispatchRuleIds: [],
+    trunkIds: [],
+  };
 }
 
-export const ListSIPDispatchRuleRequest: MessageFns<ListSIPDispatchRuleRequest, "livekit.ListSIPDispatchRuleRequest"> =
-  {
-    $type: "livekit.ListSIPDispatchRuleRequest" as const,
+export const ListSIPDispatchRuleRequest: MessageFns<
+  ListSIPDispatchRuleRequest,
+  "livekit.ListSIPDispatchRuleRequest"
+> = {
+  $type: "livekit.ListSIPDispatchRuleRequest" as const,
 
-    encode(message: ListSIPDispatchRuleRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-      if (message.page !== undefined) {
-        Pagination.encode(message.page, writer.uint32(26).fork()).join();
-      }
-      for (const v of message.dispatchRuleIds) {
-        writer.uint32(10).string(v!);
-      }
-      for (const v of message.trunkIds) {
-        writer.uint32(18).string(v!);
-      }
-      return writer;
-    },
+  encode(
+    message: ListSIPDispatchRuleRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
+    if (message.page !== undefined) {
+      Pagination.encode(message.page, writer.uint32(26).fork()).join();
+    }
+    for (const v of message.dispatchRuleIds) {
+      writer.uint32(10).string(v!);
+    }
+    for (const v of message.trunkIds) {
+      writer.uint32(18).string(v!);
+    }
+    return writer;
+  },
 
-    decode(input: BinaryReader | Uint8Array, length?: number): ListSIPDispatchRuleRequest {
-      const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-      let end = length === undefined ? reader.len : reader.pos + length;
-      const message = createBaseListSIPDispatchRuleRequest();
-      while (reader.pos < end) {
-        const tag = reader.uint32();
-        switch (tag >>> 3) {
-          case 3: {
-            if (tag !== 26) {
-              break;
-            }
-
-            message.page = Pagination.decode(reader, reader.uint32());
-            continue;
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): ListSIPDispatchRuleRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseListSIPDispatchRuleRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 3: {
+          if (tag !== 26) {
+            break;
           }
-          case 1: {
-            if (tag !== 10) {
-              break;
-            }
 
-            message.dispatchRuleIds.push(reader.string());
-            continue;
-          }
-          case 2: {
-            if (tag !== 18) {
-              break;
-            }
-
-            message.trunkIds.push(reader.string());
-            continue;
-          }
+          message.page = Pagination.decode(reader, reader.uint32());
+          continue;
         }
-        if ((tag & 7) === 4 || tag === 0) {
-          break;
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.dispatchRuleIds.push(reader.string());
+          continue;
         }
-        reader.skip(tag & 7);
-      }
-      return message;
-    },
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
 
-    fromJSON(object: any): ListSIPDispatchRuleRequest {
-      return {
-        $type: ListSIPDispatchRuleRequest.$type,
-        page: isSet(object.page) ? Pagination.fromJSON(object.page) : undefined,
-        dispatchRuleIds: globalThis.Array.isArray(object?.dispatchRuleIds)
-          ? object.dispatchRuleIds.map((e: any) => globalThis.String(e))
-          : [],
-        trunkIds: globalThis.Array.isArray(object?.trunkIds)
-          ? object.trunkIds.map((e: any) => globalThis.String(e))
-          : [],
-      };
-    },
+          message.trunkIds.push(reader.string());
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-    toJSON(message: ListSIPDispatchRuleRequest): unknown {
-      const obj: any = {};
-      if (message.page !== undefined) {
-        obj.page = Pagination.toJSON(message.page);
-      }
-      if (message.dispatchRuleIds?.length) {
-        obj.dispatchRuleIds = message.dispatchRuleIds;
-      }
-      if (message.trunkIds?.length) {
-        obj.trunkIds = message.trunkIds;
-      }
-      return obj;
-    },
+  fromJSON(object: any): ListSIPDispatchRuleRequest {
+    return {
+      $type: ListSIPDispatchRuleRequest.$type,
+      page: isSet(object.page) ? Pagination.fromJSON(object.page) : undefined,
+      dispatchRuleIds: globalThis.Array.isArray(object?.dispatchRuleIds)
+        ? object.dispatchRuleIds.map((e: any) => globalThis.String(e))
+        : [],
+      trunkIds: globalThis.Array.isArray(object?.trunkIds)
+        ? object.trunkIds.map((e: any) => globalThis.String(e))
+        : [],
+    };
+  },
 
-    create<I extends Exact<DeepPartial<ListSIPDispatchRuleRequest>, I>>(base?: I): ListSIPDispatchRuleRequest {
-      return ListSIPDispatchRuleRequest.fromPartial(base ?? ({} as any));
-    },
-    fromPartial<I extends Exact<DeepPartial<ListSIPDispatchRuleRequest>, I>>(object: I): ListSIPDispatchRuleRequest {
-      const message = createBaseListSIPDispatchRuleRequest();
-      message.page = (object.page !== undefined && object.page !== null)
+  toJSON(message: ListSIPDispatchRuleRequest): unknown {
+    const obj: any = {};
+    if (message.page !== undefined) {
+      obj.page = Pagination.toJSON(message.page);
+    }
+    if (message.dispatchRuleIds?.length) {
+      obj.dispatchRuleIds = message.dispatchRuleIds;
+    }
+    if (message.trunkIds?.length) {
+      obj.trunkIds = message.trunkIds;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ListSIPDispatchRuleRequest>, I>>(
+    base?: I,
+  ): ListSIPDispatchRuleRequest {
+    return ListSIPDispatchRuleRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<ListSIPDispatchRuleRequest>, I>>(
+    object: I,
+  ): ListSIPDispatchRuleRequest {
+    const message = createBaseListSIPDispatchRuleRequest();
+    message.page =
+      object.page !== undefined && object.page !== null
         ? Pagination.fromPartial(object.page)
         : undefined;
-      message.dispatchRuleIds = object.dispatchRuleIds?.map((e) => e) || [];
-      message.trunkIds = object.trunkIds?.map((e) => e) || [];
-      return message;
-    },
-  };
+    message.dispatchRuleIds = object.dispatchRuleIds?.map((e) => e) || [];
+    message.trunkIds = object.trunkIds?.map((e) => e) || [];
+    return message;
+  },
+};
 
-messageTypeRegistry.set(ListSIPDispatchRuleRequest.$type, ListSIPDispatchRuleRequest);
+messageTypeRegistry.set(
+  ListSIPDispatchRuleRequest.$type,
+  ListSIPDispatchRuleRequest,
+);
 
 function createBaseListSIPDispatchRuleResponse(): ListSIPDispatchRuleResponse {
   return { $type: "livekit.ListSIPDispatchRuleResponse", items: [] };
@@ -5463,15 +6263,22 @@ export const ListSIPDispatchRuleResponse: MessageFns<
 > = {
   $type: "livekit.ListSIPDispatchRuleResponse" as const,
 
-  encode(message: ListSIPDispatchRuleResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: ListSIPDispatchRuleResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     for (const v of message.items) {
       SIPDispatchRuleInfo.encode(v!, writer.uint32(10).fork()).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): ListSIPDispatchRuleResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): ListSIPDispatchRuleResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseListSIPDispatchRuleResponse();
     while (reader.pos < end) {
@@ -5482,7 +6289,9 @@ export const ListSIPDispatchRuleResponse: MessageFns<
             break;
           }
 
-          message.items.push(SIPDispatchRuleInfo.decode(reader, reader.uint32()));
+          message.items.push(
+            SIPDispatchRuleInfo.decode(reader, reader.uint32()),
+          );
           continue;
         }
       }
@@ -5511,20 +6320,31 @@ export const ListSIPDispatchRuleResponse: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ListSIPDispatchRuleResponse>, I>>(base?: I): ListSIPDispatchRuleResponse {
+  create<I extends Exact<DeepPartial<ListSIPDispatchRuleResponse>, I>>(
+    base?: I,
+  ): ListSIPDispatchRuleResponse {
     return ListSIPDispatchRuleResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ListSIPDispatchRuleResponse>, I>>(object: I): ListSIPDispatchRuleResponse {
+  fromPartial<I extends Exact<DeepPartial<ListSIPDispatchRuleResponse>, I>>(
+    object: I,
+  ): ListSIPDispatchRuleResponse {
     const message = createBaseListSIPDispatchRuleResponse();
-    message.items = object.items?.map((e) => SIPDispatchRuleInfo.fromPartial(e)) || [];
+    message.items =
+      object.items?.map((e) => SIPDispatchRuleInfo.fromPartial(e)) || [];
     return message;
   },
 };
 
-messageTypeRegistry.set(ListSIPDispatchRuleResponse.$type, ListSIPDispatchRuleResponse);
+messageTypeRegistry.set(
+  ListSIPDispatchRuleResponse.$type,
+  ListSIPDispatchRuleResponse,
+);
 
 function createBaseDeleteSIPDispatchRuleRequest(): DeleteSIPDispatchRuleRequest {
-  return { $type: "livekit.DeleteSIPDispatchRuleRequest", sipDispatchRuleId: "" };
+  return {
+    $type: "livekit.DeleteSIPDispatchRuleRequest",
+    sipDispatchRuleId: "",
+  };
 }
 
 export const DeleteSIPDispatchRuleRequest: MessageFns<
@@ -5533,15 +6353,22 @@ export const DeleteSIPDispatchRuleRequest: MessageFns<
 > = {
   $type: "livekit.DeleteSIPDispatchRuleRequest" as const,
 
-  encode(message: DeleteSIPDispatchRuleRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: DeleteSIPDispatchRuleRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.sipDispatchRuleId !== "") {
       writer.uint32(10).string(message.sipDispatchRuleId);
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): DeleteSIPDispatchRuleRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): DeleteSIPDispatchRuleRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseDeleteSIPDispatchRuleRequest();
     while (reader.pos < end) {
@@ -5567,7 +6394,9 @@ export const DeleteSIPDispatchRuleRequest: MessageFns<
   fromJSON(object: any): DeleteSIPDispatchRuleRequest {
     return {
       $type: DeleteSIPDispatchRuleRequest.$type,
-      sipDispatchRuleId: isSet(object.sipDispatchRuleId) ? globalThis.String(object.sipDispatchRuleId) : "",
+      sipDispatchRuleId: isSet(object.sipDispatchRuleId)
+        ? globalThis.String(object.sipDispatchRuleId)
+        : "",
     };
   },
 
@@ -5579,17 +6408,24 @@ export const DeleteSIPDispatchRuleRequest: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<DeleteSIPDispatchRuleRequest>, I>>(base?: I): DeleteSIPDispatchRuleRequest {
+  create<I extends Exact<DeepPartial<DeleteSIPDispatchRuleRequest>, I>>(
+    base?: I,
+  ): DeleteSIPDispatchRuleRequest {
     return DeleteSIPDispatchRuleRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<DeleteSIPDispatchRuleRequest>, I>>(object: I): DeleteSIPDispatchRuleRequest {
+  fromPartial<I extends Exact<DeepPartial<DeleteSIPDispatchRuleRequest>, I>>(
+    object: I,
+  ): DeleteSIPDispatchRuleRequest {
     const message = createBaseDeleteSIPDispatchRuleRequest();
     message.sipDispatchRuleId = object.sipDispatchRuleId ?? "";
     return message;
   },
 };
 
-messageTypeRegistry.set(DeleteSIPDispatchRuleRequest.$type, DeleteSIPDispatchRuleRequest);
+messageTypeRegistry.set(
+  DeleteSIPDispatchRuleRequest.$type,
+  DeleteSIPDispatchRuleRequest,
+);
 
 function createBaseSIPOutboundConfig(): SIPOutboundConfig {
   return {
@@ -5603,10 +6439,16 @@ function createBaseSIPOutboundConfig(): SIPOutboundConfig {
   };
 }
 
-export const SIPOutboundConfig: MessageFns<SIPOutboundConfig, "livekit.SIPOutboundConfig"> = {
+export const SIPOutboundConfig: MessageFns<
+  SIPOutboundConfig,
+  "livekit.SIPOutboundConfig"
+> = {
   $type: "livekit.SIPOutboundConfig" as const,
 
-  encode(message: SIPOutboundConfig, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPOutboundConfig,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.hostname !== "") {
       writer.uint32(10).string(message.hostname);
     }
@@ -5620,24 +6462,31 @@ export const SIPOutboundConfig: MessageFns<SIPOutboundConfig, "livekit.SIPOutbou
       writer.uint32(34).string(message.authPassword);
     }
     Object.entries(message.headersToAttributes).forEach(([key, value]) => {
-      SIPOutboundConfig_HeadersToAttributesEntry.encode({
-        $type: "livekit.SIPOutboundConfig.HeadersToAttributesEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(42).fork()).join();
+      SIPOutboundConfig_HeadersToAttributesEntry.encode(
+        {
+          $type: "livekit.SIPOutboundConfig.HeadersToAttributesEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(42).fork(),
+      ).join();
     });
     Object.entries(message.attributesToHeaders).forEach(([key, value]) => {
-      SIPOutboundConfig_AttributesToHeadersEntry.encode({
-        $type: "livekit.SIPOutboundConfig.AttributesToHeadersEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(50).fork()).join();
+      SIPOutboundConfig_AttributesToHeadersEntry.encode(
+        {
+          $type: "livekit.SIPOutboundConfig.AttributesToHeadersEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(50).fork(),
+      ).join();
     });
     return writer;
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): SIPOutboundConfig {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPOutboundConfig();
     while (reader.pos < end) {
@@ -5680,7 +6529,10 @@ export const SIPOutboundConfig: MessageFns<SIPOutboundConfig, "livekit.SIPOutbou
             break;
           }
 
-          const entry5 = SIPOutboundConfig_HeadersToAttributesEntry.decode(reader, reader.uint32());
+          const entry5 = SIPOutboundConfig_HeadersToAttributesEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry5.value !== undefined) {
             message.headersToAttributes[entry5.key] = entry5.value;
           }
@@ -5691,7 +6543,10 @@ export const SIPOutboundConfig: MessageFns<SIPOutboundConfig, "livekit.SIPOutbou
             break;
           }
 
-          const entry6 = SIPOutboundConfig_AttributesToHeadersEntry.decode(reader, reader.uint32());
+          const entry6 = SIPOutboundConfig_AttributesToHeadersEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry6.value !== undefined) {
             message.attributesToHeaders[entry6.key] = entry6.value;
           }
@@ -5709,21 +6564,33 @@ export const SIPOutboundConfig: MessageFns<SIPOutboundConfig, "livekit.SIPOutbou
   fromJSON(object: any): SIPOutboundConfig {
     return {
       $type: SIPOutboundConfig.$type,
-      hostname: isSet(object.hostname) ? globalThis.String(object.hostname) : "",
-      transport: isSet(object.transport) ? sIPTransportFromJSON(object.transport) : 0,
-      authUsername: isSet(object.authUsername) ? globalThis.String(object.authUsername) : "",
-      authPassword: isSet(object.authPassword) ? globalThis.String(object.authPassword) : "",
+      hostname: isSet(object.hostname)
+        ? globalThis.String(object.hostname)
+        : "",
+      transport: isSet(object.transport)
+        ? sIPTransportFromJSON(object.transport)
+        : 0,
+      authUsername: isSet(object.authUsername)
+        ? globalThis.String(object.authUsername)
+        : "",
+      authPassword: isSet(object.authPassword)
+        ? globalThis.String(object.authPassword)
+        : "",
       headersToAttributes: isObject(object.headersToAttributes)
-        ? Object.entries(object.headersToAttributes).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.headersToAttributes).reduce<{
+            [key: string]: string;
+          }>((acc, [key, value]) => {
+            acc[key] = String(value);
+            return acc;
+          }, {})
         : {},
       attributesToHeaders: isObject(object.attributesToHeaders)
-        ? Object.entries(object.attributesToHeaders).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.attributesToHeaders).reduce<{
+            [key: string]: string;
+          }>((acc, [key, value]) => {
+            acc[key] = String(value);
+            return acc;
+          }, {})
         : {},
     };
   },
@@ -5763,33 +6630,35 @@ export const SIPOutboundConfig: MessageFns<SIPOutboundConfig, "livekit.SIPOutbou
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPOutboundConfig>, I>>(base?: I): SIPOutboundConfig {
+  create<I extends Exact<DeepPartial<SIPOutboundConfig>, I>>(
+    base?: I,
+  ): SIPOutboundConfig {
     return SIPOutboundConfig.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPOutboundConfig>, I>>(object: I): SIPOutboundConfig {
+  fromPartial<I extends Exact<DeepPartial<SIPOutboundConfig>, I>>(
+    object: I,
+  ): SIPOutboundConfig {
     const message = createBaseSIPOutboundConfig();
     message.hostname = object.hostname ?? "";
     message.transport = object.transport ?? 0;
     message.authUsername = object.authUsername ?? "";
     message.authPassword = object.authPassword ?? "";
-    message.headersToAttributes = Object.entries(object.headersToAttributes ?? {}).reduce<{ [key: string]: string }>(
-      (acc, [key, value]) => {
-        if (value !== undefined) {
-          acc[key] = globalThis.String(value);
-        }
-        return acc;
-      },
-      {},
-    );
-    message.attributesToHeaders = Object.entries(object.attributesToHeaders ?? {}).reduce<{ [key: string]: string }>(
-      (acc, [key, value]) => {
-        if (value !== undefined) {
-          acc[key] = globalThis.String(value);
-        }
-        return acc;
-      },
-      {},
-    );
+    message.headersToAttributes = Object.entries(
+      object.headersToAttributes ?? {},
+    ).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = globalThis.String(value);
+      }
+      return acc;
+    }, {});
+    message.attributesToHeaders = Object.entries(
+      object.attributesToHeaders ?? {},
+    ).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = globalThis.String(value);
+      }
+      return acc;
+    }, {});
     return message;
   },
 };
@@ -5797,7 +6666,11 @@ export const SIPOutboundConfig: MessageFns<SIPOutboundConfig, "livekit.SIPOutbou
 messageTypeRegistry.set(SIPOutboundConfig.$type, SIPOutboundConfig);
 
 function createBaseSIPOutboundConfig_HeadersToAttributesEntry(): SIPOutboundConfig_HeadersToAttributesEntry {
-  return { $type: "livekit.SIPOutboundConfig.HeadersToAttributesEntry", key: "", value: "" };
+  return {
+    $type: "livekit.SIPOutboundConfig.HeadersToAttributesEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const SIPOutboundConfig_HeadersToAttributesEntry: MessageFns<
@@ -5806,7 +6679,10 @@ export const SIPOutboundConfig_HeadersToAttributesEntry: MessageFns<
 > = {
   $type: "livekit.SIPOutboundConfig.HeadersToAttributesEntry" as const,
 
-  encode(message: SIPOutboundConfig_HeadersToAttributesEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPOutboundConfig_HeadersToAttributesEntry,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -5816,8 +6692,12 @@ export const SIPOutboundConfig_HeadersToAttributesEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPOutboundConfig_HeadersToAttributesEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPOutboundConfig_HeadersToAttributesEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPOutboundConfig_HeadersToAttributesEntry();
     while (reader.pos < end) {
@@ -5867,14 +6747,16 @@ export const SIPOutboundConfig_HeadersToAttributesEntry: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPOutboundConfig_HeadersToAttributesEntry>, I>>(
-    base?: I,
-  ): SIPOutboundConfig_HeadersToAttributesEntry {
-    return SIPOutboundConfig_HeadersToAttributesEntry.fromPartial(base ?? ({} as any));
+  create<
+    I extends Exact<DeepPartial<SIPOutboundConfig_HeadersToAttributesEntry>, I>,
+  >(base?: I): SIPOutboundConfig_HeadersToAttributesEntry {
+    return SIPOutboundConfig_HeadersToAttributesEntry.fromPartial(
+      base ?? ({} as any),
+    );
   },
-  fromPartial<I extends Exact<DeepPartial<SIPOutboundConfig_HeadersToAttributesEntry>, I>>(
-    object: I,
-  ): SIPOutboundConfig_HeadersToAttributesEntry {
+  fromPartial<
+    I extends Exact<DeepPartial<SIPOutboundConfig_HeadersToAttributesEntry>, I>,
+  >(object: I): SIPOutboundConfig_HeadersToAttributesEntry {
     const message = createBaseSIPOutboundConfig_HeadersToAttributesEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -5882,10 +6764,17 @@ export const SIPOutboundConfig_HeadersToAttributesEntry: MessageFns<
   },
 };
 
-messageTypeRegistry.set(SIPOutboundConfig_HeadersToAttributesEntry.$type, SIPOutboundConfig_HeadersToAttributesEntry);
+messageTypeRegistry.set(
+  SIPOutboundConfig_HeadersToAttributesEntry.$type,
+  SIPOutboundConfig_HeadersToAttributesEntry,
+);
 
 function createBaseSIPOutboundConfig_AttributesToHeadersEntry(): SIPOutboundConfig_AttributesToHeadersEntry {
-  return { $type: "livekit.SIPOutboundConfig.AttributesToHeadersEntry", key: "", value: "" };
+  return {
+    $type: "livekit.SIPOutboundConfig.AttributesToHeadersEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const SIPOutboundConfig_AttributesToHeadersEntry: MessageFns<
@@ -5894,7 +6783,10 @@ export const SIPOutboundConfig_AttributesToHeadersEntry: MessageFns<
 > = {
   $type: "livekit.SIPOutboundConfig.AttributesToHeadersEntry" as const,
 
-  encode(message: SIPOutboundConfig_AttributesToHeadersEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPOutboundConfig_AttributesToHeadersEntry,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -5904,8 +6796,12 @@ export const SIPOutboundConfig_AttributesToHeadersEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPOutboundConfig_AttributesToHeadersEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPOutboundConfig_AttributesToHeadersEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPOutboundConfig_AttributesToHeadersEntry();
     while (reader.pos < end) {
@@ -5955,14 +6851,16 @@ export const SIPOutboundConfig_AttributesToHeadersEntry: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPOutboundConfig_AttributesToHeadersEntry>, I>>(
-    base?: I,
-  ): SIPOutboundConfig_AttributesToHeadersEntry {
-    return SIPOutboundConfig_AttributesToHeadersEntry.fromPartial(base ?? ({} as any));
+  create<
+    I extends Exact<DeepPartial<SIPOutboundConfig_AttributesToHeadersEntry>, I>,
+  >(base?: I): SIPOutboundConfig_AttributesToHeadersEntry {
+    return SIPOutboundConfig_AttributesToHeadersEntry.fromPartial(
+      base ?? ({} as any),
+    );
   },
-  fromPartial<I extends Exact<DeepPartial<SIPOutboundConfig_AttributesToHeadersEntry>, I>>(
-    object: I,
-  ): SIPOutboundConfig_AttributesToHeadersEntry {
+  fromPartial<
+    I extends Exact<DeepPartial<SIPOutboundConfig_AttributesToHeadersEntry>, I>,
+  >(object: I): SIPOutboundConfig_AttributesToHeadersEntry {
     const message = createBaseSIPOutboundConfig_AttributesToHeadersEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -5970,7 +6868,10 @@ export const SIPOutboundConfig_AttributesToHeadersEntry: MessageFns<
   },
 };
 
-messageTypeRegistry.set(SIPOutboundConfig_AttributesToHeadersEntry.$type, SIPOutboundConfig_AttributesToHeadersEntry);
+messageTypeRegistry.set(
+  SIPOutboundConfig_AttributesToHeadersEntry.$type,
+  SIPOutboundConfig_AttributesToHeadersEntry,
+);
 
 function createBaseCreateSIPParticipantRequest(): CreateSIPParticipantRequest {
   return {
@@ -6004,7 +6905,10 @@ export const CreateSIPParticipantRequest: MessageFns<
 > = {
   $type: "livekit.CreateSIPParticipantRequest" as const,
 
-  encode(message: CreateSIPParticipantRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: CreateSIPParticipantRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.sipTrunkId !== "") {
       writer.uint32(10).string(message.sipTrunkId);
     }
@@ -6030,11 +6934,15 @@ export const CreateSIPParticipantRequest: MessageFns<
       writer.uint32(66).string(message.participantMetadata);
     }
     Object.entries(message.participantAttributes).forEach(([key, value]) => {
-      CreateSIPParticipantRequest_ParticipantAttributesEntry.encode({
-        $type: "livekit.CreateSIPParticipantRequest.ParticipantAttributesEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(74).fork()).join();
+      CreateSIPParticipantRequest_ParticipantAttributesEntry.encode(
+        {
+          $type:
+            "livekit.CreateSIPParticipantRequest.ParticipantAttributesEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(74).fork(),
+      ).join();
     });
     if (message.dtmf !== "") {
       writer.uint32(42).string(message.dtmf);
@@ -6049,11 +6957,14 @@ export const CreateSIPParticipantRequest: MessageFns<
       writer.uint32(80).bool(message.hidePhoneNumber);
     }
     Object.entries(message.headers).forEach(([key, value]) => {
-      CreateSIPParticipantRequest_HeadersEntry.encode({
-        $type: "livekit.CreateSIPParticipantRequest.HeadersEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(130).fork()).join();
+      CreateSIPParticipantRequest_HeadersEntry.encode(
+        {
+          $type: "livekit.CreateSIPParticipantRequest.HeadersEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(130).fork(),
+      ).join();
     });
     if (message.includeHeaders !== 0) {
       writer.uint32(136).int32(message.includeHeaders);
@@ -6076,8 +6987,12 @@ export const CreateSIPParticipantRequest: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): CreateSIPParticipantRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): CreateSIPParticipantRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateSIPParticipantRequest();
     while (reader.pos < end) {
@@ -6152,7 +7067,11 @@ export const CreateSIPParticipantRequest: MessageFns<
             break;
           }
 
-          const entry9 = CreateSIPParticipantRequest_ParticipantAttributesEntry.decode(reader, reader.uint32());
+          const entry9 =
+            CreateSIPParticipantRequest_ParticipantAttributesEntry.decode(
+              reader,
+              reader.uint32(),
+            );
           if (entry9.value !== undefined) {
             message.participantAttributes[entry9.key] = entry9.value;
           }
@@ -6195,7 +7114,10 @@ export const CreateSIPParticipantRequest: MessageFns<
             break;
           }
 
-          const entry16 = CreateSIPParticipantRequest_HeadersEntry.decode(reader, reader.uint32());
+          const entry16 = CreateSIPParticipantRequest_HeadersEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry16.value !== undefined) {
             message.headers[entry16.key] = entry16.value;
           }
@@ -6261,36 +7183,75 @@ export const CreateSIPParticipantRequest: MessageFns<
   fromJSON(object: any): CreateSIPParticipantRequest {
     return {
       $type: CreateSIPParticipantRequest.$type,
-      sipTrunkId: isSet(object.sipTrunkId) ? globalThis.String(object.sipTrunkId) : "",
-      trunk: isSet(object.trunk) ? SIPOutboundConfig.fromJSON(object.trunk) : undefined,
-      sipCallTo: isSet(object.sipCallTo) ? globalThis.String(object.sipCallTo) : "",
-      sipNumber: isSet(object.sipNumber) ? globalThis.String(object.sipNumber) : "",
-      roomName: isSet(object.roomName) ? globalThis.String(object.roomName) : "",
-      participantIdentity: isSet(object.participantIdentity) ? globalThis.String(object.participantIdentity) : "",
-      participantName: isSet(object.participantName) ? globalThis.String(object.participantName) : "",
-      participantMetadata: isSet(object.participantMetadata) ? globalThis.String(object.participantMetadata) : "",
+      sipTrunkId: isSet(object.sipTrunkId)
+        ? globalThis.String(object.sipTrunkId)
+        : "",
+      trunk: isSet(object.trunk)
+        ? SIPOutboundConfig.fromJSON(object.trunk)
+        : undefined,
+      sipCallTo: isSet(object.sipCallTo)
+        ? globalThis.String(object.sipCallTo)
+        : "",
+      sipNumber: isSet(object.sipNumber)
+        ? globalThis.String(object.sipNumber)
+        : "",
+      roomName: isSet(object.roomName)
+        ? globalThis.String(object.roomName)
+        : "",
+      participantIdentity: isSet(object.participantIdentity)
+        ? globalThis.String(object.participantIdentity)
+        : "",
+      participantName: isSet(object.participantName)
+        ? globalThis.String(object.participantName)
+        : "",
+      participantMetadata: isSet(object.participantMetadata)
+        ? globalThis.String(object.participantMetadata)
+        : "",
       participantAttributes: isObject(object.participantAttributes)
-        ? Object.entries(object.participantAttributes).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.participantAttributes).reduce<{
+            [key: string]: string;
+          }>((acc, [key, value]) => {
+            acc[key] = String(value);
+            return acc;
+          }, {})
         : {},
       dtmf: isSet(object.dtmf) ? globalThis.String(object.dtmf) : "",
-      playRingtone: isSet(object.playRingtone) ? globalThis.Boolean(object.playRingtone) : false,
-      playDialtone: isSet(object.playDialtone) ? globalThis.Boolean(object.playDialtone) : false,
-      hidePhoneNumber: isSet(object.hidePhoneNumber) ? globalThis.Boolean(object.hidePhoneNumber) : false,
+      playRingtone: isSet(object.playRingtone)
+        ? globalThis.Boolean(object.playRingtone)
+        : false,
+      playDialtone: isSet(object.playDialtone)
+        ? globalThis.Boolean(object.playDialtone)
+        : false,
+      hidePhoneNumber: isSet(object.hidePhoneNumber)
+        ? globalThis.Boolean(object.hidePhoneNumber)
+        : false,
       headers: isObject(object.headers)
-        ? Object.entries(object.headers).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.headers).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {},
+          )
         : {},
-      includeHeaders: isSet(object.includeHeaders) ? sIPHeaderOptionsFromJSON(object.includeHeaders) : 0,
-      ringingTimeout: isSet(object.ringingTimeout) ? Duration.fromJSON(object.ringingTimeout) : undefined,
-      maxCallDuration: isSet(object.maxCallDuration) ? Duration.fromJSON(object.maxCallDuration) : undefined,
-      krispEnabled: isSet(object.krispEnabled) ? globalThis.Boolean(object.krispEnabled) : false,
-      mediaEncryption: isSet(object.mediaEncryption) ? sIPMediaEncryptionFromJSON(object.mediaEncryption) : 0,
-      waitUntilAnswered: isSet(object.waitUntilAnswered) ? globalThis.Boolean(object.waitUntilAnswered) : false,
+      includeHeaders: isSet(object.includeHeaders)
+        ? sIPHeaderOptionsFromJSON(object.includeHeaders)
+        : 0,
+      ringingTimeout: isSet(object.ringingTimeout)
+        ? Duration.fromJSON(object.ringingTimeout)
+        : undefined,
+      maxCallDuration: isSet(object.maxCallDuration)
+        ? Duration.fromJSON(object.maxCallDuration)
+        : undefined,
+      krispEnabled: isSet(object.krispEnabled)
+        ? globalThis.Boolean(object.krispEnabled)
+        : false,
+      mediaEncryption: isSet(object.mediaEncryption)
+        ? sIPMediaEncryptionFromJSON(object.mediaEncryption)
+        : 0,
+      waitUntilAnswered: isSet(object.waitUntilAnswered)
+        ? globalThis.Boolean(object.waitUntilAnswered)
+        : false,
     };
   },
 
@@ -6371,24 +7332,29 @@ export const CreateSIPParticipantRequest: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateSIPParticipantRequest>, I>>(base?: I): CreateSIPParticipantRequest {
+  create<I extends Exact<DeepPartial<CreateSIPParticipantRequest>, I>>(
+    base?: I,
+  ): CreateSIPParticipantRequest {
     return CreateSIPParticipantRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<CreateSIPParticipantRequest>, I>>(object: I): CreateSIPParticipantRequest {
+  fromPartial<I extends Exact<DeepPartial<CreateSIPParticipantRequest>, I>>(
+    object: I,
+  ): CreateSIPParticipantRequest {
     const message = createBaseCreateSIPParticipantRequest();
     message.sipTrunkId = object.sipTrunkId ?? "";
-    message.trunk = (object.trunk !== undefined && object.trunk !== null)
-      ? SIPOutboundConfig.fromPartial(object.trunk)
-      : undefined;
+    message.trunk =
+      object.trunk !== undefined && object.trunk !== null
+        ? SIPOutboundConfig.fromPartial(object.trunk)
+        : undefined;
     message.sipCallTo = object.sipCallTo ?? "";
     message.sipNumber = object.sipNumber ?? "";
     message.roomName = object.roomName ?? "";
     message.participantIdentity = object.participantIdentity ?? "";
     message.participantName = object.participantName ?? "";
     message.participantMetadata = object.participantMetadata ?? "";
-    message.participantAttributes = Object.entries(object.participantAttributes ?? {}).reduce<
-      { [key: string]: string }
-    >((acc, [key, value]) => {
+    message.participantAttributes = Object.entries(
+      object.participantAttributes ?? {},
+    ).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = globalThis.String(value);
       }
@@ -6398,19 +7364,23 @@ export const CreateSIPParticipantRequest: MessageFns<
     message.playRingtone = object.playRingtone ?? false;
     message.playDialtone = object.playDialtone ?? false;
     message.hidePhoneNumber = object.hidePhoneNumber ?? false;
-    message.headers = Object.entries(object.headers ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+    message.headers = Object.entries(object.headers ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
     message.includeHeaders = object.includeHeaders ?? 0;
-    message.ringingTimeout = (object.ringingTimeout !== undefined && object.ringingTimeout !== null)
-      ? Duration.fromPartial(object.ringingTimeout)
-      : undefined;
-    message.maxCallDuration = (object.maxCallDuration !== undefined && object.maxCallDuration !== null)
-      ? Duration.fromPartial(object.maxCallDuration)
-      : undefined;
+    message.ringingTimeout =
+      object.ringingTimeout !== undefined && object.ringingTimeout !== null
+        ? Duration.fromPartial(object.ringingTimeout)
+        : undefined;
+    message.maxCallDuration =
+      object.maxCallDuration !== undefined && object.maxCallDuration !== null
+        ? Duration.fromPartial(object.maxCallDuration)
+        : undefined;
     message.krispEnabled = object.krispEnabled ?? false;
     message.mediaEncryption = object.mediaEncryption ?? 0;
     message.waitUntilAnswered = object.waitUntilAnswered ?? false;
@@ -6418,17 +7388,25 @@ export const CreateSIPParticipantRequest: MessageFns<
   },
 };
 
-messageTypeRegistry.set(CreateSIPParticipantRequest.$type, CreateSIPParticipantRequest);
+messageTypeRegistry.set(
+  CreateSIPParticipantRequest.$type,
+  CreateSIPParticipantRequest,
+);
 
 function createBaseCreateSIPParticipantRequest_ParticipantAttributesEntry(): CreateSIPParticipantRequest_ParticipantAttributesEntry {
-  return { $type: "livekit.CreateSIPParticipantRequest.ParticipantAttributesEntry", key: "", value: "" };
+  return {
+    $type: "livekit.CreateSIPParticipantRequest.ParticipantAttributesEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const CreateSIPParticipantRequest_ParticipantAttributesEntry: MessageFns<
   CreateSIPParticipantRequest_ParticipantAttributesEntry,
   "livekit.CreateSIPParticipantRequest.ParticipantAttributesEntry"
 > = {
-  $type: "livekit.CreateSIPParticipantRequest.ParticipantAttributesEntry" as const,
+  $type:
+    "livekit.CreateSIPParticipantRequest.ParticipantAttributesEntry" as const,
 
   encode(
     message: CreateSIPParticipantRequest_ParticipantAttributesEntry,
@@ -6443,10 +7421,15 @@ export const CreateSIPParticipantRequest_ParticipantAttributesEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): CreateSIPParticipantRequest_ParticipantAttributesEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): CreateSIPParticipantRequest_ParticipantAttributesEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCreateSIPParticipantRequest_ParticipantAttributesEntry();
+    const message =
+      createBaseCreateSIPParticipantRequest_ParticipantAttributesEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -6475,7 +7458,9 @@ export const CreateSIPParticipantRequest_ParticipantAttributesEntry: MessageFns<
     return message;
   },
 
-  fromJSON(object: any): CreateSIPParticipantRequest_ParticipantAttributesEntry {
+  fromJSON(
+    object: any,
+  ): CreateSIPParticipantRequest_ParticipantAttributesEntry {
     return {
       $type: CreateSIPParticipantRequest_ParticipantAttributesEntry.$type,
       key: isSet(object.key) ? globalThis.String(object.key) : "",
@@ -6483,7 +7468,9 @@ export const CreateSIPParticipantRequest_ParticipantAttributesEntry: MessageFns<
     };
   },
 
-  toJSON(message: CreateSIPParticipantRequest_ParticipantAttributesEntry): unknown {
+  toJSON(
+    message: CreateSIPParticipantRequest_ParticipantAttributesEntry,
+  ): unknown {
     const obj: any = {};
     if (message.key !== "") {
       obj.key = message.key;
@@ -6494,15 +7481,24 @@ export const CreateSIPParticipantRequest_ParticipantAttributesEntry: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateSIPParticipantRequest_ParticipantAttributesEntry>, I>>(
-    base?: I,
-  ): CreateSIPParticipantRequest_ParticipantAttributesEntry {
-    return CreateSIPParticipantRequest_ParticipantAttributesEntry.fromPartial(base ?? ({} as any));
+  create<
+    I extends Exact<
+      DeepPartial<CreateSIPParticipantRequest_ParticipantAttributesEntry>,
+      I
+    >,
+  >(base?: I): CreateSIPParticipantRequest_ParticipantAttributesEntry {
+    return CreateSIPParticipantRequest_ParticipantAttributesEntry.fromPartial(
+      base ?? ({} as any),
+    );
   },
-  fromPartial<I extends Exact<DeepPartial<CreateSIPParticipantRequest_ParticipantAttributesEntry>, I>>(
-    object: I,
-  ): CreateSIPParticipantRequest_ParticipantAttributesEntry {
-    const message = createBaseCreateSIPParticipantRequest_ParticipantAttributesEntry();
+  fromPartial<
+    I extends Exact<
+      DeepPartial<CreateSIPParticipantRequest_ParticipantAttributesEntry>,
+      I
+    >,
+  >(object: I): CreateSIPParticipantRequest_ParticipantAttributesEntry {
+    const message =
+      createBaseCreateSIPParticipantRequest_ParticipantAttributesEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
@@ -6515,7 +7511,11 @@ messageTypeRegistry.set(
 );
 
 function createBaseCreateSIPParticipantRequest_HeadersEntry(): CreateSIPParticipantRequest_HeadersEntry {
-  return { $type: "livekit.CreateSIPParticipantRequest.HeadersEntry", key: "", value: "" };
+  return {
+    $type: "livekit.CreateSIPParticipantRequest.HeadersEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const CreateSIPParticipantRequest_HeadersEntry: MessageFns<
@@ -6524,7 +7524,10 @@ export const CreateSIPParticipantRequest_HeadersEntry: MessageFns<
 > = {
   $type: "livekit.CreateSIPParticipantRequest.HeadersEntry" as const,
 
-  encode(message: CreateSIPParticipantRequest_HeadersEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: CreateSIPParticipantRequest_HeadersEntry,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -6534,8 +7537,12 @@ export const CreateSIPParticipantRequest_HeadersEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): CreateSIPParticipantRequest_HeadersEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): CreateSIPParticipantRequest_HeadersEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCreateSIPParticipantRequest_HeadersEntry();
     while (reader.pos < end) {
@@ -6585,14 +7592,16 @@ export const CreateSIPParticipantRequest_HeadersEntry: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateSIPParticipantRequest_HeadersEntry>, I>>(
-    base?: I,
-  ): CreateSIPParticipantRequest_HeadersEntry {
-    return CreateSIPParticipantRequest_HeadersEntry.fromPartial(base ?? ({} as any));
+  create<
+    I extends Exact<DeepPartial<CreateSIPParticipantRequest_HeadersEntry>, I>,
+  >(base?: I): CreateSIPParticipantRequest_HeadersEntry {
+    return CreateSIPParticipantRequest_HeadersEntry.fromPartial(
+      base ?? ({} as any),
+    );
   },
-  fromPartial<I extends Exact<DeepPartial<CreateSIPParticipantRequest_HeadersEntry>, I>>(
-    object: I,
-  ): CreateSIPParticipantRequest_HeadersEntry {
+  fromPartial<
+    I extends Exact<DeepPartial<CreateSIPParticipantRequest_HeadersEntry>, I>,
+  >(object: I): CreateSIPParticipantRequest_HeadersEntry {
     const message = createBaseCreateSIPParticipantRequest_HeadersEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -6600,7 +7609,10 @@ export const CreateSIPParticipantRequest_HeadersEntry: MessageFns<
   },
 };
 
-messageTypeRegistry.set(CreateSIPParticipantRequest_HeadersEntry.$type, CreateSIPParticipantRequest_HeadersEntry);
+messageTypeRegistry.set(
+  CreateSIPParticipantRequest_HeadersEntry.$type,
+  CreateSIPParticipantRequest_HeadersEntry,
+);
 
 function createBaseSIPParticipantInfo(): SIPParticipantInfo {
   return {
@@ -6612,10 +7624,16 @@ function createBaseSIPParticipantInfo(): SIPParticipantInfo {
   };
 }
 
-export const SIPParticipantInfo: MessageFns<SIPParticipantInfo, "livekit.SIPParticipantInfo"> = {
+export const SIPParticipantInfo: MessageFns<
+  SIPParticipantInfo,
+  "livekit.SIPParticipantInfo"
+> = {
   $type: "livekit.SIPParticipantInfo" as const,
 
-  encode(message: SIPParticipantInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPParticipantInfo,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.participantId !== "") {
       writer.uint32(10).string(message.participantId);
     }
@@ -6631,8 +7649,12 @@ export const SIPParticipantInfo: MessageFns<SIPParticipantInfo, "livekit.SIPPart
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPParticipantInfo {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPParticipantInfo {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPParticipantInfo();
     while (reader.pos < end) {
@@ -6682,10 +7704,18 @@ export const SIPParticipantInfo: MessageFns<SIPParticipantInfo, "livekit.SIPPart
   fromJSON(object: any): SIPParticipantInfo {
     return {
       $type: SIPParticipantInfo.$type,
-      participantId: isSet(object.participantId) ? globalThis.String(object.participantId) : "",
-      participantIdentity: isSet(object.participantIdentity) ? globalThis.String(object.participantIdentity) : "",
-      roomName: isSet(object.roomName) ? globalThis.String(object.roomName) : "",
-      sipCallId: isSet(object.sipCallId) ? globalThis.String(object.sipCallId) : "",
+      participantId: isSet(object.participantId)
+        ? globalThis.String(object.participantId)
+        : "",
+      participantIdentity: isSet(object.participantIdentity)
+        ? globalThis.String(object.participantIdentity)
+        : "",
+      roomName: isSet(object.roomName)
+        ? globalThis.String(object.roomName)
+        : "",
+      sipCallId: isSet(object.sipCallId)
+        ? globalThis.String(object.sipCallId)
+        : "",
     };
   },
 
@@ -6706,10 +7736,14 @@ export const SIPParticipantInfo: MessageFns<SIPParticipantInfo, "livekit.SIPPart
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPParticipantInfo>, I>>(base?: I): SIPParticipantInfo {
+  create<I extends Exact<DeepPartial<SIPParticipantInfo>, I>>(
+    base?: I,
+  ): SIPParticipantInfo {
     return SIPParticipantInfo.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPParticipantInfo>, I>>(object: I): SIPParticipantInfo {
+  fromPartial<I extends Exact<DeepPartial<SIPParticipantInfo>, I>>(
+    object: I,
+  ): SIPParticipantInfo {
     const message = createBaseSIPParticipantInfo();
     message.participantId = object.participantId ?? "";
     message.participantIdentity = object.participantIdentity ?? "";
@@ -6738,7 +7772,10 @@ export const TransferSIPParticipantRequest: MessageFns<
 > = {
   $type: "livekit.TransferSIPParticipantRequest" as const,
 
-  encode(message: TransferSIPParticipantRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: TransferSIPParticipantRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.participantIdentity !== "") {
       writer.uint32(10).string(message.participantIdentity);
     }
@@ -6752,17 +7789,24 @@ export const TransferSIPParticipantRequest: MessageFns<
       writer.uint32(32).bool(message.playDialtone);
     }
     Object.entries(message.headers).forEach(([key, value]) => {
-      TransferSIPParticipantRequest_HeadersEntry.encode({
-        $type: "livekit.TransferSIPParticipantRequest.HeadersEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(42).fork()).join();
+      TransferSIPParticipantRequest_HeadersEntry.encode(
+        {
+          $type: "livekit.TransferSIPParticipantRequest.HeadersEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(42).fork(),
+      ).join();
     });
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): TransferSIPParticipantRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): TransferSIPParticipantRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTransferSIPParticipantRequest();
     while (reader.pos < end) {
@@ -6805,7 +7849,10 @@ export const TransferSIPParticipantRequest: MessageFns<
             break;
           }
 
-          const entry5 = TransferSIPParticipantRequest_HeadersEntry.decode(reader, reader.uint32());
+          const entry5 = TransferSIPParticipantRequest_HeadersEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry5.value !== undefined) {
             message.headers[entry5.key] = entry5.value;
           }
@@ -6823,15 +7870,26 @@ export const TransferSIPParticipantRequest: MessageFns<
   fromJSON(object: any): TransferSIPParticipantRequest {
     return {
       $type: TransferSIPParticipantRequest.$type,
-      participantIdentity: isSet(object.participantIdentity) ? globalThis.String(object.participantIdentity) : "",
-      roomName: isSet(object.roomName) ? globalThis.String(object.roomName) : "",
-      transferTo: isSet(object.transferTo) ? globalThis.String(object.transferTo) : "",
-      playDialtone: isSet(object.playDialtone) ? globalThis.Boolean(object.playDialtone) : false,
+      participantIdentity: isSet(object.participantIdentity)
+        ? globalThis.String(object.participantIdentity)
+        : "",
+      roomName: isSet(object.roomName)
+        ? globalThis.String(object.roomName)
+        : "",
+      transferTo: isSet(object.transferTo)
+        ? globalThis.String(object.transferTo)
+        : "",
+      playDialtone: isSet(object.playDialtone)
+        ? globalThis.Boolean(object.playDialtone)
+        : false,
       headers: isObject(object.headers)
-        ? Object.entries(object.headers).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.headers).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {},
+          )
         : {},
     };
   },
@@ -6862,7 +7920,9 @@ export const TransferSIPParticipantRequest: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<TransferSIPParticipantRequest>, I>>(base?: I): TransferSIPParticipantRequest {
+  create<I extends Exact<DeepPartial<TransferSIPParticipantRequest>, I>>(
+    base?: I,
+  ): TransferSIPParticipantRequest {
     return TransferSIPParticipantRequest.fromPartial(base ?? ({} as any));
   },
   fromPartial<I extends Exact<DeepPartial<TransferSIPParticipantRequest>, I>>(
@@ -6873,7 +7933,9 @@ export const TransferSIPParticipantRequest: MessageFns<
     message.roomName = object.roomName ?? "";
     message.transferTo = object.transferTo ?? "";
     message.playDialtone = object.playDialtone ?? false;
-    message.headers = Object.entries(object.headers ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+    message.headers = Object.entries(object.headers ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = globalThis.String(value);
       }
@@ -6883,10 +7945,17 @@ export const TransferSIPParticipantRequest: MessageFns<
   },
 };
 
-messageTypeRegistry.set(TransferSIPParticipantRequest.$type, TransferSIPParticipantRequest);
+messageTypeRegistry.set(
+  TransferSIPParticipantRequest.$type,
+  TransferSIPParticipantRequest,
+);
 
 function createBaseTransferSIPParticipantRequest_HeadersEntry(): TransferSIPParticipantRequest_HeadersEntry {
-  return { $type: "livekit.TransferSIPParticipantRequest.HeadersEntry", key: "", value: "" };
+  return {
+    $type: "livekit.TransferSIPParticipantRequest.HeadersEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const TransferSIPParticipantRequest_HeadersEntry: MessageFns<
@@ -6895,7 +7964,10 @@ export const TransferSIPParticipantRequest_HeadersEntry: MessageFns<
 > = {
   $type: "livekit.TransferSIPParticipantRequest.HeadersEntry" as const,
 
-  encode(message: TransferSIPParticipantRequest_HeadersEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: TransferSIPParticipantRequest_HeadersEntry,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -6905,8 +7977,12 @@ export const TransferSIPParticipantRequest_HeadersEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): TransferSIPParticipantRequest_HeadersEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): TransferSIPParticipantRequest_HeadersEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTransferSIPParticipantRequest_HeadersEntry();
     while (reader.pos < end) {
@@ -6956,14 +8032,16 @@ export const TransferSIPParticipantRequest_HeadersEntry: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<TransferSIPParticipantRequest_HeadersEntry>, I>>(
-    base?: I,
-  ): TransferSIPParticipantRequest_HeadersEntry {
-    return TransferSIPParticipantRequest_HeadersEntry.fromPartial(base ?? ({} as any));
+  create<
+    I extends Exact<DeepPartial<TransferSIPParticipantRequest_HeadersEntry>, I>,
+  >(base?: I): TransferSIPParticipantRequest_HeadersEntry {
+    return TransferSIPParticipantRequest_HeadersEntry.fromPartial(
+      base ?? ({} as any),
+    );
   },
-  fromPartial<I extends Exact<DeepPartial<TransferSIPParticipantRequest_HeadersEntry>, I>>(
-    object: I,
-  ): TransferSIPParticipantRequest_HeadersEntry {
+  fromPartial<
+    I extends Exact<DeepPartial<TransferSIPParticipantRequest_HeadersEntry>, I>,
+  >(object: I): TransferSIPParticipantRequest_HeadersEntry {
     const message = createBaseTransferSIPParticipantRequest_HeadersEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -6971,7 +8049,10 @@ export const TransferSIPParticipantRequest_HeadersEntry: MessageFns<
   },
 };
 
-messageTypeRegistry.set(TransferSIPParticipantRequest_HeadersEntry.$type, TransferSIPParticipantRequest_HeadersEntry);
+messageTypeRegistry.set(
+  TransferSIPParticipantRequest_HeadersEntry.$type,
+  TransferSIPParticipantRequest_HeadersEntry,
+);
 
 function createBaseSIPCallInfo(): SIPCallInfo {
   return {
@@ -7006,7 +8087,10 @@ function createBaseSIPCallInfo(): SIPCallInfo {
 export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
   $type: "livekit.SIPCallInfo" as const,
 
-  encode(message: SIPCallInfo, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPCallInfo,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.callId !== "") {
       writer.uint32(10).string(message.callId);
     }
@@ -7029,11 +8113,14 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
       writer.uint32(42).string(message.participantIdentity);
     }
     Object.entries(message.participantAttributes).forEach(([key, value]) => {
-      SIPCallInfo_ParticipantAttributesEntry.encode({
-        $type: "livekit.SIPCallInfo.ParticipantAttributesEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(146).fork()).join();
+      SIPCallInfo_ParticipantAttributesEntry.encode(
+        {
+          $type: "livekit.SIPCallInfo.ParticipantAttributesEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(146).fork(),
+      ).join();
     });
     if (message.fromUri !== undefined) {
       SIPUri.encode(message.fromUri, writer.uint32(50).fork()).join();
@@ -7043,19 +8130,25 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
     }
     if (message.createdAt !== 0n) {
       if (BigInt.asIntN(64, message.createdAt) !== message.createdAt) {
-        throw new globalThis.Error("value provided for field message.createdAt of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.createdAt of type int64 too large",
+        );
       }
       writer.uint32(72).int64(message.createdAt);
     }
     if (message.startedAt !== 0n) {
       if (BigInt.asIntN(64, message.startedAt) !== message.startedAt) {
-        throw new globalThis.Error("value provided for field message.startedAt of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.startedAt of type int64 too large",
+        );
       }
       writer.uint32(80).int64(message.startedAt);
     }
     if (message.endedAt !== 0n) {
       if (BigInt.asIntN(64, message.endedAt) !== message.endedAt) {
-        throw new globalThis.Error("value provided for field message.endedAt of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.endedAt of type int64 too large",
+        );
       }
       writer.uint32(88).int64(message.endedAt);
     }
@@ -7072,19 +8165,25 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
     }
     if (message.createdAtNs !== 0n) {
       if (BigInt.asIntN(64, message.createdAtNs) !== message.createdAtNs) {
-        throw new globalThis.Error("value provided for field message.createdAtNs of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.createdAtNs of type int64 too large",
+        );
       }
       writer.uint32(176).int64(message.createdAtNs);
     }
     if (message.startedAtNs !== 0n) {
       if (BigInt.asIntN(64, message.startedAtNs) !== message.startedAtNs) {
-        throw new globalThis.Error("value provided for field message.startedAtNs of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.startedAtNs of type int64 too large",
+        );
       }
       writer.uint32(184).int64(message.startedAtNs);
     }
     if (message.endedAtNs !== 0n) {
       if (BigInt.asIntN(64, message.endedAtNs) !== message.endedAtNs) {
-        throw new globalThis.Error("value provided for field message.endedAtNs of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.endedAtNs of type int64 too large",
+        );
       }
       writer.uint32(192).int64(message.endedAtNs);
     }
@@ -7095,7 +8194,10 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
       writer.uint32(106).string(message.error);
     }
     if (message.callStatusCode !== undefined) {
-      SIPStatus.encode(message.callStatusCode, writer.uint32(154).fork()).join();
+      SIPStatus.encode(
+        message.callStatusCode,
+        writer.uint32(154).fork(),
+      ).join();
     }
     if (message.audioCodec !== "") {
       writer.uint32(162).string(message.audioCodec);
@@ -7107,7 +8209,8 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): SIPCallInfo {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPCallInfo();
     while (reader.pos < end) {
@@ -7174,7 +8277,10 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
             break;
           }
 
-          const entry18 = SIPCallInfo_ParticipantAttributesEntry.decode(reader, reader.uint32());
+          const entry18 = SIPCallInfo_ParticipantAttributesEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry18.value !== undefined) {
             message.participantAttributes[entry18.key] = entry18.value;
           }
@@ -7332,18 +8438,28 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
       $type: SIPCallInfo.$type,
       callId: isSet(object.callId) ? globalThis.String(object.callId) : "",
       trunkId: isSet(object.trunkId) ? globalThis.String(object.trunkId) : "",
-      dispatchRuleId: isSet(object.dispatchRuleId) ? globalThis.String(object.dispatchRuleId) : "",
+      dispatchRuleId: isSet(object.dispatchRuleId)
+        ? globalThis.String(object.dispatchRuleId)
+        : "",
       region: isSet(object.region) ? globalThis.String(object.region) : "",
-      roomName: isSet(object.roomName) ? globalThis.String(object.roomName) : "",
+      roomName: isSet(object.roomName)
+        ? globalThis.String(object.roomName)
+        : "",
       roomId: isSet(object.roomId) ? globalThis.String(object.roomId) : "",
-      participantIdentity: isSet(object.participantIdentity) ? globalThis.String(object.participantIdentity) : "",
+      participantIdentity: isSet(object.participantIdentity)
+        ? globalThis.String(object.participantIdentity)
+        : "",
       participantAttributes: isObject(object.participantAttributes)
-        ? Object.entries(object.participantAttributes).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.participantAttributes).reduce<{
+            [key: string]: string;
+          }>((acc, [key, value]) => {
+            acc[key] = String(value);
+            return acc;
+          }, {})
         : {},
-      fromUri: isSet(object.fromUri) ? SIPUri.fromJSON(object.fromUri) : undefined,
+      fromUri: isSet(object.fromUri)
+        ? SIPUri.fromJSON(object.fromUri)
+        : undefined,
       toUri: isSet(object.toUri) ? SIPUri.fromJSON(object.toUri) : undefined,
       createdAt: isSet(object.createdAt) ? BigInt(object.createdAt) : 0n,
       startedAt: isSet(object.startedAt) ? BigInt(object.startedAt) : 0n,
@@ -7351,16 +8467,28 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
       enabledFeatures: globalThis.Array.isArray(object?.enabledFeatures)
         ? object.enabledFeatures.map((e: any) => sIPFeatureFromJSON(e))
         : [],
-      callDirection: isSet(object.callDirection) ? sIPCallDirectionFromJSON(object.callDirection) : 0,
-      callStatus: isSet(object.callStatus) ? sIPCallStatusFromJSON(object.callStatus) : 0,
+      callDirection: isSet(object.callDirection)
+        ? sIPCallDirectionFromJSON(object.callDirection)
+        : 0,
+      callStatus: isSet(object.callStatus)
+        ? sIPCallStatusFromJSON(object.callStatus)
+        : 0,
       createdAtNs: isSet(object.createdAtNs) ? BigInt(object.createdAtNs) : 0n,
       startedAtNs: isSet(object.startedAtNs) ? BigInt(object.startedAtNs) : 0n,
       endedAtNs: isSet(object.endedAtNs) ? BigInt(object.endedAtNs) : 0n,
-      disconnectReason: isSet(object.disconnectReason) ? disconnectReasonFromJSON(object.disconnectReason) : 0,
+      disconnectReason: isSet(object.disconnectReason)
+        ? disconnectReasonFromJSON(object.disconnectReason)
+        : 0,
       error: isSet(object.error) ? globalThis.String(object.error) : "",
-      callStatusCode: isSet(object.callStatusCode) ? SIPStatus.fromJSON(object.callStatusCode) : undefined,
-      audioCodec: isSet(object.audioCodec) ? globalThis.String(object.audioCodec) : "",
-      mediaEncryption: isSet(object.mediaEncryption) ? globalThis.String(object.mediaEncryption) : "",
+      callStatusCode: isSet(object.callStatusCode)
+        ? SIPStatus.fromJSON(object.callStatusCode)
+        : undefined,
+      audioCodec: isSet(object.audioCodec)
+        ? globalThis.String(object.audioCodec)
+        : "",
+      mediaEncryption: isSet(object.mediaEncryption)
+        ? globalThis.String(object.mediaEncryption)
+        : "",
     };
   },
 
@@ -7412,7 +8540,9 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
       obj.endedAt = message.endedAt.toString();
     }
     if (message.enabledFeatures?.length) {
-      obj.enabledFeatures = message.enabledFeatures.map((e) => sIPFeatureToJSON(e));
+      obj.enabledFeatures = message.enabledFeatures.map((e) =>
+        sIPFeatureToJSON(e),
+      );
     }
     if (message.callDirection !== 0) {
       obj.callDirection = sIPCallDirectionToJSON(message.callDirection);
@@ -7450,7 +8580,9 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
   create<I extends Exact<DeepPartial<SIPCallInfo>, I>>(base?: I): SIPCallInfo {
     return SIPCallInfo.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SIPCallInfo>, I>>(object: I): SIPCallInfo {
+  fromPartial<I extends Exact<DeepPartial<SIPCallInfo>, I>>(
+    object: I,
+  ): SIPCallInfo {
     const message = createBaseSIPCallInfo();
     message.callId = object.callId ?? "";
     message.trunkId = object.trunkId ?? "";
@@ -7459,20 +8591,22 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
     message.roomName = object.roomName ?? "";
     message.roomId = object.roomId ?? "";
     message.participantIdentity = object.participantIdentity ?? "";
-    message.participantAttributes = Object.entries(object.participantAttributes ?? {}).reduce<
-      { [key: string]: string }
-    >((acc, [key, value]) => {
+    message.participantAttributes = Object.entries(
+      object.participantAttributes ?? {},
+    ).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
-    message.fromUri = (object.fromUri !== undefined && object.fromUri !== null)
-      ? SIPUri.fromPartial(object.fromUri)
-      : undefined;
-    message.toUri = (object.toUri !== undefined && object.toUri !== null)
-      ? SIPUri.fromPartial(object.toUri)
-      : undefined;
+    message.fromUri =
+      object.fromUri !== undefined && object.fromUri !== null
+        ? SIPUri.fromPartial(object.fromUri)
+        : undefined;
+    message.toUri =
+      object.toUri !== undefined && object.toUri !== null
+        ? SIPUri.fromPartial(object.toUri)
+        : undefined;
     message.createdAt = object.createdAt ?? 0n;
     message.startedAt = object.startedAt ?? 0n;
     message.endedAt = object.endedAt ?? 0n;
@@ -7484,9 +8618,10 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
     message.endedAtNs = object.endedAtNs ?? 0n;
     message.disconnectReason = object.disconnectReason ?? 0;
     message.error = object.error ?? "";
-    message.callStatusCode = (object.callStatusCode !== undefined && object.callStatusCode !== null)
-      ? SIPStatus.fromPartial(object.callStatusCode)
-      : undefined;
+    message.callStatusCode =
+      object.callStatusCode !== undefined && object.callStatusCode !== null
+        ? SIPStatus.fromPartial(object.callStatusCode)
+        : undefined;
     message.audioCodec = object.audioCodec ?? "";
     message.mediaEncryption = object.mediaEncryption ?? "";
     return message;
@@ -7496,7 +8631,11 @@ export const SIPCallInfo: MessageFns<SIPCallInfo, "livekit.SIPCallInfo"> = {
 messageTypeRegistry.set(SIPCallInfo.$type, SIPCallInfo);
 
 function createBaseSIPCallInfo_ParticipantAttributesEntry(): SIPCallInfo_ParticipantAttributesEntry {
-  return { $type: "livekit.SIPCallInfo.ParticipantAttributesEntry", key: "", value: "" };
+  return {
+    $type: "livekit.SIPCallInfo.ParticipantAttributesEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const SIPCallInfo_ParticipantAttributesEntry: MessageFns<
@@ -7505,7 +8644,10 @@ export const SIPCallInfo_ParticipantAttributesEntry: MessageFns<
 > = {
   $type: "livekit.SIPCallInfo.ParticipantAttributesEntry" as const,
 
-  encode(message: SIPCallInfo_ParticipantAttributesEntry, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPCallInfo_ParticipantAttributesEntry,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -7515,8 +8657,12 @@ export const SIPCallInfo_ParticipantAttributesEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SIPCallInfo_ParticipantAttributesEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SIPCallInfo_ParticipantAttributesEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPCallInfo_ParticipantAttributesEntry();
     while (reader.pos < end) {
@@ -7566,14 +8712,16 @@ export const SIPCallInfo_ParticipantAttributesEntry: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SIPCallInfo_ParticipantAttributesEntry>, I>>(
-    base?: I,
-  ): SIPCallInfo_ParticipantAttributesEntry {
-    return SIPCallInfo_ParticipantAttributesEntry.fromPartial(base ?? ({} as any));
+  create<
+    I extends Exact<DeepPartial<SIPCallInfo_ParticipantAttributesEntry>, I>,
+  >(base?: I): SIPCallInfo_ParticipantAttributesEntry {
+    return SIPCallInfo_ParticipantAttributesEntry.fromPartial(
+      base ?? ({} as any),
+    );
   },
-  fromPartial<I extends Exact<DeepPartial<SIPCallInfo_ParticipantAttributesEntry>, I>>(
-    object: I,
-  ): SIPCallInfo_ParticipantAttributesEntry {
+  fromPartial<
+    I extends Exact<DeepPartial<SIPCallInfo_ParticipantAttributesEntry>, I>,
+  >(object: I): SIPCallInfo_ParticipantAttributesEntry {
     const message = createBaseSIPCallInfo_ParticipantAttributesEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -7581,16 +8729,29 @@ export const SIPCallInfo_ParticipantAttributesEntry: MessageFns<
   },
 };
 
-messageTypeRegistry.set(SIPCallInfo_ParticipantAttributesEntry.$type, SIPCallInfo_ParticipantAttributesEntry);
+messageTypeRegistry.set(
+  SIPCallInfo_ParticipantAttributesEntry.$type,
+  SIPCallInfo_ParticipantAttributesEntry,
+);
 
 function createBaseSIPUri(): SIPUri {
-  return { $type: "livekit.SIPUri", user: "", host: "", ip: "", port: 0, transport: 0 };
+  return {
+    $type: "livekit.SIPUri",
+    user: "",
+    host: "",
+    ip: "",
+    port: 0,
+    transport: 0,
+  };
 }
 
 export const SIPUri: MessageFns<SIPUri, "livekit.SIPUri"> = {
   $type: "livekit.SIPUri" as const,
 
-  encode(message: SIPUri, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SIPUri,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.user !== "") {
       writer.uint32(10).string(message.user);
     }
@@ -7610,7 +8771,8 @@ export const SIPUri: MessageFns<SIPUri, "livekit.SIPUri"> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): SIPUri {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSIPUri();
     while (reader.pos < end) {
@@ -7672,7 +8834,9 @@ export const SIPUri: MessageFns<SIPUri, "livekit.SIPUri"> = {
       host: isSet(object.host) ? globalThis.String(object.host) : "",
       ip: isSet(object.ip) ? globalThis.String(object.ip) : "",
       port: isSet(object.port) ? globalThis.Number(object.port) : 0,
-      transport: isSet(object.transport) ? sIPTransportFromJSON(object.transport) : 0,
+      transport: isSet(object.transport)
+        ? sIPTransportFromJSON(object.transport)
+        : 0,
     };
   },
 
@@ -7726,4085 +8890,4704 @@ export interface ProtoMetadata {
   options?: {
     options?: { [key: string]: any };
     services?: {
-      [key: string]: { options?: { [key: string]: any }; methods?: { [key: string]: { [key: string]: any } } };
+      [key: string]: {
+        options?: { [key: string]: any };
+        methods?: { [key: string]: { [key: string]: any } };
+      };
     };
     messages?: { [key: string]: ProtoMetaMessageOptions };
-    enums?: { [key: string]: { options?: { [key: string]: any }; values?: { [key: string]: { [key: string]: any } } } };
+    enums?: {
+      [key: string]: {
+        options?: { [key: string]: any };
+        values?: { [key: string]: { [key: string]: any } };
+      };
+    };
   };
 }
 
 export const protoMetadata = {
   fileDescriptor: {
-    "name": "livekit_sip.proto",
-    "package": "livekit",
-    "dependency": [
+    name: "livekit_sip.proto",
+    package: "livekit",
+    dependency: [
       "google/protobuf/duration.proto",
       "google/protobuf/empty.proto",
       "livekit_models.proto",
       "livekit_room.proto",
     ],
-    "publicDependency": [],
-    "weakDependency": [],
-    "messageType": [{
-      "name": "SIPStatus",
-      "field": [{
-        "name": "code",
-        "number": 1,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPStatusCode",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "code",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "status",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "status",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "CreateSIPTrunkRequest",
-      "field": [{
-        "name": "inbound_addresses",
-        "number": 1,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "inboundAddresses",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "outbound_address",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "outboundAddress",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "outbound_number",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "outboundNumber",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "inbound_numbers_regex",
-        "number": 4,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "inboundNumbersRegex",
-        "options": {
-          "ctype": 0,
-          "packed": false,
-          "jstype": 0,
-          "lazy": false,
-          "deprecated": true,
-          "weak": false,
-          "uninterpretedOption": [],
-        },
-        "proto3Optional": false,
-      }, {
-        "name": "inbound_numbers",
-        "number": 9,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "inboundNumbers",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "inbound_username",
-        "number": 5,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "inboundUsername",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "inbound_password",
-        "number": 6,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "inboundPassword",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "outbound_username",
-        "number": 7,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "outboundUsername",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "outbound_password",
-        "number": 8,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "outboundPassword",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "name",
-        "number": 10,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "name",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "metadata",
-        "number": 11,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "metadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": {
-        "messageSetWireFormat": false,
-        "noStandardDescriptorAccessor": false,
-        "deprecated": true,
-        "mapEntry": false,
-        "uninterpretedOption": [],
-      },
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPTrunkInfo",
-      "field": [{
-        "name": "sip_trunk_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "sipTrunkId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "kind",
-        "number": 14,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPTrunkInfo.TrunkKind",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "kind",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "inbound_addresses",
-        "number": 2,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "inboundAddresses",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "outbound_address",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "outboundAddress",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "outbound_number",
-        "number": 4,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "outboundNumber",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "transport",
-        "number": 13,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPTransport",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "transport",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "inbound_numbers_regex",
-        "number": 5,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "inboundNumbersRegex",
-        "options": {
-          "ctype": 0,
-          "packed": false,
-          "jstype": 0,
-          "lazy": false,
-          "deprecated": true,
-          "weak": false,
-          "uninterpretedOption": [],
-        },
-        "proto3Optional": false,
-      }, {
-        "name": "inbound_numbers",
-        "number": 10,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "inboundNumbers",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "inbound_username",
-        "number": 6,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "inboundUsername",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "inbound_password",
-        "number": 7,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "inboundPassword",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "outbound_username",
-        "number": 8,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "outboundUsername",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "outbound_password",
-        "number": 9,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "outboundPassword",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "name",
-        "number": 11,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "name",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "metadata",
-        "number": 12,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "metadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [{
-        "name": "TrunkKind",
-        "value": [{ "name": "TRUNK_LEGACY", "number": 0, "options": undefined }, {
-          "name": "TRUNK_INBOUND",
-          "number": 1,
-          "options": undefined,
-        }, { "name": "TRUNK_OUTBOUND", "number": 2, "options": undefined }],
-        "options": undefined,
-        "reservedRange": [],
-        "reservedName": [],
-      }],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": {
-        "messageSetWireFormat": false,
-        "noStandardDescriptorAccessor": false,
-        "deprecated": true,
-        "mapEntry": false,
-        "uninterpretedOption": [],
-      },
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "CreateSIPInboundTrunkRequest",
-      "field": [{
-        "name": "trunk",
-        "number": 1,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPInboundTrunkInfo",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trunk",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPInboundTrunkInfo",
-      "field": [{
-        "name": "sip_trunk_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "sipTrunkId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "name",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "name",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "metadata",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "metadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "numbers",
-        "number": 4,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "numbers",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "allowed_addresses",
-        "number": 5,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "allowedAddresses",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "allowed_numbers",
-        "number": 6,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "allowedNumbers",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "auth_username",
-        "number": 7,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "authUsername",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "auth_password",
-        "number": 8,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "authPassword",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "headers",
-        "number": 9,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPInboundTrunkInfo.HeadersEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "headers",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "headers_to_attributes",
-        "number": 10,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPInboundTrunkInfo.HeadersToAttributesEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "headersToAttributes",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "attributes_to_headers",
-        "number": 14,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPInboundTrunkInfo.AttributesToHeadersEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "attributesToHeaders",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "include_headers",
-        "number": 15,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPHeaderOptions",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "includeHeaders",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "ringing_timeout",
-        "number": 11,
-        "label": 1,
-        "type": 11,
-        "typeName": ".google.protobuf.Duration",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "ringingTimeout",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "max_call_duration",
-        "number": 12,
-        "label": 1,
-        "type": 11,
-        "typeName": ".google.protobuf.Duration",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "maxCallDuration",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "krisp_enabled",
-        "number": 13,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "krispEnabled",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "media_encryption",
-        "number": 16,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPMediaEncryption",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "mediaEncryption",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [{
-        "name": "HeadersEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }, {
-        "name": "HeadersToAttributesEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }, {
-        "name": "AttributesToHeadersEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "CreateSIPOutboundTrunkRequest",
-      "field": [{
-        "name": "trunk",
-        "number": 1,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPOutboundTrunkInfo",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trunk",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPOutboundTrunkInfo",
-      "field": [{
-        "name": "sip_trunk_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "sipTrunkId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "name",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "name",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "metadata",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "metadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "address",
-        "number": 4,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "address",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "transport",
-        "number": 5,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPTransport",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "transport",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "numbers",
-        "number": 6,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "numbers",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "auth_username",
-        "number": 7,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "authUsername",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "auth_password",
-        "number": 8,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "authPassword",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "headers",
-        "number": 9,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPOutboundTrunkInfo.HeadersEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "headers",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "headers_to_attributes",
-        "number": 10,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPOutboundTrunkInfo.HeadersToAttributesEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "headersToAttributes",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "attributes_to_headers",
-        "number": 11,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPOutboundTrunkInfo.AttributesToHeadersEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "attributesToHeaders",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "include_headers",
-        "number": 12,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPHeaderOptions",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "includeHeaders",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "media_encryption",
-        "number": 13,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPMediaEncryption",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "mediaEncryption",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [{
-        "name": "HeadersEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }, {
-        "name": "HeadersToAttributesEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }, {
-        "name": "AttributesToHeadersEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "GetSIPInboundTrunkRequest",
-      "field": [{
-        "name": "sip_trunk_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "sipTrunkId",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "GetSIPInboundTrunkResponse",
-      "field": [{
-        "name": "trunk",
-        "number": 1,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPInboundTrunkInfo",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trunk",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "GetSIPOutboundTrunkRequest",
-      "field": [{
-        "name": "sip_trunk_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "sipTrunkId",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "GetSIPOutboundTrunkResponse",
-      "field": [{
-        "name": "trunk",
-        "number": 1,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPOutboundTrunkInfo",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trunk",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "ListSIPTrunkRequest",
-      "field": [{
-        "name": "page",
-        "number": 1,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.Pagination",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "page",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": {
-        "messageSetWireFormat": false,
-        "noStandardDescriptorAccessor": false,
-        "deprecated": true,
-        "mapEntry": false,
-        "uninterpretedOption": [],
-      },
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "ListSIPTrunkResponse",
-      "field": [{
-        "name": "items",
-        "number": 1,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPTrunkInfo",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "items",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": {
-        "messageSetWireFormat": false,
-        "noStandardDescriptorAccessor": false,
-        "deprecated": true,
-        "mapEntry": false,
-        "uninterpretedOption": [],
-      },
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "ListSIPInboundTrunkRequest",
-      "field": [{
-        "name": "page",
-        "number": 3,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.Pagination",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "page",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "trunk_ids",
-        "number": 1,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trunkIds",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "numbers",
-        "number": 2,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "numbers",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "ListSIPInboundTrunkResponse",
-      "field": [{
-        "name": "items",
-        "number": 1,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPInboundTrunkInfo",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "items",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "ListSIPOutboundTrunkRequest",
-      "field": [{
-        "name": "page",
-        "number": 3,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.Pagination",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "page",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "trunk_ids",
-        "number": 1,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trunkIds",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "numbers",
-        "number": 2,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "numbers",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "ListSIPOutboundTrunkResponse",
-      "field": [{
-        "name": "items",
-        "number": 1,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPOutboundTrunkInfo",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "items",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "DeleteSIPTrunkRequest",
-      "field": [{
-        "name": "sip_trunk_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "sipTrunkId",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPDispatchRuleDirect",
-      "field": [{
-        "name": "room_name",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "roomName",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "pin",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "pin",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPDispatchRuleIndividual",
-      "field": [{
-        "name": "room_prefix",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "roomPrefix",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "pin",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "pin",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPDispatchRuleCallee",
-      "field": [{
-        "name": "room_prefix",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "roomPrefix",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "pin",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "pin",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "randomize",
-        "number": 3,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "randomize",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPDispatchRule",
-      "field": [{
-        "name": "dispatch_rule_direct",
-        "number": 1,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPDispatchRuleDirect",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "dispatchRuleDirect",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "dispatch_rule_individual",
-        "number": 2,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPDispatchRuleIndividual",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "dispatchRuleIndividual",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "dispatch_rule_callee",
-        "number": 3,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPDispatchRuleCallee",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "dispatchRuleCallee",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [{ "name": "rule", "options": undefined }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "CreateSIPDispatchRuleRequest",
-      "field": [{
-        "name": "rule",
-        "number": 1,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPDispatchRule",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "rule",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "trunk_ids",
-        "number": 2,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trunkIds",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "hide_phone_number",
-        "number": 3,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "hidePhoneNumber",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "inbound_numbers",
-        "number": 6,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "inboundNumbers",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "name",
-        "number": 4,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "name",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "metadata",
-        "number": 5,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "metadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "attributes",
-        "number": 7,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.CreateSIPDispatchRuleRequest.AttributesEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "attributes",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room_preset",
-        "number": 8,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "roomPreset",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room_config",
-        "number": 9,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.RoomConfiguration",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "roomConfig",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [{
-        "name": "AttributesEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPDispatchRuleInfo",
-      "field": [{
-        "name": "sip_dispatch_rule_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "sipDispatchRuleId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "rule",
-        "number": 2,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPDispatchRule",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "rule",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "trunk_ids",
-        "number": 3,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trunkIds",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "hide_phone_number",
-        "number": 4,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "hidePhoneNumber",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "inbound_numbers",
-        "number": 7,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "inboundNumbers",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "name",
-        "number": 5,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "name",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "metadata",
-        "number": 6,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "metadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "attributes",
-        "number": 8,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPDispatchRuleInfo.AttributesEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "attributes",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room_preset",
-        "number": 9,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "roomPreset",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room_config",
-        "number": 10,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.RoomConfiguration",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "roomConfig",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "krisp_enabled",
-        "number": 11,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "krispEnabled",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "media_encryption",
-        "number": 12,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPMediaEncryption",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "mediaEncryption",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [{
-        "name": "AttributesEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "ListSIPDispatchRuleRequest",
-      "field": [{
-        "name": "page",
-        "number": 3,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.Pagination",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "page",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "dispatch_rule_ids",
-        "number": 1,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "dispatchRuleIds",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "trunk_ids",
-        "number": 2,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trunkIds",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "ListSIPDispatchRuleResponse",
-      "field": [{
-        "name": "items",
-        "number": 1,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPDispatchRuleInfo",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "items",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "DeleteSIPDispatchRuleRequest",
-      "field": [{
-        "name": "sip_dispatch_rule_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "sipDispatchRuleId",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPOutboundConfig",
-      "field": [{
-        "name": "hostname",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "hostname",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "transport",
-        "number": 2,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPTransport",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "transport",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "auth_username",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "authUsername",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "auth_password",
-        "number": 4,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "authPassword",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "headers_to_attributes",
-        "number": 5,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPOutboundConfig.HeadersToAttributesEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "headersToAttributes",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "attributes_to_headers",
-        "number": 6,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPOutboundConfig.AttributesToHeadersEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "attributesToHeaders",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [{
-        "name": "HeadersToAttributesEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }, {
-        "name": "AttributesToHeadersEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "CreateSIPParticipantRequest",
-      "field": [{
-        "name": "sip_trunk_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "sipTrunkId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "trunk",
-        "number": 20,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPOutboundConfig",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trunk",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "sip_call_to",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "sipCallTo",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "sip_number",
-        "number": 15,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "sipNumber",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room_name",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "roomName",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_identity",
-        "number": 4,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantIdentity",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_name",
-        "number": 7,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantName",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_metadata",
-        "number": 8,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantMetadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_attributes",
-        "number": 9,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.CreateSIPParticipantRequest.ParticipantAttributesEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantAttributes",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "dtmf",
-        "number": 5,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "dtmf",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "play_ringtone",
-        "number": 6,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "playRingtone",
-        "options": {
-          "ctype": 0,
-          "packed": false,
-          "jstype": 0,
-          "lazy": false,
-          "deprecated": true,
-          "weak": false,
-          "uninterpretedOption": [],
-        },
-        "proto3Optional": false,
-      }, {
-        "name": "play_dialtone",
-        "number": 13,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "playDialtone",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "hide_phone_number",
-        "number": 10,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "hidePhoneNumber",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "headers",
-        "number": 16,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.CreateSIPParticipantRequest.HeadersEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "headers",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "include_headers",
-        "number": 17,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPHeaderOptions",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "includeHeaders",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "ringing_timeout",
-        "number": 11,
-        "label": 1,
-        "type": 11,
-        "typeName": ".google.protobuf.Duration",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "ringingTimeout",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "max_call_duration",
-        "number": 12,
-        "label": 1,
-        "type": 11,
-        "typeName": ".google.protobuf.Duration",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "maxCallDuration",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "krisp_enabled",
-        "number": 14,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "krispEnabled",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "media_encryption",
-        "number": 18,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPMediaEncryption",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "mediaEncryption",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "wait_until_answered",
-        "number": 19,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "waitUntilAnswered",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [{
-        "name": "ParticipantAttributesEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }, {
-        "name": "HeadersEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPParticipantInfo",
-      "field": [{
-        "name": "participant_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_identity",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantIdentity",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room_name",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "roomName",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "sip_call_id",
-        "number": 4,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "sipCallId",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "TransferSIPParticipantRequest",
-      "field": [{
-        "name": "participant_identity",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantIdentity",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room_name",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "roomName",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "transfer_to",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "transferTo",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "play_dialtone",
-        "number": 4,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "playDialtone",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "headers",
-        "number": 5,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.TransferSIPParticipantRequest.HeadersEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "headers",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [{
-        "name": "HeadersEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPCallInfo",
-      "field": [{
-        "name": "call_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "callId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "trunk_id",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trunkId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "dispatch_rule_id",
-        "number": 16,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "dispatchRuleId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "region",
-        "number": 17,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "region",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room_name",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "roomName",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room_id",
-        "number": 4,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "roomId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_identity",
-        "number": 5,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantIdentity",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_attributes",
-        "number": 18,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.SIPCallInfo.ParticipantAttributesEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantAttributes",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "from_uri",
-        "number": 6,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPUri",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "fromUri",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "to_uri",
-        "number": 7,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPUri",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "toUri",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "created_at",
-        "number": 9,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "createdAt",
-        "options": {
-          "ctype": 0,
-          "packed": false,
-          "jstype": 0,
-          "lazy": false,
-          "deprecated": true,
-          "weak": false,
-          "uninterpretedOption": [],
-        },
-        "proto3Optional": false,
-      }, {
-        "name": "started_at",
-        "number": 10,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "startedAt",
-        "options": {
-          "ctype": 0,
-          "packed": false,
-          "jstype": 0,
-          "lazy": false,
-          "deprecated": true,
-          "weak": false,
-          "uninterpretedOption": [],
-        },
-        "proto3Optional": false,
-      }, {
-        "name": "ended_at",
-        "number": 11,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "endedAt",
-        "options": {
-          "ctype": 0,
-          "packed": false,
-          "jstype": 0,
-          "lazy": false,
-          "deprecated": true,
-          "weak": false,
-          "uninterpretedOption": [],
-        },
-        "proto3Optional": false,
-      }, {
-        "name": "enabled_features",
-        "number": 14,
-        "label": 3,
-        "type": 14,
-        "typeName": ".livekit.SIPFeature",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "enabledFeatures",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "call_direction",
-        "number": 15,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPCallDirection",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "callDirection",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "call_status",
-        "number": 8,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPCallStatus",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "callStatus",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "created_at_ns",
-        "number": 22,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "createdAtNs",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "started_at_ns",
-        "number": 23,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "startedAtNs",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "ended_at_ns",
-        "number": 24,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "endedAtNs",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "disconnect_reason",
-        "number": 12,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.DisconnectReason",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "disconnectReason",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "error",
-        "number": 13,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "error",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "call_status_code",
-        "number": 19,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SIPStatus",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "callStatusCode",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "audio_codec",
-        "number": 20,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "audioCodec",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "media_encryption",
-        "number": 21,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "mediaEncryption",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [{
-        "name": "ParticipantAttributesEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
-        },
-        "reservedRange": [],
-        "reservedName": [],
-      }],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPUri",
-      "field": [{
-        "name": "user",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "user",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "host",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "host",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "ip",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "ip",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "port",
-        "number": 4,
-        "label": 1,
-        "type": 13,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "port",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "transport",
-        "number": 5,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.SIPTransport",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "transport",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }],
-    "enumType": [{
-      "name": "SIPStatusCode",
-      "value": [
-        { "name": "SIP_STATUS_UNKNOWN", "number": 0, "options": undefined },
-        { "name": "SIP_STATUS_TRYING", "number": 100, "options": undefined },
-        { "name": "SIP_STATUS_RINGING", "number": 180, "options": undefined },
-        { "name": "SIP_STATUS_CALL_IS_FORWARDED", "number": 181, "options": undefined },
-        { "name": "SIP_STATUS_QUEUED", "number": 182, "options": undefined },
-        { "name": "SIP_STATUS_SESSION_PROGRESS", "number": 183, "options": undefined },
-        { "name": "SIP_STATUS_OK", "number": 200, "options": undefined },
-        { "name": "SIP_STATUS_ACCEPTED", "number": 202, "options": undefined },
-        { "name": "SIP_STATUS_MOVED_PERMANENTLY", "number": 301, "options": undefined },
-        { "name": "SIP_STATUS_MOVED_TEMPORARILY", "number": 302, "options": undefined },
-        { "name": "SIP_STATUS_USE_PROXY", "number": 305, "options": undefined },
-        { "name": "SIP_STATUS_BAD_REQUEST", "number": 400, "options": undefined },
-        { "name": "SIP_STATUS_UNAUTHORIZED", "number": 401, "options": undefined },
-        { "name": "SIP_STATUS_PAYMENT_REQUIRED", "number": 402, "options": undefined },
-        { "name": "SIP_STATUS_FORBIDDEN", "number": 403, "options": undefined },
-        { "name": "SIP_STATUS_NOTFOUND", "number": 404, "options": undefined },
-        { "name": "SIP_STATUS_METHOD_NOT_ALLOWED", "number": 405, "options": undefined },
-        { "name": "SIP_STATUS_NOT_ACCEPTABLE", "number": 406, "options": undefined },
-        { "name": "SIP_STATUS_PROXY_AUTH_REQUIRED", "number": 407, "options": undefined },
-        { "name": "SIP_STATUS_REQUEST_TIMEOUT", "number": 408, "options": undefined },
-        { "name": "SIP_STATUS_CONFLICT", "number": 409, "options": undefined },
-        { "name": "SIP_STATUS_GONE", "number": 410, "options": undefined },
-        { "name": "SIP_STATUS_REQUEST_ENTITY_TOO_LARGE", "number": 413, "options": undefined },
-        { "name": "SIP_STATUS_REQUEST_URI_TOO_LONG", "number": 414, "options": undefined },
-        { "name": "SIP_STATUS_UNSUPPORTED_MEDIA_TYPE", "number": 415, "options": undefined },
-        { "name": "SIP_STATUS_REQUESTED_RANGE_NOT_SATISFIABLE", "number": 416, "options": undefined },
-        { "name": "SIP_STATUS_BAD_EXTENSION", "number": 420, "options": undefined },
-        { "name": "SIP_STATUS_EXTENSION_REQUIRED", "number": 421, "options": undefined },
-        { "name": "SIP_STATUS_INTERVAL_TOO_BRIEF", "number": 423, "options": undefined },
-        { "name": "SIP_STATUS_TEMPORARILY_UNAVAILABLE", "number": 480, "options": undefined },
-        { "name": "SIP_STATUS_CALL_TRANSACTION_DOES_NOT_EXISTS", "number": 481, "options": undefined },
-        { "name": "SIP_STATUS_LOOP_DETECTED", "number": 482, "options": undefined },
-        { "name": "SIP_STATUS_TOO_MANY_HOPS", "number": 483, "options": undefined },
-        { "name": "SIP_STATUS_ADDRESS_INCOMPLETE", "number": 484, "options": undefined },
-        { "name": "SIP_STATUS_AMBIGUOUS", "number": 485, "options": undefined },
-        { "name": "SIP_STATUS_BUSY_HERE", "number": 486, "options": undefined },
-        { "name": "SIP_STATUS_REQUEST_TERMINATED", "number": 487, "options": undefined },
-        { "name": "SIP_STATUS_NOT_ACCEPTABLE_HERE", "number": 488, "options": undefined },
-        { "name": "SIP_STATUS_INTERNAL_SERVER_ERROR", "number": 500, "options": undefined },
-        { "name": "SIP_STATUS_NOT_IMPLEMENTED", "number": 501, "options": undefined },
-        { "name": "SIP_STATUS_BAD_GATEWAY", "number": 502, "options": undefined },
-        { "name": "SIP_STATUS_SERVICE_UNAVAILABLE", "number": 503, "options": undefined },
-        { "name": "SIP_STATUS_GATEWAY_TIMEOUT", "number": 504, "options": undefined },
-        { "name": "SIP_STATUS_VERSION_NOT_SUPPORTED", "number": 505, "options": undefined },
-        { "name": "SIP_STATUS_MESSAGE_TOO_LARGE", "number": 513, "options": undefined },
-        { "name": "SIP_STATUS_GLOBAL_BUSY_EVERYWHERE", "number": 600, "options": undefined },
-        { "name": "SIP_STATUS_GLOBAL_DECLINE", "number": 603, "options": undefined },
-        { "name": "SIP_STATUS_GLOBAL_DOES_NOT_EXIST_ANYWHERE", "number": 604, "options": undefined },
-        { "name": "SIP_STATUS_GLOBAL_NOT_ACCEPTABLE", "number": 606, "options": undefined },
-      ],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPTransport",
-      "value": [
-        { "name": "SIP_TRANSPORT_AUTO", "number": 0, "options": undefined },
-        { "name": "SIP_TRANSPORT_UDP", "number": 1, "options": undefined },
-        { "name": "SIP_TRANSPORT_TCP", "number": 2, "options": undefined },
-        { "name": "SIP_TRANSPORT_TLS", "number": 3, "options": undefined },
-      ],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPHeaderOptions",
-      "value": [{ "name": "SIP_NO_HEADERS", "number": 0, "options": undefined }, {
-        "name": "SIP_X_HEADERS",
-        "number": 1,
-        "options": undefined,
-      }, { "name": "SIP_ALL_HEADERS", "number": 2, "options": undefined }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPMediaEncryption",
-      "value": [{ "name": "SIP_MEDIA_ENCRYPT_DISABLE", "number": 0, "options": undefined }, {
-        "name": "SIP_MEDIA_ENCRYPT_ALLOW",
-        "number": 1,
-        "options": undefined,
-      }, { "name": "SIP_MEDIA_ENCRYPT_REQUIRE", "number": 2, "options": undefined }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPCallStatus",
-      "value": [
-        { "name": "SCS_CALL_INCOMING", "number": 0, "options": undefined },
-        { "name": "SCS_PARTICIPANT_JOINED", "number": 1, "options": undefined },
-        { "name": "SCS_ACTIVE", "number": 2, "options": undefined },
-        { "name": "SCS_DISCONNECTED", "number": 3, "options": undefined },
-        { "name": "SCS_ERROR", "number": 4, "options": undefined },
-      ],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPFeature",
-      "value": [{ "name": "NONE", "number": 0, "options": undefined }, {
-        "name": "KRISP_ENABLED",
-        "number": 1,
-        "options": undefined,
-      }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SIPCallDirection",
-      "value": [{ "name": "SCD_UNKNOWN", "number": 0, "options": undefined }, {
-        "name": "SCD_INBOUND",
-        "number": 1,
-        "options": undefined,
-      }, { "name": "SCD_OUTBOUND", "number": 2, "options": undefined }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }],
-    "service": [{
-      "name": "SIP",
-      "method": [{
-        "name": "ListSIPTrunk",
-        "inputType": ".livekit.ListSIPTrunkRequest",
-        "outputType": ".livekit.ListSIPTrunkResponse",
-        "options": { "deprecated": true, "idempotencyLevel": 0, "uninterpretedOption": [] },
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "CreateSIPInboundTrunk",
-        "inputType": ".livekit.CreateSIPInboundTrunkRequest",
-        "outputType": ".livekit.SIPInboundTrunkInfo",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "CreateSIPOutboundTrunk",
-        "inputType": ".livekit.CreateSIPOutboundTrunkRequest",
-        "outputType": ".livekit.SIPOutboundTrunkInfo",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "GetSIPInboundTrunk",
-        "inputType": ".livekit.GetSIPInboundTrunkRequest",
-        "outputType": ".livekit.GetSIPInboundTrunkResponse",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "GetSIPOutboundTrunk",
-        "inputType": ".livekit.GetSIPOutboundTrunkRequest",
-        "outputType": ".livekit.GetSIPOutboundTrunkResponse",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "ListSIPInboundTrunk",
-        "inputType": ".livekit.ListSIPInboundTrunkRequest",
-        "outputType": ".livekit.ListSIPInboundTrunkResponse",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "ListSIPOutboundTrunk",
-        "inputType": ".livekit.ListSIPOutboundTrunkRequest",
-        "outputType": ".livekit.ListSIPOutboundTrunkResponse",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "DeleteSIPTrunk",
-        "inputType": ".livekit.DeleteSIPTrunkRequest",
-        "outputType": ".livekit.SIPTrunkInfo",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "CreateSIPDispatchRule",
-        "inputType": ".livekit.CreateSIPDispatchRuleRequest",
-        "outputType": ".livekit.SIPDispatchRuleInfo",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "ListSIPDispatchRule",
-        "inputType": ".livekit.ListSIPDispatchRuleRequest",
-        "outputType": ".livekit.ListSIPDispatchRuleResponse",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "DeleteSIPDispatchRule",
-        "inputType": ".livekit.DeleteSIPDispatchRuleRequest",
-        "outputType": ".livekit.SIPDispatchRuleInfo",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "CreateSIPParticipant",
-        "inputType": ".livekit.CreateSIPParticipantRequest",
-        "outputType": ".livekit.SIPParticipantInfo",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "TransferSIPParticipant",
-        "inputType": ".livekit.TransferSIPParticipantRequest",
-        "outputType": ".google.protobuf.Empty",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }],
-      "options": undefined,
-    }],
-    "extension": [],
-    "options": {
-      "javaPackage": "",
-      "javaOuterClassname": "",
-      "javaMultipleFiles": false,
-      "javaGenerateEqualsAndHash": false,
-      "javaStringCheckUtf8": false,
-      "optimizeFor": 1,
-      "goPackage": "github.com/livekit/protocol/livekit",
-      "ccGenericServices": false,
-      "javaGenericServices": false,
-      "pyGenericServices": false,
-      "phpGenericServices": false,
-      "deprecated": false,
-      "ccEnableArenas": true,
-      "objcClassPrefix": "",
-      "csharpNamespace": "LiveKit.Proto",
-      "swiftPrefix": "",
-      "phpClassPrefix": "",
-      "phpNamespace": "",
-      "phpMetadataNamespace": "",
-      "rubyPackage": "LiveKit::Proto",
-      "uninterpretedOption": [],
-    },
-    "sourceCodeInfo": {
-      "location": [{
-        "path": [6, 0],
-        "span": [53, 0, 72, 1],
-        "leadingComments": "",
-        "trailingComments":
-          " rpc CreateSIPTrunk(CreateSIPTrunkRequest) returns (SIPTrunkInfo) { option deprecated = true; }; DELETED\n",
-        "leadingDetachedComments": [
-          "\nLiveKit's SIP API is built with 3 high level primitives\n- SIP Trunk\n- SIP Dispatch Rule\n- SIP Participant\n\n\nThe `SIP Trunk` is used to accept and make calls. A `SIP Trunk` is configured with\nthe IPs/Ports and Authentication details of your SIP Provider. When a call is accepted from\nthe `SIP Trunk` it is then handled by the `SIP Dispatch Rules`. When a `SIP Participant` is created\nfor a outbound call a `SIP Trunk` is chosen to make the call with.\n\n\nThe `SIP Dispatch Rule` is a list of rules that dictate how a incoming SIP call should be handled.\nLiveKit currently supports 2 types, but may support more in the future.\n\n- `Direct Dispatch` puts a caller into a existing room, possibly choosing between multiple rooms with a pin\n- `Individual Dispatch` puts a caller into a new room created for the call\n\n\nThe `SIP Participant` represents an active SIP Session. These SIP Sessions are always associated with\na Participant on LiveKit side. Inbound calls create Participants directly (with a `SIP` kind), while outbound\ncalls must be initiated with `CreateSIPParticipant`.\n",
+    publicDependency: [],
+    weakDependency: [],
+    messageType: [
+      {
+        name: "SIPStatus",
+        field: [
+          {
+            name: "code",
+            number: 1,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPStatusCode",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "code",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "status",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "status",
+            options: undefined,
+            proto3Optional: false,
+          },
         ],
-      }, {
-        "path": [4, 0],
-        "span": [133, 0, 136, 1],
-        "leadingComments": " SIPStatus is returned as an error detail in CreateSIPParticipant.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 1, 2, 0],
-        "span": [142, 2, 40],
-        "leadingComments":
-          " CIDR or IPs that traffic is accepted from\n An empty list means all inbound traffic is accepted.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 1, 2, 1],
-        "span": [145, 2, 30],
-        "leadingComments": " IP that SIP INVITE is sent too\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 1, 2, 2],
-        "span": [148, 2, 29],
-        "leadingComments": " Number used to make outbound calls\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 1, 2, 4],
-        "span": [155, 2, 38],
-        "leadingComments":
-          " Accepted `To` values. This Trunk will only accept a call made to\n these numbers. This allows you to have distinct Trunks for different phone\n numbers at the same provider.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 1, 2, 5],
-        "span": [159, 2, 30],
-        "leadingComments":
-          " Username and password used to authenticate inbound and outbound SIP invites\n May be empty to have no Authentication\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 1, 2, 9],
-        "span": [165, 2, 19],
-        "leadingComments": " Optional human-readable name for the Trunk.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 1, 2, 10],
-        "span": [167, 2, 23],
-        "leadingComments": " Optional user-defined metadata for the Trunk.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 2, 2, 0],
-        "span": [178, 2, 21],
-        "leadingComments": "",
-        "trailingComments": " do not map any headers, except ones mapped explicitly\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 2, 2, 1],
-        "span": [179, 2, 20],
-        "leadingComments": "",
-        "trailingComments": " map all X-* headers to sip.h.x-* attributes\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 2, 2, 2],
-        "span": [180, 2, 22],
-        "leadingComments": "",
-        "trailingComments": " map all headers to sip.h.* attributes\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 3, 2, 0],
-        "span": [184, 2, 32],
-        "leadingComments": "",
-        "trailingComments": " do not enable encryption\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 3, 2, 1],
-        "span": [185, 2, 30],
-        "leadingComments": "",
-        "trailingComments": " use encryption if available\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 3, 2, 2],
-        "span": [186, 2, 32],
-        "leadingComments": "",
-        "trailingComments": " require encryption\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 2],
-        "span": [203, 2, 40],
-        "leadingComments":
-          " CIDR or IPs that traffic is accepted from\n An empty list means all inbound traffic is accepted.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 3],
-        "span": [206, 2, 30],
-        "leadingComments": " IP that SIP INVITE is sent too\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 4],
-        "span": [209, 2, 29],
-        "leadingComments": " Number used to make outbound calls\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 5],
-        "span": [212, 2, 30],
-        "leadingComments": " Transport used for inbound and outbound calls.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 7],
-        "span": [219, 2, 39],
-        "leadingComments":
-          " Accepted `To` values. This Trunk will only accept a call made to\n these numbers. This allows you to have distinct Trunks for different phone\n numbers at the same provider.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 8],
-        "span": [223, 2, 30],
-        "leadingComments":
-          " Username and password used to authenticate inbound and outbound SIP invites\n May be empty to have no Authentication\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 12],
-        "span": [229, 2, 19],
-        "leadingComments": " Human-readable name for the Trunk.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 13],
-        "span": [231, 2, 23],
-        "leadingComments": " User-defined metadata for the Trunk.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 3, 2, 0],
-        "span": [237, 2, 32],
-        "leadingComments": "",
-        "trailingComments": " Trunk ID is ignored\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 4, 2, 1],
-        "span": [244, 2, 18],
-        "leadingComments": " Human-readable name for the Trunk.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 4, 2, 2],
-        "span": [246, 2, 22],
-        "leadingComments": " User-defined metadata for the Trunk.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 4, 2, 3],
-        "span": [250, 2, 30],
-        "leadingComments":
-          " Numbers associated with LiveKit SIP. The Trunk will only accept calls made to these numbers.\n Creating multiple Trunks with different phone numbers allows having different rules for a single provider.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 4, 2, 4],
-        "span": [254, 2, 40],
-        "leadingComments":
-          " CIDR or IPs that traffic is accepted from.\n An empty list means all inbound traffic is accepted.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 4, 2, 5],
-        "span": [258, 2, 38],
-        "leadingComments":
-          " Numbers that are allowed to make calls to this Trunk.\n An empty list means calls from any phone number is accepted.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 4, 2, 6],
-        "span": [262, 2, 27],
-        "leadingComments":
-          " Username and password used to authenticate inbound SIP invites.\n May be empty to have no authentication.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 4, 2, 8],
-        "span": [266, 2, 34],
-        "leadingComments": " Include these SIP X-* headers in 200 OK responses.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 4, 2, 9],
-        "span": [268, 2, 49],
-        "leadingComments": " Map SIP X-* headers from INVITE to SIP participant attributes.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 4, 2, 10],
-        "span": [271, 2, 49],
-        "leadingComments":
-          " Map LiveKit attributes to SIP X-* headers when sending BYE or REFER requests.\n Keys are the names of attributes and values are the names of X-* headers they will be mapped to.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 4, 2, 11],
-        "span": [278, 2, 40],
-        "leadingComments":
-          " Map SIP headers from INVITE to sip.h.* participant attributes automatically.\n\n When the names of required headers is known, using headers_to_attributes is strongly recommended.\n\n When mapping INVITE headers to response headers with attributes_to_headers map,\n lowercase header names should be used, for example: sip.h.x-custom-header.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 4, 2, 12],
-        "span": [281, 2, 48],
-        "leadingComments": " Max time for the caller to wait for track subscription.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 4, 2, 13],
-        "span": [283, 2, 50],
-        "leadingComments": " Max call duration.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 5, 2, 0],
-        "span": [292, 2, 33],
-        "leadingComments": "",
-        "trailingComments": " Trunk ID is ignored\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 6, 2, 1],
-        "span": [299, 2, 18],
-        "leadingComments": " Human-readable name for the Trunk.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 6, 2, 2],
-        "span": [301, 2, 22],
-        "leadingComments": " User-defined metadata for the Trunk.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 6, 2, 3],
-        "span": [305, 2, 21],
-        "leadingComments":
-          " Hostname or IP that SIP INVITE is sent too.\n Note that this is not a SIP URI and should not contain the 'sip:' protocol prefix.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 6, 2, 4],
-        "span": [308, 2, 29],
-        "leadingComments": " SIP Transport used for outbound call.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 6, 2, 5],
-        "span": [311, 2, 30],
-        "leadingComments": " Numbers used to make the calls. Random one from this list will be selected.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 6, 2, 6],
-        "span": [315, 2, 27],
-        "leadingComments":
-          " Username and password used to authenticate with SIP server.\n May be empty to have no authentication.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 6, 2, 8],
-        "span": [320, 2, 34],
-        "leadingComments":
-          " Include these SIP X-* headers in INVITE request.\n These headers are sent as-is and may help identify this call as coming from LiveKit for the other SIP endpoint.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 6, 2, 9],
-        "span": [323, 2, 49],
-        "leadingComments":
-          " Map SIP X-* headers from 200 OK to SIP participant attributes.\n Keys are the names of X-* headers and values are the names of attributes they will be mapped to.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 6, 2, 10],
-        "span": [326, 2, 49],
-        "leadingComments":
-          " Map LiveKit attributes to SIP X-* headers when sending BYE or REFER requests.\n Keys are the names of attributes and values are the names of X-* headers they will be mapped to.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 6, 2, 11],
-        "span": [333, 2, 40],
-        "leadingComments":
-          " Map SIP headers from 200 OK to sip.h.* participant attributes automatically.\n\n When the names of required headers is known, using headers_to_attributes is strongly recommended.\n\n When mapping 200 OK headers to follow-up request headers with attributes_to_headers map,\n lowercase header names should be used, for example: sip.h.x-custom-header.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 13],
-        "span": [367, 0, 374, 1],
-        "leadingComments":
-          " ListSIPInboundTrunkRequest lists inbound trunks for given filters. If no filters are set, all trunks are listed.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 13, 2, 1],
-        "span": [371, 2, 32],
-        "leadingComments":
-          " Trunk IDs to list. If this option is set, the response will contains trunks in the same order.\n If any of the trunks is missing, a nil item in that position will be sent in the response.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 13, 2, 2],
-        "span": [373, 2, 30],
-        "leadingComments": " Only list trunks that contain one of the numbers, including wildcard trunks.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 15],
-        "span": [381, 0, 388, 1],
-        "leadingComments":
-          " ListSIPOutboundTrunkRequest lists outbound trunks for given filters. If no filters are set, all trunks are listed.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 15, 2, 1],
-        "span": [385, 2, 32],
-        "leadingComments":
-          " Trunk IDs to list. If this option is set, the response will contains trunks in the same order.\n If any of the trunks is missing, a nil item in that position will be sent in the response.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 15, 2, 2],
-        "span": [387, 2, 30],
-        "leadingComments": " Only list trunks that contain one of the numbers, including wildcard trunks.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 18, 2, 0],
-        "span": [400, 2, 23],
-        "leadingComments": " What room should call be directed into\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 18, 2, 1],
-        "span": [403, 2, 17],
-        "leadingComments": " Optional pin required to enter room\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 19, 2, 0],
-        "span": [408, 2, 25],
-        "leadingComments": " Prefix used on new room name\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 19, 2, 1],
-        "span": [411, 2, 17],
-        "leadingComments": " Optional pin required to enter room\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 20, 2, 0],
-        "span": [416, 2, 25],
-        "leadingComments": " Prefix used on new room name\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 20, 2, 1],
-        "span": [419, 2, 17],
-        "leadingComments": " Optional pin required to enter room\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 20, 2, 2],
-        "span": [422, 2, 21],
-        "leadingComments": " Optionally append random suffix\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 21, 2, 0],
-        "span": [430, 4, 51],
-        "leadingComments":
-          " SIPDispatchRuleDirect is a `SIP Dispatch Rule` that puts a user directly into a room\n This places users into an existing room. Optionally you can require a pin before a user can\n enter the room\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 21, 2, 1],
-        "span": [433, 4, 59],
-        "leadingComments":
-          " SIPDispatchRuleIndividual is a `SIP Dispatch Rule` that creates a new room for each caller.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 21, 2, 2],
-        "span": [436, 4, 51],
-        "leadingComments": " SIPDispatchRuleCallee is a `SIP Dispatch Rule` that creates a new room for each callee.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 22, 2, 1],
-        "span": [445, 2, 32],
-        "leadingComments":
-          " What trunks are accepted for this dispatch rule\n If empty all trunks will match this dispatch rule\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 22, 2, 2],
-        "span": [449, 2, 29],
-        "leadingComments":
-          " By default the From value (Phone number) is used for participant name/identity and added to attributes.\n If true, a random value for identity will be used and numbers will be omitted from attributes.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 22, 2, 3],
-        "span": [452, 2, 38],
-        "leadingComments": " Dispatch Rule will only accept a call made to these numbers (if set).\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 22, 2, 4],
-        "span": [455, 2, 18],
-        "leadingComments": " Optional human-readable name for the Dispatch Rule.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 22, 2, 5],
-        "span": [458, 2, 22],
-        "leadingComments":
-          " User-defined metadata for the Dispatch Rule.\n Participants created by this rule will inherit this metadata.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 22, 2, 6],
-        "span": [461, 2, 37],
-        "leadingComments":
-          " User-defined attributes for the Dispatch Rule.\n Participants created by this rule will inherit these attributes.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 22, 2, 7],
-        "span": [464, 2, 25],
-        "leadingComments": " Cloud-only, config preset to use\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 22, 2, 8],
-        "span": [467, 2, 36],
-        "leadingComments": " RoomConfiguration to use if the participant initiates the room\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 23, 2, 4],
-        "span": [478, 2, 38],
-        "leadingComments": " Dispatch Rule will only accept a call made to these numbers (if set).\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 23, 2, 5],
-        "span": [481, 2, 18],
-        "leadingComments": " Human-readable name for the Dispatch Rule.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 23, 2, 6],
-        "span": [484, 2, 22],
-        "leadingComments":
-          " User-defined metadata for the Dispatch Rule.\n Participants created by this rule will inherit this metadata.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 23, 2, 7],
-        "span": [487, 2, 37],
-        "leadingComments":
-          " User-defined attributes for the Dispatch Rule.\n Participants created by this rule will inherit these attributes.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 23, 2, 8],
-        "span": [490, 2, 25],
-        "leadingComments": " Cloud-only, config preset to use\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 23, 2, 9],
-        "span": [493, 2, 37],
-        "leadingComments": " RoomConfiguration to use if the participant initiates the room\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 23, 2, 11],
-        "span": [496, 2, 43],
-        "leadingComments": "",
-        "trailingComments": " NEXT ID: 13\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 24],
-        "span": [501, 0, 508, 1],
-        "leadingComments":
-          " ListSIPDispatchRuleRequest lists dispatch rules for given filters. If no filters are set, all rules are listed.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 24, 2, 1],
-        "span": [505, 2, 40],
-        "leadingComments":
-          " Rule IDs to list. If this option is set, the response will contains rules in the same order.\n If any of the rules is missing, a nil item in that position will be sent in the response.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 24, 2, 2],
-        "span": [507, 2, 32],
-        "leadingComments": " Only list rules that contain one of the Trunk IDs, including wildcard rules.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 27, 2, 0],
-        "span": [520, 2, 22],
-        "leadingComments": " SIP server address\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 27, 2, 1],
-        "span": [523, 2, 29],
-        "leadingComments": " SIP Transport used for outbound call.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 27, 2, 2],
-        "span": [527, 2, 27],
-        "leadingComments":
-          " Username and password used to authenticate with SIP server.\n May be empty to have no authentication.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 27, 2, 4],
-        "span": [532, 2, 48],
-        "leadingComments":
-          " Map SIP X-* headers from 200 OK to SIP participant attributes.\n Keys are the names of X-* headers and values are the names of attributes they will be mapped to.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 27, 2, 5],
-        "span": [535, 2, 48],
-        "leadingComments":
-          " Map LiveKit attributes to SIP X-* headers when sending BYE or REFER requests.\n Keys are the names of attributes and values are the names of X-* headers they will be mapped to.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28],
-        "span": [540, 0, 600, 1],
-        "leadingComments":
-          " A SIP Participant is a singular SIP session connected to a LiveKit room via\n a SIP Trunk into a SIP DispatchRule\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 0],
-        "span": [542, 2, 26],
-        "leadingComments": " What SIP Trunk should be used to dial the user\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 2],
-        "span": [546, 2, 25],
-        "leadingComments": " What number should be dialed via SIP\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 3],
-        "span": [549, 2, 25],
-        "leadingComments": " Optional SIP From number to use. If empty, trunk number is used.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 4],
-        "span": [552, 2, 23],
-        "leadingComments": " What LiveKit room should this participant be connected too\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 5],
-        "span": [555, 2, 34],
-        "leadingComments": " Optional identity of the participant in LiveKit room\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 6],
-        "span": [558, 2, 30],
-        "leadingComments": " Optional name of the participant in LiveKit room\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 7],
-        "span": [561, 2, 34],
-        "leadingComments": " Optional user-defined metadata. Will be attached to a created Participant in the room.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 8],
-        "span": [563, 2, 49],
-        "leadingComments":
-          " Optional user-defined attributes. Will be attached to a created Participant in the room.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 9],
-        "span": [567, 2, 18],
-        "leadingComments":
-          " Optionally send following DTMF digits (extension codes) when making a call.\n Character 'w' can be used to add a 0.5 sec delay.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 10],
-        "span": [570, 2, 45],
-        "leadingComments":
-          " Optionally play dialtone in the room as an audible indicator for existing participants. The `play_ringtone` option is deprectated but has the same effect.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 12],
-        "span": [575, 2, 30],
-        "leadingComments":
-          " By default the From value (Phone number) is used for participant name/identity (if not set) and added to attributes.\n If true, a random value for identity will be used and numbers will be omitted from attributes.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 13],
-        "span": [578, 2, 35],
-        "leadingComments":
-          " These headers are sent as-is and may help identify this call as coming from LiveKit for the other SIP endpoint.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 14],
-        "span": [585, 2, 40],
-        "leadingComments":
-          " Map SIP headers from 200 OK to sip.h.* participant attributes automatically.\n\n When the names of required headers is known, using headers_to_attributes is strongly recommended.\n\n When mapping 200 OK headers to follow-up request headers with attributes_to_headers map,\n lowercase header names should be used, for example: sip.h.x-custom-header.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 15],
-        "span": [588, 2, 48],
-        "leadingComments": " Max time for the callee to answer the call.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 16],
-        "span": [590, 2, 50],
-        "leadingComments": " Max call duration.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 17],
-        "span": [593, 2, 26],
-        "leadingComments": " Enable voice isolation for the callee.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 28, 2, 19],
-        "span": [598, 2, 32],
-        "leadingComments": " Wait for the answer for the call before returning.\n",
-        "trailingComments": " NEXT ID: 21\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 30, 2, 3],
-        "span": [615, 2, 25],
-        "leadingComments":
-          " Optionally play dialtone to the SIP participant as an audible indicator of being transferred\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 30, 2, 4],
-        "span": [618, 2, 34],
-        "leadingComments": " Add the following headers to the REFER SIP request.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 31, 2, 5],
-        "span": [627, 2, 21],
-        "leadingComments": "",
-        "trailingComments": " ID of the current/previous room published to\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 4, 2, 0],
-        "span": [659, 2, 24],
-        "leadingComments": "",
-        "trailingComments":
-          " Incoming call is being handled by the SIP service. The SIP participant hasn't joined a LiveKit room yet\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 4, 2, 1],
-        "span": [660, 2, 29],
-        "leadingComments": "",
-        "trailingComments":
-          " SIP participant for outgoing call has been created. The SIP outgoing call is being established\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 4, 2, 2],
-        "span": [661, 2, 17],
-        "leadingComments": "",
-        "trailingComments": " Call is ongoing. SIP participant is active in the LiveKit room\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 4, 2, 3],
-        "span": [662, 2, 23],
-        "leadingComments": "",
-        "trailingComments": " Call has ended\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 4, 2, 4],
-        "span": [663, 2, 16],
-        "leadingComments": "",
-        "trailingComments": " Call has ended or never succeeded because of an error\n",
-        "leadingDetachedComments": [],
-      }],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "CreateSIPTrunkRequest",
+        field: [
+          {
+            name: "inbound_addresses",
+            number: 1,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "inboundAddresses",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "outbound_address",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "outboundAddress",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "outbound_number",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "outboundNumber",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "inbound_numbers_regex",
+            number: 4,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "inboundNumbersRegex",
+            options: {
+              ctype: 0,
+              packed: false,
+              jstype: 0,
+              lazy: false,
+              deprecated: true,
+              weak: false,
+              uninterpretedOption: [],
+            },
+            proto3Optional: false,
+          },
+          {
+            name: "inbound_numbers",
+            number: 9,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "inboundNumbers",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "inbound_username",
+            number: 5,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "inboundUsername",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "inbound_password",
+            number: 6,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "inboundPassword",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "outbound_username",
+            number: 7,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "outboundUsername",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "outbound_password",
+            number: 8,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "outboundPassword",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "name",
+            number: 10,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "name",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "metadata",
+            number: 11,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "metadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: {
+          messageSetWireFormat: false,
+          noStandardDescriptorAccessor: false,
+          deprecated: true,
+          mapEntry: false,
+          uninterpretedOption: [],
+        },
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPTrunkInfo",
+        field: [
+          {
+            name: "sip_trunk_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "sipTrunkId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "kind",
+            number: 14,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPTrunkInfo.TrunkKind",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "kind",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "inbound_addresses",
+            number: 2,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "inboundAddresses",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "outbound_address",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "outboundAddress",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "outbound_number",
+            number: 4,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "outboundNumber",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "transport",
+            number: 13,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPTransport",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "transport",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "inbound_numbers_regex",
+            number: 5,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "inboundNumbersRegex",
+            options: {
+              ctype: 0,
+              packed: false,
+              jstype: 0,
+              lazy: false,
+              deprecated: true,
+              weak: false,
+              uninterpretedOption: [],
+            },
+            proto3Optional: false,
+          },
+          {
+            name: "inbound_numbers",
+            number: 10,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "inboundNumbers",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "inbound_username",
+            number: 6,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "inboundUsername",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "inbound_password",
+            number: 7,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "inboundPassword",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "outbound_username",
+            number: 8,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "outboundUsername",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "outbound_password",
+            number: 9,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "outboundPassword",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "name",
+            number: 11,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "name",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "metadata",
+            number: 12,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "metadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [
+          {
+            name: "TrunkKind",
+            value: [
+              { name: "TRUNK_LEGACY", number: 0, options: undefined },
+              {
+                name: "TRUNK_INBOUND",
+                number: 1,
+                options: undefined,
+              },
+              { name: "TRUNK_OUTBOUND", number: 2, options: undefined },
+            ],
+            options: undefined,
+            reservedRange: [],
+            reservedName: [],
+          },
+        ],
+        extensionRange: [],
+        oneofDecl: [],
+        options: {
+          messageSetWireFormat: false,
+          noStandardDescriptorAccessor: false,
+          deprecated: true,
+          mapEntry: false,
+          uninterpretedOption: [],
+        },
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "CreateSIPInboundTrunkRequest",
+        field: [
+          {
+            name: "trunk",
+            number: 1,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPInboundTrunkInfo",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trunk",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPInboundTrunkInfo",
+        field: [
+          {
+            name: "sip_trunk_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "sipTrunkId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "name",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "name",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "metadata",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "metadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "numbers",
+            number: 4,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "numbers",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "allowed_addresses",
+            number: 5,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "allowedAddresses",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "allowed_numbers",
+            number: 6,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "allowedNumbers",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "auth_username",
+            number: 7,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "authUsername",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "auth_password",
+            number: 8,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "authPassword",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "headers",
+            number: 9,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPInboundTrunkInfo.HeadersEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "headers",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "headers_to_attributes",
+            number: 10,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPInboundTrunkInfo.HeadersToAttributesEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "headersToAttributes",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "attributes_to_headers",
+            number: 14,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPInboundTrunkInfo.AttributesToHeadersEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "attributesToHeaders",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "include_headers",
+            number: 15,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPHeaderOptions",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "includeHeaders",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "ringing_timeout",
+            number: 11,
+            label: 1,
+            type: 11,
+            typeName: ".google.protobuf.Duration",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "ringingTimeout",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "max_call_duration",
+            number: 12,
+            label: 1,
+            type: 11,
+            typeName: ".google.protobuf.Duration",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "maxCallDuration",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "krisp_enabled",
+            number: 13,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "krispEnabled",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "media_encryption",
+            number: 16,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPMediaEncryption",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "mediaEncryption",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [
+          {
+            name: "HeadersEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+          {
+            name: "HeadersToAttributesEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+          {
+            name: "AttributesToHeadersEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+        ],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "CreateSIPOutboundTrunkRequest",
+        field: [
+          {
+            name: "trunk",
+            number: 1,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPOutboundTrunkInfo",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trunk",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPOutboundTrunkInfo",
+        field: [
+          {
+            name: "sip_trunk_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "sipTrunkId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "name",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "name",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "metadata",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "metadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "address",
+            number: 4,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "address",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "transport",
+            number: 5,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPTransport",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "transport",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "numbers",
+            number: 6,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "numbers",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "auth_username",
+            number: 7,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "authUsername",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "auth_password",
+            number: 8,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "authPassword",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "headers",
+            number: 9,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPOutboundTrunkInfo.HeadersEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "headers",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "headers_to_attributes",
+            number: 10,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPOutboundTrunkInfo.HeadersToAttributesEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "headersToAttributes",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "attributes_to_headers",
+            number: 11,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPOutboundTrunkInfo.AttributesToHeadersEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "attributesToHeaders",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "include_headers",
+            number: 12,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPHeaderOptions",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "includeHeaders",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "media_encryption",
+            number: 13,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPMediaEncryption",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "mediaEncryption",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [
+          {
+            name: "HeadersEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+          {
+            name: "HeadersToAttributesEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+          {
+            name: "AttributesToHeadersEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+        ],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "GetSIPInboundTrunkRequest",
+        field: [
+          {
+            name: "sip_trunk_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "sipTrunkId",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "GetSIPInboundTrunkResponse",
+        field: [
+          {
+            name: "trunk",
+            number: 1,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPInboundTrunkInfo",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trunk",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "GetSIPOutboundTrunkRequest",
+        field: [
+          {
+            name: "sip_trunk_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "sipTrunkId",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "GetSIPOutboundTrunkResponse",
+        field: [
+          {
+            name: "trunk",
+            number: 1,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPOutboundTrunkInfo",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trunk",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "ListSIPTrunkRequest",
+        field: [
+          {
+            name: "page",
+            number: 1,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.Pagination",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "page",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: {
+          messageSetWireFormat: false,
+          noStandardDescriptorAccessor: false,
+          deprecated: true,
+          mapEntry: false,
+          uninterpretedOption: [],
+        },
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "ListSIPTrunkResponse",
+        field: [
+          {
+            name: "items",
+            number: 1,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPTrunkInfo",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "items",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: {
+          messageSetWireFormat: false,
+          noStandardDescriptorAccessor: false,
+          deprecated: true,
+          mapEntry: false,
+          uninterpretedOption: [],
+        },
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "ListSIPInboundTrunkRequest",
+        field: [
+          {
+            name: "page",
+            number: 3,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.Pagination",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "page",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "trunk_ids",
+            number: 1,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trunkIds",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "numbers",
+            number: 2,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "numbers",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "ListSIPInboundTrunkResponse",
+        field: [
+          {
+            name: "items",
+            number: 1,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPInboundTrunkInfo",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "items",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "ListSIPOutboundTrunkRequest",
+        field: [
+          {
+            name: "page",
+            number: 3,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.Pagination",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "page",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "trunk_ids",
+            number: 1,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trunkIds",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "numbers",
+            number: 2,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "numbers",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "ListSIPOutboundTrunkResponse",
+        field: [
+          {
+            name: "items",
+            number: 1,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPOutboundTrunkInfo",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "items",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "DeleteSIPTrunkRequest",
+        field: [
+          {
+            name: "sip_trunk_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "sipTrunkId",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPDispatchRuleDirect",
+        field: [
+          {
+            name: "room_name",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "roomName",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "pin",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "pin",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPDispatchRuleIndividual",
+        field: [
+          {
+            name: "room_prefix",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "roomPrefix",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "pin",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "pin",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPDispatchRuleCallee",
+        field: [
+          {
+            name: "room_prefix",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "roomPrefix",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "pin",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "pin",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "randomize",
+            number: 3,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "randomize",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPDispatchRule",
+        field: [
+          {
+            name: "dispatch_rule_direct",
+            number: 1,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPDispatchRuleDirect",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "dispatchRuleDirect",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "dispatch_rule_individual",
+            number: 2,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPDispatchRuleIndividual",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "dispatchRuleIndividual",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "dispatch_rule_callee",
+            number: 3,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPDispatchRuleCallee",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "dispatchRuleCallee",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [{ name: "rule", options: undefined }],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "CreateSIPDispatchRuleRequest",
+        field: [
+          {
+            name: "rule",
+            number: 1,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPDispatchRule",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "rule",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "trunk_ids",
+            number: 2,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trunkIds",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "hide_phone_number",
+            number: 3,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "hidePhoneNumber",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "inbound_numbers",
+            number: 6,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "inboundNumbers",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "name",
+            number: 4,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "name",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "metadata",
+            number: 5,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "metadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "attributes",
+            number: 7,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.CreateSIPDispatchRuleRequest.AttributesEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "attributes",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room_preset",
+            number: 8,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "roomPreset",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room_config",
+            number: 9,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.RoomConfiguration",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "roomConfig",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [
+          {
+            name: "AttributesEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+        ],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPDispatchRuleInfo",
+        field: [
+          {
+            name: "sip_dispatch_rule_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "sipDispatchRuleId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "rule",
+            number: 2,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPDispatchRule",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "rule",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "trunk_ids",
+            number: 3,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trunkIds",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "hide_phone_number",
+            number: 4,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "hidePhoneNumber",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "inbound_numbers",
+            number: 7,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "inboundNumbers",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "name",
+            number: 5,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "name",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "metadata",
+            number: 6,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "metadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "attributes",
+            number: 8,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPDispatchRuleInfo.AttributesEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "attributes",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room_preset",
+            number: 9,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "roomPreset",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room_config",
+            number: 10,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.RoomConfiguration",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "roomConfig",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "krisp_enabled",
+            number: 11,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "krispEnabled",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "media_encryption",
+            number: 12,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPMediaEncryption",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "mediaEncryption",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [
+          {
+            name: "AttributesEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+        ],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "ListSIPDispatchRuleRequest",
+        field: [
+          {
+            name: "page",
+            number: 3,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.Pagination",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "page",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "dispatch_rule_ids",
+            number: 1,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "dispatchRuleIds",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "trunk_ids",
+            number: 2,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trunkIds",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "ListSIPDispatchRuleResponse",
+        field: [
+          {
+            name: "items",
+            number: 1,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPDispatchRuleInfo",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "items",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "DeleteSIPDispatchRuleRequest",
+        field: [
+          {
+            name: "sip_dispatch_rule_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "sipDispatchRuleId",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPOutboundConfig",
+        field: [
+          {
+            name: "hostname",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "hostname",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "transport",
+            number: 2,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPTransport",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "transport",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "auth_username",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "authUsername",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "auth_password",
+            number: 4,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "authPassword",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "headers_to_attributes",
+            number: 5,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPOutboundConfig.HeadersToAttributesEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "headersToAttributes",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "attributes_to_headers",
+            number: 6,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPOutboundConfig.AttributesToHeadersEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "attributesToHeaders",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [
+          {
+            name: "HeadersToAttributesEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+          {
+            name: "AttributesToHeadersEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+        ],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "CreateSIPParticipantRequest",
+        field: [
+          {
+            name: "sip_trunk_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "sipTrunkId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "trunk",
+            number: 20,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPOutboundConfig",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trunk",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "sip_call_to",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "sipCallTo",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "sip_number",
+            number: 15,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "sipNumber",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room_name",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "roomName",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_identity",
+            number: 4,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantIdentity",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_name",
+            number: 7,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantName",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_metadata",
+            number: 8,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantMetadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_attributes",
+            number: 9,
+            label: 3,
+            type: 11,
+            typeName:
+              ".livekit.CreateSIPParticipantRequest.ParticipantAttributesEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantAttributes",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "dtmf",
+            number: 5,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "dtmf",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "play_ringtone",
+            number: 6,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "playRingtone",
+            options: {
+              ctype: 0,
+              packed: false,
+              jstype: 0,
+              lazy: false,
+              deprecated: true,
+              weak: false,
+              uninterpretedOption: [],
+            },
+            proto3Optional: false,
+          },
+          {
+            name: "play_dialtone",
+            number: 13,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "playDialtone",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "hide_phone_number",
+            number: 10,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "hidePhoneNumber",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "headers",
+            number: 16,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.CreateSIPParticipantRequest.HeadersEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "headers",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "include_headers",
+            number: 17,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPHeaderOptions",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "includeHeaders",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "ringing_timeout",
+            number: 11,
+            label: 1,
+            type: 11,
+            typeName: ".google.protobuf.Duration",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "ringingTimeout",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "max_call_duration",
+            number: 12,
+            label: 1,
+            type: 11,
+            typeName: ".google.protobuf.Duration",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "maxCallDuration",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "krisp_enabled",
+            number: 14,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "krispEnabled",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "media_encryption",
+            number: 18,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPMediaEncryption",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "mediaEncryption",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "wait_until_answered",
+            number: 19,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "waitUntilAnswered",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [
+          {
+            name: "ParticipantAttributesEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+          {
+            name: "HeadersEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+        ],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPParticipantInfo",
+        field: [
+          {
+            name: "participant_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_identity",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantIdentity",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room_name",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "roomName",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "sip_call_id",
+            number: 4,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "sipCallId",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "TransferSIPParticipantRequest",
+        field: [
+          {
+            name: "participant_identity",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantIdentity",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room_name",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "roomName",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "transfer_to",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "transferTo",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "play_dialtone",
+            number: 4,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "playDialtone",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "headers",
+            number: 5,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.TransferSIPParticipantRequest.HeadersEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "headers",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [
+          {
+            name: "HeadersEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+        ],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPCallInfo",
+        field: [
+          {
+            name: "call_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "callId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "trunk_id",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trunkId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "dispatch_rule_id",
+            number: 16,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "dispatchRuleId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "region",
+            number: 17,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "region",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room_name",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "roomName",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room_id",
+            number: 4,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "roomId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_identity",
+            number: 5,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantIdentity",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_attributes",
+            number: 18,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.SIPCallInfo.ParticipantAttributesEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantAttributes",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "from_uri",
+            number: 6,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPUri",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "fromUri",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "to_uri",
+            number: 7,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPUri",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "toUri",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "created_at",
+            number: 9,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "createdAt",
+            options: {
+              ctype: 0,
+              packed: false,
+              jstype: 0,
+              lazy: false,
+              deprecated: true,
+              weak: false,
+              uninterpretedOption: [],
+            },
+            proto3Optional: false,
+          },
+          {
+            name: "started_at",
+            number: 10,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "startedAt",
+            options: {
+              ctype: 0,
+              packed: false,
+              jstype: 0,
+              lazy: false,
+              deprecated: true,
+              weak: false,
+              uninterpretedOption: [],
+            },
+            proto3Optional: false,
+          },
+          {
+            name: "ended_at",
+            number: 11,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "endedAt",
+            options: {
+              ctype: 0,
+              packed: false,
+              jstype: 0,
+              lazy: false,
+              deprecated: true,
+              weak: false,
+              uninterpretedOption: [],
+            },
+            proto3Optional: false,
+          },
+          {
+            name: "enabled_features",
+            number: 14,
+            label: 3,
+            type: 14,
+            typeName: ".livekit.SIPFeature",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "enabledFeatures",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "call_direction",
+            number: 15,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPCallDirection",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "callDirection",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "call_status",
+            number: 8,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPCallStatus",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "callStatus",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "created_at_ns",
+            number: 22,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "createdAtNs",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "started_at_ns",
+            number: 23,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "startedAtNs",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "ended_at_ns",
+            number: 24,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "endedAtNs",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "disconnect_reason",
+            number: 12,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.DisconnectReason",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "disconnectReason",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "error",
+            number: 13,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "error",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "call_status_code",
+            number: 19,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SIPStatus",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "callStatusCode",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "audio_codec",
+            number: 20,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "audioCodec",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "media_encryption",
+            number: 21,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "mediaEncryption",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [
+          {
+            name: "ParticipantAttributesEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+        ],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPUri",
+        field: [
+          {
+            name: "user",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "user",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "host",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "host",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "ip",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "ip",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "port",
+            number: 4,
+            label: 1,
+            type: 13,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "port",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "transport",
+            number: 5,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.SIPTransport",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "transport",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+    ],
+    enumType: [
+      {
+        name: "SIPStatusCode",
+        value: [
+          { name: "SIP_STATUS_UNKNOWN", number: 0, options: undefined },
+          { name: "SIP_STATUS_TRYING", number: 100, options: undefined },
+          { name: "SIP_STATUS_RINGING", number: 180, options: undefined },
+          {
+            name: "SIP_STATUS_CALL_IS_FORWARDED",
+            number: 181,
+            options: undefined,
+          },
+          { name: "SIP_STATUS_QUEUED", number: 182, options: undefined },
+          {
+            name: "SIP_STATUS_SESSION_PROGRESS",
+            number: 183,
+            options: undefined,
+          },
+          { name: "SIP_STATUS_OK", number: 200, options: undefined },
+          { name: "SIP_STATUS_ACCEPTED", number: 202, options: undefined },
+          {
+            name: "SIP_STATUS_MOVED_PERMANENTLY",
+            number: 301,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_MOVED_TEMPORARILY",
+            number: 302,
+            options: undefined,
+          },
+          { name: "SIP_STATUS_USE_PROXY", number: 305, options: undefined },
+          { name: "SIP_STATUS_BAD_REQUEST", number: 400, options: undefined },
+          { name: "SIP_STATUS_UNAUTHORIZED", number: 401, options: undefined },
+          {
+            name: "SIP_STATUS_PAYMENT_REQUIRED",
+            number: 402,
+            options: undefined,
+          },
+          { name: "SIP_STATUS_FORBIDDEN", number: 403, options: undefined },
+          { name: "SIP_STATUS_NOTFOUND", number: 404, options: undefined },
+          {
+            name: "SIP_STATUS_METHOD_NOT_ALLOWED",
+            number: 405,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_NOT_ACCEPTABLE",
+            number: 406,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_PROXY_AUTH_REQUIRED",
+            number: 407,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_REQUEST_TIMEOUT",
+            number: 408,
+            options: undefined,
+          },
+          { name: "SIP_STATUS_CONFLICT", number: 409, options: undefined },
+          { name: "SIP_STATUS_GONE", number: 410, options: undefined },
+          {
+            name: "SIP_STATUS_REQUEST_ENTITY_TOO_LARGE",
+            number: 413,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_REQUEST_URI_TOO_LONG",
+            number: 414,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_UNSUPPORTED_MEDIA_TYPE",
+            number: 415,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_REQUESTED_RANGE_NOT_SATISFIABLE",
+            number: 416,
+            options: undefined,
+          },
+          { name: "SIP_STATUS_BAD_EXTENSION", number: 420, options: undefined },
+          {
+            name: "SIP_STATUS_EXTENSION_REQUIRED",
+            number: 421,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_INTERVAL_TOO_BRIEF",
+            number: 423,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_TEMPORARILY_UNAVAILABLE",
+            number: 480,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_CALL_TRANSACTION_DOES_NOT_EXISTS",
+            number: 481,
+            options: undefined,
+          },
+          { name: "SIP_STATUS_LOOP_DETECTED", number: 482, options: undefined },
+          { name: "SIP_STATUS_TOO_MANY_HOPS", number: 483, options: undefined },
+          {
+            name: "SIP_STATUS_ADDRESS_INCOMPLETE",
+            number: 484,
+            options: undefined,
+          },
+          { name: "SIP_STATUS_AMBIGUOUS", number: 485, options: undefined },
+          { name: "SIP_STATUS_BUSY_HERE", number: 486, options: undefined },
+          {
+            name: "SIP_STATUS_REQUEST_TERMINATED",
+            number: 487,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_NOT_ACCEPTABLE_HERE",
+            number: 488,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_INTERNAL_SERVER_ERROR",
+            number: 500,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_NOT_IMPLEMENTED",
+            number: 501,
+            options: undefined,
+          },
+          { name: "SIP_STATUS_BAD_GATEWAY", number: 502, options: undefined },
+          {
+            name: "SIP_STATUS_SERVICE_UNAVAILABLE",
+            number: 503,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_GATEWAY_TIMEOUT",
+            number: 504,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_VERSION_NOT_SUPPORTED",
+            number: 505,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_MESSAGE_TOO_LARGE",
+            number: 513,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_GLOBAL_BUSY_EVERYWHERE",
+            number: 600,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_GLOBAL_DECLINE",
+            number: 603,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_GLOBAL_DOES_NOT_EXIST_ANYWHERE",
+            number: 604,
+            options: undefined,
+          },
+          {
+            name: "SIP_STATUS_GLOBAL_NOT_ACCEPTABLE",
+            number: 606,
+            options: undefined,
+          },
+        ],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPTransport",
+        value: [
+          { name: "SIP_TRANSPORT_AUTO", number: 0, options: undefined },
+          { name: "SIP_TRANSPORT_UDP", number: 1, options: undefined },
+          { name: "SIP_TRANSPORT_TCP", number: 2, options: undefined },
+          { name: "SIP_TRANSPORT_TLS", number: 3, options: undefined },
+        ],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPHeaderOptions",
+        value: [
+          { name: "SIP_NO_HEADERS", number: 0, options: undefined },
+          {
+            name: "SIP_X_HEADERS",
+            number: 1,
+            options: undefined,
+          },
+          { name: "SIP_ALL_HEADERS", number: 2, options: undefined },
+        ],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPMediaEncryption",
+        value: [
+          { name: "SIP_MEDIA_ENCRYPT_DISABLE", number: 0, options: undefined },
+          {
+            name: "SIP_MEDIA_ENCRYPT_ALLOW",
+            number: 1,
+            options: undefined,
+          },
+          { name: "SIP_MEDIA_ENCRYPT_REQUIRE", number: 2, options: undefined },
+        ],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPCallStatus",
+        value: [
+          { name: "SCS_CALL_INCOMING", number: 0, options: undefined },
+          { name: "SCS_PARTICIPANT_JOINED", number: 1, options: undefined },
+          { name: "SCS_ACTIVE", number: 2, options: undefined },
+          { name: "SCS_DISCONNECTED", number: 3, options: undefined },
+          { name: "SCS_ERROR", number: 4, options: undefined },
+        ],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPFeature",
+        value: [
+          { name: "NONE", number: 0, options: undefined },
+          {
+            name: "KRISP_ENABLED",
+            number: 1,
+            options: undefined,
+          },
+        ],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SIPCallDirection",
+        value: [
+          { name: "SCD_UNKNOWN", number: 0, options: undefined },
+          {
+            name: "SCD_INBOUND",
+            number: 1,
+            options: undefined,
+          },
+          { name: "SCD_OUTBOUND", number: 2, options: undefined },
+        ],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+    ],
+    service: [
+      {
+        name: "SIP",
+        method: [
+          {
+            name: "ListSIPTrunk",
+            inputType: ".livekit.ListSIPTrunkRequest",
+            outputType: ".livekit.ListSIPTrunkResponse",
+            options: {
+              deprecated: true,
+              idempotencyLevel: 0,
+              uninterpretedOption: [],
+            },
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "CreateSIPInboundTrunk",
+            inputType: ".livekit.CreateSIPInboundTrunkRequest",
+            outputType: ".livekit.SIPInboundTrunkInfo",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "CreateSIPOutboundTrunk",
+            inputType: ".livekit.CreateSIPOutboundTrunkRequest",
+            outputType: ".livekit.SIPOutboundTrunkInfo",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "GetSIPInboundTrunk",
+            inputType: ".livekit.GetSIPInboundTrunkRequest",
+            outputType: ".livekit.GetSIPInboundTrunkResponse",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "GetSIPOutboundTrunk",
+            inputType: ".livekit.GetSIPOutboundTrunkRequest",
+            outputType: ".livekit.GetSIPOutboundTrunkResponse",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "ListSIPInboundTrunk",
+            inputType: ".livekit.ListSIPInboundTrunkRequest",
+            outputType: ".livekit.ListSIPInboundTrunkResponse",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "ListSIPOutboundTrunk",
+            inputType: ".livekit.ListSIPOutboundTrunkRequest",
+            outputType: ".livekit.ListSIPOutboundTrunkResponse",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "DeleteSIPTrunk",
+            inputType: ".livekit.DeleteSIPTrunkRequest",
+            outputType: ".livekit.SIPTrunkInfo",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "CreateSIPDispatchRule",
+            inputType: ".livekit.CreateSIPDispatchRuleRequest",
+            outputType: ".livekit.SIPDispatchRuleInfo",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "ListSIPDispatchRule",
+            inputType: ".livekit.ListSIPDispatchRuleRequest",
+            outputType: ".livekit.ListSIPDispatchRuleResponse",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "DeleteSIPDispatchRule",
+            inputType: ".livekit.DeleteSIPDispatchRuleRequest",
+            outputType: ".livekit.SIPDispatchRuleInfo",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "CreateSIPParticipant",
+            inputType: ".livekit.CreateSIPParticipantRequest",
+            outputType: ".livekit.SIPParticipantInfo",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "TransferSIPParticipant",
+            inputType: ".livekit.TransferSIPParticipantRequest",
+            outputType: ".google.protobuf.Empty",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+        ],
+        options: undefined,
+      },
+    ],
+    extension: [],
+    options: {
+      javaPackage: "",
+      javaOuterClassname: "",
+      javaMultipleFiles: false,
+      javaGenerateEqualsAndHash: false,
+      javaStringCheckUtf8: false,
+      optimizeFor: 1,
+      goPackage: "github.com/livekit/protocol/livekit",
+      ccGenericServices: false,
+      javaGenericServices: false,
+      pyGenericServices: false,
+      phpGenericServices: false,
+      deprecated: false,
+      ccEnableArenas: true,
+      objcClassPrefix: "",
+      csharpNamespace: "LiveKit.Proto",
+      swiftPrefix: "",
+      phpClassPrefix: "",
+      phpNamespace: "",
+      phpMetadataNamespace: "",
+      rubyPackage: "LiveKit::Proto",
+      uninterpretedOption: [],
     },
-    "syntax": "proto3",
+    sourceCodeInfo: {
+      location: [
+        {
+          path: [6, 0],
+          span: [53, 0, 72, 1],
+          leadingComments: "",
+          trailingComments:
+            " rpc CreateSIPTrunk(CreateSIPTrunkRequest) returns (SIPTrunkInfo) { option deprecated = true; }; DELETED\n",
+          leadingDetachedComments: [
+            "\nLiveKit's SIP API is built with 3 high level primitives\n- SIP Trunk\n- SIP Dispatch Rule\n- SIP Participant\n\n\nThe `SIP Trunk` is used to accept and make calls. A `SIP Trunk` is configured with\nthe IPs/Ports and Authentication details of your SIP Provider. When a call is accepted from\nthe `SIP Trunk` it is then handled by the `SIP Dispatch Rules`. When a `SIP Participant` is created\nfor a outbound call a `SIP Trunk` is chosen to make the call with.\n\n\nThe `SIP Dispatch Rule` is a list of rules that dictate how a incoming SIP call should be handled.\nLiveKit currently supports 2 types, but may support more in the future.\n\n- `Direct Dispatch` puts a caller into a existing room, possibly choosing between multiple rooms with a pin\n- `Individual Dispatch` puts a caller into a new room created for the call\n\n\nThe `SIP Participant` represents an active SIP Session. These SIP Sessions are always associated with\na Participant on LiveKit side. Inbound calls create Participants directly (with a `SIP` kind), while outbound\ncalls must be initiated with `CreateSIPParticipant`.\n",
+          ],
+        },
+        {
+          path: [4, 0],
+          span: [133, 0, 136, 1],
+          leadingComments:
+            " SIPStatus is returned as an error detail in CreateSIPParticipant.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 1, 2, 0],
+          span: [142, 2, 40],
+          leadingComments:
+            " CIDR or IPs that traffic is accepted from\n An empty list means all inbound traffic is accepted.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 1, 2, 1],
+          span: [145, 2, 30],
+          leadingComments: " IP that SIP INVITE is sent too\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 1, 2, 2],
+          span: [148, 2, 29],
+          leadingComments: " Number used to make outbound calls\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 1, 2, 4],
+          span: [155, 2, 38],
+          leadingComments:
+            " Accepted `To` values. This Trunk will only accept a call made to\n these numbers. This allows you to have distinct Trunks for different phone\n numbers at the same provider.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 1, 2, 5],
+          span: [159, 2, 30],
+          leadingComments:
+            " Username and password used to authenticate inbound and outbound SIP invites\n May be empty to have no Authentication\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 1, 2, 9],
+          span: [165, 2, 19],
+          leadingComments: " Optional human-readable name for the Trunk.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 1, 2, 10],
+          span: [167, 2, 23],
+          leadingComments: " Optional user-defined metadata for the Trunk.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 2, 2, 0],
+          span: [178, 2, 21],
+          leadingComments: "",
+          trailingComments:
+            " do not map any headers, except ones mapped explicitly\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 2, 2, 1],
+          span: [179, 2, 20],
+          leadingComments: "",
+          trailingComments: " map all X-* headers to sip.h.x-* attributes\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 2, 2, 2],
+          span: [180, 2, 22],
+          leadingComments: "",
+          trailingComments: " map all headers to sip.h.* attributes\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 3, 2, 0],
+          span: [184, 2, 32],
+          leadingComments: "",
+          trailingComments: " do not enable encryption\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 3, 2, 1],
+          span: [185, 2, 30],
+          leadingComments: "",
+          trailingComments: " use encryption if available\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 3, 2, 2],
+          span: [186, 2, 32],
+          leadingComments: "",
+          trailingComments: " require encryption\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 2, 2, 2],
+          span: [203, 2, 40],
+          leadingComments:
+            " CIDR or IPs that traffic is accepted from\n An empty list means all inbound traffic is accepted.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 2, 2, 3],
+          span: [206, 2, 30],
+          leadingComments: " IP that SIP INVITE is sent too\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 2, 2, 4],
+          span: [209, 2, 29],
+          leadingComments: " Number used to make outbound calls\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 2, 2, 5],
+          span: [212, 2, 30],
+          leadingComments: " Transport used for inbound and outbound calls.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 2, 2, 7],
+          span: [219, 2, 39],
+          leadingComments:
+            " Accepted `To` values. This Trunk will only accept a call made to\n these numbers. This allows you to have distinct Trunks for different phone\n numbers at the same provider.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 2, 2, 8],
+          span: [223, 2, 30],
+          leadingComments:
+            " Username and password used to authenticate inbound and outbound SIP invites\n May be empty to have no Authentication\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 2, 2, 12],
+          span: [229, 2, 19],
+          leadingComments: " Human-readable name for the Trunk.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 2, 2, 13],
+          span: [231, 2, 23],
+          leadingComments: " User-defined metadata for the Trunk.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 3, 2, 0],
+          span: [237, 2, 32],
+          leadingComments: "",
+          trailingComments: " Trunk ID is ignored\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 4, 2, 1],
+          span: [244, 2, 18],
+          leadingComments: " Human-readable name for the Trunk.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 4, 2, 2],
+          span: [246, 2, 22],
+          leadingComments: " User-defined metadata for the Trunk.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 4, 2, 3],
+          span: [250, 2, 30],
+          leadingComments:
+            " Numbers associated with LiveKit SIP. The Trunk will only accept calls made to these numbers.\n Creating multiple Trunks with different phone numbers allows having different rules for a single provider.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 4, 2, 4],
+          span: [254, 2, 40],
+          leadingComments:
+            " CIDR or IPs that traffic is accepted from.\n An empty list means all inbound traffic is accepted.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 4, 2, 5],
+          span: [258, 2, 38],
+          leadingComments:
+            " Numbers that are allowed to make calls to this Trunk.\n An empty list means calls from any phone number is accepted.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 4, 2, 6],
+          span: [262, 2, 27],
+          leadingComments:
+            " Username and password used to authenticate inbound SIP invites.\n May be empty to have no authentication.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 4, 2, 8],
+          span: [266, 2, 34],
+          leadingComments:
+            " Include these SIP X-* headers in 200 OK responses.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 4, 2, 9],
+          span: [268, 2, 49],
+          leadingComments:
+            " Map SIP X-* headers from INVITE to SIP participant attributes.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 4, 2, 10],
+          span: [271, 2, 49],
+          leadingComments:
+            " Map LiveKit attributes to SIP X-* headers when sending BYE or REFER requests.\n Keys are the names of attributes and values are the names of X-* headers they will be mapped to.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 4, 2, 11],
+          span: [278, 2, 40],
+          leadingComments:
+            " Map SIP headers from INVITE to sip.h.* participant attributes automatically.\n\n When the names of required headers is known, using headers_to_attributes is strongly recommended.\n\n When mapping INVITE headers to response headers with attributes_to_headers map,\n lowercase header names should be used, for example: sip.h.x-custom-header.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 4, 2, 12],
+          span: [281, 2, 48],
+          leadingComments:
+            " Max time for the caller to wait for track subscription.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 4, 2, 13],
+          span: [283, 2, 50],
+          leadingComments: " Max call duration.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 5, 2, 0],
+          span: [292, 2, 33],
+          leadingComments: "",
+          trailingComments: " Trunk ID is ignored\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 6, 2, 1],
+          span: [299, 2, 18],
+          leadingComments: " Human-readable name for the Trunk.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 6, 2, 2],
+          span: [301, 2, 22],
+          leadingComments: " User-defined metadata for the Trunk.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 6, 2, 3],
+          span: [305, 2, 21],
+          leadingComments:
+            " Hostname or IP that SIP INVITE is sent too.\n Note that this is not a SIP URI and should not contain the 'sip:' protocol prefix.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 6, 2, 4],
+          span: [308, 2, 29],
+          leadingComments: " SIP Transport used for outbound call.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 6, 2, 5],
+          span: [311, 2, 30],
+          leadingComments:
+            " Numbers used to make the calls. Random one from this list will be selected.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 6, 2, 6],
+          span: [315, 2, 27],
+          leadingComments:
+            " Username and password used to authenticate with SIP server.\n May be empty to have no authentication.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 6, 2, 8],
+          span: [320, 2, 34],
+          leadingComments:
+            " Include these SIP X-* headers in INVITE request.\n These headers are sent as-is and may help identify this call as coming from LiveKit for the other SIP endpoint.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 6, 2, 9],
+          span: [323, 2, 49],
+          leadingComments:
+            " Map SIP X-* headers from 200 OK to SIP participant attributes.\n Keys are the names of X-* headers and values are the names of attributes they will be mapped to.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 6, 2, 10],
+          span: [326, 2, 49],
+          leadingComments:
+            " Map LiveKit attributes to SIP X-* headers when sending BYE or REFER requests.\n Keys are the names of attributes and values are the names of X-* headers they will be mapped to.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 6, 2, 11],
+          span: [333, 2, 40],
+          leadingComments:
+            " Map SIP headers from 200 OK to sip.h.* participant attributes automatically.\n\n When the names of required headers is known, using headers_to_attributes is strongly recommended.\n\n When mapping 200 OK headers to follow-up request headers with attributes_to_headers map,\n lowercase header names should be used, for example: sip.h.x-custom-header.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 13],
+          span: [367, 0, 374, 1],
+          leadingComments:
+            " ListSIPInboundTrunkRequest lists inbound trunks for given filters. If no filters are set, all trunks are listed.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 13, 2, 1],
+          span: [371, 2, 32],
+          leadingComments:
+            " Trunk IDs to list. If this option is set, the response will contains trunks in the same order.\n If any of the trunks is missing, a nil item in that position will be sent in the response.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 13, 2, 2],
+          span: [373, 2, 30],
+          leadingComments:
+            " Only list trunks that contain one of the numbers, including wildcard trunks.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 15],
+          span: [381, 0, 388, 1],
+          leadingComments:
+            " ListSIPOutboundTrunkRequest lists outbound trunks for given filters. If no filters are set, all trunks are listed.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 15, 2, 1],
+          span: [385, 2, 32],
+          leadingComments:
+            " Trunk IDs to list. If this option is set, the response will contains trunks in the same order.\n If any of the trunks is missing, a nil item in that position will be sent in the response.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 15, 2, 2],
+          span: [387, 2, 30],
+          leadingComments:
+            " Only list trunks that contain one of the numbers, including wildcard trunks.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 18, 2, 0],
+          span: [400, 2, 23],
+          leadingComments: " What room should call be directed into\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 18, 2, 1],
+          span: [403, 2, 17],
+          leadingComments: " Optional pin required to enter room\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 19, 2, 0],
+          span: [408, 2, 25],
+          leadingComments: " Prefix used on new room name\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 19, 2, 1],
+          span: [411, 2, 17],
+          leadingComments: " Optional pin required to enter room\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 20, 2, 0],
+          span: [416, 2, 25],
+          leadingComments: " Prefix used on new room name\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 20, 2, 1],
+          span: [419, 2, 17],
+          leadingComments: " Optional pin required to enter room\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 20, 2, 2],
+          span: [422, 2, 21],
+          leadingComments: " Optionally append random suffix\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 21, 2, 0],
+          span: [430, 4, 51],
+          leadingComments:
+            " SIPDispatchRuleDirect is a `SIP Dispatch Rule` that puts a user directly into a room\n This places users into an existing room. Optionally you can require a pin before a user can\n enter the room\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 21, 2, 1],
+          span: [433, 4, 59],
+          leadingComments:
+            " SIPDispatchRuleIndividual is a `SIP Dispatch Rule` that creates a new room for each caller.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 21, 2, 2],
+          span: [436, 4, 51],
+          leadingComments:
+            " SIPDispatchRuleCallee is a `SIP Dispatch Rule` that creates a new room for each callee.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 22, 2, 1],
+          span: [445, 2, 32],
+          leadingComments:
+            " What trunks are accepted for this dispatch rule\n If empty all trunks will match this dispatch rule\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 22, 2, 2],
+          span: [449, 2, 29],
+          leadingComments:
+            " By default the From value (Phone number) is used for participant name/identity and added to attributes.\n If true, a random value for identity will be used and numbers will be omitted from attributes.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 22, 2, 3],
+          span: [452, 2, 38],
+          leadingComments:
+            " Dispatch Rule will only accept a call made to these numbers (if set).\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 22, 2, 4],
+          span: [455, 2, 18],
+          leadingComments:
+            " Optional human-readable name for the Dispatch Rule.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 22, 2, 5],
+          span: [458, 2, 22],
+          leadingComments:
+            " User-defined metadata for the Dispatch Rule.\n Participants created by this rule will inherit this metadata.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 22, 2, 6],
+          span: [461, 2, 37],
+          leadingComments:
+            " User-defined attributes for the Dispatch Rule.\n Participants created by this rule will inherit these attributes.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 22, 2, 7],
+          span: [464, 2, 25],
+          leadingComments: " Cloud-only, config preset to use\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 22, 2, 8],
+          span: [467, 2, 36],
+          leadingComments:
+            " RoomConfiguration to use if the participant initiates the room\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 23, 2, 4],
+          span: [478, 2, 38],
+          leadingComments:
+            " Dispatch Rule will only accept a call made to these numbers (if set).\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 23, 2, 5],
+          span: [481, 2, 18],
+          leadingComments: " Human-readable name for the Dispatch Rule.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 23, 2, 6],
+          span: [484, 2, 22],
+          leadingComments:
+            " User-defined metadata for the Dispatch Rule.\n Participants created by this rule will inherit this metadata.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 23, 2, 7],
+          span: [487, 2, 37],
+          leadingComments:
+            " User-defined attributes for the Dispatch Rule.\n Participants created by this rule will inherit these attributes.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 23, 2, 8],
+          span: [490, 2, 25],
+          leadingComments: " Cloud-only, config preset to use\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 23, 2, 9],
+          span: [493, 2, 37],
+          leadingComments:
+            " RoomConfiguration to use if the participant initiates the room\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 23, 2, 11],
+          span: [496, 2, 43],
+          leadingComments: "",
+          trailingComments: " NEXT ID: 13\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 24],
+          span: [501, 0, 508, 1],
+          leadingComments:
+            " ListSIPDispatchRuleRequest lists dispatch rules for given filters. If no filters are set, all rules are listed.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 24, 2, 1],
+          span: [505, 2, 40],
+          leadingComments:
+            " Rule IDs to list. If this option is set, the response will contains rules in the same order.\n If any of the rules is missing, a nil item in that position will be sent in the response.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 24, 2, 2],
+          span: [507, 2, 32],
+          leadingComments:
+            " Only list rules that contain one of the Trunk IDs, including wildcard rules.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 27, 2, 0],
+          span: [520, 2, 22],
+          leadingComments: " SIP server address\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 27, 2, 1],
+          span: [523, 2, 29],
+          leadingComments: " SIP Transport used for outbound call.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 27, 2, 2],
+          span: [527, 2, 27],
+          leadingComments:
+            " Username and password used to authenticate with SIP server.\n May be empty to have no authentication.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 27, 2, 4],
+          span: [532, 2, 48],
+          leadingComments:
+            " Map SIP X-* headers from 200 OK to SIP participant attributes.\n Keys are the names of X-* headers and values are the names of attributes they will be mapped to.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 27, 2, 5],
+          span: [535, 2, 48],
+          leadingComments:
+            " Map LiveKit attributes to SIP X-* headers when sending BYE or REFER requests.\n Keys are the names of attributes and values are the names of X-* headers they will be mapped to.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28],
+          span: [540, 0, 600, 1],
+          leadingComments:
+            " A SIP Participant is a singular SIP session connected to a LiveKit room via\n a SIP Trunk into a SIP DispatchRule\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 0],
+          span: [542, 2, 26],
+          leadingComments: " What SIP Trunk should be used to dial the user\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 2],
+          span: [546, 2, 25],
+          leadingComments: " What number should be dialed via SIP\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 3],
+          span: [549, 2, 25],
+          leadingComments:
+            " Optional SIP From number to use. If empty, trunk number is used.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 4],
+          span: [552, 2, 23],
+          leadingComments:
+            " What LiveKit room should this participant be connected too\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 5],
+          span: [555, 2, 34],
+          leadingComments:
+            " Optional identity of the participant in LiveKit room\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 6],
+          span: [558, 2, 30],
+          leadingComments:
+            " Optional name of the participant in LiveKit room\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 7],
+          span: [561, 2, 34],
+          leadingComments:
+            " Optional user-defined metadata. Will be attached to a created Participant in the room.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 8],
+          span: [563, 2, 49],
+          leadingComments:
+            " Optional user-defined attributes. Will be attached to a created Participant in the room.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 9],
+          span: [567, 2, 18],
+          leadingComments:
+            " Optionally send following DTMF digits (extension codes) when making a call.\n Character 'w' can be used to add a 0.5 sec delay.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 10],
+          span: [570, 2, 45],
+          leadingComments:
+            " Optionally play dialtone in the room as an audible indicator for existing participants. The `play_ringtone` option is deprectated but has the same effect.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 12],
+          span: [575, 2, 30],
+          leadingComments:
+            " By default the From value (Phone number) is used for participant name/identity (if not set) and added to attributes.\n If true, a random value for identity will be used and numbers will be omitted from attributes.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 13],
+          span: [578, 2, 35],
+          leadingComments:
+            " These headers are sent as-is and may help identify this call as coming from LiveKit for the other SIP endpoint.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 14],
+          span: [585, 2, 40],
+          leadingComments:
+            " Map SIP headers from 200 OK to sip.h.* participant attributes automatically.\n\n When the names of required headers is known, using headers_to_attributes is strongly recommended.\n\n When mapping 200 OK headers to follow-up request headers with attributes_to_headers map,\n lowercase header names should be used, for example: sip.h.x-custom-header.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 15],
+          span: [588, 2, 48],
+          leadingComments: " Max time for the callee to answer the call.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 16],
+          span: [590, 2, 50],
+          leadingComments: " Max call duration.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 17],
+          span: [593, 2, 26],
+          leadingComments: " Enable voice isolation for the callee.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 28, 2, 19],
+          span: [598, 2, 32],
+          leadingComments:
+            " Wait for the answer for the call before returning.\n",
+          trailingComments: " NEXT ID: 21\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 30, 2, 3],
+          span: [615, 2, 25],
+          leadingComments:
+            " Optionally play dialtone to the SIP participant as an audible indicator of being transferred\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 30, 2, 4],
+          span: [618, 2, 34],
+          leadingComments:
+            " Add the following headers to the REFER SIP request.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 31, 2, 5],
+          span: [627, 2, 21],
+          leadingComments: "",
+          trailingComments: " ID of the current/previous room published to\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 4, 2, 0],
+          span: [659, 2, 24],
+          leadingComments: "",
+          trailingComments:
+            " Incoming call is being handled by the SIP service. The SIP participant hasn't joined a LiveKit room yet\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 4, 2, 1],
+          span: [660, 2, 29],
+          leadingComments: "",
+          trailingComments:
+            " SIP participant for outgoing call has been created. The SIP outgoing call is being established\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 4, 2, 2],
+          span: [661, 2, 17],
+          leadingComments: "",
+          trailingComments:
+            " Call is ongoing. SIP participant is active in the LiveKit room\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 4, 2, 3],
+          span: [662, 2, 23],
+          leadingComments: "",
+          trailingComments: " Call has ended\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 4, 2, 4],
+          span: [663, 2, 16],
+          leadingComments: "",
+          trailingComments:
+            " Call has ended or never succeeded because of an error\n",
+          leadingDetachedComments: [],
+        },
+      ],
+    },
+    syntax: "proto3",
   },
   references: {
     ".livekit.SIPStatusCode": SIPStatusCode,
@@ -11820,14 +13603,20 @@ export const protoMetadata = {
     ".livekit.SIPTrunkInfo.TrunkKind": SIPTrunkInfo_TrunkKind,
     ".livekit.CreateSIPInboundTrunkRequest": CreateSIPInboundTrunkRequest,
     ".livekit.SIPInboundTrunkInfo": SIPInboundTrunkInfo,
-    ".livekit.SIPInboundTrunkInfo.HeadersEntry": SIPInboundTrunkInfo_HeadersEntry,
-    ".livekit.SIPInboundTrunkInfo.HeadersToAttributesEntry": SIPInboundTrunkInfo_HeadersToAttributesEntry,
-    ".livekit.SIPInboundTrunkInfo.AttributesToHeadersEntry": SIPInboundTrunkInfo_AttributesToHeadersEntry,
+    ".livekit.SIPInboundTrunkInfo.HeadersEntry":
+      SIPInboundTrunkInfo_HeadersEntry,
+    ".livekit.SIPInboundTrunkInfo.HeadersToAttributesEntry":
+      SIPInboundTrunkInfo_HeadersToAttributesEntry,
+    ".livekit.SIPInboundTrunkInfo.AttributesToHeadersEntry":
+      SIPInboundTrunkInfo_AttributesToHeadersEntry,
     ".livekit.CreateSIPOutboundTrunkRequest": CreateSIPOutboundTrunkRequest,
     ".livekit.SIPOutboundTrunkInfo": SIPOutboundTrunkInfo,
-    ".livekit.SIPOutboundTrunkInfo.HeadersEntry": SIPOutboundTrunkInfo_HeadersEntry,
-    ".livekit.SIPOutboundTrunkInfo.HeadersToAttributesEntry": SIPOutboundTrunkInfo_HeadersToAttributesEntry,
-    ".livekit.SIPOutboundTrunkInfo.AttributesToHeadersEntry": SIPOutboundTrunkInfo_AttributesToHeadersEntry,
+    ".livekit.SIPOutboundTrunkInfo.HeadersEntry":
+      SIPOutboundTrunkInfo_HeadersEntry,
+    ".livekit.SIPOutboundTrunkInfo.HeadersToAttributesEntry":
+      SIPOutboundTrunkInfo_HeadersToAttributesEntry,
+    ".livekit.SIPOutboundTrunkInfo.AttributesToHeadersEntry":
+      SIPOutboundTrunkInfo_AttributesToHeadersEntry,
     ".livekit.GetSIPInboundTrunkRequest": GetSIPInboundTrunkRequest,
     ".livekit.GetSIPInboundTrunkResponse": GetSIPInboundTrunkResponse,
     ".livekit.GetSIPOutboundTrunkRequest": GetSIPOutboundTrunkRequest,
@@ -11844,40 +13633,67 @@ export const protoMetadata = {
     ".livekit.SIPDispatchRuleCallee": SIPDispatchRuleCallee,
     ".livekit.SIPDispatchRule": SIPDispatchRule,
     ".livekit.CreateSIPDispatchRuleRequest": CreateSIPDispatchRuleRequest,
-    ".livekit.CreateSIPDispatchRuleRequest.AttributesEntry": CreateSIPDispatchRuleRequest_AttributesEntry,
+    ".livekit.CreateSIPDispatchRuleRequest.AttributesEntry":
+      CreateSIPDispatchRuleRequest_AttributesEntry,
     ".livekit.SIPDispatchRuleInfo": SIPDispatchRuleInfo,
-    ".livekit.SIPDispatchRuleInfo.AttributesEntry": SIPDispatchRuleInfo_AttributesEntry,
+    ".livekit.SIPDispatchRuleInfo.AttributesEntry":
+      SIPDispatchRuleInfo_AttributesEntry,
     ".livekit.ListSIPDispatchRuleRequest": ListSIPDispatchRuleRequest,
     ".livekit.ListSIPDispatchRuleResponse": ListSIPDispatchRuleResponse,
     ".livekit.DeleteSIPDispatchRuleRequest": DeleteSIPDispatchRuleRequest,
     ".livekit.SIPOutboundConfig": SIPOutboundConfig,
-    ".livekit.SIPOutboundConfig.HeadersToAttributesEntry": SIPOutboundConfig_HeadersToAttributesEntry,
-    ".livekit.SIPOutboundConfig.AttributesToHeadersEntry": SIPOutboundConfig_AttributesToHeadersEntry,
+    ".livekit.SIPOutboundConfig.HeadersToAttributesEntry":
+      SIPOutboundConfig_HeadersToAttributesEntry,
+    ".livekit.SIPOutboundConfig.AttributesToHeadersEntry":
+      SIPOutboundConfig_AttributesToHeadersEntry,
     ".livekit.CreateSIPParticipantRequest": CreateSIPParticipantRequest,
     ".livekit.CreateSIPParticipantRequest.ParticipantAttributesEntry":
       CreateSIPParticipantRequest_ParticipantAttributesEntry,
-    ".livekit.CreateSIPParticipantRequest.HeadersEntry": CreateSIPParticipantRequest_HeadersEntry,
+    ".livekit.CreateSIPParticipantRequest.HeadersEntry":
+      CreateSIPParticipantRequest_HeadersEntry,
     ".livekit.SIPParticipantInfo": SIPParticipantInfo,
     ".livekit.TransferSIPParticipantRequest": TransferSIPParticipantRequest,
-    ".livekit.TransferSIPParticipantRequest.HeadersEntry": TransferSIPParticipantRequest_HeadersEntry,
+    ".livekit.TransferSIPParticipantRequest.HeadersEntry":
+      TransferSIPParticipantRequest_HeadersEntry,
     ".livekit.SIPCallInfo": SIPCallInfo,
-    ".livekit.SIPCallInfo.ParticipantAttributesEntry": SIPCallInfo_ParticipantAttributesEntry,
+    ".livekit.SIPCallInfo.ParticipantAttributesEntry":
+      SIPCallInfo_ParticipantAttributesEntry,
     ".livekit.SIPUri": SIPUri,
   },
-  dependencies: [protoMetadata1, protoMetadata2, protoMetadata3, protoMetadata4],
+  dependencies: [
+    protoMetadata1,
+    protoMetadata2,
+    protoMetadata3,
+    protoMetadata4,
+  ],
 } as const satisfies ProtoMetadata;
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | bigint | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | bigint
+  | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends globalThis.Array<infer U>
+    ? globalThis.Array<DeepPartial<U>>
+    : T extends ReadonlyArray<infer U>
+      ? ReadonlyArray<DeepPartial<U>>
+      : T extends {}
+        ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
+        : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never };
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never;
+    };
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;

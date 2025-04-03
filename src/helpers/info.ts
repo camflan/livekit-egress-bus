@@ -32,8 +32,7 @@ export type ClientRPCService = keyof typeof clientServiceDefinitions;
 export type ClientRPCForService<Service extends ClientRPCService> =
   keyof (typeof clientServiceDefinitions)[Service];
 
-type ClientRPCKey =
-  keyof (typeof clientServiceDefinitions)[ClientRPCService];
+type ClientRPCKey = keyof (typeof clientServiceDefinitions)[ClientRPCService];
 
 function isClientRPCKey(
   variableToCheck: unknown,

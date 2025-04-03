@@ -7,7 +7,10 @@
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { FileDescriptorProto as FileDescriptorProto1 } from "ts-proto-descriptors";
-import { protoMetadata as protoMetadata1, Timestamp } from "./google/protobuf/timestamp";
+import {
+  protoMetadata as protoMetadata1,
+  Timestamp,
+} from "./google/protobuf/timestamp";
 import { messageTypeRegistry } from "./typeRegistry";
 
 export const protobufPackage = "livekit";
@@ -58,19 +61,22 @@ export const MetricLabel = {
   UNRECOGNIZED: -1,
 } as const;
 
-export type MetricLabel = typeof MetricLabel[keyof typeof MetricLabel];
+export type MetricLabel = (typeof MetricLabel)[keyof typeof MetricLabel];
 
 export namespace MetricLabel {
   export type AGENTS_LLM_TTFT = typeof MetricLabel.AGENTS_LLM_TTFT;
   export type AGENTS_STT_TTFT = typeof MetricLabel.AGENTS_STT_TTFT;
   export type AGENTS_TTS_TTFB = typeof MetricLabel.AGENTS_TTS_TTFB;
-  export type CLIENT_VIDEO_SUBSCRIBER_FREEZE_COUNT = typeof MetricLabel.CLIENT_VIDEO_SUBSCRIBER_FREEZE_COUNT;
+  export type CLIENT_VIDEO_SUBSCRIBER_FREEZE_COUNT =
+    typeof MetricLabel.CLIENT_VIDEO_SUBSCRIBER_FREEZE_COUNT;
   export type CLIENT_VIDEO_SUBSCRIBER_TOTAL_FREEZE_DURATION =
     typeof MetricLabel.CLIENT_VIDEO_SUBSCRIBER_TOTAL_FREEZE_DURATION;
-  export type CLIENT_VIDEO_SUBSCRIBER_PAUSE_COUNT = typeof MetricLabel.CLIENT_VIDEO_SUBSCRIBER_PAUSE_COUNT;
+  export type CLIENT_VIDEO_SUBSCRIBER_PAUSE_COUNT =
+    typeof MetricLabel.CLIENT_VIDEO_SUBSCRIBER_PAUSE_COUNT;
   export type CLIENT_VIDEO_SUBSCRIBER_TOTAL_PAUSES_DURATION =
     typeof MetricLabel.CLIENT_VIDEO_SUBSCRIBER_TOTAL_PAUSES_DURATION;
-  export type CLIENT_AUDIO_SUBSCRIBER_CONCEALED_SAMPLES = typeof MetricLabel.CLIENT_AUDIO_SUBSCRIBER_CONCEALED_SAMPLES;
+  export type CLIENT_AUDIO_SUBSCRIBER_CONCEALED_SAMPLES =
+    typeof MetricLabel.CLIENT_AUDIO_SUBSCRIBER_CONCEALED_SAMPLES;
   export type CLIENT_AUDIO_SUBSCRIBER_SILENT_CONCEALED_SAMPLES =
     typeof MetricLabel.CLIENT_AUDIO_SUBSCRIBER_SILENT_CONCEALED_SAMPLES;
   export type CLIENT_AUDIO_SUBSCRIBER_CONCEALMENT_EVENTS =
@@ -79,7 +85,8 @@ export namespace MetricLabel {
     typeof MetricLabel.CLIENT_AUDIO_SUBSCRIBER_INTERRUPTION_COUNT;
   export type CLIENT_AUDIO_SUBSCRIBER_TOTAL_INTERRUPTION_DURATION =
     typeof MetricLabel.CLIENT_AUDIO_SUBSCRIBER_TOTAL_INTERRUPTION_DURATION;
-  export type CLIENT_SUBSCRIBER_JITTER_BUFFER_DELAY = typeof MetricLabel.CLIENT_SUBSCRIBER_JITTER_BUFFER_DELAY;
+  export type CLIENT_SUBSCRIBER_JITTER_BUFFER_DELAY =
+    typeof MetricLabel.CLIENT_SUBSCRIBER_JITTER_BUFFER_DELAY;
   export type CLIENT_SUBSCRIBER_JITTER_BUFFER_EMITTED_COUNT =
     typeof MetricLabel.CLIENT_SUBSCRIBER_JITTER_BUFFER_EMITTED_COUNT;
   export type CLIENT_VIDEO_PUBLISHER_QUALITY_LIMITATION_DURATION_BANDWIDTH =
@@ -91,7 +98,8 @@ export namespace MetricLabel {
   export type PUBLISHER_RTT = typeof MetricLabel.PUBLISHER_RTT;
   export type SERVER_MESH_RTT = typeof MetricLabel.SERVER_MESH_RTT;
   export type SUBSCRIBER_RTT = typeof MetricLabel.SUBSCRIBER_RTT;
-  export type METRIC_LABEL_PREDEFINED_MAX_VALUE = typeof MetricLabel.METRIC_LABEL_PREDEFINED_MAX_VALUE;
+  export type METRIC_LABEL_PREDEFINED_MAX_VALUE =
+    typeof MetricLabel.METRIC_LABEL_PREDEFINED_MAX_VALUE;
   export type UNRECOGNIZED = typeof MetricLabel.UNRECOGNIZED;
 }
 
@@ -221,9 +229,7 @@ export interface MetricsBatch {
   $type: "livekit.MetricsBatch";
   /** time at which this batch is sent based on a monotonic clock (millisecond resolution) */
   timestampMs: bigint;
-  normalizedTimestamp:
-    | Date
-    | undefined;
+  normalizedTimestamp: Date | undefined;
   /**
    * To avoid repeating string values, we store them in a separate list and reference them by index
    * This is useful for storing participant identities, track names, etc.
@@ -293,15 +299,23 @@ function createBaseMetricsBatch(): MetricsBatch {
 export const MetricsBatch: MessageFns<MetricsBatch, "livekit.MetricsBatch"> = {
   $type: "livekit.MetricsBatch" as const,
 
-  encode(message: MetricsBatch, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: MetricsBatch,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.timestampMs !== 0n) {
       if (BigInt.asIntN(64, message.timestampMs) !== message.timestampMs) {
-        throw new globalThis.Error("value provided for field message.timestampMs of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.timestampMs of type int64 too large",
+        );
       }
       writer.uint32(8).int64(message.timestampMs);
     }
     if (message.normalizedTimestamp !== undefined) {
-      Timestamp.encode(toTimestamp(message.normalizedTimestamp), writer.uint32(18).fork()).join();
+      Timestamp.encode(
+        toTimestamp(message.normalizedTimestamp),
+        writer.uint32(18).fork(),
+      ).join();
     }
     for (const v of message.strData) {
       writer.uint32(26).string(v!);
@@ -316,7 +330,8 @@ export const MetricsBatch: MessageFns<MetricsBatch, "livekit.MetricsBatch"> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): MetricsBatch {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMetricsBatch();
     while (reader.pos < end) {
@@ -335,7 +350,9 @@ export const MetricsBatch: MessageFns<MetricsBatch, "livekit.MetricsBatch"> = {
             break;
           }
 
-          message.normalizedTimestamp = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.normalizedTimestamp = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32()),
+          );
           continue;
         }
         case 3: {
@@ -351,7 +368,9 @@ export const MetricsBatch: MessageFns<MetricsBatch, "livekit.MetricsBatch"> = {
             break;
           }
 
-          message.timeSeries.push(TimeSeriesMetric.decode(reader, reader.uint32()));
+          message.timeSeries.push(
+            TimeSeriesMetric.decode(reader, reader.uint32()),
+          );
           continue;
         }
         case 5: {
@@ -378,11 +397,15 @@ export const MetricsBatch: MessageFns<MetricsBatch, "livekit.MetricsBatch"> = {
       normalizedTimestamp: isSet(object.normalizedTimestamp)
         ? fromJsonTimestamp(object.normalizedTimestamp)
         : undefined,
-      strData: globalThis.Array.isArray(object?.strData) ? object.strData.map((e: any) => globalThis.String(e)) : [],
+      strData: globalThis.Array.isArray(object?.strData)
+        ? object.strData.map((e: any) => globalThis.String(e))
+        : [],
       timeSeries: globalThis.Array.isArray(object?.timeSeries)
         ? object.timeSeries.map((e: any) => TimeSeriesMetric.fromJSON(e))
         : [],
-      events: globalThis.Array.isArray(object?.events) ? object.events.map((e: any) => EventMetric.fromJSON(e)) : [],
+      events: globalThis.Array.isArray(object?.events)
+        ? object.events.map((e: any) => EventMetric.fromJSON(e))
+        : [],
     };
   },
 
@@ -398,7 +421,9 @@ export const MetricsBatch: MessageFns<MetricsBatch, "livekit.MetricsBatch"> = {
       obj.strData = message.strData;
     }
     if (message.timeSeries?.length) {
-      obj.timeSeries = message.timeSeries.map((e) => TimeSeriesMetric.toJSON(e));
+      obj.timeSeries = message.timeSeries.map((e) =>
+        TimeSeriesMetric.toJSON(e),
+      );
     }
     if (message.events?.length) {
       obj.events = message.events.map((e) => EventMetric.toJSON(e));
@@ -406,16 +431,22 @@ export const MetricsBatch: MessageFns<MetricsBatch, "livekit.MetricsBatch"> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MetricsBatch>, I>>(base?: I): MetricsBatch {
+  create<I extends Exact<DeepPartial<MetricsBatch>, I>>(
+    base?: I,
+  ): MetricsBatch {
     return MetricsBatch.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<MetricsBatch>, I>>(object: I): MetricsBatch {
+  fromPartial<I extends Exact<DeepPartial<MetricsBatch>, I>>(
+    object: I,
+  ): MetricsBatch {
     const message = createBaseMetricsBatch();
     message.timestampMs = object.timestampMs ?? 0n;
     message.normalizedTimestamp = object.normalizedTimestamp ?? undefined;
     message.strData = object.strData?.map((e) => e) || [];
-    message.timeSeries = object.timeSeries?.map((e) => TimeSeriesMetric.fromPartial(e)) || [];
-    message.events = object.events?.map((e) => EventMetric.fromPartial(e)) || [];
+    message.timeSeries =
+      object.timeSeries?.map((e) => TimeSeriesMetric.fromPartial(e)) || [];
+    message.events =
+      object.events?.map((e) => EventMetric.fromPartial(e)) || [];
     return message;
   },
 };
@@ -423,13 +454,26 @@ export const MetricsBatch: MessageFns<MetricsBatch, "livekit.MetricsBatch"> = {
 messageTypeRegistry.set(MetricsBatch.$type, MetricsBatch);
 
 function createBaseTimeSeriesMetric(): TimeSeriesMetric {
-  return { $type: "livekit.TimeSeriesMetric", label: 0, participantIdentity: 0, trackSid: 0, samples: [], rid: 0 };
+  return {
+    $type: "livekit.TimeSeriesMetric",
+    label: 0,
+    participantIdentity: 0,
+    trackSid: 0,
+    samples: [],
+    rid: 0,
+  };
 }
 
-export const TimeSeriesMetric: MessageFns<TimeSeriesMetric, "livekit.TimeSeriesMetric"> = {
+export const TimeSeriesMetric: MessageFns<
+  TimeSeriesMetric,
+  "livekit.TimeSeriesMetric"
+> = {
   $type: "livekit.TimeSeriesMetric" as const,
 
-  encode(message: TimeSeriesMetric, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: TimeSeriesMetric,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.label !== 0) {
       writer.uint32(8).uint32(message.label);
     }
@@ -449,7 +493,8 @@ export const TimeSeriesMetric: MessageFns<TimeSeriesMetric, "livekit.TimeSeriesM
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): TimeSeriesMetric {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTimeSeriesMetric();
     while (reader.pos < end) {
@@ -508,7 +553,9 @@ export const TimeSeriesMetric: MessageFns<TimeSeriesMetric, "livekit.TimeSeriesM
     return {
       $type: TimeSeriesMetric.$type,
       label: isSet(object.label) ? globalThis.Number(object.label) : 0,
-      participantIdentity: isSet(object.participantIdentity) ? globalThis.Number(object.participantIdentity) : 0,
+      participantIdentity: isSet(object.participantIdentity)
+        ? globalThis.Number(object.participantIdentity)
+        : 0,
       trackSid: isSet(object.trackSid) ? globalThis.Number(object.trackSid) : 0,
       samples: globalThis.Array.isArray(object?.samples)
         ? object.samples.map((e: any) => MetricSample.fromJSON(e))
@@ -537,15 +584,20 @@ export const TimeSeriesMetric: MessageFns<TimeSeriesMetric, "livekit.TimeSeriesM
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<TimeSeriesMetric>, I>>(base?: I): TimeSeriesMetric {
+  create<I extends Exact<DeepPartial<TimeSeriesMetric>, I>>(
+    base?: I,
+  ): TimeSeriesMetric {
     return TimeSeriesMetric.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<TimeSeriesMetric>, I>>(object: I): TimeSeriesMetric {
+  fromPartial<I extends Exact<DeepPartial<TimeSeriesMetric>, I>>(
+    object: I,
+  ): TimeSeriesMetric {
     const message = createBaseTimeSeriesMetric();
     message.label = object.label ?? 0;
     message.participantIdentity = object.participantIdentity ?? 0;
     message.trackSid = object.trackSid ?? 0;
-    message.samples = object.samples?.map((e) => MetricSample.fromPartial(e)) || [];
+    message.samples =
+      object.samples?.map((e) => MetricSample.fromPartial(e)) || [];
     message.rid = object.rid ?? 0;
     return message;
   },
@@ -554,21 +606,34 @@ export const TimeSeriesMetric: MessageFns<TimeSeriesMetric, "livekit.TimeSeriesM
 messageTypeRegistry.set(TimeSeriesMetric.$type, TimeSeriesMetric);
 
 function createBaseMetricSample(): MetricSample {
-  return { $type: "livekit.MetricSample", timestampMs: 0n, normalizedTimestamp: undefined, value: 0 };
+  return {
+    $type: "livekit.MetricSample",
+    timestampMs: 0n,
+    normalizedTimestamp: undefined,
+    value: 0,
+  };
 }
 
 export const MetricSample: MessageFns<MetricSample, "livekit.MetricSample"> = {
   $type: "livekit.MetricSample" as const,
 
-  encode(message: MetricSample, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: MetricSample,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.timestampMs !== 0n) {
       if (BigInt.asIntN(64, message.timestampMs) !== message.timestampMs) {
-        throw new globalThis.Error("value provided for field message.timestampMs of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.timestampMs of type int64 too large",
+        );
       }
       writer.uint32(8).int64(message.timestampMs);
     }
     if (message.normalizedTimestamp !== undefined) {
-      Timestamp.encode(toTimestamp(message.normalizedTimestamp), writer.uint32(18).fork()).join();
+      Timestamp.encode(
+        toTimestamp(message.normalizedTimestamp),
+        writer.uint32(18).fork(),
+      ).join();
     }
     if (message.value !== 0) {
       writer.uint32(29).float(message.value);
@@ -577,7 +642,8 @@ export const MetricSample: MessageFns<MetricSample, "livekit.MetricSample"> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): MetricSample {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMetricSample();
     while (reader.pos < end) {
@@ -596,7 +662,9 @@ export const MetricSample: MessageFns<MetricSample, "livekit.MetricSample"> = {
             break;
           }
 
-          message.normalizedTimestamp = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.normalizedTimestamp = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32()),
+          );
           continue;
         }
         case 3: {
@@ -641,10 +709,14 @@ export const MetricSample: MessageFns<MetricSample, "livekit.MetricSample"> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MetricSample>, I>>(base?: I): MetricSample {
+  create<I extends Exact<DeepPartial<MetricSample>, I>>(
+    base?: I,
+  ): MetricSample {
     return MetricSample.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<MetricSample>, I>>(object: I): MetricSample {
+  fromPartial<I extends Exact<DeepPartial<MetricSample>, I>>(
+    object: I,
+  ): MetricSample {
     const message = createBaseMetricSample();
     message.timestampMs = object.timestampMs ?? 0n;
     message.normalizedTimestamp = object.normalizedTimestamp ?? undefined;
@@ -673,7 +745,10 @@ function createBaseEventMetric(): EventMetric {
 export const EventMetric: MessageFns<EventMetric, "livekit.EventMetric"> = {
   $type: "livekit.EventMetric" as const,
 
-  encode(message: EventMetric, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: EventMetric,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.label !== 0) {
       writer.uint32(8).uint32(message.label);
     }
@@ -684,22 +759,36 @@ export const EventMetric: MessageFns<EventMetric, "livekit.EventMetric"> = {
       writer.uint32(24).uint32(message.trackSid);
     }
     if (message.startTimestampMs !== 0n) {
-      if (BigInt.asIntN(64, message.startTimestampMs) !== message.startTimestampMs) {
-        throw new globalThis.Error("value provided for field message.startTimestampMs of type int64 too large");
+      if (
+        BigInt.asIntN(64, message.startTimestampMs) !== message.startTimestampMs
+      ) {
+        throw new globalThis.Error(
+          "value provided for field message.startTimestampMs of type int64 too large",
+        );
       }
       writer.uint32(32).int64(message.startTimestampMs);
     }
     if (message.endTimestampMs !== undefined) {
-      if (BigInt.asIntN(64, message.endTimestampMs) !== message.endTimestampMs) {
-        throw new globalThis.Error("value provided for field message.endTimestampMs of type int64 too large");
+      if (
+        BigInt.asIntN(64, message.endTimestampMs) !== message.endTimestampMs
+      ) {
+        throw new globalThis.Error(
+          "value provided for field message.endTimestampMs of type int64 too large",
+        );
       }
       writer.uint32(40).int64(message.endTimestampMs);
     }
     if (message.normalizedStartTimestamp !== undefined) {
-      Timestamp.encode(toTimestamp(message.normalizedStartTimestamp), writer.uint32(50).fork()).join();
+      Timestamp.encode(
+        toTimestamp(message.normalizedStartTimestamp),
+        writer.uint32(50).fork(),
+      ).join();
     }
     if (message.normalizedEndTimestamp !== undefined) {
-      Timestamp.encode(toTimestamp(message.normalizedEndTimestamp), writer.uint32(58).fork()).join();
+      Timestamp.encode(
+        toTimestamp(message.normalizedEndTimestamp),
+        writer.uint32(58).fork(),
+      ).join();
     }
     if (message.metadata !== "") {
       writer.uint32(66).string(message.metadata);
@@ -711,7 +800,8 @@ export const EventMetric: MessageFns<EventMetric, "livekit.EventMetric"> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): EventMetric {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEventMetric();
     while (reader.pos < end) {
@@ -762,7 +852,9 @@ export const EventMetric: MessageFns<EventMetric, "livekit.EventMetric"> = {
             break;
           }
 
-          message.normalizedStartTimestamp = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.normalizedStartTimestamp = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32()),
+          );
           continue;
         }
         case 7: {
@@ -770,7 +862,9 @@ export const EventMetric: MessageFns<EventMetric, "livekit.EventMetric"> = {
             break;
           }
 
-          message.normalizedEndTimestamp = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.normalizedEndTimestamp = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32()),
+          );
           continue;
         }
         case 8: {
@@ -802,17 +896,25 @@ export const EventMetric: MessageFns<EventMetric, "livekit.EventMetric"> = {
     return {
       $type: EventMetric.$type,
       label: isSet(object.label) ? globalThis.Number(object.label) : 0,
-      participantIdentity: isSet(object.participantIdentity) ? globalThis.Number(object.participantIdentity) : 0,
+      participantIdentity: isSet(object.participantIdentity)
+        ? globalThis.Number(object.participantIdentity)
+        : 0,
       trackSid: isSet(object.trackSid) ? globalThis.Number(object.trackSid) : 0,
-      startTimestampMs: isSet(object.startTimestampMs) ? BigInt(object.startTimestampMs) : 0n,
-      endTimestampMs: isSet(object.endTimestampMs) ? BigInt(object.endTimestampMs) : undefined,
+      startTimestampMs: isSet(object.startTimestampMs)
+        ? BigInt(object.startTimestampMs)
+        : 0n,
+      endTimestampMs: isSet(object.endTimestampMs)
+        ? BigInt(object.endTimestampMs)
+        : undefined,
       normalizedStartTimestamp: isSet(object.normalizedStartTimestamp)
         ? fromJsonTimestamp(object.normalizedStartTimestamp)
         : undefined,
       normalizedEndTimestamp: isSet(object.normalizedEndTimestamp)
         ? fromJsonTimestamp(object.normalizedEndTimestamp)
         : undefined,
-      metadata: isSet(object.metadata) ? globalThis.String(object.metadata) : "",
+      metadata: isSet(object.metadata)
+        ? globalThis.String(object.metadata)
+        : "",
       rid: isSet(object.rid) ? globalThis.Number(object.rid) : 0,
     };
   },
@@ -835,7 +937,8 @@ export const EventMetric: MessageFns<EventMetric, "livekit.EventMetric"> = {
       obj.endTimestampMs = message.endTimestampMs.toString();
     }
     if (message.normalizedStartTimestamp !== undefined) {
-      obj.normalizedStartTimestamp = message.normalizedStartTimestamp.toISOString();
+      obj.normalizedStartTimestamp =
+        message.normalizedStartTimestamp.toISOString();
     }
     if (message.normalizedEndTimestamp !== undefined) {
       obj.normalizedEndTimestamp = message.normalizedEndTimestamp.toISOString();
@@ -852,14 +955,17 @@ export const EventMetric: MessageFns<EventMetric, "livekit.EventMetric"> = {
   create<I extends Exact<DeepPartial<EventMetric>, I>>(base?: I): EventMetric {
     return EventMetric.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<EventMetric>, I>>(object: I): EventMetric {
+  fromPartial<I extends Exact<DeepPartial<EventMetric>, I>>(
+    object: I,
+  ): EventMetric {
     const message = createBaseEventMetric();
     message.label = object.label ?? 0;
     message.participantIdentity = object.participantIdentity ?? 0;
     message.trackSid = object.trackSid ?? 0;
     message.startTimestampMs = object.startTimestampMs ?? 0n;
     message.endTimestampMs = object.endTimestampMs ?? undefined;
-    message.normalizedStartTimestamp = object.normalizedStartTimestamp ?? undefined;
+    message.normalizedStartTimestamp =
+      object.normalizedStartTimestamp ?? undefined;
     message.normalizedEndTimestamp = object.normalizedEndTimestamp ?? undefined;
     message.metadata = object.metadata ?? "";
     message.rid = object.rid ?? 0;
@@ -883,593 +989,739 @@ export interface ProtoMetadata {
   options?: {
     options?: { [key: string]: any };
     services?: {
-      [key: string]: { options?: { [key: string]: any }; methods?: { [key: string]: { [key: string]: any } } };
+      [key: string]: {
+        options?: { [key: string]: any };
+        methods?: { [key: string]: { [key: string]: any } };
+      };
     };
     messages?: { [key: string]: ProtoMetaMessageOptions };
-    enums?: { [key: string]: { options?: { [key: string]: any }; values?: { [key: string]: { [key: string]: any } } } };
+    enums?: {
+      [key: string]: {
+        options?: { [key: string]: any };
+        values?: { [key: string]: { [key: string]: any } };
+      };
+    };
   };
 }
 
 export const protoMetadata = {
   fileDescriptor: {
-    "name": "livekit_metrics.proto",
-    "package": "livekit",
-    "dependency": ["google/protobuf/timestamp.proto"],
-    "publicDependency": [],
-    "weakDependency": [],
-    "messageType": [{
-      "name": "MetricsBatch",
-      "field": [{
-        "name": "timestamp_ms",
-        "number": 1,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "timestampMs",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "normalized_timestamp",
-        "number": 2,
-        "label": 1,
-        "type": 11,
-        "typeName": ".google.protobuf.Timestamp",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "normalizedTimestamp",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "str_data",
-        "number": 3,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "strData",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "time_series",
-        "number": 4,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.TimeSeriesMetric",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "timeSeries",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "events",
-        "number": 5,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.EventMetric",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "events",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "TimeSeriesMetric",
-      "field": [{
-        "name": "label",
-        "number": 1,
-        "label": 1,
-        "type": 13,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "label",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_identity",
-        "number": 2,
-        "label": 1,
-        "type": 13,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantIdentity",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "track_sid",
-        "number": 3,
-        "label": 1,
-        "type": 13,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trackSid",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "samples",
-        "number": 4,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.MetricSample",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "samples",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "rid",
-        "number": 5,
-        "label": 1,
-        "type": 13,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "rid",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "MetricSample",
-      "field": [{
-        "name": "timestamp_ms",
-        "number": 1,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "timestampMs",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "normalized_timestamp",
-        "number": 2,
-        "label": 1,
-        "type": 11,
-        "typeName": ".google.protobuf.Timestamp",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "normalizedTimestamp",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "value",
-        "number": 3,
-        "label": 1,
-        "type": 2,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "value",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "EventMetric",
-      "field": [{
-        "name": "label",
-        "number": 1,
-        "label": 1,
-        "type": 13,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "label",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_identity",
-        "number": 2,
-        "label": 1,
-        "type": 13,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantIdentity",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "track_sid",
-        "number": 3,
-        "label": 1,
-        "type": 13,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "trackSid",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "start_timestamp_ms",
-        "number": 4,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "startTimestampMs",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "end_timestamp_ms",
-        "number": 5,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "endTimestampMs",
-        "options": undefined,
-        "proto3Optional": true,
-      }, {
-        "name": "normalized_start_timestamp",
-        "number": 6,
-        "label": 1,
-        "type": 11,
-        "typeName": ".google.protobuf.Timestamp",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "normalizedStartTimestamp",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "normalized_end_timestamp",
-        "number": 7,
-        "label": 1,
-        "type": 11,
-        "typeName": ".google.protobuf.Timestamp",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 1,
-        "jsonName": "normalizedEndTimestamp",
-        "options": undefined,
-        "proto3Optional": true,
-      }, {
-        "name": "metadata",
-        "number": 8,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "metadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "rid",
-        "number": 9,
-        "label": 1,
-        "type": 13,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "rid",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [{ "name": "_end_timestamp_ms", "options": undefined }, {
-        "name": "_normalized_end_timestamp",
-        "options": undefined,
-      }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }],
-    "enumType": [{
-      "name": "MetricLabel",
-      "value": [
-        { "name": "AGENTS_LLM_TTFT", "number": 0, "options": undefined },
-        { "name": "AGENTS_STT_TTFT", "number": 1, "options": undefined },
-        { "name": "AGENTS_TTS_TTFB", "number": 2, "options": undefined },
-        { "name": "CLIENT_VIDEO_SUBSCRIBER_FREEZE_COUNT", "number": 3, "options": undefined },
-        { "name": "CLIENT_VIDEO_SUBSCRIBER_TOTAL_FREEZE_DURATION", "number": 4, "options": undefined },
-        { "name": "CLIENT_VIDEO_SUBSCRIBER_PAUSE_COUNT", "number": 5, "options": undefined },
-        { "name": "CLIENT_VIDEO_SUBSCRIBER_TOTAL_PAUSES_DURATION", "number": 6, "options": undefined },
-        { "name": "CLIENT_AUDIO_SUBSCRIBER_CONCEALED_SAMPLES", "number": 7, "options": undefined },
-        { "name": "CLIENT_AUDIO_SUBSCRIBER_SILENT_CONCEALED_SAMPLES", "number": 8, "options": undefined },
-        { "name": "CLIENT_AUDIO_SUBSCRIBER_CONCEALMENT_EVENTS", "number": 9, "options": undefined },
-        { "name": "CLIENT_AUDIO_SUBSCRIBER_INTERRUPTION_COUNT", "number": 10, "options": undefined },
-        { "name": "CLIENT_AUDIO_SUBSCRIBER_TOTAL_INTERRUPTION_DURATION", "number": 11, "options": undefined },
-        { "name": "CLIENT_SUBSCRIBER_JITTER_BUFFER_DELAY", "number": 12, "options": undefined },
-        { "name": "CLIENT_SUBSCRIBER_JITTER_BUFFER_EMITTED_COUNT", "number": 13, "options": undefined },
-        { "name": "CLIENT_VIDEO_PUBLISHER_QUALITY_LIMITATION_DURATION_BANDWIDTH", "number": 14, "options": undefined },
-        { "name": "CLIENT_VIDEO_PUBLISHER_QUALITY_LIMITATION_DURATION_CPU", "number": 15, "options": undefined },
-        { "name": "CLIENT_VIDEO_PUBLISHER_QUALITY_LIMITATION_DURATION_OTHER", "number": 16, "options": undefined },
-        { "name": "PUBLISHER_RTT", "number": 17, "options": undefined },
-        { "name": "SERVER_MESH_RTT", "number": 18, "options": undefined },
-        { "name": "SUBSCRIBER_RTT", "number": 19, "options": undefined },
-        { "name": "METRIC_LABEL_PREDEFINED_MAX_VALUE", "number": 4096, "options": undefined },
-      ],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }],
-    "service": [],
-    "extension": [],
-    "options": {
-      "javaPackage": "",
-      "javaOuterClassname": "",
-      "javaMultipleFiles": false,
-      "javaGenerateEqualsAndHash": false,
-      "javaStringCheckUtf8": false,
-      "optimizeFor": 1,
-      "goPackage": "github.com/livekit/protocol/livekit",
-      "ccGenericServices": false,
-      "javaGenericServices": false,
-      "pyGenericServices": false,
-      "phpGenericServices": false,
-      "deprecated": false,
-      "ccEnableArenas": true,
-      "objcClassPrefix": "",
-      "csharpNamespace": "LiveKit.Proto",
-      "swiftPrefix": "",
-      "phpClassPrefix": "",
-      "phpNamespace": "",
-      "phpMetadataNamespace": "",
-      "rubyPackage": "LiveKit::Proto",
-      "uninterpretedOption": [],
-    },
-    "sourceCodeInfo": {
-      "location": [{
-        "path": [5, 0],
-        "span": [21, 0, 46, 1],
-        "leadingComments":
-          " index from [0: MAX_LABEL_PREDEFINED_MAX_VALUE) are for predefined labels (`MetricLabel`)\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [
-          "\nProtocol used to record metrics for a specific session.\n\nClients send their timestamp in their own monotonically increasing time (e.g `performance.now` on JS).\nThese timestamps are then augmented by the SFU to its time base.\n\nA metric can be linked to a specific track by setting `track_sid`.\n",
+    name: "livekit_metrics.proto",
+    package: "livekit",
+    dependency: ["google/protobuf/timestamp.proto"],
+    publicDependency: [],
+    weakDependency: [],
+    messageType: [
+      {
+        name: "MetricsBatch",
+        field: [
+          {
+            name: "timestamp_ms",
+            number: 1,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "timestampMs",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "normalized_timestamp",
+            number: 2,
+            label: 1,
+            type: 11,
+            typeName: ".google.protobuf.Timestamp",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "normalizedTimestamp",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "str_data",
+            number: 3,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "strData",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "time_series",
+            number: 4,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.TimeSeriesMetric",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "timeSeries",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "events",
+            number: 5,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.EventMetric",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "events",
+            options: undefined,
+            proto3Optional: false,
+          },
         ],
-      }, {
-        "path": [5, 0, 2, 0],
-        "span": [22, 2, 22],
-        "leadingComments": "",
-        "trailingComments": " time to first token from LLM\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 1],
-        "span": [23, 2, 22],
-        "leadingComments": "",
-        "trailingComments": " time to final transcription\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 2],
-        "span": [24, 2, 22],
-        "leadingComments": "",
-        "trailingComments": " time to first byte\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 3],
-        "span": [26, 2, 43],
-        "leadingComments": "",
-        "trailingComments": " Number of video freezes\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 4],
-        "span": [27, 2, 52],
-        "leadingComments": "",
-        "trailingComments": " total duration of freezes\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 5],
-        "span": [28, 2, 42],
-        "leadingComments": "",
-        "trailingComments": " number of video pauses\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 6],
-        "span": [29, 2, 52],
-        "leadingComments": "",
-        "trailingComments": " total duration of pauses\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 7],
-        "span": [30, 2, 48],
-        "leadingComments": "",
-        "trailingComments": " number of concealed (synthesized) audio samples\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 8],
-        "span": [31, 2, 55],
-        "leadingComments": "",
-        "trailingComments": " number of silent concealed samples\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 9],
-        "span": [32, 2, 49],
-        "leadingComments": "",
-        "trailingComments": " number of concealment events\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 10],
-        "span": [33, 2, 50],
-        "leadingComments": "",
-        "trailingComments": " number of interruptions\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 11],
-        "span": [34, 2, 59],
-        "leadingComments": "",
-        "trailingComments": " total duration of interruptions\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 12],
-        "span": [35, 2, 45],
-        "leadingComments": "",
-        "trailingComments": " total time spent in jitter buffer\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 13],
-        "span": [36, 2, 53],
-        "leadingComments": "",
-        "trailingComments": " total time spent in jitter buffer\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 14],
-        "span": [37, 2, 68],
-        "leadingComments": "",
-        "trailingComments": " total duration spent in bandwidth quality limitation\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 15],
-        "span": [38, 2, 62],
-        "leadingComments": "",
-        "trailingComments": " total duration spent in cpu quality limitation\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 16],
-        "span": [39, 2, 64],
-        "leadingComments": "",
-        "trailingComments": " total duration spent in other quality limitation\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 17],
-        "span": [41, 2, 21],
-        "leadingComments": "",
-        "trailingComments": " Publisher RTT (participant -> server)\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 18],
-        "span": [42, 2, 23],
-        "leadingComments": "",
-        "trailingComments": " RTT between publisher node and subscriber node (could involve intermedia node(s))\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [5, 0, 2, 19],
-        "span": [43, 2, 22],
-        "leadingComments": "",
-        "trailingComments": " Subscribe RTT (server -> participant)\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 0, 2, 0],
-        "span": [49, 2, 25],
-        "leadingComments": "",
-        "trailingComments": " time at which this batch is sent based on a monotonic clock (millisecond resolution)\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 0, 2, 2],
-        "span": [57, 2, 31],
-        "leadingComments":
-          " To avoid repeating string values, we store them in a separate list and reference them by index\n This is useful for storing participant identities, track names, etc.\n There is also a predefined list of labels that can be used to reference common metrics.\n They have reserved indices from 0 to (METRIC_LABEL_PREDEFINED_MAX_VALUE - 1).\n Indexes pointing at str_data should start from METRIC_LABEL_PREDEFINED_MAX_VALUE, \n such that str_data[0] == index of METRIC_LABEL_PREDEFINED_MAX_VALUE.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 1, 2, 0],
-        "span": [65, 2, 19],
-        "leadingComments":
-          ' Metric name e.g "speech_probablity". The string value is not directly stored in the message, but referenced by index\n in the `str_data` field of `MetricsBatch`\n',
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 1, 2, 1],
-        "span": [66, 2, 34],
-        "leadingComments": "",
-        "trailingComments": " index into `str_data`\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 1, 2, 2],
-        "span": [67, 2, 23],
-        "leadingComments": "",
-        "trailingComments": " index into `str_data`\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 1, 2, 4],
-        "span": [69, 2, 17],
-        "leadingComments": "",
-        "trailingComments": " index into 'str_data'\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 0],
-        "span": [73, 2, 25],
-        "leadingComments": "",
-        "trailingComments": " time of metric based on a monotonic clock (in milliseconds)\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 3, 2, 1],
-        "span": [80, 2, 34],
-        "leadingComments": "",
-        "trailingComments": " index into `str_data`\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 3, 2, 2],
-        "span": [81, 2, 23],
-        "leadingComments": "",
-        "trailingComments": " index into `str_data`\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 3, 2, 3],
-        "span": [82, 2, 31],
-        "leadingComments": "",
-        "trailingComments": " start time of event based on a monotonic clock (in milliseconds)\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 3, 2, 4],
-        "span": [83, 2, 38],
-        "leadingComments": "",
-        "trailingComments": " end time of event based on a monotonic clock (in milliseconds), if needed\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 3, 2, 8],
-        "span": [87, 2, 17],
-        "leadingComments": "",
-        "trailingComments": " index into 'str_data'\n",
-        "leadingDetachedComments": [],
-      }],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "TimeSeriesMetric",
+        field: [
+          {
+            name: "label",
+            number: 1,
+            label: 1,
+            type: 13,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "label",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_identity",
+            number: 2,
+            label: 1,
+            type: 13,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantIdentity",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "track_sid",
+            number: 3,
+            label: 1,
+            type: 13,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trackSid",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "samples",
+            number: 4,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.MetricSample",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "samples",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "rid",
+            number: 5,
+            label: 1,
+            type: 13,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "rid",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "MetricSample",
+        field: [
+          {
+            name: "timestamp_ms",
+            number: 1,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "timestampMs",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "normalized_timestamp",
+            number: 2,
+            label: 1,
+            type: 11,
+            typeName: ".google.protobuf.Timestamp",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "normalizedTimestamp",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "value",
+            number: 3,
+            label: 1,
+            type: 2,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "value",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "EventMetric",
+        field: [
+          {
+            name: "label",
+            number: 1,
+            label: 1,
+            type: 13,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "label",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_identity",
+            number: 2,
+            label: 1,
+            type: 13,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantIdentity",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "track_sid",
+            number: 3,
+            label: 1,
+            type: 13,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "trackSid",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "start_timestamp_ms",
+            number: 4,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "startTimestampMs",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "end_timestamp_ms",
+            number: 5,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "endTimestampMs",
+            options: undefined,
+            proto3Optional: true,
+          },
+          {
+            name: "normalized_start_timestamp",
+            number: 6,
+            label: 1,
+            type: 11,
+            typeName: ".google.protobuf.Timestamp",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "normalizedStartTimestamp",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "normalized_end_timestamp",
+            number: 7,
+            label: 1,
+            type: 11,
+            typeName: ".google.protobuf.Timestamp",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 1,
+            jsonName: "normalizedEndTimestamp",
+            options: undefined,
+            proto3Optional: true,
+          },
+          {
+            name: "metadata",
+            number: 8,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "metadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "rid",
+            number: 9,
+            label: 1,
+            type: 13,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "rid",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [
+          { name: "_end_timestamp_ms", options: undefined },
+          {
+            name: "_normalized_end_timestamp",
+            options: undefined,
+          },
+        ],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+    ],
+    enumType: [
+      {
+        name: "MetricLabel",
+        value: [
+          { name: "AGENTS_LLM_TTFT", number: 0, options: undefined },
+          { name: "AGENTS_STT_TTFT", number: 1, options: undefined },
+          { name: "AGENTS_TTS_TTFB", number: 2, options: undefined },
+          {
+            name: "CLIENT_VIDEO_SUBSCRIBER_FREEZE_COUNT",
+            number: 3,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_VIDEO_SUBSCRIBER_TOTAL_FREEZE_DURATION",
+            number: 4,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_VIDEO_SUBSCRIBER_PAUSE_COUNT",
+            number: 5,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_VIDEO_SUBSCRIBER_TOTAL_PAUSES_DURATION",
+            number: 6,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_AUDIO_SUBSCRIBER_CONCEALED_SAMPLES",
+            number: 7,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_AUDIO_SUBSCRIBER_SILENT_CONCEALED_SAMPLES",
+            number: 8,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_AUDIO_SUBSCRIBER_CONCEALMENT_EVENTS",
+            number: 9,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_AUDIO_SUBSCRIBER_INTERRUPTION_COUNT",
+            number: 10,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_AUDIO_SUBSCRIBER_TOTAL_INTERRUPTION_DURATION",
+            number: 11,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_SUBSCRIBER_JITTER_BUFFER_DELAY",
+            number: 12,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_SUBSCRIBER_JITTER_BUFFER_EMITTED_COUNT",
+            number: 13,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_VIDEO_PUBLISHER_QUALITY_LIMITATION_DURATION_BANDWIDTH",
+            number: 14,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_VIDEO_PUBLISHER_QUALITY_LIMITATION_DURATION_CPU",
+            number: 15,
+            options: undefined,
+          },
+          {
+            name: "CLIENT_VIDEO_PUBLISHER_QUALITY_LIMITATION_DURATION_OTHER",
+            number: 16,
+            options: undefined,
+          },
+          { name: "PUBLISHER_RTT", number: 17, options: undefined },
+          { name: "SERVER_MESH_RTT", number: 18, options: undefined },
+          { name: "SUBSCRIBER_RTT", number: 19, options: undefined },
+          {
+            name: "METRIC_LABEL_PREDEFINED_MAX_VALUE",
+            number: 4096,
+            options: undefined,
+          },
+        ],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+    ],
+    service: [],
+    extension: [],
+    options: {
+      javaPackage: "",
+      javaOuterClassname: "",
+      javaMultipleFiles: false,
+      javaGenerateEqualsAndHash: false,
+      javaStringCheckUtf8: false,
+      optimizeFor: 1,
+      goPackage: "github.com/livekit/protocol/livekit",
+      ccGenericServices: false,
+      javaGenericServices: false,
+      pyGenericServices: false,
+      phpGenericServices: false,
+      deprecated: false,
+      ccEnableArenas: true,
+      objcClassPrefix: "",
+      csharpNamespace: "LiveKit.Proto",
+      swiftPrefix: "",
+      phpClassPrefix: "",
+      phpNamespace: "",
+      phpMetadataNamespace: "",
+      rubyPackage: "LiveKit::Proto",
+      uninterpretedOption: [],
     },
-    "syntax": "proto3",
+    sourceCodeInfo: {
+      location: [
+        {
+          path: [5, 0],
+          span: [21, 0, 46, 1],
+          leadingComments:
+            " index from [0: MAX_LABEL_PREDEFINED_MAX_VALUE) are for predefined labels (`MetricLabel`)\n",
+          trailingComments: "",
+          leadingDetachedComments: [
+            "\nProtocol used to record metrics for a specific session.\n\nClients send their timestamp in their own monotonically increasing time (e.g `performance.now` on JS).\nThese timestamps are then augmented by the SFU to its time base.\n\nA metric can be linked to a specific track by setting `track_sid`.\n",
+          ],
+        },
+        {
+          path: [5, 0, 2, 0],
+          span: [22, 2, 22],
+          leadingComments: "",
+          trailingComments: " time to first token from LLM\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 1],
+          span: [23, 2, 22],
+          leadingComments: "",
+          trailingComments: " time to final transcription\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 2],
+          span: [24, 2, 22],
+          leadingComments: "",
+          trailingComments: " time to first byte\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 3],
+          span: [26, 2, 43],
+          leadingComments: "",
+          trailingComments: " Number of video freezes\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 4],
+          span: [27, 2, 52],
+          leadingComments: "",
+          trailingComments: " total duration of freezes\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 5],
+          span: [28, 2, 42],
+          leadingComments: "",
+          trailingComments: " number of video pauses\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 6],
+          span: [29, 2, 52],
+          leadingComments: "",
+          trailingComments: " total duration of pauses\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 7],
+          span: [30, 2, 48],
+          leadingComments: "",
+          trailingComments:
+            " number of concealed (synthesized) audio samples\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 8],
+          span: [31, 2, 55],
+          leadingComments: "",
+          trailingComments: " number of silent concealed samples\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 9],
+          span: [32, 2, 49],
+          leadingComments: "",
+          trailingComments: " number of concealment events\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 10],
+          span: [33, 2, 50],
+          leadingComments: "",
+          trailingComments: " number of interruptions\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 11],
+          span: [34, 2, 59],
+          leadingComments: "",
+          trailingComments: " total duration of interruptions\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 12],
+          span: [35, 2, 45],
+          leadingComments: "",
+          trailingComments: " total time spent in jitter buffer\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 13],
+          span: [36, 2, 53],
+          leadingComments: "",
+          trailingComments: " total time spent in jitter buffer\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 14],
+          span: [37, 2, 68],
+          leadingComments: "",
+          trailingComments:
+            " total duration spent in bandwidth quality limitation\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 15],
+          span: [38, 2, 62],
+          leadingComments: "",
+          trailingComments: " total duration spent in cpu quality limitation\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 16],
+          span: [39, 2, 64],
+          leadingComments: "",
+          trailingComments:
+            " total duration spent in other quality limitation\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 17],
+          span: [41, 2, 21],
+          leadingComments: "",
+          trailingComments: " Publisher RTT (participant -> server)\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 18],
+          span: [42, 2, 23],
+          leadingComments: "",
+          trailingComments:
+            " RTT between publisher node and subscriber node (could involve intermedia node(s))\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [5, 0, 2, 19],
+          span: [43, 2, 22],
+          leadingComments: "",
+          trailingComments: " Subscribe RTT (server -> participant)\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 0, 2, 0],
+          span: [49, 2, 25],
+          leadingComments: "",
+          trailingComments:
+            " time at which this batch is sent based on a monotonic clock (millisecond resolution)\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 0, 2, 2],
+          span: [57, 2, 31],
+          leadingComments:
+            " To avoid repeating string values, we store them in a separate list and reference them by index\n This is useful for storing participant identities, track names, etc.\n There is also a predefined list of labels that can be used to reference common metrics.\n They have reserved indices from 0 to (METRIC_LABEL_PREDEFINED_MAX_VALUE - 1).\n Indexes pointing at str_data should start from METRIC_LABEL_PREDEFINED_MAX_VALUE, \n such that str_data[0] == index of METRIC_LABEL_PREDEFINED_MAX_VALUE.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 1, 2, 0],
+          span: [65, 2, 19],
+          leadingComments:
+            ' Metric name e.g "speech_probablity". The string value is not directly stored in the message, but referenced by index\n in the `str_data` field of `MetricsBatch`\n',
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 1, 2, 1],
+          span: [66, 2, 34],
+          leadingComments: "",
+          trailingComments: " index into `str_data`\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 1, 2, 2],
+          span: [67, 2, 23],
+          leadingComments: "",
+          trailingComments: " index into `str_data`\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 1, 2, 4],
+          span: [69, 2, 17],
+          leadingComments: "",
+          trailingComments: " index into 'str_data'\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 2, 2, 0],
+          span: [73, 2, 25],
+          leadingComments: "",
+          trailingComments:
+            " time of metric based on a monotonic clock (in milliseconds)\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 3, 2, 1],
+          span: [80, 2, 34],
+          leadingComments: "",
+          trailingComments: " index into `str_data`\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 3, 2, 2],
+          span: [81, 2, 23],
+          leadingComments: "",
+          trailingComments: " index into `str_data`\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 3, 2, 3],
+          span: [82, 2, 31],
+          leadingComments: "",
+          trailingComments:
+            " start time of event based on a monotonic clock (in milliseconds)\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 3, 2, 4],
+          span: [83, 2, 38],
+          leadingComments: "",
+          trailingComments:
+            " end time of event based on a monotonic clock (in milliseconds), if needed\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 3, 2, 8],
+          span: [87, 2, 17],
+          leadingComments: "",
+          trailingComments: " index into 'str_data'\n",
+          leadingDetachedComments: [],
+        },
+      ],
+    },
+    syntax: "proto3",
   },
   references: {
     ".livekit.MetricLabel": MetricLabel,
@@ -1481,17 +1733,32 @@ export const protoMetadata = {
   dependencies: [protoMetadata1],
 } as const satisfies ProtoMetadata;
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | bigint | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | bigint
+  | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends globalThis.Array<infer U>
+    ? globalThis.Array<DeepPartial<U>>
+    : T extends ReadonlyArray<infer U>
+      ? ReadonlyArray<DeepPartial<U>>
+      : T extends {}
+        ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
+        : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never };
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never;
+    };
 
 function toTimestamp(date: Date): Timestamp {
   const seconds = BigInt(Math.trunc(date.getTime() / 1_000));
