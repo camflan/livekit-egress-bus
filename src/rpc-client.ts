@@ -10,7 +10,7 @@ import {
 } from "./helpers/channels";
 import { msToNanosecondsBigInt } from "./helpers/datetimes";
 import { GenericLiveKitRpcError } from "./helpers/errors";
-import { newClientID, NewRequestID } from "./helpers/ids";
+import { newClientID, newRequestID } from "./helpers/ids";
 import { getInfo, ClientRPCService, ClientRPCForService } from "./helpers/info";
 import { getLogger } from "./helpers/logger";
 import {
@@ -156,7 +156,7 @@ export class RPCClient {
     const options = { ...DEFAULT_REQUEST_OPTIONS, ...providedOptions };
     const info = getInfo(service, rpc, topic);
 
-    const requestId = NewRequestID();
+    const requestId = newRequestID();
     const rawRequest = Buffer.from(requestMessageFns.encode(msg).finish());
     const now = Date.now();
 

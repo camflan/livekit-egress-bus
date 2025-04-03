@@ -15,7 +15,7 @@ import {
   nanosecondsBigIntToMs,
 } from "./helpers/datetimes";
 import { ErrorCode, isLiveKitError } from "./helpers/errors";
-import { NewServerID } from "./helpers/ids";
+import { newServerID } from "./helpers/ids";
 import { getInfo, RequestInfo, ServerRPCKey, RPCService } from "./helpers/info";
 import { getLogger } from "./helpers/logger";
 import {
@@ -73,7 +73,7 @@ export class RPCServer {
     // abort: AbortController;
     bus: MessageBus;
   }) {
-    this.serverId = NewServerID();
+    this.serverId = newServerID();
     this.#bus = bus;
 
     this.start = this.start.bind(this);

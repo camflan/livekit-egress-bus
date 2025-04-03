@@ -1,24 +1,37 @@
 /**
  * functionality sourced from LiveKit rand-ids
  */
+
+const entityPrefixes = {
+  client: "CLI",
+  egress: "EG",
+  request: "REQ",
+  server: "SRV",
+  stream: "STR",
+} as const;
+
+export function newRequestID() {
+  return formatID(entityPrefixes.request);
+}
+
+export function newServerID() {
+  return formatID(entityPrefixes.server);
+}
+
+export function newStreamID() {
+  return formatID(entityPrefixes.stream);
+}
+
 export function newClientID() {
-  return formatID("CLI_");
+  return formatID(entityPrefixes.client);
 }
 
-export function NewServerID() {
-  return formatID("SRV_");
-}
-
-export function NewRequestID() {
-  return formatID("REQ_");
-}
-
-export function NewStreamID() {
-  return formatID("STR_");
+export function newEgressID() {
+  return formatID(entityPrefixes.egress);
 }
 
 export function formatID(prefix: string) {
-  return prefix + readIDChars(10);
+  return `${prefix}_${readIDChars(10)}`;
 }
 
 const alphabet =
