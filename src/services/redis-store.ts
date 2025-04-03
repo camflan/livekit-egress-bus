@@ -1,11 +1,12 @@
 /** adapted from the ideas of LK redis store */
-
-import Redis from "iovalkey";
-import { getValkeyClient } from "./valkey";
 import { ensureError } from "@uplift-ltd/ts-helpers";
-import { EgressInfo, EgressStatus } from "@/generated/livekit_egress";
+import Redis from "iovalkey";
 import { getLogger } from "loglevel";
+
+import { EgressInfo, EgressStatus } from "@/generated/livekit_egress";
 import { EgressNotFoundError } from "@/errors";
+
+import { getValkeyClient } from "./valkey";
 
 const logger = getLogger("redis-store");
 

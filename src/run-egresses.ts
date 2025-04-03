@@ -5,11 +5,11 @@ import {
   StopEgressRequest,
 } from "./generated/livekit_egress";
 import { StartEgressRequest } from "./generated/rpc/egress";
-import { MessageBus } from "./bus";
 import { formatID } from "./helpers/ids";
 import { getLogger } from "./helpers/logger";
-import { RPCClient } from "./rpc-client";
-import { getValkeyClient } from "./valkey";
+import { MessageBus } from "./services/bus";
+import { RPCClient } from "./services/rpc-client";
+import { getValkeyClient } from "./services/valkey";
 
 const logger = getLogger("run-egresses");
 
