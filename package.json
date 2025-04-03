@@ -21,7 +21,8 @@
     "loglevel": "^1.9.2",
     "loglevel-plugin-prefix": "^0.8.4",
     "ts-chan": "^0.6.0",
-    "ts-proto": "^2.6.1"
+    "ts-proto": "^2.6.1",
+    "ts-proto-descriptors": "^2.0.0"
   },
   "devDependencies": {
     "@bufbuild/protoc-gen-es": "^2.2.3",
