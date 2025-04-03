@@ -1,0 +1,7 @@
+{
+    "name": "livekit-egress-bus",
+    "version": "2025.4.1",
+    "exports": {
+        ".": "./mod.ts"
+    }
+}
