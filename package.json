@@ -1,6 +1,6 @@
 {
   "name": "livekit-egress-bus",
-  "version": "2025.4.2",
+  "version": "2025.4.3",
   "main": "src/server.ts",
   "scripts": {
     "format": "prettier --write mod.ts ./src/**/*.ts",
