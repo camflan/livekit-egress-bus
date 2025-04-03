@@ -1,11 +1,11 @@
+import { Empty } from "@/generated/google/protobuf/empty";
+import { MessageFns, Msg } from "@/generated/internal";
+import { messageTypeRegistry, UnknownMessage } from "@/generated/typeRegistry";
+import { getLogger } from "@/helpers/logger";
 import { ensureError } from "@uplift-ltd/ts-helpers";
 import Redis from "iovalkey";
 import { Chan } from "ts-chan";
 
-import { getLogger } from "@/helpers/logger";
-import { Empty } from "@/generated/google/protobuf/empty";
-import { MessageFns, Msg } from "@/generated/internal";
-import { messageTypeRegistry, UnknownMessage } from "@/generated/typeRegistry";
 import { getValkeyClient } from "./valkey";
 
 const logger = getLogger("bus");

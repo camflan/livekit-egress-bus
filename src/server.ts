@@ -1,24 +1,24 @@
+import { ErrorCode, isLiveKitError } from "@/helpers/errors";
+import { getLogger } from "@/helpers/logger";
 import { ensureError } from "@uplift-ltd/ts-helpers";
 
+import { MessageBus } from "./bus";
+import { Empty } from "./generated/google/protobuf/empty";
 import {
   EgressInfo,
   EgressStatus,
   ListEgressRequest,
   ListEgressResponse,
 } from "./generated/livekit_egress";
-import { Empty } from "./generated/google/protobuf/empty";
 import { GetEgressRequest, UpdateMetricsRequest } from "./generated/rpc/io";
-import { MessageBus } from "./services/bus";
-import { ErrorCode, isLiveKitError } from "./errors";
-import { getLogger } from "./helpers/logger";
 import {
   listEgress,
   loadEgress,
   storeEgress,
   updateEgress,
-} from "./services/redis-store";
-import { RPCServer } from "./services/rpc-server";
-import { getValkeyClient } from "./services/valkey";
+} from "./redis-store";
+import { RPCServer } from "./rpc-server";
+import { getValkeyClient } from "./valkey";
 
 const logger = getLogger("server");
 let stopServer: (() => void) | undefined = undefined;

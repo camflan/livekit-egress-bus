@@ -1,24 +1,25 @@
 import {
-  getClaimRequestChannel,
-  getClaimResponseChannel,
-  getResponseChannel,
-  getRPCChannel,
-} from "@/helpers/channels";
-import { newClientID, NewRequestID } from "@/helpers/ids";
-import { msToNanosecondsBigInt } from "@/helpers/datetimes";
-import { MessageBus } from "./bus";
-import { Chan, recv, Select } from "ts-chan";
-import {
   ClaimRequest as InternalClaimRequest,
   Response as InternalResponse,
   MessageFns,
   Request as InternalRequest,
   ClaimResponse as InternalClaimResponse,
 } from "@/generated/internal";
-import { getInfo, ClientRPCService, ClientRPCForService } from "@/info";
-import { ensureError } from "@uplift-ltd/ts-helpers";
+import {
+  getClaimRequestChannel,
+  getClaimResponseChannel,
+  getResponseChannel,
+  getRPCChannel,
+} from "@/helpers/channels";
+import { msToNanosecondsBigInt } from "@/helpers/datetimes";
+import { GenericLiveKitRpcError } from "@/helpers/errors";
+import { newClientID, NewRequestID } from "@/helpers/ids";
+import { getInfo, ClientRPCService, ClientRPCForService } from "@/helpers/info";
 import { getLogger } from "@/helpers/logger";
-import { GenericLiveKitRpcError } from "@/errors";
+import { ensureError } from "@uplift-ltd/ts-helpers";
+import { Chan, recv, Select } from "ts-chan";
+
+import { MessageBus } from "./bus";
 import { AbortChannel, makeAbortChannel } from "./rpc-abort-channel";
 
 const logger = getLogger("rpc.client");

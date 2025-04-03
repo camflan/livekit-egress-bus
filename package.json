@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "src/server.ts",
   "scripts": {
-    "knip": "npx knip --config=knip.json --tsConfig=tsconfig.json",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "proto:generate": "./compile-protobufs.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,10 +24,14 @@
   },
   "devDependencies": {
     "@bufbuild/protoc-gen-es": "^2.2.3",
+    "@eslint/js": "^9.23.0",
     "@types/node": "^22.13.9",
+    "eslint": "^9.23.0",
+    "eslint-plugin-perfectionist": "^4.11.0",
     "prettier": "^3.5.3",
     "tsx": "^4.19.3",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.29.0"
   },
   "peerDependencies": {
     "iovalkey": "^0.3.1"

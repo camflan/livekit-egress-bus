@@ -1,10 +1,9 @@
+import { EgressInfo, EgressStatus } from "@/generated/livekit_egress";
+import { EgressNotFoundError } from "@/helpers/errors";
 /** adapted from the ideas of LK redis store */
 import { ensureError } from "@uplift-ltd/ts-helpers";
 import Redis from "iovalkey";
 import { getLogger } from "loglevel";
-
-import { EgressInfo, EgressStatus } from "@/generated/livekit_egress";
-import { EgressNotFoundError } from "@/errors";
 
 import { getValkeyClient } from "./valkey";
 
@@ -141,6 +140,6 @@ export async function updateEgress(
   }
 }
 
-function egressEndedValue(roomName: string, endedAt: BigInt) {
+function egressEndedValue(roomName: string, endedAt: bigint) {
   return `${roomName}|${endedAt}`;
 }

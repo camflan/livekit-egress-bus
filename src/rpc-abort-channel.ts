@@ -1,5 +1,5 @@
+import { GenericLiveKitRpcError } from "@/helpers/errors";
 import { Chan } from "ts-chan";
-import { GenericLiveKitRpcError } from "@/errors";
 
 export type AbortChannel<T = Error> = {
   abort: (reason: GenericLiveKitRpcError | T) => void;

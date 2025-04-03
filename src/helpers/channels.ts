@@ -1,8 +1,9 @@
+import { safeJoin } from "@uplift-ltd/strings";
+
 /**
  * Adapted from LiveKit psrpc channels.go
  */
-import { RPCService, RequestInfo } from "@/info";
-import { safeJoin } from "@uplift-ltd/strings";
+import { RPCService, RequestInfo } from "./info";
 
 const safeJoinWithPeriod = safeJoin(".");
 

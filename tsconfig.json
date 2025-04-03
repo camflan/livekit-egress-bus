@@ -46,7 +46,7 @@
         "target": "ES2022"
     },
     "include": [
-        "eslint.config.js",
+        "eslint.config.mjs",
         "lint-staged.config.js",
         "mod.ts",
         "prettier.config.js",
@@ -55,7 +55,7 @@
         "src/**/*.tsx",
     ],
     "exclude": [
-        "eslint.config.js",
+        "contrib",
         "node_modules"
     ]
 }

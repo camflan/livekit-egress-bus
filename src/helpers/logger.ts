@@ -1,7 +1,7 @@
-import log from "loglevel";
-import chalk from "chalk";
-import prefix from "loglevel-plugin-prefix";
 import { safeJoin } from "@uplift-ltd/strings";
+import chalk from "chalk";
+import log from "loglevel";
+import prefix from "loglevel-plugin-prefix";
 
 const colors = {
   TRACE: chalk.magenta,

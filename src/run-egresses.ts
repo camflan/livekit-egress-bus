@@ -1,4 +1,6 @@
 import { ensureError } from "@uplift-ltd/ts-helpers";
+
+import { MessageBus } from "./bus";
 import {
   EgressInfo,
   EncodingOptionsPreset,
@@ -7,9 +9,8 @@ import {
 import { StartEgressRequest } from "./generated/rpc/egress";
 import { formatID } from "./helpers/ids";
 import { getLogger } from "./helpers/logger";
-import { MessageBus } from "./services/bus";
-import { RPCClient } from "./services/rpc-client";
-import { getValkeyClient } from "./services/valkey";
+import { RPCClient } from "./rpc-client";
+import { getValkeyClient } from "./valkey";
 
 const logger = getLogger("run-egresses");
 
