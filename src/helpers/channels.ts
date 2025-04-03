@@ -108,8 +108,7 @@ export function getStreamServerChannel({
     Local: formatLocalChannel(method, CHANNEL_SUFFIXES.STREAM),
   };
 }
-
-export function formatClientChannel(
+function formatClientChannel(
   service: string,
   clientId: string,
   channel: string,
@@ -122,11 +121,11 @@ export function formatClientChannel(
   );
 }
 
-export function formatLocalChannel(method: string, channel: string) {
+function formatLocalChannel(method: string, channel: string) {
   return safeJoinWithPeriod(method, channel);
 }
 
-export function formatServerChannel(
+function formatServerChannel(
   service: string,
   topic: string[] = [],
   queue: boolean,

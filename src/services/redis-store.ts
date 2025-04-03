@@ -3,9 +3,9 @@
 import Redis from "iovalkey";
 import { getValkeyClient } from "./valkey";
 import { ensureError } from "@uplift-ltd/ts-helpers";
-import { EgressInfo, EgressStatus } from "./generated/livekit_egress";
+import { EgressInfo, EgressStatus } from "@/generated/livekit_egress";
 import { getLogger } from "loglevel";
-import { EgressNotFoundError } from "./errors";
+import { EgressNotFoundError } from "@/errors";
 
 const logger = getLogger("redis-store");
 

@@ -8,7 +8,7 @@ import {
 } from "./generated/livekit_egress";
 import { Empty } from "./generated/google/protobuf/empty";
 import { GetEgressRequest, UpdateMetricsRequest } from "./generated/rpc/io";
-import { MessageBus } from "./bus";
+import { MessageBus } from "./services/bus";
 import { ErrorCode, isLiveKitError } from "./errors";
 import { getLogger } from "./helpers/logger";
 import {
@@ -16,9 +16,9 @@ import {
   loadEgress,
   storeEgress,
   updateEgress,
-} from "./redis-store";
-import { RPCServer } from "./rpc-server";
-import { getValkeyClient } from "./valkey";
+} from "./services/redis-store";
+import { RPCServer } from "./services/rpc-server";
+import { getValkeyClient } from "./services/valkey";
 
 const logger = getLogger("server");
 let stopServer: (() => void) | undefined = undefined;
