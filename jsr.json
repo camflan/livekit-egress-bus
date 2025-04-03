@@ -1,6 +1,6 @@
 {
   "name": "@camflan/livekit-egress-bus",
-  "version": "2025.4.3",
+  "version": "2025.4.4",
   "exports": {
     ".": "./mod.ts"
   }
