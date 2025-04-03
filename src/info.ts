@@ -1,6 +1,4 @@
-export type Service = "EgressInternal" | "IOInfo";
-
-type MethodInfo = {
+export type MethodInfo = {
   affinityEnabled: boolean;
   multi: boolean;
   requireClaim: boolean;
@@ -8,85 +6,105 @@ type MethodInfo = {
 };
 
 const clientServiceDefinitions = {
-  StartEgress: {
-    affinityEnabled: true,
-    multi: false,
-    queue: false,
-    requireClaim: true,
+  EgressInternal: {
+    StartEgress: {
+      affinityEnabled: true,
+      multi: false,
+      queue: false,
+      requireClaim: true,
+    },
+    ListActiveEgress: {
+      affinityEnabled: false,
+      multi: true,
+      queue: false,
+      requireClaim: false,
+    },
+    StopEgress: {
+      affinityEnabled: false,
+      multi: false,
+      queue: true,
+      requireClaim: true,
+    },
   },
-  ListActiveEgress: {
-    affinityEnabled: false,
-    multi: true,
-    requireClaim: false,
-    queue: false,
-  },
-} as const satisfies Record<string, MethodInfo>;
+} as const satisfies Record<string, Record<string, MethodInfo>>;
 
-type ClientRPCKey = keyof typeof clientServiceDefinitions;
+export type ClientRPCService = keyof typeof clientServiceDefinitions;
+export type ClientRPCForService<Service extends ClientRPCService> =
+  keyof (typeof clientServiceDefinitions)[Service];
+
+export type ClientRPCKey =
+  keyof (typeof clientServiceDefinitions)[ClientRPCService];
 
 function isClientRPCKey(
   variableToCheck: unknown,
 ): variableToCheck is ClientRPCKey {
-  return (
-    typeof variableToCheck === "string" &&
-    variableToCheck in clientServiceDefinitions
-  );
+  if (!variableToCheck || typeof variableToCheck !== "string") {
+    return false;
+  }
+
+  return Object.values(clientServiceDefinitions).some((config) => {
+    return variableToCheck in config;
+  });
 }
 
 const serverServiceDefinitions = {
-  CreateEgress: {
-    affinityEnabled: false,
-    multi: false,
-    requireClaim: true,
-    queue: true,
+  IOInfo: {
+    CreateEgress: {
+      affinityEnabled: false,
+      multi: false,
+      requireClaim: true,
+      queue: true,
+    },
+    UpdateEgress: {
+      affinityEnabled: false,
+      multi: false,
+      requireClaim: true,
+      queue: true,
+    },
+    GetEgress: {
+      affinityEnabled: false,
+      multi: false,
+      requireClaim: true,
+      queue: true,
+    },
+    ListEgress: {
+      affinityEnabled: false,
+      multi: false,
+      requireClaim: true,
+      queue: true,
+    },
+    UpdateMetrics: {
+      affinityEnabled: false,
+      multi: false,
+      requireClaim: true,
+      queue: true,
+    },
   },
-  UpdateEgress: {
-    affinityEnabled: false,
-    multi: false,
-    requireClaim: true,
-    queue: true,
-  },
-  GetEgress: {
-    affinityEnabled: false,
-    multi: false,
-    requireClaim: true,
-    queue: true,
-  },
-  ListEgress: {
-    affinityEnabled: false,
-    multi: false,
-    requireClaim: true,
-    queue: true,
-  },
-  UpdateMetrics: {
-    affinityEnabled: false,
-    multi: false,
-    requireClaim: true,
-    queue: true,
-  },
-} as const satisfies Record<string, MethodInfo>;
-export type ServerRPCKey = keyof typeof serverServiceDefinitions;
+} as const satisfies Record<string, Required<Record<string, MethodInfo>>>;
 
-export type RPCKey = ClientRPCKey | ServerRPCKey;
+export type ServerRPCService = keyof typeof serverServiceDefinitions;
+export type ServerRPCKey =
+  keyof (typeof serverServiceDefinitions)[ServerRPCService];
 
-export function getInfo({
-  rpc,
-  topic,
-  service,
-}: {
-  rpc:
-    | keyof typeof clientServiceDefinitions
-    | keyof typeof serverServiceDefinitions;
-  topic: string[];
-  service: Service;
-}) {
+export type RPCService = ClientRPCService | ServerRPCService;
+
+export function getInfo<
+  Service extends RPCService,
+  RPC = Service extends ServerRPCService
+    ? keyof (typeof serverServiceDefinitions)[Service]
+    : Service extends ClientRPCService
+      ? keyof (typeof clientServiceDefinitions)[Service]
+      : never,
+>(service: Service, rpc: RPC, topic: string[] = []) {
   const method = isClientRPCKey(rpc)
-    ? clientServiceDefinitions[rpc]
-    : serverServiceDefinitions[rpc];
+    ? clientServiceDefinitions[service as ClientRPCService][rpc as ClientRPCKey]
+    : serverServiceDefinitions[service as ServerRPCService][
+        rpc as ServerRPCKey
+      ];
 
   const rpcInfo = {
     service,
-    method: rpc,
+    method: rpc as string,
     topic,
     multi: method.multi ?? false,
   };

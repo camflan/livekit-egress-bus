@@ -5,7 +5,7 @@ import { getValkeyClient } from "./valkey";
 import { ensureError } from "@uplift-ltd/ts-helpers";
 import { EgressInfo, EgressStatus } from "./generated/livekit_egress";
 import { getLogger } from "loglevel";
-import { EgressNotFoundError, NotFoundError } from "./errors";
+import { EgressNotFoundError } from "./errors";
 
 const logger = getLogger("redis-store");
 
@@ -71,9 +71,7 @@ export async function loadEgress(
 
     return EgressInfo.decode(data);
   } catch (err) {
-    const error = ensureError(err);
-    logger.error(err);
-    throw error;
+    throw ensureError(err);
   }
 }
 

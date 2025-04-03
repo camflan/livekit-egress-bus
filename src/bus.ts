@@ -8,6 +8,7 @@ import { getLogger } from "./helpers/logger";
 import { Empty } from "./generated/google/protobuf/empty";
 
 const logger = getLogger("bus");
+logger.disableAll();
 
 const GOOGLE_TYPEURL_PREFIX = "type.googleapis.com/";
 
@@ -47,7 +48,7 @@ export class MessageBus {
 
   publish<T extends UnknownMessage>(channel: string, msg: T) {
     const msgType = messageTypeRegistry.get(msg.$type);
-    logger.debug("PUBLISH", { channel, msgType, msg });
+    logger.trace("PUBLISH", { channel, msgType, msg });
 
     if (!msgType) {
       throw new Error(`Unsupported message type: ${msg.$type}!`);
@@ -108,11 +109,11 @@ export class MessageBus {
     const channel = channelBuffer.toString("utf-8");
 
     const decodedMsg = Msg.decode(messageBuffer);
-    logger.debug("#handleMessageBuffer:DECODED MSG", channel, decodedMsg);
+    logger.trace("#handleMessageBuffer:DECODED MSG", channel, decodedMsg);
     const msgValueType = messageTypeRegistry.get(
       decodedMsg.typeUrl.slice(GOOGLE_TYPEURL_PREFIX.length),
     );
-    logger.debug("#handleMessageBuffer: msgValueType", msgValueType);
+    logger.trace("#handleMessageBuffer: msgValueType", msgValueType);
 
     if (!msgValueType) {
       throw new Error(`Unsupported message type: ${decodedMsg.typeUrl}!`);
@@ -212,8 +213,6 @@ export class MessageBus {
   }
 
   async unsubscribe(topic: string, queue: boolean, id: string) {
-    console.log("file: bus.ts~line: 219~unsubscribe", topic, id);
-
     const subList = queue
       ? this.#queues.get(topic)
       : this.#subscriptions.get(topic);

@@ -1,19 +1,8 @@
 /**
  * Adapted from LiveKit psrpc channels.go
  */
+import { RPCService, RequestInfo } from "@/info";
 import { safeJoin } from "@uplift-ltd/strings";
-
-type LKService = string; // "EgressInternal";
-
-export type LivekitRequestInfo = {
-  service: string;
-  method: string;
-  topic: string[];
-  affinityEnabled?: boolean;
-  multi?: boolean;
-  queue?: boolean;
-  requireClaim?: boolean;
-};
 
 const safeJoinWithPeriod = safeJoin(".");
 
@@ -36,7 +25,7 @@ export const startEgressRequestChannel = getRPCChannel({
   topic: [],
 });
 
-export function getClaimRequestChannel(service: LKService, clientId: string) {
+export function getClaimRequestChannel(service: RPCService, clientId: string) {
   return {
     Legacy: formatChannel(
       "|",
@@ -52,14 +41,14 @@ export function getClaimRequestChannel(service: LKService, clientId: string) {
   };
 }
 
-export function getStreamChannel(service: LKService, clientId: string) {
+export function getStreamChannel(service: RPCService, clientId: string) {
   return {
     Legacy: formatChannel("|", service, clientId, CHANNEL_SUFFIXES.STREAM),
     Server: formatClientChannel(service, clientId, CHANNEL_SUFFIXES.STREAM),
   };
 }
 
-export function getResponseChannel(service: LKService, clientId: string) {
+export function getResponseChannel(service: RPCService, clientId: string) {
   return {
     Legacy: formatChannel("|", service, clientId, CHANNEL_SUFFIXES.RESPONSE),
     Server: formatClientChannel(service, clientId, CHANNEL_SUFFIXES.RESPONSE),
@@ -71,7 +60,8 @@ export function getRPCChannel({
   method,
   queue = false,
   service,
-}: LivekitRequestInfo) {
+}: Pick<RequestInfo, "method" | "service"> &
+  Partial<Pick<RequestInfo, "queue" | "topic">>) {
   return {
     Legacy: formatChannel(
       "|",
@@ -85,7 +75,7 @@ export function getRPCChannel({
   };
 }
 
-export function getHandlerKey({ method, topic }: LivekitRequestInfo) {
+export function getHandlerKey({ method, topic }: RequestInfo) {
   return formatChannel(".", method, topic);
 }
 
@@ -93,7 +83,7 @@ export function getClaimResponseChannel({
   service,
   method,
   topic,
-}: LivekitRequestInfo) {
+}: RequestInfo) {
   return {
     Legacy: formatChannel(
       "|",
@@ -111,7 +101,7 @@ export function getStreamServerChannel({
   service,
   method,
   topic,
-}: LivekitRequestInfo) {
+}: RequestInfo) {
   return {
     Legacy: formatChannel("|", service, method, topic, CHANNEL_SUFFIXES.STREAM),
     Server: formatServerChannel(service, topic, false),
@@ -138,7 +128,7 @@ export function formatLocalChannel(method: string, channel: string) {
 
 export function formatServerChannel(
   service: string,
-  topic: string[],
+  topic: string[] = [],
   queue: boolean,
 ) {
   return safeJoinWithPeriod(

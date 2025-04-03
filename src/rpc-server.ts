@@ -17,37 +17,76 @@ import {
   getRPCChannel,
 } from "./helpers/channels";
 import { getLogger } from "./helpers/logger";
-import { getInfo, RequestInfo, ServerRPCKey, Service } from "./info";
+import { getInfo, RequestInfo, ServerRPCKey, RPCService } from "./info";
 import { getValkeyClient } from "./valkey";
 import { Chan, recv, Select } from "ts-chan";
 import {
   msToNanosecondsBigInt,
   nanosecondsBigIntToMs,
 } from "./helpers/datetimes";
-import { ErrorCode } from "./errors";
+import { ErrorCode, isLiveKitError } from "./errors";
 import { NewServerID } from "./helpers/ids";
+import { Any } from "./generated/google/protobuf/any";
+import { makeAbortChannel } from "./rpc-abort-channel";
+import { setInterval } from "node:timers";
 
 const logger = getLogger("rpc.server");
 
-type AffinityFunc<RequestType extends UnknownMessage> = (
+export type AffinityFunc<RequestType extends UnknownMessage> = (
   req: RequestType,
 ) => number;
+
+export type RPCHandlerImpl<
+  RequestType extends UnknownMessage = UnknownMessage,
+  ResponseType extends UnknownMessage = UnknownMessage,
+> = {
+  affinityFn?: AffinityFunc<InternalRequest>;
+  claimSub: MessageBusSubscription<InternalClaimResponse>;
+  claims: Map<string, Chan<InternalClaimResponse>>;
+  handlerFn: (req: RequestType) => Promise<ResponseType>;
+  info: RequestInfo;
+  requestSub: MessageBusSubscription<InternalRequest>;
+  run: () => () => void;
+  stop: () => void;
+  //
+  //
+  // TODO: Do we need to implement these clean up functions?
+  // handling
+  // closeOnce
+  // complete: Chan(1)
+  // onCompleted: () => void;
+};
 
 export class RPCServer {
   #bus: MessageBus;
   #handlers = new Map<string, RPCHandlerImpl>();
+  #interval = setInterval(() => {
+    /* noop */
+  }, 1_000_000_000);
   serverId: string;
 
-  constructor({ bus, abort }: { bus: MessageBus; abort: AbortController }) {
+  constructor({
+    // TODO: support global abort?
+    // abort
+    bus,
+  }: {
+    // abort: AbortController;
+    bus: MessageBus;
+  }) {
     this.serverId = NewServerID();
     this.#bus = bus ?? getValkeyClient({ connectionName: this.serverId });
+
+    this.start = this.start.bind(this);
+    this.stop = this.stop.bind(this);
   }
 
-  async start() {
+  start(onSuccess?: () => void) {
     logger.info("Starting server…");
 
     try {
-      return Promise.all(this.#handlers.values().map((fn) => fn.run()));
+      // start all the handlers
+      this.#handlers.values().forEach((fn) => fn.run());
+      onSuccess?.();
     } catch (err) {
       const error = ensureError(err);
       logger.error("ERROR: ", error);
@@ -55,8 +94,11 @@ export class RPCServer {
     }
   }
 
-  async stop() {
+  stop() {
     logger.info("Shutting down…");
+    clearInterval(this.#interval);
+    this.#handlers.forEach((handler) => handler.stop());
+    logger.info("done");
   }
 
   registerHandler<
@@ -71,7 +113,7 @@ export class RPCServer {
     responseMessageFns,
     service,
     rpc,
-    topic,
+    topic = [],
   }: Pick<
     RPCHandlerImpl<RequestType, ResponseType>,
     "affinityFn" | "handlerFn"
@@ -79,10 +121,10 @@ export class RPCServer {
     requestMessageFns: MessageFns<RequestType, RequestTypeKey>;
     responseMessageFns: MessageFns<ResponseType, ResponseTypeKey>;
     rpc: ServerRPCKey;
-    service: Service;
-    topic: string[];
+    service: RPCService;
+    topic?: string[];
   }) {
-    const info = getInfo({ service, rpc, topic });
+    const info = getInfo(service, rpc, topic);
     const key = getHandlerKey(info);
 
     if (this.#handlers.has(key)) {
@@ -97,7 +139,6 @@ export class RPCServer {
       responseMessageFns,
     });
 
-    // TODO: Need to fix this type?
     // @ts-expect-error: Fix this?
     this.#handlers.set(key, handler);
   }
@@ -149,6 +190,7 @@ export class RPCServer {
 
     const claims = new Map<string, Chan<InternalClaimResponse>>();
 
+    /** handle claim request/response cycle */
     const claimRequest = async (req: InternalRequest) => {
       let affinity: number = 0;
 
@@ -165,6 +207,7 @@ export class RPCServer {
       const claimResponseChan = new Chan<InternalClaimResponse>(1);
       claims.set(req.requestId, claimResponseChan);
 
+      /** close claims channel */
       const close = () => {
         claims.delete(req.requestId);
         claimResponseChan.close();
@@ -181,12 +224,12 @@ export class RPCServer {
 
       const defaultClaimTimeoutMs = 2_000;
 
-      const timeout = AbortSignal.timeout(
+      const timeoutSignal = AbortSignal.timeout(
         (req.expiry
           ? nanosecondsBigIntToMs(req.expiry)
           : defaultClaimTimeoutMs) - Date.now(),
       );
-      const { value: claim } = await claimResponseChan.recv(timeout);
+      const { value: claim } = await claimResponseChan.recv(timeoutSignal);
 
       const claimed = claim?.serverId === this.serverId;
       close();
@@ -206,16 +249,16 @@ export class RPCServer {
 
       if (res instanceof Error) {
         response.error = res.message;
-        // TODO: hook up proper error codes?
-        response.code = ErrorCode.Unknown;
-        response.errorDetails = [];
+        response.code = isLiveKitError(res) ? res.code : ErrorCode.Unknown;
+        response.errorDetails = [
+          ...response.errorDetails,
+          Any.create({ value: Buffer.from(res.message) }),
+        ];
       } else if (!res) {
-        const bytes = Buffer.from(
-          responseMessageFns
-            .encode(responseMessageFns.fromPartial(res))
-            .finish(),
+        const rawResponse = Buffer.from(
+          responseMessageFns.encode(responseMessageFns.create(res)).finish(),
         );
-        response.rawResponse = bytes;
+        response.rawResponse = rawResponse;
       }
 
       return this.#bus.publish(
@@ -225,21 +268,20 @@ export class RPCServer {
     };
 
     const handleRequest = async (req: InternalRequest) => {
-      // TODO: headers?
-
-      // TODO: gracefully handle this?
-      // TODO: send error response when fails?
-      const data = requestMessageFns.decode(req.rawRequest);
-
-      if (info.requireClaim) {
-        const claimed = await claimRequest(req);
-
-        if (!claimed) {
-          return;
-        }
-      }
-
       try {
+        // TODO: headers?
+        // TODO: gracefully handle this?
+        // TODO: send error response when fails?
+        const data = requestMessageFns.decode(req.rawRequest);
+
+        if (info.requireClaim) {
+          const claimed = await claimRequest(req);
+
+          if (!claimed) {
+            return;
+          }
+        }
+
         const response = await handlerFn(data);
         logger.trace("Sending response: ", response);
 
@@ -251,10 +293,72 @@ export class RPCServer {
       }
     };
 
-    const abortController = new AbortController();
+    let _promise: Promise<void> | undefined;
 
+    const run = async () => {
+      logger.debug(`Running handler for: ${JSON.stringify(info.rpcInfo)}…`);
+      const select = new Select([
+        recv(abortChannel.channel),
+        recv(requestSub.msgChannel),
+        recv(claimSub.msgChannel),
+      ]);
+
+      while (true) {
+        const resultIdx = await select.wait();
+        logger.trace("file: rpc-server.ts~line: 263~resultIdx", resultIdx);
+
+        switch (resultIdx) {
+          // abort
+          case 0:
+            const abortReason = select.recv(select.cases[resultIdx]).value;
+            if (!abortReason) break;
+            throw abortReason;
+
+          // request
+          case 1:
+            const request = select.recv(select.cases[resultIdx]).value;
+            logger.trace("REQUEST", request);
+
+            if (!request) {
+              break;
+            }
+
+            const nowNano = msToNanosecondsBigInt(Date.now());
+            if (!request.expiry || nowNano < request.expiry) {
+              handleRequest(request).catch((err) => {
+                const error = ensureError(err);
+                logger.error(error);
+                return;
+              });
+            }
+
+            break;
+
+          // claim
+          case 2:
+            const claim = select.recv(select.cases[resultIdx]).value;
+            logger.trace("CLAIM", claim);
+            if (!claim) continue;
+
+            const claimChannel = claims.get(claim.requestId);
+            if (claimChannel) {
+              claimChannel.trySend(claim);
+            }
+
+            break;
+
+          default:
+            logger.warn(`Unsupported result: ${resultIdx}`);
+            break;
+        }
+      }
+    };
+
+    const abortChannel = makeAbortChannel();
+
+    // TODO: Support draining/finish handling current request?
     const stop = () => {
-      abortController.abort();
+      abortChannel.channel.close();
       requestSub.close();
       claimSub.close();
     };
@@ -267,80 +371,10 @@ export class RPCServer {
       info,
       requestSub,
       stop,
-      async run() {
-        logger.debug(`Running handler for: ${JSON.stringify(info.rpcInfo)}…`);
-        const select = new Select([
-          recv(requestSub.msgChannel),
-          recv(claimSub.msgChannel),
-        ]);
-
-        while (true) {
-          const resultIdx = await select.wait(abortController.signal);
-          logger.trace("file: rpc-server.ts~line: 263~resultIdx", resultIdx);
-
-          switch (resultIdx) {
-            // request
-            case 0:
-              const request = select.recv(select.cases[resultIdx]).value;
-              logger.trace("REQUEST", request);
-
-              if (!request) {
-                logger.trace("No request?", request);
-                continue;
-              }
-
-              const nowNano = msToNanosecondsBigInt(Date.now());
-              if (!request.expiry || nowNano < request.expiry) {
-                handleRequest(request).catch((err) => {
-                  const error = ensureError(err);
-                  logger.error(error);
-                  return;
-                });
-              }
-
-              break;
-
-            // claim
-            case 1:
-              const claim = select.recv(select.cases[resultIdx]).value;
-              logger.trace("CLAIM", claim);
-              if (!claim) continue;
-
-              const claimChannel = claims.get(claim.requestId);
-              if (claimChannel) {
-                claimChannel.trySend(claim);
-              }
-
-              break;
-
-            default:
-              logger.warn(`Unsupported result: ${resultIdx}`);
-              break;
-          }
-        }
+      run() {
+        _promise = run();
+        return stop;
       },
     };
   }
 }
-
-type RPCHandlerImpl<
-  RequestType extends UnknownMessage = UnknownMessage,
-  ResponseType extends UnknownMessage = UnknownMessage,
-> = {
-  affinityFn?: AffinityFunc<InternalRequest>;
-  claimSub: MessageBusSubscription<InternalClaimResponse>;
-  claims: Map<string, Chan<InternalClaimResponse>>;
-  handlerFn: (req: RequestType) => Promise<ResponseType>;
-  // Omit<ResponseType, "$type"> & Partial<Pick<ResponseType, "$type">>
-  info: RequestInfo;
-  requestSub: MessageBusSubscription<InternalRequest>;
-  run: () => Promise<void>;
-  stop: () => void;
-  //
-  //
-  // TODO: Do we need to implement these clean up functions?
-  // handling
-  // closeOnce
-  // complete: Chan(1)
-  // onCompleted: () => void;
-};

@@ -15,44 +15,38 @@ import {
   Request as InternalRequest,
   ClaimResponse as InternalClaimResponse,
 } from "./generated/internal";
-import { getInfo, RPCKey, Service } from "./info";
+import { getInfo, ClientRPCService, ClientRPCForService } from "./info";
 import { ensureError } from "@uplift-ltd/ts-helpers";
 import { getLogger } from "./helpers/logger";
+import { GenericLiveKitRpcError } from "./errors";
+import { AbortChannel, makeAbortChannel } from "./rpc-abort-channel";
+import { abort } from "node:process";
 
 const logger = getLogger("rpc.client");
 
 // copied from LK, converted to ms
-const DefaultClientTimeoutMs = 3 * 1000;
-const DefaultAffinityTimeoutMs = 1000;
+const DefaultClientTimeoutMs = 3_000;
+const DefaultAffinityTimeoutMs = 1_000;
 const DefaultAffinityShortCircuitMs = 200;
 
 type ClaimRequestChannel = Chan<InternalClaimRequest>;
 type ResponseChannel = Chan<InternalResponse>;
 
 export class RPCClient {
-  #abortController: AbortController;
-  #abortChannel: Chan<string>;
+  #abortChannel: AbortChannel;
   #bus: MessageBus;
   #claimRequests = new Map<string, ClaimRequestChannel>();
   #clientID = newClientID();
   #responseChannels = new Map<string, ResponseChannel>();
 
-  constructor({ bus, abort }: { bus: MessageBus; abort: AbortController }) {
-    // this.#abortController = abort;
-    this.#abortController = new AbortController();
-    this.#abortChannel = new Chan<string>(1);
-
-    // const { channel } = makeAbortChannel(this.#abortController);
-    // const { channel } = makeAbortChannel();
-
-    // this.#abortChannel = channel;
+  constructor({ bus }: { bus: MessageBus }) {
+    this.#abortChannel = makeAbortChannel();
     this.#bus = bus;
 
     this.work();
   }
 
   async work() {
-    logger.debug("Starting work");
     try {
       const responses = this.#bus.subscribe(
         getResponseChannel("EgressInternal", this.#clientID).Legacy,
@@ -64,19 +58,19 @@ export class RPCClient {
       );
 
       const select = new Select([
-        recv(this.#abortChannel),
+        recv(this.#abortChannel.channel),
         recv(responses.msgChannel),
         recv(claims.msgChannel),
       ]);
 
       while (true) {
-        const resultIdx = await select.wait(/* this.#abortController.signal */);
+        const resultIdx = await select.wait();
 
         switch (resultIdx) {
           // Abort
           case 0: {
             const reason = select.recv(select.cases[resultIdx]).value;
-            logger.debug("file: rpc-client.ts~line: 76~reason", reason);
+            logger.trace("file: rpc-client.ts~line: 76~reason", reason);
 
             if (reason) {
               responses.close();
@@ -88,7 +82,7 @@ export class RPCClient {
           // responses
           case 1: {
             const res = select.recv(select.cases[resultIdx]).value;
-            logger.debug("file: rpc-client.ts~line: 88~res", res);
+            logger.trace("file: rpc-client.ts~line: 88~res", res);
 
             if (!res) {
               this.close();
@@ -106,7 +100,7 @@ export class RPCClient {
           // claims
           case 2: {
             const claim = select.recv(select.cases[resultIdx]).value;
-            logger.debug("file: rpc-client.ts~line: 106~claim", claim);
+            logger.trace("file: rpc-client.ts~line: 106~claim", claim);
 
             if (!claim) {
               this.close();
@@ -133,9 +127,7 @@ export class RPCClient {
   }
 
   close() {
-    // TODO: close all channels?
-    this.#abortController.abort();
-    this.#abortChannel.close();
+    this.#abortChannel.channel.close();
   }
 
   async requestSingle<
@@ -143,57 +135,48 @@ export class RPCClient {
     ResponseMsg,
     RequestType extends string,
     ResponseType extends string,
+    Service extends ClientRPCService,
   >({
     requestMessageFns,
     responseMessageFns,
     msg,
     rpc,
     service,
-    topic,
+    topic = [],
     options: providedOptions,
   }: {
     service: Service;
-    rpc: RPCKey;
-    topic: string[];
-    msg: Partial<RequestMsg>;
+    rpc: ClientRPCForService<Service>;
+    topic?: string[];
+    msg: RequestMsg;
     requestMessageFns: MessageFns<RequestMsg, RequestType>;
     responseMessageFns?: MessageFns<ResponseMsg, ResponseType>;
     options: RequestOptions;
   }) {
-    if (this.#abortController.signal.aborted) {
-      throw new Error("ClientClosed");
-    }
-
     const options = { ...DEFAULT_REQUEST_OPTIONS, ...providedOptions };
-    const info = getInfo({ rpc, topic, service });
+    const info = getInfo(service, rpc, topic);
 
     const requestId = NewRequestID();
-    const b = Buffer.from(
-      // @ts-expect-error: Upset about type not matching? Fix with moving req/res types to HOF?
-      requestMessageFns.encode(requestMessageFns.fromPartial(msg)).finish(),
-    );
+    const rawRequest = Buffer.from(requestMessageFns.encode(msg).finish());
     const now = Date.now();
 
-    logger.debug(`REQ [${requestId}]`, { info, options });
     const req = InternalRequest.create({
       clientId: this.#clientID,
       requestId,
       sentAt: msToNanosecondsBigInt(now),
       expiry: msToNanosecondsBigInt(now + DefaultClientTimeoutMs),
       multi: false,
-      rawRequest: b,
+      rawRequest,
     });
 
     const claimChannel = new Chan<InternalClaimRequest>();
     const resChannel = new Chan<InternalResponse>(1);
 
     const close = () => {
-      logger.debug("CLOSING UP SHOP");
       this.#claimRequests.delete(requestId);
       this.#responseChannels.delete(requestId);
       claimChannel.close();
       resChannel.close();
-      this.close();
     };
 
     if (info.requireClaim) {
@@ -202,7 +185,6 @@ export class RPCClient {
 
     this.#responseChannels.set(requestId, resChannel);
 
-    logger.debug(`Publishing req [${requestId}]`);
     const result = await this.#bus
       .publish(getRPCChannel(info).Legacy, req)
       .catch((err) => {
@@ -223,26 +205,19 @@ export class RPCClient {
       throw result;
     }
 
-    // TODO: Set/manage timeout
-    // const { channel: abortChannel, abort: cancel } = makeAbortChannel();
-    // this.#abortController,
+    const abortChannel = makeAbortChannel();
+    // abort if parent aborts
+    this.#abortChannel.onAbort((reason) => abortChannel.abort(reason));
 
-    const cancel = AbortSignal.timeout(options.timeoutMs * 3);
-    const abortChannel = new Chan<string>(1);
-
-    cancel.addEventListener("abort", () => {
-      abortChannel.trySend("timeoutMs");
-    });
+    // We have a deadline to make a server selection before we fail
+    const cancelTimeout = abortChannel.delayedAbort(options.timeoutMs);
 
     if (info.requireClaim) {
-      logger.debug("REQUIRES CLAIM");
       const response = await selectServer(
-        this.#abortController.signal,
         claimChannel,
         resChannel,
         options.selectionOptions,
       );
-      logger.debug("file: rpc-client.ts~line: 239~response", response);
 
       if (typeof response !== "string") {
         throw response;
@@ -257,7 +232,9 @@ export class RPCClient {
       );
     }
 
-    const select = new Select([recv(abortChannel), recv(resChannel)]);
+    cancelTimeout();
+
+    const select = new Select([recv(abortChannel.channel), recv(resChannel)]);
 
     while (true) {
       const resultIdx = await select.wait();
@@ -266,21 +243,24 @@ export class RPCClient {
         // abort
         case 0: {
           const abort = select.recv(select.cases[resultIdx]).value;
-          logger.debug("file: rpc-client.ts~line: 261~abort", abort);
+          if (!abort) break;
+          logger.trace("file: rpc-client.ts~line: 261~abort", abort);
           return abort;
         }
 
         // responses
         case 1: {
           const res = select.recv(select.cases[resultIdx]).value;
-          logger.debug("file: rpc-client.ts~line: 254~res", res);
+          logger.trace("file: rpc-client.ts~line: 254~res", res);
           if (!res) break;
 
           if (res.rawResponse && responseMessageFns) {
             const response = responseMessageFns.decode(res.rawResponse);
-            logger.debug("file: rpc-client.ts~line: 258~response", response);
+            logger.trace("file: rpc-client.ts~line: 258~response", response);
             return response;
           }
+
+          return res;
         }
       }
     }
@@ -331,24 +311,13 @@ const DEFAULT_SELECTION_OPTIONS = {
   shortCircuitTimeout: DefaultAffinityShortCircuitMs,
 } satisfies SelectionOptions;
 
-// TODO: implement parent/child aborts?
 async function selectServer(
-  parentSignal: AbortSignal,
   claimChannel: ClaimRequestChannel,
   resChannel: ResponseChannel,
   opts: Partial<SelectionOptions> = {},
 ) {
-  // const controller = new AbortController();
-  const localAbortChannel = new Chan<string>(1);
-  // const cancel = controller.abort;
-  // const signal = controller.signal;
+  const localAbortChannel = makeAbortChannel();
 
-  // const {
-  //   channel: localAbortChannel,
-  //   abort: cancel,
-  //   signal,
-  // } = makeAbortChannel();
-  // parentSignal
   const {
     acceptFirstAvailable,
     affinityTimeout,
@@ -369,46 +338,44 @@ async function selectServer(
   let shorted = false;
 
   const select = new Select([
-    recv(localAbortChannel),
+    recv(localAbortChannel.channel),
     recv(claimChannel),
     recv(resChannel),
   ]);
 
   // force selection after timeout
-  const cancel = AbortSignal.timeout(affinityTimeout);
-  cancel.addEventListener("abort", () => {
-    localAbortChannel.trySend("affinityTimeout");
-  });
-  // timers.setTimeout(() => {
-  //   cancel();
-  // }, affinityTimeout);
+  localAbortChannel.delayedAbort(affinityTimeout);
 
   while (true) {
-    // TODO: maybe remove the signal and just use the abortChannel?
     const resultIdx = await select.wait();
-    logger.debug("file: rpc-client.ts~line: 378~resultIdx", resultIdx);
 
     switch (resultIdx) {
       // abort
       case 0: {
         const abortReason = select.recv(select.cases[resultIdx]).value;
-        logger.debug("file: rpc-client.ts~line: 384~abortReason", abortReason);
+        logger.trace("file: rpc-client.ts~line: 384~abortReason", {
+          abortReason,
+          claims,
+          resError,
+          serverId,
+        });
 
         if (selectionFunction) {
           return selectionFunction(claims);
-        }
-
-        if (resError) {
-          return resError;
         }
 
         if (serverId) {
           return serverId;
         }
 
+        if (resError) {
+          return resError;
+        }
+
         if (claimCount > 0) {
-          return new NoServersAvailableError(
-            "No servers available (recieved ${claimCount} responses)",
+          return new GenericLiveKitRpcError(
+            "unavailable",
+            `No servers available (recieved ${claimCount} responses)`,
           );
         }
 
@@ -418,7 +385,7 @@ async function selectServer(
       // claims
       case 1: {
         const claim = select.recv(select.cases[resultIdx]).value;
-        logger.debug("file: rpc-client.ts~line: 407~claim", claim);
+        logger.trace("file: rpc-client.ts~line: 407~claim", claim);
 
         if (!claim) break;
         claimCount += 1;
@@ -443,11 +410,9 @@ async function selectServer(
 
           if (shortCircuitTimeout > 0 && !shorted) {
             shorted = true;
-
-            const cancel = AbortSignal.timeout(shortCircuitTimeout);
-            cancel.addEventListener("abort", () => {
-              localAbortChannel.trySend("shortCircuitTimeout");
-            });
+            // if we haven't returned in this window,
+            // then the abort handler will be called
+            localAbortChannel.delayedAbort(shortCircuitTimeout);
           }
         }
         break;
@@ -457,53 +422,14 @@ async function selectServer(
       case 2: {
         // will only happen with malformed requests
         const response = select.recv(select.cases[resultIdx]).value;
-        logger.debug("file: rpc-client.ts~line: 446~response", response);
-        resError = new Error("Invalid response recieved", { cause: response });
-
+        logger.trace("file: rpc-client.ts~line: 446~response", response);
+        resError = new GenericLiveKitRpcError(
+          "malformed_result",
+          "Invalid response",
+          { cause: response },
+        );
         break;
       }
     }
-  }
-}
-
-class NoServersAvailableError extends Error {
-  constructor(...args: ConstructorParameters<typeof Error>) {
-    super(...args);
-
-    this.name = "NoServersAvailable";
-  }
-}
-
-function makeAbortChannel() {
-  // parentControllerOrSignal?: AbortController | AbortSignal,
-  try {
-    const controller = new AbortController();
-    const channel = new Chan<string>(1);
-
-    // if (parentControllerOrSignal) {
-    //   const signal = (parentControllerOrSignal =
-    //     "signal" in parentControllerOrSignal
-    //       ? parentControllerOrSignal.signal
-    //       : parentControllerOrSignal);
-    //
-    //   signal.addEventListener("abort", () => {
-    //     controller.abort("Parent controller was aborted");
-    //   });
-    // }
-
-    controller.signal.addEventListener("abort", function () {
-      channel.trySend(`parentAborted: ${this.reason}`);
-    });
-
-    return {
-      abort: controller.abort,
-      channel,
-      controller,
-      signal: controller.signal,
-    };
-  } catch (err) {
-    const error = ensureError(err);
-    logger.debug("file: rpc-client.ts~line: 465~error", error);
-    throw error;
   }
 }

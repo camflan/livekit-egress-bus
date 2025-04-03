@@ -44,7 +44,12 @@ export const ErrorCode = {
 
 export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];
 
-class NamedError extends Error {
+const LKErrorSymbol = Symbol("LKError");
+
+class LiveKitError extends Error {
+  "$$type" = LKErrorSymbol;
+  code: ErrorCode = ErrorCode.Unknown;
+
   constructor(...args: ConstructorParameters<typeof Error>) {
     super(...args);
 
@@ -52,132 +57,144 @@ class NamedError extends Error {
   }
 }
 
-export class GenericLiveKitRpcError extends NamedError {
+export function isLiveKitError(
+  variableToCheck: unknown,
+): variableToCheck is LiveKitError {
+  if (!(variableToCheck instanceof Error)) {
+    return false;
+  }
+
+  if (!("$$type" in variableToCheck)) {
+    return false;
+  }
+
+  return variableToCheck.$$type === LKErrorSymbol;
+}
+
+export class GenericLiveKitRpcError extends LiveKitError {
   code: ErrorCode;
 
-  constructor(code: ErrorCode, msg: string) {
-    super(msg);
+  constructor(code: ErrorCode, ...args: ConstructorParameters<typeof Error>) {
+    super(...args);
     this.code = code;
   }
 }
 
-export class NotFoundError extends NamedError {
+export class NotFoundError extends LiveKitError {
   code = ErrorCode.NotFound;
 }
 
-export class EgressNotFoundError extends NamedError {
+export class EgressNotFoundError extends LiveKitError {
   code = ErrorCode.NotFound;
   message = "egress does not exist";
 }
 
-export class EgressNotConnectedError extends NamedError {
+export class EgressNotConnectedError extends LiveKitError {
   code = ErrorCode.Internal;
   message = "egress not connected (redis required)";
 }
 
-export class IdentityEmptyError extends NamedError {
+export class IdentityEmptyError extends LiveKitError {
   code = ErrorCode.InvalidArgument;
   message = "identity cannot be empty";
 }
 
-export class IngressNotConnectedError extends NamedError {
+export class IngressNotConnectedError extends LiveKitError {
   code = ErrorCode.Internal;
   message = "ingress not connected (redis required)";
 }
 
-export class IngressNotFoundError extends NamedError {
+export class IngressNotFoundError extends LiveKitError {
   code = ErrorCode.NotFound;
   message = "ingress does not exist";
 }
 
-export class IngressNonReusableError extends NamedError {
+export class IngressNonReusableError extends LiveKitError {
   code = ErrorCode.InvalidArgument;
   message = "ingress is not reusable and cannot be modified";
 }
 
-export class NameExceedsLimitsError extends NamedError {
+export class NameExceedsLimitsError extends LiveKitError {
   code = ErrorCode.InvalidArgument;
   message = "name length exceeds limits";
 }
 
-export class MetadataExceedsLimitsError extends NamedError {
+export class MetadataExceedsLimitsError extends LiveKitError {
   code = ErrorCode.InvalidArgument;
   message = "metadata size exceeds limits";
 }
 
-export class AttributeExceedsLimitsError extends NamedError {
+export class AttributeExceedsLimitsError extends LiveKitError {
   code = ErrorCode.InvalidArgument;
   message = "attribute size exceeds limits";
 }
 
-export class RoomNameExceedsLimitsError extends NamedError {
+export class RoomNameExceedsLimitsError extends LiveKitError {
   code = ErrorCode.InvalidArgument;
   message = "room name length exceeds limits";
 }
 
-export class ParticipantIdentityExceedsLimitsError extends NamedError {
+export class ParticipantIdentityExceedsLimitsError extends LiveKitError {
   code = ErrorCode.InvalidArgument;
   message = "participant identity length exceeds limits";
 }
 
-export class OperationFailedError extends NamedError {
+export class OperationFailedError extends LiveKitError {
   code = ErrorCode.Internal;
   message = "operation cannot be completed";
 }
 
-export class ParticipantNotFoundError extends NamedError {
+export class ParticipantNotFoundError extends LiveKitError {
   code = ErrorCode.NotFound;
   message = "participant does not exist";
 }
 
-export class RoomNotFoundError extends NamedError {
+export class RoomNotFoundError extends LiveKitError {
   code = ErrorCode.NotFound;
   message = "requested room does not exist";
 }
 
-export class RoomLockFailedError extends NamedError {
+export class RoomLockFailedError extends LiveKitError {
   code = ErrorCode.Internal;
   message = "could not lock room";
 }
 
-export class RoomUnlockFailedError extends NamedError {
+export class RoomUnlockFailedError extends LiveKitError {
   code = ErrorCode.Internal;
   message = "could not unlock room, lock token does not match";
 }
 
-export class RemoteUnmuteNoteEnabledError extends NamedError {
+export class RemoteUnmuteNoteEnabledError extends LiveKitError {
   code = ErrorCode.FailedPrecondition;
   message = "remote unmute not enabled";
 }
 
-export class TrackNotFoundError extends NamedError {
+export class TrackNotFoundError extends LiveKitError {
   code = ErrorCode.NotFound;
   message = "track is not found";
 }
 
-export class WebHookMissingAPIKeyError extends NamedError {
+export class WebHookMissingAPIKeyError extends LiveKitError {
   code = ErrorCode.InvalidArgument;
   message = "api_key is required to use webhooks";
 }
 
-export class SIPNotConnectedError extends NamedError {
+export class SIPNotConnectedError extends LiveKitError {
   code = ErrorCode.Internal;
   message = "sip not connected (redis required)";
 }
 
-export class SIPTrunkNotFoundError extends NamedError {
+export class SIPTrunkNotFoundError extends LiveKitError {
   code = ErrorCode.NotFound;
   message = "requested sip trunk does not exist";
 }
 
-export class SIPDispatchRuleNotFoundError extends NamedError {
+export class SIPDispatchRuleNotFoundError extends LiveKitError {
   code = ErrorCode.NotFound;
   message = "requested sip dispatch rule does not exist";
 }
 
-export class SIPParticipantNotFoundError extends NamedError {
+export class SIPParticipantNotFoundError extends LiveKitError {
   code = ErrorCode.NotFound;
   message = "requested sip participant does not exist";
 }
-
-//

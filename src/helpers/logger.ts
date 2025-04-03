@@ -36,6 +36,13 @@ prefix.apply(log.getLogger("critical"), {
   },
 });
 
-log.setDefaultLevel("DEBUG");
+const defaultLogLevel: keyof typeof log.levels = "DEBUG";
+const envLogLevel = process.env.LOG_LEVEL ?? defaultLogLevel;
+
+log.setDefaultLevel(
+  envLogLevel in log.levels
+    ? log.levels[envLogLevel as keyof typeof log.levels]
+    : defaultLogLevel,
+);
 
 export const getLogger = log.getLogger;

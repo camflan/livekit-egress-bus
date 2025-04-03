@@ -5,6 +5,7 @@ import {
   EncodingOptionsPreset,
   ListEgressRequest,
   ListEgressResponse,
+  StopEgressRequest,
 } from "./generated/livekit_egress";
 import { StartEgressRequest } from "./generated/rpc/egress";
 import { formatID } from "./helpers/ids";
@@ -21,7 +22,7 @@ import {
   updateEgress,
 } from "./redis-store";
 import { GetEgressRequest, UpdateMetricsRequest } from "./generated/rpc/io";
-import { NotFoundError } from "./errors";
+import { ErrorCode, isLiveKitError } from "./errors";
 
 const logger = getLogger("cli");
 
@@ -63,10 +64,92 @@ async function main() {
     bus,
   });
 
-  // TODO: pull out of here
+  registerIOHandlers(server);
+
+  const serverPromise = server.start();
+
+  const client = makeEgressClient(
+    new RPCClient({
+      abort,
+      bus,
+    }),
+  );
+
+  const response = await client.startEgress();
+
+  logger.debug("RPC Response!", response);
+
+  await serverPromise;
+}
+
+function makeEgressClient(client: RPCClient) {
+  return {
+    async startEgress() {
+      const egressId = formatID("EG_");
+
+      logger.debug(`Requesting StartEgress: ${egressId}`);
+      const response = await client.requestSingle({
+        msg: StartEgressRequest.create({
+          egressId,
+          web: {
+            preset: EncodingOptionsPreset.H264_1080P_60,
+            streamOutputs: [
+              {
+                urls: [
+                  "rtmps://12b43280e4c2.global-contribute.live-video.net:443/app/sk_us-east-1_Zyl6qUz90C1L_Kof1rfclunFfJ9UdhiaXv02zJ8ltDA",
+                ],
+              },
+            ],
+            url: "https://videojs.github.io/autoplay-tests/plain/attr/autoplay-playsinline.html",
+          },
+        }),
+        // TODO: remove this duplicate requirement. Either take from msg or make msg JSON
+        requestMessageFns: StartEgressRequest,
+        rpc: "StartEgress",
+        service: "EgressInternal",
+        topic: [],
+        options: {
+          timeoutMs: 500,
+        },
+      });
+
+      return response;
+    },
+
+    async stopEgress(egressId: string) {
+      logger.debug("Requesting StopEgress");
+
+      return await client.requestSingle({
+        msg: StopEgressRequest.create({
+          egressId,
+        }),
+        requestMessageFns: StopEgressRequest,
+        options: {
+          timeoutMs: 500,
+        },
+        topic: [],
+        rpc: "StopEgress",
+        service: "EgressInternal",
+      });
+    },
+  };
+}
+
+function registerIOHandlers(server: RPCServer) {
   server.registerHandler({
     async handlerFn(egressInfo) {
-      const existingEgress = await loadEgress(egressInfo.egressId);
+      const existingEgress = await loadEgress(egressInfo.egressId).catch(
+        (err) => {
+          const error = ensureError(err);
+          logger.debug("LOAD EGRESS", error);
+
+          if (isLiveKitError(error) && error.code === ErrorCode.NotFound) {
+            return null;
+          }
+
+          throw error;
+        },
+      );
       if (existingEgress) {
         return Empty;
       }
@@ -145,41 +228,4 @@ async function main() {
       return Empty;
     },
   });
-
-  const serverPromise = server.start();
-
-  const client = new RPCClient({
-    abort,
-    bus,
-  });
-  const egressId = formatID("EG_");
-
-  logger.debug(`Calling server for egressId: ${egressId}`);
-  const response = await client.requestSingle({
-    msg: StartEgressRequest.create({
-      egressId,
-      web: {
-        preset: EncodingOptionsPreset.H264_1080P_60,
-        streamOutputs: [
-          {
-            urls: [
-              "rtmps://12b43280e4c2.global-contribute.live-video.net:443/app/sk_us-east-1_Zyl6qUz90C1L_Kof1rfclunFfJ9UdhiaXv02zJ8ltDA",
-            ],
-          },
-        ],
-        url: "https://videojs.github.io/autoplay-tests/plain/attr/autoplay-playsinline.html",
-      },
-    }),
-    requestMessageFns: StartEgressRequest,
-    rpc: "StartEgress",
-    service: "EgressInternal",
-    topic: [],
-    options: {
-      timeoutMs: 500,
-    },
-  });
-
-  logger.debug("RPC Response!", response);
-
-  await serverPromise;
 }
