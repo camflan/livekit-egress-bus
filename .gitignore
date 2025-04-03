@@ -4,6 +4,7 @@
 
 # -- include these files -----------------------------------------------
 !.gitignore
+!.github/
 !README.md
 !compile-protobufs.sh
 !contrib/
