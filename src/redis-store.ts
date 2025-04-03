@@ -3,8 +3,8 @@ import { ensureError } from "@uplift-ltd/ts-helpers";
 import Redis from "iovalkey";
 import { getLogger } from "loglevel";
 
-import { EgressInfo, EgressStatus } from "./generated/livekit_egress";
 import { EgressNotFoundError } from "./helpers/errors";
+import { EgressInfo, EgressStatus } from "./protobufs.ts";
 
 const logger = getLogger("redis-store");
 

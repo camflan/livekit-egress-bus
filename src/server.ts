@@ -1,16 +1,17 @@
 import { ensureError } from "@uplift-ltd/ts-helpers";
 
 import { MessageBus } from "./bus";
-import { Empty } from "./generated/google/protobuf/empty";
+import { ErrorCode, isLiveKitError } from "./helpers/errors";
+import { getLogger } from "./helpers/logger";
 import {
+  Empty,
   EgressInfo,
   EgressStatus,
   ListEgressRequest,
   ListEgressResponse,
-} from "./generated/livekit_egress";
-import { GetEgressRequest, UpdateMetricsRequest } from "./generated/rpc/io";
-import { ErrorCode, isLiveKitError } from "./helpers/errors";
-import { getLogger } from "./helpers/logger";
+  GetEgressRequest,
+  UpdateMetricsRequest,
+} from "./protobufs.ts";
 import { makeRedisStore } from "./redis-store";
 import { RPCServer } from "./rpc-server";
 import { getValkeyClient } from "./valkey";

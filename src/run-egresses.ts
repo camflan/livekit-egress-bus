@@ -1,14 +1,14 @@
 import { ensureError } from "@uplift-ltd/ts-helpers";
 
 import { MessageBus } from "./bus";
+import { formatID } from "./helpers/ids";
+import { getLogger } from "./helpers/logger";
 import {
   EgressInfo,
   EncodingOptionsPreset,
   StopEgressRequest,
-} from "./generated/livekit_egress";
-import { StartEgressRequest } from "./generated/rpc/egress";
-import { formatID } from "./helpers/ids";
-import { getLogger } from "./helpers/logger";
+  StartEgressRequest,
+} from "./protobufs.ts";
 import { RPCClient } from "./rpc-client";
 import { getValkeyClient } from "./valkey";
 

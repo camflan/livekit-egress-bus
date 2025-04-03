@@ -3,13 +3,6 @@ import { Chan, recv, Select } from "ts-chan";
 
 import { MessageBus } from "./bus";
 import {
-  ClaimRequest as InternalClaimRequest,
-  Response as InternalResponse,
-  MessageFns,
-  Request as InternalRequest,
-  ClaimResponse as InternalClaimResponse,
-} from "./generated/internal";
-import {
   getClaimRequestChannel,
   getClaimResponseChannel,
   getResponseChannel,
@@ -20,6 +13,13 @@ import { GenericLiveKitRpcError } from "./helpers/errors";
 import { newClientID, NewRequestID } from "./helpers/ids";
 import { getInfo, ClientRPCService, ClientRPCForService } from "./helpers/info";
 import { getLogger } from "./helpers/logger";
+import {
+  ClaimRequest as InternalClaimRequest,
+  Response as InternalResponse,
+  MessageFns,
+  Request as InternalRequest,
+  ClaimResponse as InternalClaimResponse,
+} from "./protobufs.ts";
 import { AbortChannel, makeAbortChannel } from "./rpc-abort-channel";
 
 const logger = getLogger("rpc.client");
