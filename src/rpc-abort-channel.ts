@@ -1,6 +1,7 @@
-import { GenericLiveKitRpcError } from "@/helpers/errors";
-import { getLogger } from "@/helpers/logger";
 import { Chan } from "ts-chan";
+
+import { GenericLiveKitRpcError } from "./helpers/errors";
+import { getLogger } from "./helpers/logger";
 
 const logger = getLogger("rpc-abort-channel");
 

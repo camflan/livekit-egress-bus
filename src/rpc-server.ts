@@ -1,33 +1,33 @@
-import { Any } from "@/generated/google/protobuf/any";
-import { Empty } from "@/generated/google/protobuf/empty";
+import { ensureError } from "@uplift-ltd/ts-helpers";
+import { setInterval } from "node:timers";
+import { Chan, recv, Select } from "ts-chan";
+
+import { MessageBusSubscription, MessageBus } from "./bus";
+import { Any } from "./generated/google/protobuf/any";
+import { Empty } from "./generated/google/protobuf/empty";
 import {
   ClaimRequest as InternalClaimRequest,
   ClaimResponse as InternalClaimResponse,
   MessageFns,
   Response as InternalResponse,
   Request as InternalRequest,
-} from "@/generated/internal";
-import { UnknownMessage } from "@/generated/typeRegistry";
+} from "./generated/internal";
+import { UnknownMessage } from "./generated/typeRegistry";
 import {
   getClaimRequestChannel,
   getClaimResponseChannel,
   getHandlerKey,
   getResponseChannel,
   getRPCChannel,
-} from "@/helpers/channels";
+} from "./helpers/channels";
 import {
   msToNanosecondsBigInt,
   nanosecondsBigIntToMs,
-} from "@/helpers/datetimes";
-import { ErrorCode, isLiveKitError } from "@/helpers/errors";
-import { NewServerID } from "@/helpers/ids";
-import { getInfo, RequestInfo, ServerRPCKey, RPCService } from "@/helpers/info";
-import { getLogger } from "@/helpers/logger";
-import { ensureError } from "@uplift-ltd/ts-helpers";
-import { setInterval } from "node:timers";
-import { Chan, recv, Select } from "ts-chan";
-
-import { MessageBusSubscription, MessageBus } from "./bus";
+} from "./helpers/datetimes";
+import { ErrorCode, isLiveKitError } from "./helpers/errors";
+import { NewServerID } from "./helpers/ids";
+import { getInfo, RequestInfo, ServerRPCKey, RPCService } from "./helpers/info";
+import { getLogger } from "./helpers/logger";
 import { makeAbortChannel } from "./rpc-abort-channel";
 
 const logger = getLogger("rpc.server");

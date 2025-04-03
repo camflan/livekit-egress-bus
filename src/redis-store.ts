@@ -1,9 +1,10 @@
-import { EgressInfo, EgressStatus } from "@/generated/livekit_egress";
-import { EgressNotFoundError } from "@/helpers/errors";
 /** adapted from the ideas of LK redis store */
 import { ensureError } from "@uplift-ltd/ts-helpers";
 import Redis from "iovalkey";
 import { getLogger } from "loglevel";
+
+import { EgressInfo, EgressStatus } from "./generated/livekit_egress";
+import { EgressNotFoundError } from "./helpers/errors";
 
 const logger = getLogger("redis-store");
 
