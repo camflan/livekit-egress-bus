@@ -29,7 +29,6 @@ import { Chan, recv, Select } from "ts-chan";
 
 import { MessageBusSubscription, MessageBus } from "./bus";
 import { makeAbortChannel } from "./rpc-abort-channel";
-import { getValkeyClient } from "./valkey";
 
 const logger = getLogger("rpc.server");
 
@@ -75,7 +74,7 @@ export class RPCServer {
     bus: MessageBus;
   }) {
     this.serverId = NewServerID();
-    this.#bus = bus ?? getValkeyClient({ connectionName: this.serverId });
+    this.#bus = bus;
 
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
@@ -294,9 +293,11 @@ export class RPCServer {
       }
     };
 
-    let _promise: Promise<void> | undefined;
+    // holds promise so that the handler continues to run
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let _promise: Promise<void> | null = null;
 
-    const run = async () => {
+    const runHandler = async () => {
       logger.debug(`Running handler for: ${JSON.stringify(info.rpcInfo)}…`);
       const select = new Select([
         recv(abortChannel.channel),
@@ -310,13 +311,14 @@ export class RPCServer {
 
         switch (resultIdx) {
           // abort
-          case 0:
+          case 0: {
             const abortReason = select.recv(select.cases[resultIdx]).value;
             if (!abortReason) break;
             throw abortReason;
+          }
 
           // request
-          case 1:
+          case 1: {
             const request = select.recv(select.cases[resultIdx]).value;
             logger.trace("REQUEST", request);
 
@@ -334,9 +336,10 @@ export class RPCServer {
             }
 
             break;
+          }
 
           // claim
-          case 2:
+          case 2: {
             const claim = select.recv(select.cases[resultIdx]).value;
             logger.trace("CLAIM", claim);
             if (!claim) continue;
@@ -347,6 +350,7 @@ export class RPCServer {
             }
 
             break;
+          }
 
           default:
             logger.warn(`Unsupported result: ${resultIdx}`);
@@ -362,6 +366,7 @@ export class RPCServer {
       abortChannel.channel.close();
       requestSub.close();
       claimSub.close();
+      _promise = null;
     };
 
     return {
@@ -373,7 +378,7 @@ export class RPCServer {
       requestSub,
       stop,
       run() {
-        _promise = run();
+        _promise = runHandler();
         return stop;
       },
     };

@@ -6,8 +6,6 @@ import { ensureError } from "@uplift-ltd/ts-helpers";
 import Redis from "iovalkey";
 import { Chan } from "ts-chan";
 
-import { getValkeyClient } from "./valkey";
-
 const logger = getLogger("bus");
 
 const GOOGLE_TYPEURL_PREFIX = "type.googleapis.com/";
@@ -39,7 +37,7 @@ export class MessageBus {
   #queues = new MessageBusSubscriptionListMap();
   #subscriptions = new MessageBusSubscriptionListMap();
 
-  constructor(valkey: Redis = getValkeyClient({ lazyConnect: true })) {
+  constructor(valkey: Redis) {
     this.#client = valkey;
     this.#subscriber = this.#client.duplicate();
 
@@ -189,7 +187,7 @@ export class MessageBus {
         subs: [],
       } satisfies MessageBusSubscriptionList<T, V>;
 
-      // @ts-expect-error
+      // @ts-expect-error: type doesn't fully match but its OK here
       subLists.set(channel, subList);
 
       this.#subscriber.subscribe(channel, (err, count) => {

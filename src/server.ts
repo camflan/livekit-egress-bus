@@ -11,12 +11,7 @@ import {
   ListEgressResponse,
 } from "./generated/livekit_egress";
 import { GetEgressRequest, UpdateMetricsRequest } from "./generated/rpc/io";
-import {
-  listEgress,
-  loadEgress,
-  storeEgress,
-  updateEgress,
-} from "./redis-store";
+import { makeRedisStore } from "./redis-store";
 import { RPCServer } from "./rpc-server";
 import { getValkeyClient } from "./valkey";
 
@@ -70,6 +65,9 @@ export function createServer({ bus }: { bus: MessageBus }) {
 }
 
 function registerIOHandlers(server: RPCServer) {
+  const { loadEgress, updateEgress, listEgress, storeEgress } =
+    makeRedisStore(getValkeyClient());
+
   server.registerHandler({
     async handlerFn(egressInfo) {
       const existingEgress = await loadEgress(egressInfo.egressId).catch(

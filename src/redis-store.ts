@@ -5,10 +5,10 @@ import { ensureError } from "@uplift-ltd/ts-helpers";
 import Redis from "iovalkey";
 import { getLogger } from "loglevel";
 
-import { getValkeyClient } from "./valkey";
-
 const logger = getLogger("redis-store");
 
+// keeping these until we know we don't need them
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const VersionKey = "livekit_version";
 
 // RoomsKey is hash of room_name => Room proto
@@ -37,11 +37,9 @@ const AgentDispatchPrefix = "agent_dispatch:";
 const AgentJobPrefix = "agent_job:";
 
 const maxRetries = 5;
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
-export async function storeEgress(
-  info: EgressInfo,
-  client: Redis = getValkeyClient({ lazyConnect: true }),
-) {
+export async function storeEgress(client: Redis, info: EgressInfo) {
   try {
     const data = Buffer.from(
       EgressInfo.encode(EgressInfo.create(info)).finish(),
@@ -58,10 +56,7 @@ export async function storeEgress(
   }
 }
 
-export async function loadEgress(
-  egressId: string,
-  client: Redis = getValkeyClient({ lazyConnect: true }),
-) {
+export async function loadEgress(client: Redis, egressId: string) {
   try {
     const data = await client.hgetBuffer(EgressKey, egressId);
 
@@ -76,9 +71,9 @@ export async function loadEgress(
 }
 
 export async function listEgress(
+  client: Redis,
   roomName: string,
   isActiveOnly?: boolean,
-  client: Redis = getValkeyClient({ lazyConnect: true }),
 ) {
   try {
     let data: (Buffer | null)[] = [];
@@ -114,10 +109,7 @@ export async function listEgress(
   }
 }
 
-export async function updateEgress(
-  info: EgressInfo,
-  client: Redis = getValkeyClient({ lazyConnect: true }),
-) {
+export async function updateEgress(client: Redis, info: EgressInfo) {
   try {
     const data = Buffer.from(EgressInfo.encode(info).finish());
     const pipeline = client.pipeline();
@@ -142,4 +134,13 @@ export async function updateEgress(
 
 function egressEndedValue(roomName: string, endedAt: bigint) {
   return `${roomName}|${endedAt}`;
+}
+
+export function makeRedisStore(valkey: Redis) {
+  return {
+    listEgress: listEgress.bind(undefined, valkey),
+    loadEgress: loadEgress.bind(undefined, valkey),
+    storeEgress: updateEgress.bind(undefined, valkey),
+    updateEgress: updateEgress.bind(undefined, valkey),
+  } as const;
 }

@@ -10,7 +10,7 @@ export function getValkeyClient(options?: GetValkeyClientOptions) {
 function getValkeyClientConfig({
   db = 0,
   host = process.env.REDIS_HOST ?? "127.0.0.1",
-  port = Number(process.env.REDIS_PORT) ?? 6380,
+  port = process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6380,
   ...options
 }: GetValkeyClientOptions = {}) {
   return {

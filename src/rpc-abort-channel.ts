@@ -1,5 +1,8 @@
 import { GenericLiveKitRpcError } from "@/helpers/errors";
+import { getLogger } from "@/helpers/logger";
 import { Chan } from "ts-chan";
+
+const logger = getLogger("rpc-abort-channel");
 
 export type AbortChannel<T = Error> = {
   abort: (reason: GenericLiveKitRpcError | T) => void;
@@ -22,7 +25,8 @@ export function makeAbortChannel<T = Error>(channelSize = 1) {
       try {
         listener?.fn(reason);
       } catch (err) {
-        //
+        // OK to ignore this, we don't need to know if it failed
+        logger.trace(err);
       }
     });
   };
