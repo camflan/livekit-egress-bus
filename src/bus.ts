@@ -21,7 +21,7 @@ export type MessageBusSubscription<T extends UnknownMessage = UnknownMessage> =
     queue: boolean;
   };
 
-export type MessageBusSubscriptionList<
+type MessageBusSubscriptionList<
   T extends UnknownMessage = UnknownMessage,
   K extends string = string,
 > = {

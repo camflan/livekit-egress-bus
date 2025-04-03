@@ -32,11 +32,11 @@ import { setInterval } from "node:timers";
 
 const logger = getLogger("rpc.server");
 
-export type AffinityFunc<RequestType extends UnknownMessage> = (
+type AffinityFunc<RequestType extends UnknownMessage> = (
   req: RequestType,
 ) => number;
 
-export type RPCHandlerImpl<
+type RPCHandlerImpl<
   RequestType extends UnknownMessage = UnknownMessage,
   ResponseType extends UnknownMessage = UnknownMessage,
 > = {

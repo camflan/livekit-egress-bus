@@ -1,4 +1,4 @@
-export type MethodInfo = {
+type MethodInfo = {
   affinityEnabled: boolean;
   multi: boolean;
   requireClaim: boolean;
@@ -32,7 +32,7 @@ export type ClientRPCService = keyof typeof clientServiceDefinitions;
 export type ClientRPCForService<Service extends ClientRPCService> =
   keyof (typeof clientServiceDefinitions)[Service];
 
-export type ClientRPCKey =
+type ClientRPCKey =
   keyof (typeof clientServiceDefinitions)[ClientRPCService];
 
 function isClientRPCKey(
@@ -82,7 +82,7 @@ const serverServiceDefinitions = {
   },
 } as const satisfies Record<string, Required<Record<string, MethodInfo>>>;
 
-export type ServerRPCService = keyof typeof serverServiceDefinitions;
+type ServerRPCService = keyof typeof serverServiceDefinitions;
 export type ServerRPCKey =
   keyof (typeof serverServiceDefinitions)[ServerRPCService];
 
