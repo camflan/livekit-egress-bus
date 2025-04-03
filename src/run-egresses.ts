@@ -1,16 +1,15 @@
-import { getValkeyClient } from "./valkey";
-
+import { ensureError } from "@uplift-ltd/ts-helpers";
 import {
   EgressInfo,
   EncodingOptionsPreset,
   StopEgressRequest,
 } from "./generated/livekit_egress";
 import { StartEgressRequest } from "./generated/rpc/egress";
-import { formatID } from "./helpers/ids";
-import { ensureError } from "@uplift-ltd/ts-helpers";
-import { RPCClient } from "./rpc-client";
 import { MessageBus } from "./bus";
+import { formatID } from "./helpers/ids";
 import { getLogger } from "./helpers/logger";
+import { RPCClient } from "./rpc-client";
+import { getValkeyClient } from "./valkey";
 
 const logger = getLogger("run-egresses");
 
@@ -18,14 +17,11 @@ const EGRESSES = new Map<string, EgressInfo>();
 
 const DEFAULT_EXPIRY_MS = 500;
 
-const abort = new AbortController();
-
 const valkey = getValkeyClient({ lazyConnect: false });
 const bus = new MessageBus(valkey);
 
 const client = makeEgressClient(
   new RPCClient({
-    abort,
     bus,
   }),
 );
@@ -44,7 +40,6 @@ async function exit(err?: string | Error) {
     logger.error(error);
   }
 
-  abort.abort(error);
   process.exit(exitCode);
 }
 

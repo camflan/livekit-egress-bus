@@ -1,4 +1,4 @@
-import { getValkeyClient } from "./valkey";
+import { ensureError } from "@uplift-ltd/ts-helpers";
 
 import {
   EgressInfo,
@@ -6,19 +6,19 @@ import {
   ListEgressRequest,
   ListEgressResponse,
 } from "./generated/livekit_egress";
-import { ensureError } from "@uplift-ltd/ts-helpers";
-import { MessageBus } from "./bus";
-import { getLogger } from "./helpers/logger";
-import { RPCServer } from "./rpc-server";
 import { Empty } from "./generated/google/protobuf/empty";
+import { GetEgressRequest, UpdateMetricsRequest } from "./generated/rpc/io";
+import { MessageBus } from "./bus";
+import { ErrorCode, isLiveKitError } from "./errors";
+import { getLogger } from "./helpers/logger";
 import {
   listEgress,
   loadEgress,
   storeEgress,
   updateEgress,
 } from "./redis-store";
-import { GetEgressRequest, UpdateMetricsRequest } from "./generated/rpc/io";
-import { ErrorCode, isLiveKitError } from "./errors";
+import { RPCServer } from "./rpc-server";
+import { getValkeyClient } from "./valkey";
 
 const logger = getLogger("server");
 let stopServer: (() => void) | undefined = undefined;

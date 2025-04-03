@@ -1,11 +1,13 @@
 {
   "name": "livekit-egress-bus",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.ts",
   "scripts": {
+    "knip": "npx knip --config=knip.json --tsConfig=tsconfig.json",
     "proto:generate": "./compile-protobufs.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "type": "module",
   "author": "Camron Flanders <me@camronflanders.com>",
   "license": "ISC",
   "description": "",
