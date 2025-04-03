@@ -80,8 +80,10 @@ export class GenericLiveKitRpcError extends LiveKitError {
   }
 }
 
-export class NotFoundError extends LiveKitError {
-  code = ErrorCode.NotFound;
+// -- Egress errors ----------------------------------------------------------
+export class EgressNotConnectedError extends LiveKitError {
+  code = ErrorCode.Internal;
+  message = "egress not connected (redis required)";
 }
 
 export class EgressNotFoundError extends LiveKitError {
@@ -89,34 +91,10 @@ export class EgressNotFoundError extends LiveKitError {
   message = "egress does not exist";
 }
 
-export class EgressNotConnectedError extends LiveKitError {
-  code = ErrorCode.Internal;
-  message = "egress not connected (redis required)";
-}
-
-export class IdentityEmptyError extends LiveKitError {
+// -- Generic errors --------------------------------------------------
+export class AttributeExceedsLimitsError extends LiveKitError {
   code = ErrorCode.InvalidArgument;
-  message = "identity cannot be empty";
-}
-
-export class IngressNotConnectedError extends LiveKitError {
-  code = ErrorCode.Internal;
-  message = "ingress not connected (redis required)";
-}
-
-export class IngressNotFoundError extends LiveKitError {
-  code = ErrorCode.NotFound;
-  message = "ingress does not exist";
-}
-
-export class IngressNonReusableError extends LiveKitError {
-  code = ErrorCode.InvalidArgument;
-  message = "ingress is not reusable and cannot be modified";
-}
-
-export class NameExceedsLimitsError extends LiveKitError {
-  code = ErrorCode.InvalidArgument;
-  message = "name length exceeds limits";
+  message = "attribute size exceeds limits";
 }
 
 export class MetadataExceedsLimitsError extends LiveKitError {
@@ -124,77 +102,12 @@ export class MetadataExceedsLimitsError extends LiveKitError {
   message = "metadata size exceeds limits";
 }
 
-export class AttributeExceedsLimitsError extends LiveKitError {
-  code = ErrorCode.InvalidArgument;
-  message = "attribute size exceeds limits";
-}
-
-export class RoomNameExceedsLimitsError extends LiveKitError {
-  code = ErrorCode.InvalidArgument;
-  message = "room name length exceeds limits";
-}
-
-export class ParticipantIdentityExceedsLimitsError extends LiveKitError {
-  code = ErrorCode.InvalidArgument;
-  message = "participant identity length exceeds limits";
-}
-
 export class OperationFailedError extends LiveKitError {
   code = ErrorCode.Internal;
   message = "operation cannot be completed";
 }
 
-export class ParticipantNotFoundError extends LiveKitError {
-  code = ErrorCode.NotFound;
-  message = "participant does not exist";
-}
-
-export class RoomNotFoundError extends LiveKitError {
-  code = ErrorCode.NotFound;
-  message = "requested room does not exist";
-}
-
-export class RoomLockFailedError extends LiveKitError {
-  code = ErrorCode.Internal;
-  message = "could not lock room";
-}
-
-export class RoomUnlockFailedError extends LiveKitError {
-  code = ErrorCode.Internal;
-  message = "could not unlock room, lock token does not match";
-}
-
-export class RemoteUnmuteNoteEnabledError extends LiveKitError {
-  code = ErrorCode.FailedPrecondition;
-  message = "remote unmute not enabled";
-}
-
-export class TrackNotFoundError extends LiveKitError {
-  code = ErrorCode.NotFound;
-  message = "track is not found";
-}
-
 export class WebHookMissingAPIKeyError extends LiveKitError {
   code = ErrorCode.InvalidArgument;
   message = "api_key is required to use webhooks";
-}
-
-export class SIPNotConnectedError extends LiveKitError {
-  code = ErrorCode.Internal;
-  message = "sip not connected (redis required)";
-}
-
-export class SIPTrunkNotFoundError extends LiveKitError {
-  code = ErrorCode.NotFound;
-  message = "requested sip trunk does not exist";
-}
-
-export class SIPDispatchRuleNotFoundError extends LiveKitError {
-  code = ErrorCode.NotFound;
-  message = "requested sip dispatch rule does not exist";
-}
-
-export class SIPParticipantNotFoundError extends LiveKitError {
-  code = ErrorCode.NotFound;
-  message = "requested sip participant does not exist";
 }
