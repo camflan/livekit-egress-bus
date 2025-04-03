@@ -12,8 +12,6 @@ const colors = {
 } as const;
 
 prefix.reg(log);
-log.enableAll();
-
 prefix.apply(log, {
   format(level, name, timestamp) {
     const levelUpper = level.toUpperCase();
@@ -30,19 +28,17 @@ prefix.apply(log, {
   },
 });
 
-prefix.apply(log.getLogger("critical"), {
-  format(level, name, timestamp) {
-    return chalk.red.bold(`[${timestamp}] ${level} ${name}:`);
-  },
-});
+const defaultLogLevel: keyof typeof log.levels = "ERROR";
+const envLogLevel = process.env.EGRESS_BUS_LOG_LEVEL;
 
-const defaultLogLevel: keyof typeof log.levels = "DEBUG";
-const envLogLevel = process.env.LOG_LEVEL ?? defaultLogLevel;
-
-log.setDefaultLevel(
-  envLogLevel in log.levels
-    ? log.levels[envLogLevel as keyof typeof log.levels]
-    : defaultLogLevel,
-);
+if (!envLogLevel) {
+  log.disableAll();
+} else {
+  log.setDefaultLevel(
+    envLogLevel in log.levels
+      ? log.levels[envLogLevel as keyof typeof log.levels]
+      : defaultLogLevel,
+  );
+}
 
 export const getLogger = log.getLogger;
