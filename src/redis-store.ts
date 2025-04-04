@@ -1,9 +1,9 @@
 /** adapted from the ideas of LK redis store */
 import { ensureError } from "@uplift-ltd/ts-helpers";
 import Redis from "iovalkey";
-import { getLogger } from "loglevel";
 
 import { EgressNotFoundError } from "./helpers/errors";
+import { getLogger } from "./helpers/logger.ts";
 import { EgressInfo, EgressStatus } from "./protobufs.ts";
 
 const logger = getLogger("redis-store");

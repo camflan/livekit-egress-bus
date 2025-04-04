@@ -293,80 +293,86 @@ export class RPCServer {
       }
     };
 
+    const abortChannel = makeAbortChannel();
+
     // holds promise so that the handler continues to run
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let _promise: Promise<void> | null = null;
+    const _promise = Promise.withResolvers<void>();
 
     const runHandler = async () => {
-      logger.debug(`Running handler for: ${JSON.stringify(info.rpcInfo)}…`);
-      const select = new Select([
-        recv(abortChannel.channel),
-        recv(requestSub.msgChannel),
-        recv(claimSub.msgChannel),
-      ]);
+      try {
+        logger.debug(`Running handler for: ${JSON.stringify(info.rpcInfo)}…`);
+        const select = new Select([
+          recv(abortChannel.channel),
+          recv(requestSub.msgChannel),
+          recv(claimSub.msgChannel),
+        ]);
 
-      while (true) {
-        const resultIdx = await select.wait();
-        logger.trace("file: rpc-server.ts~line: 263~resultIdx", resultIdx);
+        while (true) {
+          const resultIdx = await select.wait();
+          logger.trace("file: rpc-server.ts~line: 263~resultIdx", resultIdx);
 
-        switch (resultIdx) {
-          // abort
-          case 0: {
-            const abortReason = select.recv(select.cases[resultIdx]).value;
-            if (!abortReason) break;
-            throw abortReason;
-          }
+          switch (resultIdx) {
+            // abort
+            case 0: {
+              const abortReason = select.recv(select.cases[resultIdx]).value;
+              if (!abortReason) break;
+              throw abortReason;
+            }
 
-          // request
-          case 1: {
-            const request = select.recv(select.cases[resultIdx]).value;
-            logger.trace("REQUEST", request);
+            // request
+            case 1: {
+              const request = select.recv(select.cases[resultIdx]).value;
+              logger.trace("REQUEST", request);
 
-            if (!request) {
+              if (!request) {
+                break;
+              }
+
+              const nowNano = msToNanosecondsBigInt(Date.now());
+              if (!request.expiry || nowNano < request.expiry) {
+                handleRequest(request).catch((err) => {
+                  const error = ensureError(err);
+                  logger.error(error);
+                  return;
+                });
+              }
+
               break;
             }
 
-            const nowNano = msToNanosecondsBigInt(Date.now());
-            if (!request.expiry || nowNano < request.expiry) {
-              handleRequest(request).catch((err) => {
-                const error = ensureError(err);
-                logger.error(error);
-                return;
-              });
+            // claim
+            case 2: {
+              const claim = select.recv(select.cases[resultIdx]).value;
+              logger.trace("CLAIM", claim);
+              if (!claim) continue;
+
+              const claimChannel = claims.get(claim.requestId);
+              if (claimChannel) {
+                claimChannel.trySend(claim);
+              }
+
+              break;
             }
 
-            break;
+            default:
+              logger.warn(`Unsupported result: ${resultIdx}`);
+              break;
           }
-
-          // claim
-          case 2: {
-            const claim = select.recv(select.cases[resultIdx]).value;
-            logger.trace("CLAIM", claim);
-            if (!claim) continue;
-
-            const claimChannel = claims.get(claim.requestId);
-            if (claimChannel) {
-              claimChannel.trySend(claim);
-            }
-
-            break;
-          }
-
-          default:
-            logger.warn(`Unsupported result: ${resultIdx}`);
-            break;
         }
+      } catch (err) {
+        const error = ensureError(err);
+        logger.error("Handler error", error);
+        // TODO: handle recoverable errors?
+        _promise.reject(error);
       }
     };
-
-    const abortChannel = makeAbortChannel();
 
     // TODO: Support draining/finish handling current request?
     const stop = () => {
       abortChannel.channel.close();
       requestSub.close();
       claimSub.close();
-      _promise = null;
+      _promise.resolve();
     };
 
     return {
@@ -376,11 +382,11 @@ export class RPCServer {
       handlerFn,
       info,
       requestSub,
-      stop,
       run() {
-        _promise = runHandler();
+        runHandler();
         return stop;
       },
+      stop,
     };
   }
 }
