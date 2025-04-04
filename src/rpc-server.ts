@@ -81,24 +81,23 @@ export class RPCServer {
   }
 
   start(onSuccess?: () => void) {
-    logger.info("Starting server…");
+    logger.trace("Starting server…");
 
     try {
       // start all the handlers
       this.#handlers.values().forEach((fn) => fn.run());
       onSuccess?.();
     } catch (err) {
-      const error = ensureError(err);
-      logger.error("ERROR: ", error);
-      throw error;
+      throw ensureError(err);
     }
   }
 
-  stop() {
-    logger.info("Shutting down…");
+  stop(onStopped?: () => void) {
+    logger.trace("Shutting down…");
     clearInterval(this.#interval);
     this.#handlers.forEach((handler) => handler.stop());
-    logger.info("done");
+    onStopped?.();
+    logger.trace("done");
   }
 
   registerHandler<
