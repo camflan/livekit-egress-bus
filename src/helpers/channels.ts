@@ -137,5 +137,5 @@ function formatChannel(
   delim: string,
   ...parts: Parameters<ReturnType<typeof safeJoin>>
 ) {
-  return safeJoin(delim)(parts);
+  return safeJoin(delim)(...parts);
 }
