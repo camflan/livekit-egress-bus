@@ -1,8 +1,6 @@
-import { ensureError } from "@uplift-ltd/ts-helpers";
-
-import { MessageBus } from "./bus";
-import { ErrorCode, isLiveKitError } from "./helpers/errors";
-import { getLogger } from "./helpers/logger";
+import { MessageBus } from "@/bus.ts";
+import { ErrorCode, isLiveKitError } from "@/helpers/errors.ts";
+import { getLogger } from "@/helpers/logger.ts";
 import {
   Empty,
   EgressInfo,
@@ -11,12 +9,16 @@ import {
   ListEgressResponse,
   GetEgressRequest,
   UpdateMetricsRequest,
-} from "./protobufs.ts";
-import { makeRedisStore } from "./redis-store";
-import { RPCServer } from "./rpc-server";
-import { getValkeyClient } from "./valkey";
+} from "@/protobufs.ts";
+import { makeRedisStore } from "@/redis-store.ts";
+import { RPCServer } from "@/rpc-server.ts";
+import { ensureError } from "@uplift-ltd/ts-helpers";
+
+import { getValkeyClient } from "./valkey.js";
 
 const logger = getLogger("server");
+logger.enableAll();
+
 let stopServer: (() => void) | undefined = undefined;
 
 function exit(err?: string | Error) {
@@ -44,7 +46,11 @@ main();
 
 function main() {
   try {
-    const valkey = getValkeyClient({ lazyConnect: false });
+    const valkey = getValkeyClient({
+      host: "redis.livekit-egress-stack.orb.local",
+      port: 6379,
+      lazyConnect: false,
+    });
     const bus = new MessageBus(valkey);
 
     const server = createServer({ bus });
@@ -71,6 +77,8 @@ function registerIOHandlers(server: RPCServer) {
 
   server.registerHandler({
     async handlerFn(egressInfo) {
+      logger.debug("CreateEgress", egressInfo);
+
       const existingEgress = await loadEgress(egressInfo.egressId).catch(
         (err) => {
           const error = ensureError(err);
@@ -100,6 +108,7 @@ function registerIOHandlers(server: RPCServer) {
 
   server.registerHandler({
     async handlerFn(egressInfo) {
+      logger.debug("UpdateEgress", egressInfo);
       await updateEgress(egressInfo);
 
       if (egressInfo.status === EgressStatus.EGRESS_FAILED) {

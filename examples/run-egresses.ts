@@ -1,16 +1,16 @@
-import { ensureError } from "@uplift-ltd/ts-helpers";
-
-import { MessageBus } from "./bus";
-import { formatID } from "./helpers/ids";
-import { getLogger } from "./helpers/logger";
+import { MessageBus } from "@/bus.ts";
+import { formatID } from "@/helpers/ids.ts";
+import { getLogger } from "@/helpers/logger.ts";
 import {
   EgressInfo,
   EncodingOptionsPreset,
   StopEgressRequest,
   StartEgressRequest,
-} from "./protobufs.ts";
-import { RPCClient } from "./rpc-client";
-import { getValkeyClient } from "./valkey";
+} from "@/protobufs.ts";
+import { RPCClient } from "@/rpc-client.ts";
+import { ensureError } from "@uplift-ltd/ts-helpers";
+
+import { getValkeyClient } from "./valkey.js";
 
 const logger = getLogger("run-egresses");
 
@@ -130,7 +130,7 @@ function makeEgressClient(client: RPCClient) {
           timeoutMs: DEFAULT_EXPIRY_MS,
         },
         rpc: "StopEgress",
-        service: "EgressInternal",
+        service: "EgressHandler",
       });
     },
   };

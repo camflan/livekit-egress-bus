@@ -27,18 +27,6 @@
         ],
         "baseUrl": ".",
         "paths": {
-            "@/components/*": [
-                "./src/components/*"
-            ],
-            "@/contexts/*": [
-                "./src/contexts/*"
-            ],
-            "@/services/*": [
-                "./src/services/*"
-            ],
-            "@/utils/*": [
-                "./src/utils/*"
-            ],
             "@/*": [
                 "./src/*"
             ]
@@ -47,12 +35,12 @@
     },
     "include": [
         "eslint.config.mjs",
+        "examples/*.ts",
         "lint-staged.config.js",
         "mod.ts",
         "prettier.config.js",
         "scripts/**/*.ts",
         "src/**/*.ts",
-        "src/**/*.tsx",
     ],
     "exclude": [
         "contrib",

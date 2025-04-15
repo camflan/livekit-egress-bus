@@ -1,41 +1,31 @@
-import { MessageBus } from "./bus";
-import { RPCClient } from "./rpc-client";
-import { newEgressID } from "./helpers/ids";
-import { getLogger } from "./helpers/logger";
+import { MessageBus } from "@/bus.ts";
+import { newEgressID } from "@/helpers/ids.ts";
+import { getLogger } from "@/helpers/logger.ts";
 import {
   EgressInfo,
   EncodingOptionsPreset,
   StopEgressRequest,
   StartEgressRequest,
-} from "./protobufs.ts";
-import { getValkeyClient } from "./valkey";
+} from "@/protobufs.ts";
+import { RPCClient } from "@/rpc-client.ts";
+
+import { getValkeyClient } from "./valkey.js";
 
 const DEFAULT_EXPIRY_MS = 500;
-const logger = getLogger("run-egresses");
-logger.enableAll();
+const logger = getLogger("shared");
 
-(async function main() {
-  const client = makeEgressClient();
-  logger.info("Client created");
-
-  const result = await client.startEgress({
-    sourceUrl:
-      "https://videojs.github.io/autoplay-tests/videojs/attr/autoplay-playsinline.html",
-    destinationUrls: ["http://localhost:8000"],
-  });
-
-  logger.info("StartEgress", result);
-})()
-  .then(logger.info)
-  .catch(logger.error);
-
-type StartEgressOptions = {
+export type StartEgressOptions = {
   destinationUrls: string[];
   sourceUrl: string;
 };
 
 export function makeEgressClient() {
-  const valkey = getValkeyClient({ lazyConnect: false });
+  const valkey = getValkeyClient({
+    host: "redis.livekit-egress-stack.orb.local",
+    port: 6379,
+    lazyConnect: false,
+  });
+  valkey.ping();
   const bus = new MessageBus(valkey);
 
   const client = new RPCClient({
@@ -54,11 +44,20 @@ export function makeEgressClient() {
           egressId,
           web: {
             preset: EncodingOptionsPreset.H264_1080P_60,
-            streamOutputs: [
-              {
-                urls: destinationUrls,
-              },
-            ],
+            fileOutputs: destinationUrls.length
+              ? undefined
+              : [
+                  {
+                    filepath: "/dev/null",
+                  },
+                ],
+            streamOutputs: destinationUrls.length
+              ? [
+                  {
+                    urls: destinationUrls,
+                  },
+                ]
+              : undefined,
             url: sourceUrl,
           },
         }),
@@ -85,10 +84,15 @@ export function makeEgressClient() {
         requestMessageFns: StopEgressRequest,
         responseMessageFns: EgressInfo,
         options: {
-          timeoutMs: DEFAULT_EXPIRY_MS,
+          selectionOptions: {
+            affinityTimeout: DEFAULT_EXPIRY_MS * 10,
+            acceptFirstAvailable: true,
+          },
+          timeoutMs: DEFAULT_EXPIRY_MS * 10,
         },
         rpc: "StopEgress",
-        service: "EgressInternal",
+        service: "EgressHandler",
+        topic: [egressId],
       });
     },
   };

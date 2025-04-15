@@ -9,6 +9,7 @@
 !README.md
 !compile-protobufs.sh
 !contrib/
+!examples/
 !jsr.json
 !mod.ts
 !package-lock.json
