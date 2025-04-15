@@ -58,21 +58,7 @@ main()
   .then(() => exit());
 
 async function main() {
-  const egresses: StartEgressOptions[] = [
-    {
-      destinationUrls: [
-        "rtmps://12b43280e4c2.global-contribute.live-video.net:443/app/sk_us-east-1_cZl8JsBYryQy_dOQ9gF24MiErpeQUVj7r9CZM52Aau7",
-      ],
-      sourceUrl:
-        "https://pauljadam.com/demos/autoplay-loop-muted-controls.html",
-    },
-    // {
-    //   destinationUrls: [
-    //     "rtmps://12b43280e4c2.global-contribute.live-video.net:443/app/sk_us-east-1_e9DkUxy7ZSC5_VniGqn67cIUdfFzLgpdlz8AsHfNVLG",
-    //   ],
-    //   sourceUrl: "https://soundcloud.com/sc-playlists/sets/lo-fi-chill-beats",
-    // },
-  ];
+  const egresses: StartEgressOptions[] = [];
 
   for await (const config of egresses) {
     logger.info(`Starting egress for ${config.sourceUrl}`);
