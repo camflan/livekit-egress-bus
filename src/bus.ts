@@ -116,7 +116,10 @@ export class MessageBus {
     const msgValueType = messageTypeRegistry.get(
       decodedMsg.typeUrl.slice(GOOGLE_TYPEURL_PREFIX.length),
     );
-    logger.trace("#handleMessageBuffer: msgValueType", msgValueType);
+    logger.trace(
+      `#handleMessageBuffer: [${channel}] msgValueType`,
+      msgValueType,
+    );
 
     if (!msgValueType) {
       throw new Error(`Unsupported message type: ${decodedMsg.typeUrl}!`);
@@ -140,6 +143,7 @@ export class MessageBus {
     }
   }
 
+  // TODO: update bus subscriptions to support multiple bus topics => 1 msg channel
   subscribe<T extends UnknownMessage, V extends string>(
     channel: string,
     messageFns: MessageFns<T, V>,

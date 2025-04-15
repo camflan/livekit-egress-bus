@@ -19,7 +19,15 @@ const clientServiceDefinitions = {
       queue: false,
       requireClaim: false,
     },
+  },
+  EgressHandler: {
     StopEgress: {
+      affinityEnabled: false,
+      multi: false,
+      queue: true,
+      requireClaim: true,
+    },
+    UpdateStream: {
       affinityEnabled: false,
       multi: false,
       queue: true,

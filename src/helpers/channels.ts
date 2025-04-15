@@ -20,12 +20,6 @@ const CHANNEL_SUFFIXES = {
   STREAM: "STR",
 } as const;
 
-export const startEgressRequestChannel = getRPCChannel({
-  service: "EgressInternal",
-  method: "StartEgress",
-  topic: [],
-});
-
 export function getClaimRequestChannel(service: RPCService, clientId: string) {
   return {
     Legacy: formatChannel(
@@ -59,7 +53,7 @@ export function getResponseChannel(service: RPCService, clientId: string) {
 export function getRPCChannel({
   topic,
   method,
-  queue = false,
+  queue,
   service,
 }: Pick<RequestInfo, "method" | "service"> &
   Partial<Pick<RequestInfo, "queue" | "topic">>) {
@@ -71,7 +65,7 @@ export function getRPCChannel({
       topic,
       CHANNEL_SUFFIXES.REQUEST,
     ),
-    Server: formatServerChannel(service, topic, queue),
+    Server: formatServerChannel(service, topic, queue ?? false),
     Local: formatLocalChannel(method, CHANNEL_SUFFIXES.REQUEST),
   };
 }

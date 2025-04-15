@@ -1,16 +1,16 @@
-import { ensureError } from "@uplift-ltd/ts-helpers";
-
-import { MessageBus } from "./bus";
-import { formatID } from "./helpers/ids";
-import { getLogger } from "./helpers/logger";
+import { MessageBus } from "@/bus.ts";
+import { formatID } from "@/helpers/ids.ts";
+import { getLogger } from "@/helpers/logger.ts";
 import {
   EgressInfo,
   EncodingOptionsPreset,
   StopEgressRequest,
   StartEgressRequest,
-} from "./protobufs.ts";
-import { RPCClient } from "./rpc-client";
-import { getValkeyClient } from "./valkey";
+} from "@/protobufs.ts";
+import { RPCClient } from "@/rpc-client.ts";
+import { ensureError } from "@uplift-ltd/ts-helpers";
+
+import { getValkeyClient } from "./valkey.js";
 
 const logger = getLogger("run-egresses");
 
@@ -58,21 +58,7 @@ main()
   .then(() => exit());
 
 async function main() {
-  const egresses: StartEgressOptions[] = [
-    {
-      destinationUrls: [
-        "rtmps://12b43280e4c2.global-contribute.live-video.net:443/app/sk_us-east-1_cZl8JsBYryQy_dOQ9gF24MiErpeQUVj7r9CZM52Aau7",
-      ],
-      sourceUrl:
-        "https://pauljadam.com/demos/autoplay-loop-muted-controls.html",
-    },
-    // {
-    //   destinationUrls: [
-    //     "rtmps://12b43280e4c2.global-contribute.live-video.net:443/app/sk_us-east-1_e9DkUxy7ZSC5_VniGqn67cIUdfFzLgpdlz8AsHfNVLG",
-    //   ],
-    //   sourceUrl: "https://soundcloud.com/sc-playlists/sets/lo-fi-chill-beats",
-    // },
-  ];
+  const egresses: StartEgressOptions[] = [];
 
   for await (const config of egresses) {
     logger.info(`Starting egress for ${config.sourceUrl}`);
@@ -130,7 +116,7 @@ function makeEgressClient(client: RPCClient) {
           timeoutMs: DEFAULT_EXPIRY_MS,
         },
         rpc: "StopEgress",
-        service: "EgressInternal",
+        service: "EgressHandler",
       });
     },
   };

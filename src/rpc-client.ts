@@ -48,19 +48,38 @@ export class RPCClient {
 
   async work() {
     try {
-      const responses = this.#bus.subscribe(
-        getResponseChannel("EgressInternal", this.#clientID).Legacy,
-        InternalResponse,
-      );
-      const claims = this.#bus.subscribe(
-        getClaimRequestChannel("EgressInternal", this.#clientID).Legacy,
-        InternalClaimRequest,
-      );
+      // NOTE: This needs to subscribe to all client request services for Responses/ClaimRequests
+      // TODO: update bus subscriptions to support multiple bus topics => 1 msg channel
+      const [
+        egressInternalResponses,
+        egressHandlerResponses,
+        egressInternalClaims,
+        egressHandlerClaims,
+      ] = await Promise.all([
+        this.#bus.subscribe(
+          getResponseChannel("EgressInternal", this.#clientID).Legacy,
+          InternalResponse,
+        ),
+        this.#bus.subscribe(
+          getResponseChannel("EgressHandler", this.#clientID).Legacy,
+          InternalResponse,
+        ),
+        this.#bus.subscribe(
+          getClaimRequestChannel("EgressInternal", this.#clientID).Legacy,
+          InternalClaimRequest,
+        ),
+        this.#bus.subscribe(
+          getClaimRequestChannel("EgressHandler", this.#clientID).Legacy,
+          InternalClaimRequest,
+        ),
+      ]);
 
       const select = new Select([
         recv(this.#abortChannel.channel),
-        recv(responses.msgChannel),
-        recv(claims.msgChannel),
+        recv(egressInternalResponses.msgChannel),
+        recv(egressHandlerResponses.msgChannel),
+        recv(egressInternalClaims.msgChannel),
+        recv(egressHandlerClaims.msgChannel),
       ]);
 
       while (true) {
@@ -70,19 +89,20 @@ export class RPCClient {
           // Abort
           case 0: {
             const reason = select.recv(select.cases[resultIdx]).value;
-            logger.trace("file: rpc-client.ts~line: 76~reason", reason);
+            logger.debug("file: rpc-client.ts~line: 76~reason", reason);
 
             if (reason) {
-              responses.close();
-              claims.close();
+              egressInternalResponses.close();
+              egressInternalClaims.close();
             }
             break;
           }
 
           // responses
-          case 1: {
+          case 1:
+          case 2: {
             const res = select.recv(select.cases[resultIdx]).value;
-            logger.trace("file: rpc-client.ts~line: 88~res", res);
+            logger.debug("Response", res);
 
             if (!res) {
               this.close();
@@ -98,9 +118,10 @@ export class RPCClient {
           }
 
           // claims
-          case 2: {
+          case 3:
+          case 4: {
             const claim = select.recv(select.cases[resultIdx]).value;
-            logger.trace("file: rpc-client.ts~line: 106~claim", claim);
+            logger.debug("Claim", claim);
 
             if (!claim) {
               this.close();
@@ -121,7 +142,7 @@ export class RPCClient {
       }
     } catch (err) {
       const error = ensureError(err);
-      logger.error("file: rpc-client.ts~line: 122~error", error);
+      logger.error("Error caught", error);
       throw err;
     }
   }
@@ -155,6 +176,7 @@ export class RPCClient {
   }) {
     const options = { ...DEFAULT_REQUEST_OPTIONS, ...providedOptions };
     const info = getInfo(service, rpc, topic);
+    logger.debug("Request info: ", info);
 
     const requestId = newRequestID();
     const rawRequest = Buffer.from(requestMessageFns.encode(msg).finish());
@@ -185,20 +207,25 @@ export class RPCClient {
 
     this.#responseChannels.set(requestId, resChannel);
 
-    const result = await this.#bus
-      .publish(getRPCChannel(info).Legacy, req)
-      .catch((err) => {
-        if (err instanceof Error) {
-          return err;
-        }
+    const rpcChannel = getRPCChannel(info).Legacy;
+    logger.debug("RpcChannel", rpcChannel);
 
-        if (typeof err === "string") {
-          return new Error("err");
-        }
+    const result = await this.#bus.publish(rpcChannel, req).catch((err) => {
+      if (err instanceof Error) {
+        return err;
+      }
 
-        return new Error("Unknown error occurred", { cause: err });
-      });
-    logger.debug("RPC RESULT", result);
+      if (typeof err === "string") {
+        return new Error("err");
+      }
+
+      return new Error("Unknown error occurred", { cause: err });
+    });
+
+    logger.debug(
+      "RPC publish result",
+      typeof result === "number" ? { receivedBy: result } : result,
+    );
 
     if (result instanceof Error) {
       close();
@@ -223,8 +250,10 @@ export class RPCClient {
         throw response;
       }
 
+      const claimResChannel = getClaimResponseChannel(info).Legacy;
+
       await this.#bus.publish(
-        getClaimResponseChannel(info).Legacy,
+        claimResChannel,
         InternalClaimResponse.create({
           requestId,
           serverId: response,
@@ -244,19 +273,19 @@ export class RPCClient {
         case 0: {
           const abort = select.recv(select.cases[resultIdx]).value;
           if (!abort) break;
-          logger.trace("file: rpc-client.ts~line: 261~abort", abort);
+          logger.debug("file: rpc-client.ts~line: 261~abort", abort);
           return abort;
         }
 
         // responses
         case 1: {
           const res = select.recv(select.cases[resultIdx]).value;
-          logger.trace("file: rpc-client.ts~line: 254~res", res);
+          logger.debug("file: rpc-client.ts~line: 254~res", res);
           if (!res) break;
 
           if (res.rawResponse && responseMessageFns) {
             const response = responseMessageFns.decode(res.rawResponse);
-            logger.trace("file: rpc-client.ts~line: 258~response", response);
+            logger.debug("file: rpc-client.ts~line: 258~response", response);
             return response;
           }
 
@@ -353,7 +382,7 @@ async function selectServer(
       // abort
       case 0: {
         const abortReason = select.recv(select.cases[resultIdx]).value;
-        logger.trace("file: rpc-client.ts~line: 384~abortReason", {
+        logger.debug("Abort reason", {
           abortReason,
           claims,
           resError,
@@ -385,7 +414,7 @@ async function selectServer(
       // claims
       case 1: {
         const claim = select.recv(select.cases[resultIdx]).value;
-        logger.trace("file: rpc-client.ts~line: 407~claim", claim);
+        logger.debug("Claim", claim);
 
         if (!claim) break;
         claimCount += 1;
@@ -422,7 +451,7 @@ async function selectServer(
       case 2: {
         // will only happen with malformed requests
         const response = select.recv(select.cases[resultIdx]).value;
-        logger.trace("file: rpc-client.ts~line: 446~response", response);
+        logger.debug("Response", response);
         resError = new GenericLiveKitRpcError(
           "malformed_result",
           "Invalid response",
