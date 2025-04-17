@@ -1,9 +1,11 @@
 {
   "name": "@camflan/livekit-egress-bus",
-  "version": "2025.4.9",
-  "exclude": ["compile-protobufs.sh", "examples"],
+  "version": "2025.4.10",
+  "exclude": [
+    "compile-protobufs.sh",
+    "examples"
+  ],
   "exports": {
     ".": "./mod.ts"
   }
 }
-
