@@ -215,10 +215,6 @@ export class RPCClient {
         return err;
       }
 
-      if (typeof err === "string") {
-        return new Error("err");
-      }
-
       return new Error("Unknown error occurred", { cause: err });
     });
 
@@ -273,14 +269,14 @@ export class RPCClient {
         case 0: {
           const abort = select.recv(select.cases[resultIdx]).value;
           if (!abort) break;
-          logger.debug("file: rpc-client.ts~line: 261~abort", abort);
-          return abort;
+          logger.trace("file: rpc-client.ts~line: 261~abort", abort);
+          throw abort;
         }
 
         // responses
         case 1: {
           const res = select.recv(select.cases[resultIdx]).value;
-          logger.debug("file: rpc-client.ts~line: 254~res", res);
+          logger.trace("file: rpc-client.ts~line: 254~res", res);
           if (!res) break;
 
           if (res.rawResponse && responseMessageFns) {
