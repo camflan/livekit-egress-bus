@@ -3,6 +3,8 @@ import chalk from "chalk";
 import log from "loglevel";
 import prefix from "loglevel-plugin-prefix";
 
+const logger = log.noConflict();
+
 const colors = {
   TRACE: chalk.magenta,
   DEBUG: chalk.cyan,
@@ -11,8 +13,8 @@ const colors = {
   ERROR: chalk.red,
 } as const;
 
-prefix.reg(log);
-prefix.apply(log, {
+prefix.reg(logger);
+prefix.apply(logger, {
   format(level, name, timestamp) {
     const levelUpper = level.toUpperCase();
     const color =
@@ -32,13 +34,13 @@ const defaultLogLevel: keyof typeof log.levels = "ERROR";
 const envLogLevel = process.env.EGRESS_BUS_LOG_LEVEL;
 
 if (!envLogLevel) {
-  log.disableAll();
+  logger.disableAll();
 } else {
-  log.setDefaultLevel(
+  logger.setDefaultLevel(
     envLogLevel in log.levels
       ? log.levels[envLogLevel as keyof typeof log.levels]
       : defaultLogLevel,
   );
 }
 
-export const getLogger = log.getLogger;
+export const getLogger = logger.getLogger;
