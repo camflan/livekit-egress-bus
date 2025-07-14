@@ -111,3 +111,14 @@ export class WebHookMissingAPIKeyError extends LiveKitError {
   code = ErrorCode.InvalidArgument;
   message = "api_key is required to use webhooks";
 }
+
+// -- Our custom errors
+export class EgressClusterNoResponseError extends LiveKitError {
+  code = ErrorCode.Unknown;
+  message = "No response from Egress cluster";
+}
+
+export class EgressMalformedResponse extends LiveKitError {
+  code = ErrorCode.MalformedResponse;
+  message = "Malformed response from Egress";
+}

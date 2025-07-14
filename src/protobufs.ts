@@ -4,6 +4,8 @@ export {
   Msg,
   Request,
   Response,
+  type DeepPartial,
+  type Exact,
   type MessageFns,
 } from "./generated/internal.ts";
 

@@ -9,16 +9,24 @@ import {
   getRPCChannel,
 } from "./helpers/channels";
 import { msToNanosecondsBigInt } from "./helpers/datetimes";
-import { GenericLiveKitRpcError } from "./helpers/errors";
+import {
+  EgressClusterNoResponseError,
+  GenericLiveKitRpcError,
+} from "./helpers/errors";
 import { newClientID, newRequestID } from "./helpers/ids";
 import { getInfo, ClientRPCService, ClientRPCForService } from "./helpers/info";
 import { getLogger } from "./helpers/logger";
 import {
   ClaimRequest as InternalClaimRequest,
-  Response as InternalResponse,
+  ClaimResponse as InternalClaimResponse,
+  EgressInfo,
   MessageFns,
   Request as InternalRequest,
-  ClaimResponse as InternalClaimResponse,
+  Response as InternalResponse,
+  StartEgressRequest,
+  type DeepPartial,
+  type Exact,
+  StopEgressRequest,
 } from "./protobufs.ts";
 import { AbortChannel, makeAbortChannel } from "./rpc-abort-channel";
 
@@ -43,7 +51,75 @@ export class RPCClient {
     this.#abortChannel = makeAbortChannel();
     this.#bus = bus;
 
+    this.startEgress = this.startEgress.bind(this);
+    this.stopEgress = this.stopEgress.bind(this);
+
     this.work();
+  }
+
+  /** Send RPC message to the Egress cluster to start an Egress Request */
+  async startEgress<I extends Exact<DeepPartial<StartEgressRequest>, I>>(
+    request: I,
+    options: RequestOptions = { timeoutMs: DefaultClientTimeoutMs },
+  ) {
+    const result = await this.requestSingle({
+      msg: StartEgressRequest.create(request),
+      options,
+      requestMessageFns: StartEgressRequest,
+      responseMessageFns: EgressInfo,
+      rpc: "StartEgress",
+      service: "EgressInternal",
+    });
+
+    logger.debug("StartEgress response", result);
+
+    // We should have already thrown a Timeout error, malformed reuslt error, etc by now. This is to assure TS
+    if (!result) {
+      throw new EgressClusterNoResponseError();
+    }
+
+    // We should have already thrown a MalformedResult error by now, but this is to assure TS
+    if (result.$type !== "livekit.EgressInfo") {
+      console.debug("No EgressInfo returned, probably not started?", result);
+      throw new GenericLiveKitRpcError("malformed_result", "Invalid response", {
+        cause: result,
+      });
+    }
+
+    return result;
+  }
+
+  /** Send RPC message to Stop a specific Egress request by ID */
+  async stopEgress<I extends Exact<DeepPartial<StopEgressRequest>, I>>(
+    request: I,
+    options: RequestOptions = { timeoutMs: DefaultClientTimeoutMs },
+  ) {
+    const msg = StopEgressRequest.create(request);
+
+    const result = await this.requestSingle({
+      msg,
+      options,
+      requestMessageFns: StopEgressRequest,
+      responseMessageFns: EgressInfo,
+      rpc: "StopEgress",
+      service: "EgressHandler",
+      topic: [msg.egressId],
+    });
+
+    // We should have already thrown a Timeout error, malformed reuslt error, etc by now. This is to assure TS
+    if (!result) {
+      throw new EgressClusterNoResponseError();
+    }
+
+    // We should have already thrown a MalformedResult error by now, but this is to assure TS
+    if (result.$type !== "livekit.EgressInfo") {
+      console.debug("No EgressInfo returned, probably not started?", result);
+      throw new GenericLiveKitRpcError("malformed_result", "Invalid response", {
+        cause: result,
+      });
+    }
+
+    return result;
   }
 
   async work() {
@@ -151,6 +227,7 @@ export class RPCClient {
     this.#abortChannel.channel.close();
   }
 
+  /** Raw access to our internal method used to send a non-multi request via the RPC bus */
   async requestSingle<
     RequestMsg,
     ResponseMsg,
