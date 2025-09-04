@@ -12,9 +12,9 @@ import {
   GetEgressRequest,
   UpdateMetricsRequest,
 } from "@/protobufs.ts";
-import { makeRedisStore } from "@/redis-store.ts";
 import { RPCServer } from "@/rpc-server.ts";
 
+import { makeRedisStore } from "./redis-store.ts";
 import { getValkeyClient } from "./valkey.js";
 
 const logger = getLogger("server");
