@@ -18,9 +18,14 @@ import { messageTypeRegistry } from "./typeRegistry";
 
 export const protobufPackage = "livekit";
 
-export const JobType = { JT_ROOM: 0, JT_PUBLISHER: 1, JT_PARTICIPANT: 2, UNRECOGNIZED: -1 } as const;
+export const JobType = {
+  JT_ROOM: 0,
+  JT_PUBLISHER: 1,
+  JT_PARTICIPANT: 2,
+  UNRECOGNIZED: -1,
+} as const;
 
-export type JobType = typeof JobType[keyof typeof JobType];
+export type JobType = (typeof JobType)[keyof typeof JobType];
 
 export namespace JobType {
   export type JT_ROOM = typeof JobType.JT_ROOM;
@@ -61,9 +66,13 @@ export function jobTypeToJSON(object: JobType): string {
   }
 }
 
-export const WorkerStatus = { WS_AVAILABLE: 0, WS_FULL: 1, UNRECOGNIZED: -1 } as const;
+export const WorkerStatus = {
+  WS_AVAILABLE: 0,
+  WS_FULL: 1,
+  UNRECOGNIZED: -1,
+} as const;
 
-export type WorkerStatus = typeof WorkerStatus[keyof typeof WorkerStatus];
+export type WorkerStatus = (typeof WorkerStatus)[keyof typeof WorkerStatus];
 
 export namespace WorkerStatus {
   export type WS_AVAILABLE = typeof WorkerStatus.WS_AVAILABLE;
@@ -98,9 +107,15 @@ export function workerStatusToJSON(object: WorkerStatus): string {
   }
 }
 
-export const JobStatus = { JS_PENDING: 0, JS_RUNNING: 1, JS_SUCCESS: 2, JS_FAILED: 3, UNRECOGNIZED: -1 } as const;
+export const JobStatus = {
+  JS_PENDING: 0,
+  JS_RUNNING: 1,
+  JS_SUCCESS: 2,
+  JS_FAILED: 3,
+  UNRECOGNIZED: -1,
+} as const;
 
-export type JobStatus = typeof JobStatus[keyof typeof JobStatus];
+export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus];
 
 export namespace JobStatus {
   export type JS_PENDING = typeof JobStatus.JS_PENDING;
@@ -153,9 +168,7 @@ export interface Job {
   dispatchId: string;
   type: JobType;
   room: Room | undefined;
-  participant?:
-    | ParticipantInfo
-    | undefined;
+  participant?: ParticipantInfo | undefined;
   /** @deprecated */
   namespace: string;
   metadata: string;
@@ -177,17 +190,11 @@ export interface JobState {
 export interface WorkerMessage {
   $type: "livekit.WorkerMessage";
   /** agent workers need to register themselves with the server first */
-  register?:
-    | RegisterWorkerRequest
-    | undefined;
+  register?: RegisterWorkerRequest | undefined;
   /** worker confirms to server that it's available for a job, or declines it */
-  availability?:
-    | AvailabilityResponse
-    | undefined;
+  availability?: AvailabilityResponse | undefined;
   /** worker can update its status to the server, including taking itself out of the pool */
-  updateWorker?:
-    | UpdateWorkerStatus
-    | undefined;
+  updateWorker?: UpdateWorkerStatus | undefined;
   /** job can send status updates to the server, useful for tracking progress */
   updateJob?: UpdateJobStatus | undefined;
   ping?: WorkerPing | undefined;
@@ -199,9 +206,7 @@ export interface WorkerMessage {
 export interface ServerMessage {
   $type: "livekit.ServerMessage";
   /** server confirms the registration, from this moment on, the worker is considered active */
-  register?:
-    | RegisterWorkerResponse
-    | undefined;
+  register?: RegisterWorkerResponse | undefined;
   /** server asks worker to confirm availability for a job */
   availability?: AvailabilityRequest | undefined;
   assignment?: JobAssignment | undefined;
@@ -253,9 +258,7 @@ export interface MigrateJobRequest {
 
 export interface AvailabilityRequest {
   $type: "livekit.AvailabilityRequest";
-  job:
-    | Job
-    | undefined;
+  job: Job | undefined;
   /**
    * True when the job was previously assigned to another worker but has been
    * migrated due to different reasons (e.g. worker failure, job migration)
@@ -291,9 +294,7 @@ export interface UpdateJobStatus {
 
 export interface UpdateWorkerStatus {
   $type: "livekit.UpdateWorkerStatus";
-  status?:
-    | WorkerStatus
-    | undefined;
+  status?: WorkerStatus | undefined;
   /** optional string metadata = 2 [deprecated=true]; */
   load: number;
   jobCount: number;
@@ -329,7 +330,10 @@ function createBaseJob(): Job {
 export const Job: MessageFns<Job, "livekit.Job"> = {
   $type: "livekit.Job" as const,
 
-  encode(message: Job, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: Job,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -343,7 +347,10 @@ export const Job: MessageFns<Job, "livekit.Job"> = {
       Room.encode(message.room, writer.uint32(26).fork()).join();
     }
     if (message.participant !== undefined) {
-      ParticipantInfo.encode(message.participant, writer.uint32(34).fork()).join();
+      ParticipantInfo.encode(
+        message.participant,
+        writer.uint32(34).fork(),
+      ).join();
     }
     if (message.namespace !== "") {
       writer.uint32(42).string(message.namespace);
@@ -361,7 +368,8 @@ export const Job: MessageFns<Job, "livekit.Job"> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): Job {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseJob();
     while (reader.pos < end) {
@@ -452,13 +460,23 @@ export const Job: MessageFns<Job, "livekit.Job"> = {
     return {
       $type: Job.$type,
       id: isSet(object.id) ? globalThis.String(object.id) : "",
-      dispatchId: isSet(object.dispatchId) ? globalThis.String(object.dispatchId) : "",
+      dispatchId: isSet(object.dispatchId)
+        ? globalThis.String(object.dispatchId)
+        : "",
       type: isSet(object.type) ? jobTypeFromJSON(object.type) : 0,
       room: isSet(object.room) ? Room.fromJSON(object.room) : undefined,
-      participant: isSet(object.participant) ? ParticipantInfo.fromJSON(object.participant) : undefined,
-      namespace: isSet(object.namespace) ? globalThis.String(object.namespace) : "",
-      metadata: isSet(object.metadata) ? globalThis.String(object.metadata) : "",
-      agentName: isSet(object.agentName) ? globalThis.String(object.agentName) : "",
+      participant: isSet(object.participant)
+        ? ParticipantInfo.fromJSON(object.participant)
+        : undefined,
+      namespace: isSet(object.namespace)
+        ? globalThis.String(object.namespace)
+        : "",
+      metadata: isSet(object.metadata)
+        ? globalThis.String(object.metadata)
+        : "",
+      agentName: isSet(object.agentName)
+        ? globalThis.String(object.agentName)
+        : "",
       state: isSet(object.state) ? JobState.fromJSON(object.state) : undefined,
     };
   },
@@ -503,16 +521,21 @@ export const Job: MessageFns<Job, "livekit.Job"> = {
     message.id = object.id ?? "";
     message.dispatchId = object.dispatchId ?? "";
     message.type = object.type ?? 0;
-    message.room = (object.room !== undefined && object.room !== null) ? Room.fromPartial(object.room) : undefined;
-    message.participant = (object.participant !== undefined && object.participant !== null)
-      ? ParticipantInfo.fromPartial(object.participant)
-      : undefined;
+    message.room =
+      object.room !== undefined && object.room !== null
+        ? Room.fromPartial(object.room)
+        : undefined;
+    message.participant =
+      object.participant !== undefined && object.participant !== null
+        ? ParticipantInfo.fromPartial(object.participant)
+        : undefined;
     message.namespace = object.namespace ?? "";
     message.metadata = object.metadata ?? "";
     message.agentName = object.agentName ?? "";
-    message.state = (object.state !== undefined && object.state !== null)
-      ? JobState.fromPartial(object.state)
-      : undefined;
+    message.state =
+      object.state !== undefined && object.state !== null
+        ? JobState.fromPartial(object.state)
+        : undefined;
     return message;
   },
 };
@@ -534,7 +557,10 @@ function createBaseJobState(): JobState {
 export const JobState: MessageFns<JobState, "livekit.JobState"> = {
   $type: "livekit.JobState" as const,
 
-  encode(message: JobState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: JobState,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.status !== 0) {
       writer.uint32(8).int32(message.status);
     }
@@ -543,19 +569,25 @@ export const JobState: MessageFns<JobState, "livekit.JobState"> = {
     }
     if (message.startedAt !== 0n) {
       if (BigInt.asIntN(64, message.startedAt) !== message.startedAt) {
-        throw new globalThis.Error("value provided for field message.startedAt of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.startedAt of type int64 too large",
+        );
       }
       writer.uint32(24).int64(message.startedAt);
     }
     if (message.endedAt !== 0n) {
       if (BigInt.asIntN(64, message.endedAt) !== message.endedAt) {
-        throw new globalThis.Error("value provided for field message.endedAt of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.endedAt of type int64 too large",
+        );
       }
       writer.uint32(32).int64(message.endedAt);
     }
     if (message.updatedAt !== 0n) {
       if (BigInt.asIntN(64, message.updatedAt) !== message.updatedAt) {
-        throw new globalThis.Error("value provided for field message.updatedAt of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.updatedAt of type int64 too large",
+        );
       }
       writer.uint32(40).int64(message.updatedAt);
     }
@@ -566,7 +598,8 @@ export const JobState: MessageFns<JobState, "livekit.JobState"> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): JobState {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseJobState();
     while (reader.pos < end) {
@@ -637,7 +670,9 @@ export const JobState: MessageFns<JobState, "livekit.JobState"> = {
       startedAt: isSet(object.startedAt) ? BigInt(object.startedAt) : 0n,
       endedAt: isSet(object.endedAt) ? BigInt(object.endedAt) : 0n,
       updatedAt: isSet(object.updatedAt) ? BigInt(object.updatedAt) : 0n,
-      participantIdentity: isSet(object.participantIdentity) ? globalThis.String(object.participantIdentity) : "",
+      participantIdentity: isSet(object.participantIdentity)
+        ? globalThis.String(object.participantIdentity)
+        : "",
     };
   },
 
@@ -694,174 +729,235 @@ function createBaseWorkerMessage(): WorkerMessage {
   };
 }
 
-export const WorkerMessage: MessageFns<WorkerMessage, "livekit.WorkerMessage"> = {
-  $type: "livekit.WorkerMessage" as const,
+export const WorkerMessage: MessageFns<WorkerMessage, "livekit.WorkerMessage"> =
+  {
+    $type: "livekit.WorkerMessage" as const,
 
-  encode(message: WorkerMessage, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.register !== undefined) {
-      RegisterWorkerRequest.encode(message.register, writer.uint32(10).fork()).join();
-    }
-    if (message.availability !== undefined) {
-      AvailabilityResponse.encode(message.availability, writer.uint32(18).fork()).join();
-    }
-    if (message.updateWorker !== undefined) {
-      UpdateWorkerStatus.encode(message.updateWorker, writer.uint32(26).fork()).join();
-    }
-    if (message.updateJob !== undefined) {
-      UpdateJobStatus.encode(message.updateJob, writer.uint32(34).fork()).join();
-    }
-    if (message.ping !== undefined) {
-      WorkerPing.encode(message.ping, writer.uint32(42).fork()).join();
-    }
-    if (message.simulateJob !== undefined) {
-      SimulateJobRequest.encode(message.simulateJob, writer.uint32(50).fork()).join();
-    }
-    if (message.migrateJob !== undefined) {
-      MigrateJobRequest.encode(message.migrateJob, writer.uint32(58).fork()).join();
-    }
-    return writer;
-  },
-
-  decode(input: BinaryReader | Uint8Array, length?: number): WorkerMessage {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseWorkerMessage();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
-          }
-
-          message.register = RegisterWorkerRequest.decode(reader, reader.uint32());
-          continue;
-        }
-        case 2: {
-          if (tag !== 18) {
-            break;
-          }
-
-          message.availability = AvailabilityResponse.decode(reader, reader.uint32());
-          continue;
-        }
-        case 3: {
-          if (tag !== 26) {
-            break;
-          }
-
-          message.updateWorker = UpdateWorkerStatus.decode(reader, reader.uint32());
-          continue;
-        }
-        case 4: {
-          if (tag !== 34) {
-            break;
-          }
-
-          message.updateJob = UpdateJobStatus.decode(reader, reader.uint32());
-          continue;
-        }
-        case 5: {
-          if (tag !== 42) {
-            break;
-          }
-
-          message.ping = WorkerPing.decode(reader, reader.uint32());
-          continue;
-        }
-        case 6: {
-          if (tag !== 50) {
-            break;
-          }
-
-          message.simulateJob = SimulateJobRequest.decode(reader, reader.uint32());
-          continue;
-        }
-        case 7: {
-          if (tag !== 58) {
-            break;
-          }
-
-          message.migrateJob = MigrateJobRequest.decode(reader, reader.uint32());
-          continue;
-        }
+    encode(
+      message: WorkerMessage,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      if (message.register !== undefined) {
+        RegisterWorkerRequest.encode(
+          message.register,
+          writer.uint32(10).fork(),
+        ).join();
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      if (message.availability !== undefined) {
+        AvailabilityResponse.encode(
+          message.availability,
+          writer.uint32(18).fork(),
+        ).join();
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      if (message.updateWorker !== undefined) {
+        UpdateWorkerStatus.encode(
+          message.updateWorker,
+          writer.uint32(26).fork(),
+        ).join();
+      }
+      if (message.updateJob !== undefined) {
+        UpdateJobStatus.encode(
+          message.updateJob,
+          writer.uint32(34).fork(),
+        ).join();
+      }
+      if (message.ping !== undefined) {
+        WorkerPing.encode(message.ping, writer.uint32(42).fork()).join();
+      }
+      if (message.simulateJob !== undefined) {
+        SimulateJobRequest.encode(
+          message.simulateJob,
+          writer.uint32(50).fork(),
+        ).join();
+      }
+      if (message.migrateJob !== undefined) {
+        MigrateJobRequest.encode(
+          message.migrateJob,
+          writer.uint32(58).fork(),
+        ).join();
+      }
+      return writer;
+    },
 
-  fromJSON(object: any): WorkerMessage {
-    return {
-      $type: WorkerMessage.$type,
-      register: isSet(object.register) ? RegisterWorkerRequest.fromJSON(object.register) : undefined,
-      availability: isSet(object.availability) ? AvailabilityResponse.fromJSON(object.availability) : undefined,
-      updateWorker: isSet(object.updateWorker) ? UpdateWorkerStatus.fromJSON(object.updateWorker) : undefined,
-      updateJob: isSet(object.updateJob) ? UpdateJobStatus.fromJSON(object.updateJob) : undefined,
-      ping: isSet(object.ping) ? WorkerPing.fromJSON(object.ping) : undefined,
-      simulateJob: isSet(object.simulateJob) ? SimulateJobRequest.fromJSON(object.simulateJob) : undefined,
-      migrateJob: isSet(object.migrateJob) ? MigrateJobRequest.fromJSON(object.migrateJob) : undefined,
-    };
-  },
+    decode(input: BinaryReader | Uint8Array, length?: number): WorkerMessage {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseWorkerMessage();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
 
-  toJSON(message: WorkerMessage): unknown {
-    const obj: any = {};
-    if (message.register !== undefined) {
-      obj.register = RegisterWorkerRequest.toJSON(message.register);
-    }
-    if (message.availability !== undefined) {
-      obj.availability = AvailabilityResponse.toJSON(message.availability);
-    }
-    if (message.updateWorker !== undefined) {
-      obj.updateWorker = UpdateWorkerStatus.toJSON(message.updateWorker);
-    }
-    if (message.updateJob !== undefined) {
-      obj.updateJob = UpdateJobStatus.toJSON(message.updateJob);
-    }
-    if (message.ping !== undefined) {
-      obj.ping = WorkerPing.toJSON(message.ping);
-    }
-    if (message.simulateJob !== undefined) {
-      obj.simulateJob = SimulateJobRequest.toJSON(message.simulateJob);
-    }
-    if (message.migrateJob !== undefined) {
-      obj.migrateJob = MigrateJobRequest.toJSON(message.migrateJob);
-    }
-    return obj;
-  },
+            message.register = RegisterWorkerRequest.decode(
+              reader,
+              reader.uint32(),
+            );
+            continue;
+          }
+          case 2: {
+            if (tag !== 18) {
+              break;
+            }
 
-  create<I extends Exact<DeepPartial<WorkerMessage>, I>>(base?: I): WorkerMessage {
-    return WorkerMessage.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<WorkerMessage>, I>>(object: I): WorkerMessage {
-    const message = createBaseWorkerMessage();
-    message.register = (object.register !== undefined && object.register !== null)
-      ? RegisterWorkerRequest.fromPartial(object.register)
-      : undefined;
-    message.availability = (object.availability !== undefined && object.availability !== null)
-      ? AvailabilityResponse.fromPartial(object.availability)
-      : undefined;
-    message.updateWorker = (object.updateWorker !== undefined && object.updateWorker !== null)
-      ? UpdateWorkerStatus.fromPartial(object.updateWorker)
-      : undefined;
-    message.updateJob = (object.updateJob !== undefined && object.updateJob !== null)
-      ? UpdateJobStatus.fromPartial(object.updateJob)
-      : undefined;
-    message.ping = (object.ping !== undefined && object.ping !== null)
-      ? WorkerPing.fromPartial(object.ping)
-      : undefined;
-    message.simulateJob = (object.simulateJob !== undefined && object.simulateJob !== null)
-      ? SimulateJobRequest.fromPartial(object.simulateJob)
-      : undefined;
-    message.migrateJob = (object.migrateJob !== undefined && object.migrateJob !== null)
-      ? MigrateJobRequest.fromPartial(object.migrateJob)
-      : undefined;
-    return message;
-  },
-};
+            message.availability = AvailabilityResponse.decode(
+              reader,
+              reader.uint32(),
+            );
+            continue;
+          }
+          case 3: {
+            if (tag !== 26) {
+              break;
+            }
+
+            message.updateWorker = UpdateWorkerStatus.decode(
+              reader,
+              reader.uint32(),
+            );
+            continue;
+          }
+          case 4: {
+            if (tag !== 34) {
+              break;
+            }
+
+            message.updateJob = UpdateJobStatus.decode(reader, reader.uint32());
+            continue;
+          }
+          case 5: {
+            if (tag !== 42) {
+              break;
+            }
+
+            message.ping = WorkerPing.decode(reader, reader.uint32());
+            continue;
+          }
+          case 6: {
+            if (tag !== 50) {
+              break;
+            }
+
+            message.simulateJob = SimulateJobRequest.decode(
+              reader,
+              reader.uint32(),
+            );
+            continue;
+          }
+          case 7: {
+            if (tag !== 58) {
+              break;
+            }
+
+            message.migrateJob = MigrateJobRequest.decode(
+              reader,
+              reader.uint32(),
+            );
+            continue;
+          }
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
+
+    fromJSON(object: any): WorkerMessage {
+      return {
+        $type: WorkerMessage.$type,
+        register: isSet(object.register)
+          ? RegisterWorkerRequest.fromJSON(object.register)
+          : undefined,
+        availability: isSet(object.availability)
+          ? AvailabilityResponse.fromJSON(object.availability)
+          : undefined,
+        updateWorker: isSet(object.updateWorker)
+          ? UpdateWorkerStatus.fromJSON(object.updateWorker)
+          : undefined,
+        updateJob: isSet(object.updateJob)
+          ? UpdateJobStatus.fromJSON(object.updateJob)
+          : undefined,
+        ping: isSet(object.ping) ? WorkerPing.fromJSON(object.ping) : undefined,
+        simulateJob: isSet(object.simulateJob)
+          ? SimulateJobRequest.fromJSON(object.simulateJob)
+          : undefined,
+        migrateJob: isSet(object.migrateJob)
+          ? MigrateJobRequest.fromJSON(object.migrateJob)
+          : undefined,
+      };
+    },
+
+    toJSON(message: WorkerMessage): unknown {
+      const obj: any = {};
+      if (message.register !== undefined) {
+        obj.register = RegisterWorkerRequest.toJSON(message.register);
+      }
+      if (message.availability !== undefined) {
+        obj.availability = AvailabilityResponse.toJSON(message.availability);
+      }
+      if (message.updateWorker !== undefined) {
+        obj.updateWorker = UpdateWorkerStatus.toJSON(message.updateWorker);
+      }
+      if (message.updateJob !== undefined) {
+        obj.updateJob = UpdateJobStatus.toJSON(message.updateJob);
+      }
+      if (message.ping !== undefined) {
+        obj.ping = WorkerPing.toJSON(message.ping);
+      }
+      if (message.simulateJob !== undefined) {
+        obj.simulateJob = SimulateJobRequest.toJSON(message.simulateJob);
+      }
+      if (message.migrateJob !== undefined) {
+        obj.migrateJob = MigrateJobRequest.toJSON(message.migrateJob);
+      }
+      return obj;
+    },
+
+    create<I extends Exact<DeepPartial<WorkerMessage>, I>>(
+      base?: I,
+    ): WorkerMessage {
+      return WorkerMessage.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<WorkerMessage>, I>>(
+      object: I,
+    ): WorkerMessage {
+      const message = createBaseWorkerMessage();
+      message.register =
+        object.register !== undefined && object.register !== null
+          ? RegisterWorkerRequest.fromPartial(object.register)
+          : undefined;
+      message.availability =
+        object.availability !== undefined && object.availability !== null
+          ? AvailabilityResponse.fromPartial(object.availability)
+          : undefined;
+      message.updateWorker =
+        object.updateWorker !== undefined && object.updateWorker !== null
+          ? UpdateWorkerStatus.fromPartial(object.updateWorker)
+          : undefined;
+      message.updateJob =
+        object.updateJob !== undefined && object.updateJob !== null
+          ? UpdateJobStatus.fromPartial(object.updateJob)
+          : undefined;
+      message.ping =
+        object.ping !== undefined && object.ping !== null
+          ? WorkerPing.fromPartial(object.ping)
+          : undefined;
+      message.simulateJob =
+        object.simulateJob !== undefined && object.simulateJob !== null
+          ? SimulateJobRequest.fromPartial(object.simulateJob)
+          : undefined;
+      message.migrateJob =
+        object.migrateJob !== undefined && object.migrateJob !== null
+          ? MigrateJobRequest.fromPartial(object.migrateJob)
+          : undefined;
+      return message;
+    },
+  };
 
 messageTypeRegistry.set(WorkerMessage.$type, WorkerMessage);
 
@@ -876,149 +972,203 @@ function createBaseServerMessage(): ServerMessage {
   };
 }
 
-export const ServerMessage: MessageFns<ServerMessage, "livekit.ServerMessage"> = {
-  $type: "livekit.ServerMessage" as const,
+export const ServerMessage: MessageFns<ServerMessage, "livekit.ServerMessage"> =
+  {
+    $type: "livekit.ServerMessage" as const,
 
-  encode(message: ServerMessage, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.register !== undefined) {
-      RegisterWorkerResponse.encode(message.register, writer.uint32(10).fork()).join();
-    }
-    if (message.availability !== undefined) {
-      AvailabilityRequest.encode(message.availability, writer.uint32(18).fork()).join();
-    }
-    if (message.assignment !== undefined) {
-      JobAssignment.encode(message.assignment, writer.uint32(26).fork()).join();
-    }
-    if (message.termination !== undefined) {
-      JobTermination.encode(message.termination, writer.uint32(42).fork()).join();
-    }
-    if (message.pong !== undefined) {
-      WorkerPong.encode(message.pong, writer.uint32(34).fork()).join();
-    }
-    return writer;
-  },
-
-  decode(input: BinaryReader | Uint8Array, length?: number): ServerMessage {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseServerMessage();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
-          }
-
-          message.register = RegisterWorkerResponse.decode(reader, reader.uint32());
-          continue;
-        }
-        case 2: {
-          if (tag !== 18) {
-            break;
-          }
-
-          message.availability = AvailabilityRequest.decode(reader, reader.uint32());
-          continue;
-        }
-        case 3: {
-          if (tag !== 26) {
-            break;
-          }
-
-          message.assignment = JobAssignment.decode(reader, reader.uint32());
-          continue;
-        }
-        case 5: {
-          if (tag !== 42) {
-            break;
-          }
-
-          message.termination = JobTermination.decode(reader, reader.uint32());
-          continue;
-        }
-        case 4: {
-          if (tag !== 34) {
-            break;
-          }
-
-          message.pong = WorkerPong.decode(reader, reader.uint32());
-          continue;
-        }
+    encode(
+      message: ServerMessage,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      if (message.register !== undefined) {
+        RegisterWorkerResponse.encode(
+          message.register,
+          writer.uint32(10).fork(),
+        ).join();
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      if (message.availability !== undefined) {
+        AvailabilityRequest.encode(
+          message.availability,
+          writer.uint32(18).fork(),
+        ).join();
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      if (message.assignment !== undefined) {
+        JobAssignment.encode(
+          message.assignment,
+          writer.uint32(26).fork(),
+        ).join();
+      }
+      if (message.termination !== undefined) {
+        JobTermination.encode(
+          message.termination,
+          writer.uint32(42).fork(),
+        ).join();
+      }
+      if (message.pong !== undefined) {
+        WorkerPong.encode(message.pong, writer.uint32(34).fork()).join();
+      }
+      return writer;
+    },
 
-  fromJSON(object: any): ServerMessage {
-    return {
-      $type: ServerMessage.$type,
-      register: isSet(object.register) ? RegisterWorkerResponse.fromJSON(object.register) : undefined,
-      availability: isSet(object.availability) ? AvailabilityRequest.fromJSON(object.availability) : undefined,
-      assignment: isSet(object.assignment) ? JobAssignment.fromJSON(object.assignment) : undefined,
-      termination: isSet(object.termination) ? JobTermination.fromJSON(object.termination) : undefined,
-      pong: isSet(object.pong) ? WorkerPong.fromJSON(object.pong) : undefined,
-    };
-  },
+    decode(input: BinaryReader | Uint8Array, length?: number): ServerMessage {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseServerMessage();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
 
-  toJSON(message: ServerMessage): unknown {
-    const obj: any = {};
-    if (message.register !== undefined) {
-      obj.register = RegisterWorkerResponse.toJSON(message.register);
-    }
-    if (message.availability !== undefined) {
-      obj.availability = AvailabilityRequest.toJSON(message.availability);
-    }
-    if (message.assignment !== undefined) {
-      obj.assignment = JobAssignment.toJSON(message.assignment);
-    }
-    if (message.termination !== undefined) {
-      obj.termination = JobTermination.toJSON(message.termination);
-    }
-    if (message.pong !== undefined) {
-      obj.pong = WorkerPong.toJSON(message.pong);
-    }
-    return obj;
-  },
+            message.register = RegisterWorkerResponse.decode(
+              reader,
+              reader.uint32(),
+            );
+            continue;
+          }
+          case 2: {
+            if (tag !== 18) {
+              break;
+            }
 
-  create<I extends Exact<DeepPartial<ServerMessage>, I>>(base?: I): ServerMessage {
-    return ServerMessage.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<ServerMessage>, I>>(object: I): ServerMessage {
-    const message = createBaseServerMessage();
-    message.register = (object.register !== undefined && object.register !== null)
-      ? RegisterWorkerResponse.fromPartial(object.register)
-      : undefined;
-    message.availability = (object.availability !== undefined && object.availability !== null)
-      ? AvailabilityRequest.fromPartial(object.availability)
-      : undefined;
-    message.assignment = (object.assignment !== undefined && object.assignment !== null)
-      ? JobAssignment.fromPartial(object.assignment)
-      : undefined;
-    message.termination = (object.termination !== undefined && object.termination !== null)
-      ? JobTermination.fromPartial(object.termination)
-      : undefined;
-    message.pong = (object.pong !== undefined && object.pong !== null)
-      ? WorkerPong.fromPartial(object.pong)
-      : undefined;
-    return message;
-  },
-};
+            message.availability = AvailabilityRequest.decode(
+              reader,
+              reader.uint32(),
+            );
+            continue;
+          }
+          case 3: {
+            if (tag !== 26) {
+              break;
+            }
+
+            message.assignment = JobAssignment.decode(reader, reader.uint32());
+            continue;
+          }
+          case 5: {
+            if (tag !== 42) {
+              break;
+            }
+
+            message.termination = JobTermination.decode(
+              reader,
+              reader.uint32(),
+            );
+            continue;
+          }
+          case 4: {
+            if (tag !== 34) {
+              break;
+            }
+
+            message.pong = WorkerPong.decode(reader, reader.uint32());
+            continue;
+          }
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
+
+    fromJSON(object: any): ServerMessage {
+      return {
+        $type: ServerMessage.$type,
+        register: isSet(object.register)
+          ? RegisterWorkerResponse.fromJSON(object.register)
+          : undefined,
+        availability: isSet(object.availability)
+          ? AvailabilityRequest.fromJSON(object.availability)
+          : undefined,
+        assignment: isSet(object.assignment)
+          ? JobAssignment.fromJSON(object.assignment)
+          : undefined,
+        termination: isSet(object.termination)
+          ? JobTermination.fromJSON(object.termination)
+          : undefined,
+        pong: isSet(object.pong) ? WorkerPong.fromJSON(object.pong) : undefined,
+      };
+    },
+
+    toJSON(message: ServerMessage): unknown {
+      const obj: any = {};
+      if (message.register !== undefined) {
+        obj.register = RegisterWorkerResponse.toJSON(message.register);
+      }
+      if (message.availability !== undefined) {
+        obj.availability = AvailabilityRequest.toJSON(message.availability);
+      }
+      if (message.assignment !== undefined) {
+        obj.assignment = JobAssignment.toJSON(message.assignment);
+      }
+      if (message.termination !== undefined) {
+        obj.termination = JobTermination.toJSON(message.termination);
+      }
+      if (message.pong !== undefined) {
+        obj.pong = WorkerPong.toJSON(message.pong);
+      }
+      return obj;
+    },
+
+    create<I extends Exact<DeepPartial<ServerMessage>, I>>(
+      base?: I,
+    ): ServerMessage {
+      return ServerMessage.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<ServerMessage>, I>>(
+      object: I,
+    ): ServerMessage {
+      const message = createBaseServerMessage();
+      message.register =
+        object.register !== undefined && object.register !== null
+          ? RegisterWorkerResponse.fromPartial(object.register)
+          : undefined;
+      message.availability =
+        object.availability !== undefined && object.availability !== null
+          ? AvailabilityRequest.fromPartial(object.availability)
+          : undefined;
+      message.assignment =
+        object.assignment !== undefined && object.assignment !== null
+          ? JobAssignment.fromPartial(object.assignment)
+          : undefined;
+      message.termination =
+        object.termination !== undefined && object.termination !== null
+          ? JobTermination.fromPartial(object.termination)
+          : undefined;
+      message.pong =
+        object.pong !== undefined && object.pong !== null
+          ? WorkerPong.fromPartial(object.pong)
+          : undefined;
+      return message;
+    },
+  };
 
 messageTypeRegistry.set(ServerMessage.$type, ServerMessage);
 
 function createBaseSimulateJobRequest(): SimulateJobRequest {
-  return { $type: "livekit.SimulateJobRequest", type: 0, room: undefined, participant: undefined };
+  return {
+    $type: "livekit.SimulateJobRequest",
+    type: 0,
+    room: undefined,
+    participant: undefined,
+  };
 }
 
-export const SimulateJobRequest: MessageFns<SimulateJobRequest, "livekit.SimulateJobRequest"> = {
+export const SimulateJobRequest: MessageFns<
+  SimulateJobRequest,
+  "livekit.SimulateJobRequest"
+> = {
   $type: "livekit.SimulateJobRequest" as const,
 
-  encode(message: SimulateJobRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: SimulateJobRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
@@ -1026,13 +1176,20 @@ export const SimulateJobRequest: MessageFns<SimulateJobRequest, "livekit.Simulat
       Room.encode(message.room, writer.uint32(18).fork()).join();
     }
     if (message.participant !== undefined) {
-      ParticipantInfo.encode(message.participant, writer.uint32(26).fork()).join();
+      ParticipantInfo.encode(
+        message.participant,
+        writer.uint32(26).fork(),
+      ).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): SimulateJobRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): SimulateJobRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSimulateJobRequest();
     while (reader.pos < end) {
@@ -1076,7 +1233,9 @@ export const SimulateJobRequest: MessageFns<SimulateJobRequest, "livekit.Simulat
       $type: SimulateJobRequest.$type,
       type: isSet(object.type) ? jobTypeFromJSON(object.type) : 0,
       room: isSet(object.room) ? Room.fromJSON(object.room) : undefined,
-      participant: isSet(object.participant) ? ParticipantInfo.fromJSON(object.participant) : undefined,
+      participant: isSet(object.participant)
+        ? ParticipantInfo.fromJSON(object.participant)
+        : undefined,
     };
   },
 
@@ -1094,16 +1253,24 @@ export const SimulateJobRequest: MessageFns<SimulateJobRequest, "livekit.Simulat
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SimulateJobRequest>, I>>(base?: I): SimulateJobRequest {
+  create<I extends Exact<DeepPartial<SimulateJobRequest>, I>>(
+    base?: I,
+  ): SimulateJobRequest {
     return SimulateJobRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SimulateJobRequest>, I>>(object: I): SimulateJobRequest {
+  fromPartial<I extends Exact<DeepPartial<SimulateJobRequest>, I>>(
+    object: I,
+  ): SimulateJobRequest {
     const message = createBaseSimulateJobRequest();
     message.type = object.type ?? 0;
-    message.room = (object.room !== undefined && object.room !== null) ? Room.fromPartial(object.room) : undefined;
-    message.participant = (object.participant !== undefined && object.participant !== null)
-      ? ParticipantInfo.fromPartial(object.participant)
-      : undefined;
+    message.room =
+      object.room !== undefined && object.room !== null
+        ? Room.fromPartial(object.room)
+        : undefined;
+    message.participant =
+      object.participant !== undefined && object.participant !== null
+        ? ParticipantInfo.fromPartial(object.participant)
+        : undefined;
     return message;
   },
 };
@@ -1117,10 +1284,15 @@ function createBaseWorkerPing(): WorkerPing {
 export const WorkerPing: MessageFns<WorkerPing, "livekit.WorkerPing"> = {
   $type: "livekit.WorkerPing" as const,
 
-  encode(message: WorkerPing, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: WorkerPing,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.timestamp !== 0n) {
       if (BigInt.asIntN(64, message.timestamp) !== message.timestamp) {
-        throw new globalThis.Error("value provided for field message.timestamp of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.timestamp of type int64 too large",
+        );
       }
       writer.uint32(8).int64(message.timestamp);
     }
@@ -1128,7 +1300,8 @@ export const WorkerPing: MessageFns<WorkerPing, "livekit.WorkerPing"> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): WorkerPing {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseWorkerPing();
     while (reader.pos < end) {
@@ -1152,7 +1325,10 @@ export const WorkerPing: MessageFns<WorkerPing, "livekit.WorkerPing"> = {
   },
 
   fromJSON(object: any): WorkerPing {
-    return { $type: WorkerPing.$type, timestamp: isSet(object.timestamp) ? BigInt(object.timestamp) : 0n };
+    return {
+      $type: WorkerPing.$type,
+      timestamp: isSet(object.timestamp) ? BigInt(object.timestamp) : 0n,
+    };
   },
 
   toJSON(message: WorkerPing): unknown {
@@ -1166,7 +1342,9 @@ export const WorkerPing: MessageFns<WorkerPing, "livekit.WorkerPing"> = {
   create<I extends Exact<DeepPartial<WorkerPing>, I>>(base?: I): WorkerPing {
     return WorkerPing.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<WorkerPing>, I>>(object: I): WorkerPing {
+  fromPartial<I extends Exact<DeepPartial<WorkerPing>, I>>(
+    object: I,
+  ): WorkerPing {
     const message = createBaseWorkerPing();
     message.timestamp = object.timestamp ?? 0n;
     return message;
@@ -1182,16 +1360,23 @@ function createBaseWorkerPong(): WorkerPong {
 export const WorkerPong: MessageFns<WorkerPong, "livekit.WorkerPong"> = {
   $type: "livekit.WorkerPong" as const,
 
-  encode(message: WorkerPong, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: WorkerPong,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.lastTimestamp !== 0n) {
       if (BigInt.asIntN(64, message.lastTimestamp) !== message.lastTimestamp) {
-        throw new globalThis.Error("value provided for field message.lastTimestamp of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.lastTimestamp of type int64 too large",
+        );
       }
       writer.uint32(8).int64(message.lastTimestamp);
     }
     if (message.timestamp !== 0n) {
       if (BigInt.asIntN(64, message.timestamp) !== message.timestamp) {
-        throw new globalThis.Error("value provided for field message.timestamp of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.timestamp of type int64 too large",
+        );
       }
       writer.uint32(16).int64(message.timestamp);
     }
@@ -1199,7 +1384,8 @@ export const WorkerPong: MessageFns<WorkerPong, "livekit.WorkerPong"> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): WorkerPong {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseWorkerPong();
     while (reader.pos < end) {
@@ -1233,7 +1419,9 @@ export const WorkerPong: MessageFns<WorkerPong, "livekit.WorkerPong"> = {
   fromJSON(object: any): WorkerPong {
     return {
       $type: WorkerPong.$type,
-      lastTimestamp: isSet(object.lastTimestamp) ? BigInt(object.lastTimestamp) : 0n,
+      lastTimestamp: isSet(object.lastTimestamp)
+        ? BigInt(object.lastTimestamp)
+        : 0n,
       timestamp: isSet(object.timestamp) ? BigInt(object.timestamp) : 0n,
     };
   },
@@ -1252,7 +1440,9 @@ export const WorkerPong: MessageFns<WorkerPong, "livekit.WorkerPong"> = {
   create<I extends Exact<DeepPartial<WorkerPong>, I>>(base?: I): WorkerPong {
     return WorkerPong.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<WorkerPong>, I>>(object: I): WorkerPong {
+  fromPartial<I extends Exact<DeepPartial<WorkerPong>, I>>(
+    object: I,
+  ): WorkerPong {
     const message = createBaseWorkerPong();
     message.lastTimestamp = object.lastTimestamp ?? 0n;
     message.timestamp = object.timestamp ?? 0n;
@@ -1274,10 +1464,16 @@ function createBaseRegisterWorkerRequest(): RegisterWorkerRequest {
   };
 }
 
-export const RegisterWorkerRequest: MessageFns<RegisterWorkerRequest, "livekit.RegisterWorkerRequest"> = {
+export const RegisterWorkerRequest: MessageFns<
+  RegisterWorkerRequest,
+  "livekit.RegisterWorkerRequest"
+> = {
   $type: "livekit.RegisterWorkerRequest" as const,
 
-  encode(message: RegisterWorkerRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: RegisterWorkerRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
@@ -1294,13 +1490,20 @@ export const RegisterWorkerRequest: MessageFns<RegisterWorkerRequest, "livekit.R
       writer.uint32(50).string(message.namespace);
     }
     if (message.allowedPermissions !== undefined) {
-      ParticipantPermission.encode(message.allowedPermissions, writer.uint32(58).fork()).join();
+      ParticipantPermission.encode(
+        message.allowedPermissions,
+        writer.uint32(58).fork(),
+      ).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): RegisterWorkerRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): RegisterWorkerRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRegisterWorkerRequest();
     while (reader.pos < end) {
@@ -1351,7 +1554,10 @@ export const RegisterWorkerRequest: MessageFns<RegisterWorkerRequest, "livekit.R
             break;
           }
 
-          message.allowedPermissions = ParticipantPermission.decode(reader, reader.uint32());
+          message.allowedPermissions = ParticipantPermission.decode(
+            reader,
+            reader.uint32(),
+          );
           continue;
         }
       }
@@ -1367,10 +1573,16 @@ export const RegisterWorkerRequest: MessageFns<RegisterWorkerRequest, "livekit.R
     return {
       $type: RegisterWorkerRequest.$type,
       type: isSet(object.type) ? jobTypeFromJSON(object.type) : 0,
-      agentName: isSet(object.agentName) ? globalThis.String(object.agentName) : "",
+      agentName: isSet(object.agentName)
+        ? globalThis.String(object.agentName)
+        : "",
       version: isSet(object.version) ? globalThis.String(object.version) : "",
-      pingInterval: isSet(object.pingInterval) ? globalThis.Number(object.pingInterval) : 0,
-      namespace: isSet(object.namespace) ? globalThis.String(object.namespace) : undefined,
+      pingInterval: isSet(object.pingInterval)
+        ? globalThis.Number(object.pingInterval)
+        : 0,
+      namespace: isSet(object.namespace)
+        ? globalThis.String(object.namespace)
+        : undefined,
       allowedPermissions: isSet(object.allowedPermissions)
         ? ParticipantPermission.fromJSON(object.allowedPermissions)
         : undefined,
@@ -1395,24 +1607,32 @@ export const RegisterWorkerRequest: MessageFns<RegisterWorkerRequest, "livekit.R
       obj.namespace = message.namespace;
     }
     if (message.allowedPermissions !== undefined) {
-      obj.allowedPermissions = ParticipantPermission.toJSON(message.allowedPermissions);
+      obj.allowedPermissions = ParticipantPermission.toJSON(
+        message.allowedPermissions,
+      );
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<RegisterWorkerRequest>, I>>(base?: I): RegisterWorkerRequest {
+  create<I extends Exact<DeepPartial<RegisterWorkerRequest>, I>>(
+    base?: I,
+  ): RegisterWorkerRequest {
     return RegisterWorkerRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<RegisterWorkerRequest>, I>>(object: I): RegisterWorkerRequest {
+  fromPartial<I extends Exact<DeepPartial<RegisterWorkerRequest>, I>>(
+    object: I,
+  ): RegisterWorkerRequest {
     const message = createBaseRegisterWorkerRequest();
     message.type = object.type ?? 0;
     message.agentName = object.agentName ?? "";
     message.version = object.version ?? "";
     message.pingInterval = object.pingInterval ?? 0;
     message.namespace = object.namespace ?? undefined;
-    message.allowedPermissions = (object.allowedPermissions !== undefined && object.allowedPermissions !== null)
-      ? ParticipantPermission.fromPartial(object.allowedPermissions)
-      : undefined;
+    message.allowedPermissions =
+      object.allowedPermissions !== undefined &&
+      object.allowedPermissions !== null
+        ? ParticipantPermission.fromPartial(object.allowedPermissions)
+        : undefined;
     return message;
   },
 };
@@ -1420,13 +1640,23 @@ export const RegisterWorkerRequest: MessageFns<RegisterWorkerRequest, "livekit.R
 messageTypeRegistry.set(RegisterWorkerRequest.$type, RegisterWorkerRequest);
 
 function createBaseRegisterWorkerResponse(): RegisterWorkerResponse {
-  return { $type: "livekit.RegisterWorkerResponse", workerId: "", serverInfo: undefined };
+  return {
+    $type: "livekit.RegisterWorkerResponse",
+    workerId: "",
+    serverInfo: undefined,
+  };
 }
 
-export const RegisterWorkerResponse: MessageFns<RegisterWorkerResponse, "livekit.RegisterWorkerResponse"> = {
+export const RegisterWorkerResponse: MessageFns<
+  RegisterWorkerResponse,
+  "livekit.RegisterWorkerResponse"
+> = {
   $type: "livekit.RegisterWorkerResponse" as const,
 
-  encode(message: RegisterWorkerResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: RegisterWorkerResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.workerId !== "") {
       writer.uint32(10).string(message.workerId);
     }
@@ -1436,8 +1666,12 @@ export const RegisterWorkerResponse: MessageFns<RegisterWorkerResponse, "livekit
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): RegisterWorkerResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): RegisterWorkerResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRegisterWorkerResponse();
     while (reader.pos < end) {
@@ -1471,8 +1705,12 @@ export const RegisterWorkerResponse: MessageFns<RegisterWorkerResponse, "livekit
   fromJSON(object: any): RegisterWorkerResponse {
     return {
       $type: RegisterWorkerResponse.$type,
-      workerId: isSet(object.workerId) ? globalThis.String(object.workerId) : "",
-      serverInfo: isSet(object.serverInfo) ? ServerInfo.fromJSON(object.serverInfo) : undefined,
+      workerId: isSet(object.workerId)
+        ? globalThis.String(object.workerId)
+        : "",
+      serverInfo: isSet(object.serverInfo)
+        ? ServerInfo.fromJSON(object.serverInfo)
+        : undefined,
     };
   },
 
@@ -1487,15 +1725,20 @@ export const RegisterWorkerResponse: MessageFns<RegisterWorkerResponse, "livekit
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<RegisterWorkerResponse>, I>>(base?: I): RegisterWorkerResponse {
+  create<I extends Exact<DeepPartial<RegisterWorkerResponse>, I>>(
+    base?: I,
+  ): RegisterWorkerResponse {
     return RegisterWorkerResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<RegisterWorkerResponse>, I>>(object: I): RegisterWorkerResponse {
+  fromPartial<I extends Exact<DeepPartial<RegisterWorkerResponse>, I>>(
+    object: I,
+  ): RegisterWorkerResponse {
     const message = createBaseRegisterWorkerResponse();
     message.workerId = object.workerId ?? "";
-    message.serverInfo = (object.serverInfo !== undefined && object.serverInfo !== null)
-      ? ServerInfo.fromPartial(object.serverInfo)
-      : undefined;
+    message.serverInfo =
+      object.serverInfo !== undefined && object.serverInfo !== null
+        ? ServerInfo.fromPartial(object.serverInfo)
+        : undefined;
     return message;
   },
 };
@@ -1506,10 +1749,16 @@ function createBaseMigrateJobRequest(): MigrateJobRequest {
   return { $type: "livekit.MigrateJobRequest", jobIds: [] };
 }
 
-export const MigrateJobRequest: MessageFns<MigrateJobRequest, "livekit.MigrateJobRequest"> = {
+export const MigrateJobRequest: MessageFns<
+  MigrateJobRequest,
+  "livekit.MigrateJobRequest"
+> = {
   $type: "livekit.MigrateJobRequest" as const,
 
-  encode(message: MigrateJobRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: MigrateJobRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     for (const v of message.jobIds) {
       writer.uint32(18).string(v!);
     }
@@ -1517,7 +1766,8 @@ export const MigrateJobRequest: MessageFns<MigrateJobRequest, "livekit.MigrateJo
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): MigrateJobRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMigrateJobRequest();
     while (reader.pos < end) {
@@ -1543,7 +1793,9 @@ export const MigrateJobRequest: MessageFns<MigrateJobRequest, "livekit.MigrateJo
   fromJSON(object: any): MigrateJobRequest {
     return {
       $type: MigrateJobRequest.$type,
-      jobIds: globalThis.Array.isArray(object?.jobIds) ? object.jobIds.map((e: any) => globalThis.String(e)) : [],
+      jobIds: globalThis.Array.isArray(object?.jobIds)
+        ? object.jobIds.map((e: any) => globalThis.String(e))
+        : [],
     };
   },
 
@@ -1555,10 +1807,14 @@ export const MigrateJobRequest: MessageFns<MigrateJobRequest, "livekit.MigrateJo
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MigrateJobRequest>, I>>(base?: I): MigrateJobRequest {
+  create<I extends Exact<DeepPartial<MigrateJobRequest>, I>>(
+    base?: I,
+  ): MigrateJobRequest {
     return MigrateJobRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<MigrateJobRequest>, I>>(object: I): MigrateJobRequest {
+  fromPartial<I extends Exact<DeepPartial<MigrateJobRequest>, I>>(
+    object: I,
+  ): MigrateJobRequest {
     const message = createBaseMigrateJobRequest();
     message.jobIds = object.jobIds?.map((e) => e) || [];
     return message;
@@ -1568,13 +1824,23 @@ export const MigrateJobRequest: MessageFns<MigrateJobRequest, "livekit.MigrateJo
 messageTypeRegistry.set(MigrateJobRequest.$type, MigrateJobRequest);
 
 function createBaseAvailabilityRequest(): AvailabilityRequest {
-  return { $type: "livekit.AvailabilityRequest", job: undefined, resuming: false };
+  return {
+    $type: "livekit.AvailabilityRequest",
+    job: undefined,
+    resuming: false,
+  };
 }
 
-export const AvailabilityRequest: MessageFns<AvailabilityRequest, "livekit.AvailabilityRequest"> = {
+export const AvailabilityRequest: MessageFns<
+  AvailabilityRequest,
+  "livekit.AvailabilityRequest"
+> = {
   $type: "livekit.AvailabilityRequest" as const,
 
-  encode(message: AvailabilityRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: AvailabilityRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.job !== undefined) {
       Job.encode(message.job, writer.uint32(10).fork()).join();
     }
@@ -1584,8 +1850,12 @@ export const AvailabilityRequest: MessageFns<AvailabilityRequest, "livekit.Avail
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): AvailabilityRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): AvailabilityRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAvailabilityRequest();
     while (reader.pos < end) {
@@ -1620,7 +1890,9 @@ export const AvailabilityRequest: MessageFns<AvailabilityRequest, "livekit.Avail
     return {
       $type: AvailabilityRequest.$type,
       job: isSet(object.job) ? Job.fromJSON(object.job) : undefined,
-      resuming: isSet(object.resuming) ? globalThis.Boolean(object.resuming) : false,
+      resuming: isSet(object.resuming)
+        ? globalThis.Boolean(object.resuming)
+        : false,
     };
   },
 
@@ -1635,12 +1907,19 @@ export const AvailabilityRequest: MessageFns<AvailabilityRequest, "livekit.Avail
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<AvailabilityRequest>, I>>(base?: I): AvailabilityRequest {
+  create<I extends Exact<DeepPartial<AvailabilityRequest>, I>>(
+    base?: I,
+  ): AvailabilityRequest {
     return AvailabilityRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<AvailabilityRequest>, I>>(object: I): AvailabilityRequest {
+  fromPartial<I extends Exact<DeepPartial<AvailabilityRequest>, I>>(
+    object: I,
+  ): AvailabilityRequest {
     const message = createBaseAvailabilityRequest();
-    message.job = (object.job !== undefined && object.job !== null) ? Job.fromPartial(object.job) : undefined;
+    message.job =
+      object.job !== undefined && object.job !== null
+        ? Job.fromPartial(object.job)
+        : undefined;
     message.resuming = object.resuming ?? false;
     return message;
   },
@@ -1661,10 +1940,16 @@ function createBaseAvailabilityResponse(): AvailabilityResponse {
   };
 }
 
-export const AvailabilityResponse: MessageFns<AvailabilityResponse, "livekit.AvailabilityResponse"> = {
+export const AvailabilityResponse: MessageFns<
+  AvailabilityResponse,
+  "livekit.AvailabilityResponse"
+> = {
   $type: "livekit.AvailabilityResponse" as const,
 
-  encode(message: AvailabilityResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: AvailabilityResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.jobId !== "") {
       writer.uint32(10).string(message.jobId);
     }
@@ -1684,17 +1969,24 @@ export const AvailabilityResponse: MessageFns<AvailabilityResponse, "livekit.Ava
       writer.uint32(50).string(message.participantMetadata);
     }
     Object.entries(message.participantAttributes).forEach(([key, value]) => {
-      AvailabilityResponse_ParticipantAttributesEntry.encode({
-        $type: "livekit.AvailabilityResponse.ParticipantAttributesEntry",
-        key: key as any,
-        value,
-      }, writer.uint32(58).fork()).join();
+      AvailabilityResponse_ParticipantAttributesEntry.encode(
+        {
+          $type: "livekit.AvailabilityResponse.ParticipantAttributesEntry",
+          key: key as any,
+          value,
+        },
+        writer.uint32(58).fork(),
+      ).join();
     });
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): AvailabilityResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): AvailabilityResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAvailabilityResponse();
     while (reader.pos < end) {
@@ -1753,7 +2045,10 @@ export const AvailabilityResponse: MessageFns<AvailabilityResponse, "livekit.Ava
             break;
           }
 
-          const entry7 = AvailabilityResponse_ParticipantAttributesEntry.decode(reader, reader.uint32());
+          const entry7 = AvailabilityResponse_ParticipantAttributesEntry.decode(
+            reader,
+            reader.uint32(),
+          );
           if (entry7.value !== undefined) {
             message.participantAttributes[entry7.key] = entry7.value;
           }
@@ -1772,16 +2067,28 @@ export const AvailabilityResponse: MessageFns<AvailabilityResponse, "livekit.Ava
     return {
       $type: AvailabilityResponse.$type,
       jobId: isSet(object.jobId) ? globalThis.String(object.jobId) : "",
-      available: isSet(object.available) ? globalThis.Boolean(object.available) : false,
-      supportsResume: isSet(object.supportsResume) ? globalThis.Boolean(object.supportsResume) : false,
-      participantName: isSet(object.participantName) ? globalThis.String(object.participantName) : "",
-      participantIdentity: isSet(object.participantIdentity) ? globalThis.String(object.participantIdentity) : "",
-      participantMetadata: isSet(object.participantMetadata) ? globalThis.String(object.participantMetadata) : "",
+      available: isSet(object.available)
+        ? globalThis.Boolean(object.available)
+        : false,
+      supportsResume: isSet(object.supportsResume)
+        ? globalThis.Boolean(object.supportsResume)
+        : false,
+      participantName: isSet(object.participantName)
+        ? globalThis.String(object.participantName)
+        : "",
+      participantIdentity: isSet(object.participantIdentity)
+        ? globalThis.String(object.participantIdentity)
+        : "",
+      participantMetadata: isSet(object.participantMetadata)
+        ? globalThis.String(object.participantMetadata)
+        : "",
       participantAttributes: isObject(object.participantAttributes)
-        ? Object.entries(object.participantAttributes).reduce<{ [key: string]: string }>((acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        }, {})
+        ? Object.entries(object.participantAttributes).reduce<{
+            [key: string]: string;
+          }>((acc, [key, value]) => {
+            acc[key] = String(value);
+            return acc;
+          }, {})
         : {},
     };
   },
@@ -1818,10 +2125,14 @@ export const AvailabilityResponse: MessageFns<AvailabilityResponse, "livekit.Ava
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<AvailabilityResponse>, I>>(base?: I): AvailabilityResponse {
+  create<I extends Exact<DeepPartial<AvailabilityResponse>, I>>(
+    base?: I,
+  ): AvailabilityResponse {
     return AvailabilityResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<AvailabilityResponse>, I>>(object: I): AvailabilityResponse {
+  fromPartial<I extends Exact<DeepPartial<AvailabilityResponse>, I>>(
+    object: I,
+  ): AvailabilityResponse {
     const message = createBaseAvailabilityResponse();
     message.jobId = object.jobId ?? "";
     message.available = object.available ?? false;
@@ -1829,9 +2140,9 @@ export const AvailabilityResponse: MessageFns<AvailabilityResponse, "livekit.Ava
     message.participantName = object.participantName ?? "";
     message.participantIdentity = object.participantIdentity ?? "";
     message.participantMetadata = object.participantMetadata ?? "";
-    message.participantAttributes = Object.entries(object.participantAttributes ?? {}).reduce<
-      { [key: string]: string }
-    >((acc, [key, value]) => {
+    message.participantAttributes = Object.entries(
+      object.participantAttributes ?? {},
+    ).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = globalThis.String(value);
       }
@@ -1844,7 +2155,11 @@ export const AvailabilityResponse: MessageFns<AvailabilityResponse, "livekit.Ava
 messageTypeRegistry.set(AvailabilityResponse.$type, AvailabilityResponse);
 
 function createBaseAvailabilityResponse_ParticipantAttributesEntry(): AvailabilityResponse_ParticipantAttributesEntry {
-  return { $type: "livekit.AvailabilityResponse.ParticipantAttributesEntry", key: "", value: "" };
+  return {
+    $type: "livekit.AvailabilityResponse.ParticipantAttributesEntry",
+    key: "",
+    value: "",
+  };
 }
 
 export const AvailabilityResponse_ParticipantAttributesEntry: MessageFns<
@@ -1866,8 +2181,12 @@ export const AvailabilityResponse_ParticipantAttributesEntry: MessageFns<
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): AvailabilityResponse_ParticipantAttributesEntry {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): AvailabilityResponse_ParticipantAttributesEntry {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAvailabilityResponse_ParticipantAttributesEntry();
     while (reader.pos < end) {
@@ -1917,14 +2236,22 @@ export const AvailabilityResponse_ParticipantAttributesEntry: MessageFns<
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<AvailabilityResponse_ParticipantAttributesEntry>, I>>(
-    base?: I,
-  ): AvailabilityResponse_ParticipantAttributesEntry {
-    return AvailabilityResponse_ParticipantAttributesEntry.fromPartial(base ?? ({} as any));
+  create<
+    I extends Exact<
+      DeepPartial<AvailabilityResponse_ParticipantAttributesEntry>,
+      I
+    >,
+  >(base?: I): AvailabilityResponse_ParticipantAttributesEntry {
+    return AvailabilityResponse_ParticipantAttributesEntry.fromPartial(
+      base ?? ({} as any),
+    );
   },
-  fromPartial<I extends Exact<DeepPartial<AvailabilityResponse_ParticipantAttributesEntry>, I>>(
-    object: I,
-  ): AvailabilityResponse_ParticipantAttributesEntry {
+  fromPartial<
+    I extends Exact<
+      DeepPartial<AvailabilityResponse_ParticipantAttributesEntry>,
+      I
+    >,
+  >(object: I): AvailabilityResponse_ParticipantAttributesEntry {
     const message = createBaseAvailabilityResponse_ParticipantAttributesEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -1941,10 +2268,16 @@ function createBaseUpdateJobStatus(): UpdateJobStatus {
   return { $type: "livekit.UpdateJobStatus", jobId: "", status: 0, error: "" };
 }
 
-export const UpdateJobStatus: MessageFns<UpdateJobStatus, "livekit.UpdateJobStatus"> = {
+export const UpdateJobStatus: MessageFns<
+  UpdateJobStatus,
+  "livekit.UpdateJobStatus"
+> = {
   $type: "livekit.UpdateJobStatus" as const,
 
-  encode(message: UpdateJobStatus, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: UpdateJobStatus,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.jobId !== "") {
       writer.uint32(10).string(message.jobId);
     }
@@ -1958,7 +2291,8 @@ export const UpdateJobStatus: MessageFns<UpdateJobStatus, "livekit.UpdateJobStat
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): UpdateJobStatus {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateJobStatus();
     while (reader.pos < end) {
@@ -2020,10 +2354,14 @@ export const UpdateJobStatus: MessageFns<UpdateJobStatus, "livekit.UpdateJobStat
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateJobStatus>, I>>(base?: I): UpdateJobStatus {
+  create<I extends Exact<DeepPartial<UpdateJobStatus>, I>>(
+    base?: I,
+  ): UpdateJobStatus {
     return UpdateJobStatus.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<UpdateJobStatus>, I>>(object: I): UpdateJobStatus {
+  fromPartial<I extends Exact<DeepPartial<UpdateJobStatus>, I>>(
+    object: I,
+  ): UpdateJobStatus {
     const message = createBaseUpdateJobStatus();
     message.jobId = object.jobId ?? "";
     message.status = object.status ?? 0;
@@ -2035,13 +2373,24 @@ export const UpdateJobStatus: MessageFns<UpdateJobStatus, "livekit.UpdateJobStat
 messageTypeRegistry.set(UpdateJobStatus.$type, UpdateJobStatus);
 
 function createBaseUpdateWorkerStatus(): UpdateWorkerStatus {
-  return { $type: "livekit.UpdateWorkerStatus", status: undefined, load: 0, jobCount: 0 };
+  return {
+    $type: "livekit.UpdateWorkerStatus",
+    status: undefined,
+    load: 0,
+    jobCount: 0,
+  };
 }
 
-export const UpdateWorkerStatus: MessageFns<UpdateWorkerStatus, "livekit.UpdateWorkerStatus"> = {
+export const UpdateWorkerStatus: MessageFns<
+  UpdateWorkerStatus,
+  "livekit.UpdateWorkerStatus"
+> = {
   $type: "livekit.UpdateWorkerStatus" as const,
 
-  encode(message: UpdateWorkerStatus, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: UpdateWorkerStatus,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.status !== undefined) {
       writer.uint32(8).int32(message.status);
     }
@@ -2054,8 +2403,12 @@ export const UpdateWorkerStatus: MessageFns<UpdateWorkerStatus, "livekit.UpdateW
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): UpdateWorkerStatus {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): UpdateWorkerStatus {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateWorkerStatus();
     while (reader.pos < end) {
@@ -2097,7 +2450,9 @@ export const UpdateWorkerStatus: MessageFns<UpdateWorkerStatus, "livekit.UpdateW
   fromJSON(object: any): UpdateWorkerStatus {
     return {
       $type: UpdateWorkerStatus.$type,
-      status: isSet(object.status) ? workerStatusFromJSON(object.status) : undefined,
+      status: isSet(object.status)
+        ? workerStatusFromJSON(object.status)
+        : undefined,
       load: isSet(object.load) ? globalThis.Number(object.load) : 0,
       jobCount: isSet(object.jobCount) ? globalThis.Number(object.jobCount) : 0,
     };
@@ -2117,10 +2472,14 @@ export const UpdateWorkerStatus: MessageFns<UpdateWorkerStatus, "livekit.UpdateW
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<UpdateWorkerStatus>, I>>(base?: I): UpdateWorkerStatus {
+  create<I extends Exact<DeepPartial<UpdateWorkerStatus>, I>>(
+    base?: I,
+  ): UpdateWorkerStatus {
     return UpdateWorkerStatus.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<UpdateWorkerStatus>, I>>(object: I): UpdateWorkerStatus {
+  fromPartial<I extends Exact<DeepPartial<UpdateWorkerStatus>, I>>(
+    object: I,
+  ): UpdateWorkerStatus {
     const message = createBaseUpdateWorkerStatus();
     message.status = object.status ?? undefined;
     message.load = object.load ?? 0;
@@ -2132,99 +2491,116 @@ export const UpdateWorkerStatus: MessageFns<UpdateWorkerStatus, "livekit.UpdateW
 messageTypeRegistry.set(UpdateWorkerStatus.$type, UpdateWorkerStatus);
 
 function createBaseJobAssignment(): JobAssignment {
-  return { $type: "livekit.JobAssignment", job: undefined, url: undefined, token: "" };
+  return {
+    $type: "livekit.JobAssignment",
+    job: undefined,
+    url: undefined,
+    token: "",
+  };
 }
 
-export const JobAssignment: MessageFns<JobAssignment, "livekit.JobAssignment"> = {
-  $type: "livekit.JobAssignment" as const,
+export const JobAssignment: MessageFns<JobAssignment, "livekit.JobAssignment"> =
+  {
+    $type: "livekit.JobAssignment" as const,
 
-  encode(message: JobAssignment, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.job !== undefined) {
-      Job.encode(message.job, writer.uint32(10).fork()).join();
-    }
-    if (message.url !== undefined) {
-      writer.uint32(18).string(message.url);
-    }
-    if (message.token !== "") {
-      writer.uint32(26).string(message.token);
-    }
-    return writer;
-  },
-
-  decode(input: BinaryReader | Uint8Array, length?: number): JobAssignment {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseJobAssignment();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
-          }
-
-          message.job = Job.decode(reader, reader.uint32());
-          continue;
-        }
-        case 2: {
-          if (tag !== 18) {
-            break;
-          }
-
-          message.url = reader.string();
-          continue;
-        }
-        case 3: {
-          if (tag !== 26) {
-            break;
-          }
-
-          message.token = reader.string();
-          continue;
-        }
+    encode(
+      message: JobAssignment,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      if (message.job !== undefined) {
+        Job.encode(message.job, writer.uint32(10).fork()).join();
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      if (message.url !== undefined) {
+        writer.uint32(18).string(message.url);
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      if (message.token !== "") {
+        writer.uint32(26).string(message.token);
+      }
+      return writer;
+    },
 
-  fromJSON(object: any): JobAssignment {
-    return {
-      $type: JobAssignment.$type,
-      job: isSet(object.job) ? Job.fromJSON(object.job) : undefined,
-      url: isSet(object.url) ? globalThis.String(object.url) : undefined,
-      token: isSet(object.token) ? globalThis.String(object.token) : "",
-    };
-  },
+    decode(input: BinaryReader | Uint8Array, length?: number): JobAssignment {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseJobAssignment();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
 
-  toJSON(message: JobAssignment): unknown {
-    const obj: any = {};
-    if (message.job !== undefined) {
-      obj.job = Job.toJSON(message.job);
-    }
-    if (message.url !== undefined) {
-      obj.url = message.url;
-    }
-    if (message.token !== "") {
-      obj.token = message.token;
-    }
-    return obj;
-  },
+            message.job = Job.decode(reader, reader.uint32());
+            continue;
+          }
+          case 2: {
+            if (tag !== 18) {
+              break;
+            }
 
-  create<I extends Exact<DeepPartial<JobAssignment>, I>>(base?: I): JobAssignment {
-    return JobAssignment.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<JobAssignment>, I>>(object: I): JobAssignment {
-    const message = createBaseJobAssignment();
-    message.job = (object.job !== undefined && object.job !== null) ? Job.fromPartial(object.job) : undefined;
-    message.url = object.url ?? undefined;
-    message.token = object.token ?? "";
-    return message;
-  },
-};
+            message.url = reader.string();
+            continue;
+          }
+          case 3: {
+            if (tag !== 26) {
+              break;
+            }
+
+            message.token = reader.string();
+            continue;
+          }
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
+
+    fromJSON(object: any): JobAssignment {
+      return {
+        $type: JobAssignment.$type,
+        job: isSet(object.job) ? Job.fromJSON(object.job) : undefined,
+        url: isSet(object.url) ? globalThis.String(object.url) : undefined,
+        token: isSet(object.token) ? globalThis.String(object.token) : "",
+      };
+    },
+
+    toJSON(message: JobAssignment): unknown {
+      const obj: any = {};
+      if (message.job !== undefined) {
+        obj.job = Job.toJSON(message.job);
+      }
+      if (message.url !== undefined) {
+        obj.url = message.url;
+      }
+      if (message.token !== "") {
+        obj.token = message.token;
+      }
+      return obj;
+    },
+
+    create<I extends Exact<DeepPartial<JobAssignment>, I>>(
+      base?: I,
+    ): JobAssignment {
+      return JobAssignment.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<JobAssignment>, I>>(
+      object: I,
+    ): JobAssignment {
+      const message = createBaseJobAssignment();
+      message.job =
+        object.job !== undefined && object.job !== null
+          ? Job.fromPartial(object.job)
+          : undefined;
+      message.url = object.url ?? undefined;
+      message.token = object.token ?? "";
+      return message;
+    },
+  };
 
 messageTypeRegistry.set(JobAssignment.$type, JobAssignment);
 
@@ -2232,10 +2608,16 @@ function createBaseJobTermination(): JobTermination {
   return { $type: "livekit.JobTermination", jobId: "" };
 }
 
-export const JobTermination: MessageFns<JobTermination, "livekit.JobTermination"> = {
+export const JobTermination: MessageFns<
+  JobTermination,
+  "livekit.JobTermination"
+> = {
   $type: "livekit.JobTermination" as const,
 
-  encode(message: JobTermination, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: JobTermination,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.jobId !== "") {
       writer.uint32(10).string(message.jobId);
     }
@@ -2243,7 +2625,8 @@ export const JobTermination: MessageFns<JobTermination, "livekit.JobTermination"
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): JobTermination {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseJobTermination();
     while (reader.pos < end) {
@@ -2267,7 +2650,10 @@ export const JobTermination: MessageFns<JobTermination, "livekit.JobTermination"
   },
 
   fromJSON(object: any): JobTermination {
-    return { $type: JobTermination.$type, jobId: isSet(object.jobId) ? globalThis.String(object.jobId) : "" };
+    return {
+      $type: JobTermination.$type,
+      jobId: isSet(object.jobId) ? globalThis.String(object.jobId) : "",
+    };
   },
 
   toJSON(message: JobTermination): unknown {
@@ -2278,10 +2664,14 @@ export const JobTermination: MessageFns<JobTermination, "livekit.JobTermination"
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<JobTermination>, I>>(base?: I): JobTermination {
+  create<I extends Exact<DeepPartial<JobTermination>, I>>(
+    base?: I,
+  ): JobTermination {
     return JobTermination.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<JobTermination>, I>>(object: I): JobTermination {
+  fromPartial<I extends Exact<DeepPartial<JobTermination>, I>>(
+    object: I,
+  ): JobTermination {
     const message = createBaseJobTermination();
     message.jobId = object.jobId ?? "";
     return message;
@@ -2304,1130 +2694,1273 @@ export interface ProtoMetadata {
   options?: {
     options?: { [key: string]: any };
     services?: {
-      [key: string]: { options?: { [key: string]: any }; methods?: { [key: string]: { [key: string]: any } } };
+      [key: string]: {
+        options?: { [key: string]: any };
+        methods?: { [key: string]: { [key: string]: any } };
+      };
     };
     messages?: { [key: string]: ProtoMetaMessageOptions };
-    enums?: { [key: string]: { options?: { [key: string]: any }; values?: { [key: string]: { [key: string]: any } } } };
+    enums?: {
+      [key: string]: {
+        options?: { [key: string]: any };
+        values?: { [key: string]: { [key: string]: any } };
+      };
+    };
   };
 }
 
 export const protoMetadata = {
   fileDescriptor: {
-    "name": "livekit_agent.proto",
-    "package": "livekit",
-    "dependency": ["livekit_models.proto"],
-    "publicDependency": [],
-    "weakDependency": [],
-    "messageType": [{
-      "name": "Job",
-      "field": [{
-        "name": "id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "id",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "dispatch_id",
-        "number": 9,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "dispatchId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "type",
-        "number": 2,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.JobType",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "type",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room",
-        "number": 3,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.Room",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "room",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant",
-        "number": 4,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.ParticipantInfo",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participant",
-        "options": undefined,
-        "proto3Optional": true,
-      }, {
-        "name": "namespace",
-        "number": 5,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "namespace",
-        "options": {
-          "ctype": 0,
-          "packed": false,
-          "jstype": 0,
-          "lazy": false,
-          "deprecated": true,
-          "weak": false,
-          "uninterpretedOption": [],
+    name: "livekit_agent.proto",
+    package: "livekit",
+    dependency: ["livekit_models.proto"],
+    publicDependency: [],
+    weakDependency: [],
+    messageType: [
+      {
+        name: "Job",
+        field: [
+          {
+            name: "id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "id",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "dispatch_id",
+            number: 9,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "dispatchId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "type",
+            number: 2,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.JobType",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "type",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room",
+            number: 3,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.Room",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "room",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant",
+            number: 4,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.ParticipantInfo",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participant",
+            options: undefined,
+            proto3Optional: true,
+          },
+          {
+            name: "namespace",
+            number: 5,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "namespace",
+            options: {
+              ctype: 0,
+              packed: false,
+              jstype: 0,
+              lazy: false,
+              deprecated: true,
+              weak: false,
+              uninterpretedOption: [],
+            },
+            proto3Optional: false,
+          },
+          {
+            name: "metadata",
+            number: 6,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "metadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "agent_name",
+            number: 7,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "agentName",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "state",
+            number: 8,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.JobState",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "state",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [{ name: "_participant", options: undefined }],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "JobState",
+        field: [
+          {
+            name: "status",
+            number: 1,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.JobStatus",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "status",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "error",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "error",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "started_at",
+            number: 3,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "startedAt",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "ended_at",
+            number: 4,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "endedAt",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "updated_at",
+            number: 5,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "updatedAt",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_identity",
+            number: 6,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantIdentity",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "WorkerMessage",
+        field: [
+          {
+            name: "register",
+            number: 1,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.RegisterWorkerRequest",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "register",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "availability",
+            number: 2,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.AvailabilityResponse",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "availability",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "update_worker",
+            number: 3,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.UpdateWorkerStatus",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "updateWorker",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "update_job",
+            number: 4,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.UpdateJobStatus",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "updateJob",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "ping",
+            number: 5,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.WorkerPing",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "ping",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "simulate_job",
+            number: 6,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.SimulateJobRequest",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "simulateJob",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "migrate_job",
+            number: 7,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.MigrateJobRequest",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "migrateJob",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [{ name: "message", options: undefined }],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "ServerMessage",
+        field: [
+          {
+            name: "register",
+            number: 1,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.RegisterWorkerResponse",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "register",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "availability",
+            number: 2,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.AvailabilityRequest",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "availability",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "assignment",
+            number: 3,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.JobAssignment",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "assignment",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "termination",
+            number: 5,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.JobTermination",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "termination",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "pong",
+            number: 4,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.WorkerPong",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "pong",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [{ name: "message", options: undefined }],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "SimulateJobRequest",
+        field: [
+          {
+            name: "type",
+            number: 1,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.JobType",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "type",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room",
+            number: 2,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.Room",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "room",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant",
+            number: 3,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.ParticipantInfo",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participant",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "WorkerPing",
+        field: [
+          {
+            name: "timestamp",
+            number: 1,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "timestamp",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "WorkerPong",
+        field: [
+          {
+            name: "last_timestamp",
+            number: 1,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "lastTimestamp",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "timestamp",
+            number: 2,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "timestamp",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "RegisterWorkerRequest",
+        field: [
+          {
+            name: "type",
+            number: 1,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.JobType",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "type",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "agent_name",
+            number: 8,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "agentName",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "version",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "version",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "ping_interval",
+            number: 5,
+            label: 1,
+            type: 13,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "pingInterval",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "namespace",
+            number: 6,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "namespace",
+            options: undefined,
+            proto3Optional: true,
+          },
+          {
+            name: "allowed_permissions",
+            number: 7,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.ParticipantPermission",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "allowedPermissions",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [{ name: "_namespace", options: undefined }],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "RegisterWorkerResponse",
+        field: [
+          {
+            name: "worker_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "workerId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "server_info",
+            number: 3,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.ServerInfo",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "serverInfo",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "MigrateJobRequest",
+        field: [
+          {
+            name: "job_ids",
+            number: 2,
+            label: 3,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "jobIds",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "AvailabilityRequest",
+        field: [
+          {
+            name: "job",
+            number: 1,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.Job",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "job",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "resuming",
+            number: 2,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "resuming",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "AvailabilityResponse",
+        field: [
+          {
+            name: "job_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "jobId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "available",
+            number: 2,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "available",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "supports_resume",
+            number: 3,
+            label: 1,
+            type: 8,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "supportsResume",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_name",
+            number: 4,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantName",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_identity",
+            number: 5,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantIdentity",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_metadata",
+            number: 6,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantMetadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "participant_attributes",
+            number: 7,
+            label: 3,
+            type: 11,
+            typeName:
+              ".livekit.AvailabilityResponse.ParticipantAttributesEntry",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "participantAttributes",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [
+          {
+            name: "ParticipantAttributesEntry",
+            field: [
+              {
+                name: "key",
+                number: 1,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "key",
+                options: undefined,
+                proto3Optional: false,
+              },
+              {
+                name: "value",
+                number: 2,
+                label: 1,
+                type: 9,
+                typeName: "",
+                extendee: "",
+                defaultValue: "",
+                oneofIndex: 0,
+                jsonName: "value",
+                options: undefined,
+                proto3Optional: false,
+              },
+            ],
+            extension: [],
+            nestedType: [],
+            enumType: [],
+            extensionRange: [],
+            oneofDecl: [],
+            options: {
+              messageSetWireFormat: false,
+              noStandardDescriptorAccessor: false,
+              deprecated: false,
+              mapEntry: true,
+              uninterpretedOption: [],
+            },
+            reservedRange: [],
+            reservedName: [],
+          },
+        ],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "UpdateJobStatus",
+        field: [
+          {
+            name: "job_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "jobId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "status",
+            number: 2,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.JobStatus",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "status",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "error",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "error",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "UpdateWorkerStatus",
+        field: [
+          {
+            name: "status",
+            number: 1,
+            label: 1,
+            type: 14,
+            typeName: ".livekit.WorkerStatus",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "status",
+            options: undefined,
+            proto3Optional: true,
+          },
+          {
+            name: "load",
+            number: 3,
+            label: 1,
+            type: 2,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "load",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "job_count",
+            number: 4,
+            label: 1,
+            type: 13,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "jobCount",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [{ name: "_status", options: undefined }],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "JobAssignment",
+        field: [
+          {
+            name: "job",
+            number: 1,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.Job",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "job",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "url",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "url",
+            options: undefined,
+            proto3Optional: true,
+          },
+          {
+            name: "token",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "token",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [{ name: "_url", options: undefined }],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "JobTermination",
+        field: [
+          {
+            name: "job_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "jobId",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+    ],
+    enumType: [
+      {
+        name: "JobType",
+        value: [
+          { name: "JT_ROOM", number: 0, options: undefined },
+          {
+            name: "JT_PUBLISHER",
+            number: 1,
+            options: undefined,
+          },
+          { name: "JT_PARTICIPANT", number: 2, options: undefined },
+        ],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "WorkerStatus",
+        value: [
+          { name: "WS_AVAILABLE", number: 0, options: undefined },
+          {
+            name: "WS_FULL",
+            number: 1,
+            options: undefined,
+          },
+        ],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "JobStatus",
+        value: [
+          { name: "JS_PENDING", number: 0, options: undefined },
+          { name: "JS_RUNNING", number: 1, options: undefined },
+          { name: "JS_SUCCESS", number: 2, options: undefined },
+          { name: "JS_FAILED", number: 3, options: undefined },
+        ],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+    ],
+    service: [],
+    extension: [],
+    options: {
+      javaPackage: "",
+      javaOuterClassname: "",
+      javaMultipleFiles: false,
+      javaGenerateEqualsAndHash: false,
+      javaStringCheckUtf8: false,
+      optimizeFor: 1,
+      goPackage: "github.com/livekit/protocol/livekit",
+      ccGenericServices: false,
+      javaGenericServices: false,
+      pyGenericServices: false,
+      phpGenericServices: false,
+      deprecated: false,
+      ccEnableArenas: true,
+      objcClassPrefix: "",
+      csharpNamespace: "LiveKit.Proto",
+      swiftPrefix: "",
+      phpClassPrefix: "",
+      phpNamespace: "",
+      phpMetadataNamespace: "",
+      rubyPackage: "LiveKit::Proto",
+      uninterpretedOption: [],
+    },
+    sourceCodeInfo: {
+      location: [
+        {
+          path: [4, 2],
+          span: [45, 0, 61, 1],
+          leadingComments: " from Worker to Server\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
         },
-        "proto3Optional": false,
-      }, {
-        "name": "metadata",
-        "number": 6,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "metadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "agent_name",
-        "number": 7,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "agentName",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "state",
-        "number": 8,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.JobState",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "state",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [{ "name": "_participant", "options": undefined }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "JobState",
-      "field": [{
-        "name": "status",
-        "number": 1,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.JobStatus",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "status",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "error",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "error",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "started_at",
-        "number": 3,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "startedAt",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "ended_at",
-        "number": 4,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "endedAt",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "updated_at",
-        "number": 5,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "updatedAt",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_identity",
-        "number": 6,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantIdentity",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "WorkerMessage",
-      "field": [{
-        "name": "register",
-        "number": 1,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.RegisterWorkerRequest",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "register",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "availability",
-        "number": 2,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.AvailabilityResponse",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "availability",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "update_worker",
-        "number": 3,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.UpdateWorkerStatus",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "updateWorker",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "update_job",
-        "number": 4,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.UpdateJobStatus",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "updateJob",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "ping",
-        "number": 5,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.WorkerPing",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "ping",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "simulate_job",
-        "number": 6,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.SimulateJobRequest",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "simulateJob",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "migrate_job",
-        "number": 7,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.MigrateJobRequest",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "migrateJob",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [{ "name": "message", "options": undefined }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "ServerMessage",
-      "field": [{
-        "name": "register",
-        "number": 1,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.RegisterWorkerResponse",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "register",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "availability",
-        "number": 2,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.AvailabilityRequest",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "availability",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "assignment",
-        "number": 3,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.JobAssignment",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "assignment",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "termination",
-        "number": 5,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.JobTermination",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "termination",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "pong",
-        "number": 4,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.WorkerPong",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "pong",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [{ "name": "message", "options": undefined }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "SimulateJobRequest",
-      "field": [{
-        "name": "type",
-        "number": 1,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.JobType",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "type",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room",
-        "number": 2,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.Room",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "room",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant",
-        "number": 3,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.ParticipantInfo",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participant",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "WorkerPing",
-      "field": [{
-        "name": "timestamp",
-        "number": 1,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "timestamp",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "WorkerPong",
-      "field": [{
-        "name": "last_timestamp",
-        "number": 1,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "lastTimestamp",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "timestamp",
-        "number": 2,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "timestamp",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "RegisterWorkerRequest",
-      "field": [{
-        "name": "type",
-        "number": 1,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.JobType",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "type",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "agent_name",
-        "number": 8,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "agentName",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "version",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "version",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "ping_interval",
-        "number": 5,
-        "label": 1,
-        "type": 13,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "pingInterval",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "namespace",
-        "number": 6,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "namespace",
-        "options": undefined,
-        "proto3Optional": true,
-      }, {
-        "name": "allowed_permissions",
-        "number": 7,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.ParticipantPermission",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "allowedPermissions",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [{ "name": "_namespace", "options": undefined }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "RegisterWorkerResponse",
-      "field": [{
-        "name": "worker_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "workerId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "server_info",
-        "number": 3,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.ServerInfo",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "serverInfo",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "MigrateJobRequest",
-      "field": [{
-        "name": "job_ids",
-        "number": 2,
-        "label": 3,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "jobIds",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "AvailabilityRequest",
-      "field": [{
-        "name": "job",
-        "number": 1,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.Job",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "job",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "resuming",
-        "number": 2,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "resuming",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "AvailabilityResponse",
-      "field": [{
-        "name": "job_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "jobId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "available",
-        "number": 2,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "available",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "supports_resume",
-        "number": 3,
-        "label": 1,
-        "type": 8,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "supportsResume",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_name",
-        "number": 4,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantName",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_identity",
-        "number": 5,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantIdentity",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_metadata",
-        "number": 6,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantMetadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "participant_attributes",
-        "number": 7,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.AvailabilityResponse.ParticipantAttributesEntry",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "participantAttributes",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [{
-        "name": "ParticipantAttributesEntry",
-        "field": [{
-          "name": "key",
-          "number": 1,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "key",
-          "options": undefined,
-          "proto3Optional": false,
-        }, {
-          "name": "value",
-          "number": 2,
-          "label": 1,
-          "type": 9,
-          "typeName": "",
-          "extendee": "",
-          "defaultValue": "",
-          "oneofIndex": 0,
-          "jsonName": "value",
-          "options": undefined,
-          "proto3Optional": false,
-        }],
-        "extension": [],
-        "nestedType": [],
-        "enumType": [],
-        "extensionRange": [],
-        "oneofDecl": [],
-        "options": {
-          "messageSetWireFormat": false,
-          "noStandardDescriptorAccessor": false,
-          "deprecated": false,
-          "mapEntry": true,
-          "uninterpretedOption": [],
+        {
+          path: [4, 2, 2, 0],
+          span: [48, 4, 39],
+          leadingComments:
+            " agent workers need to register themselves with the server first\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
         },
-        "reservedRange": [],
-        "reservedName": [],
-      }],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "UpdateJobStatus",
-      "field": [{
-        "name": "job_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "jobId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "status",
-        "number": 2,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.JobStatus",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "status",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "error",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "error",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "UpdateWorkerStatus",
-      "field": [{
-        "name": "status",
-        "number": 1,
-        "label": 1,
-        "type": 14,
-        "typeName": ".livekit.WorkerStatus",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "status",
-        "options": undefined,
-        "proto3Optional": true,
-      }, {
-        "name": "load",
-        "number": 3,
-        "label": 1,
-        "type": 2,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "load",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "job_count",
-        "number": 4,
-        "label": 1,
-        "type": 13,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "jobCount",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [{ "name": "_status", "options": undefined }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "JobAssignment",
-      "field": [{
-        "name": "job",
-        "number": 1,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.Job",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "job",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "url",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "url",
-        "options": undefined,
-        "proto3Optional": true,
-      }, {
-        "name": "token",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "token",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [{ "name": "_url", "options": undefined }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "JobTermination",
-      "field": [{
-        "name": "job_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "jobId",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }],
-    "enumType": [{
-      "name": "JobType",
-      "value": [{ "name": "JT_ROOM", "number": 0, "options": undefined }, {
-        "name": "JT_PUBLISHER",
-        "number": 1,
-        "options": undefined,
-      }, { "name": "JT_PARTICIPANT", "number": 2, "options": undefined }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "WorkerStatus",
-      "value": [{ "name": "WS_AVAILABLE", "number": 0, "options": undefined }, {
-        "name": "WS_FULL",
-        "number": 1,
-        "options": undefined,
-      }],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "JobStatus",
-      "value": [
-        { "name": "JS_PENDING", "number": 0, "options": undefined },
-        { "name": "JS_RUNNING", "number": 1, "options": undefined },
-        { "name": "JS_SUCCESS", "number": 2, "options": undefined },
-        { "name": "JS_FAILED", "number": 3, "options": undefined },
+        {
+          path: [4, 2, 2, 1],
+          span: [50, 4, 42],
+          leadingComments:
+            " worker confirms to server that it's available for a job, or declines it\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 2, 2, 2],
+          span: [53, 4, 41],
+          leadingComments:
+            " worker can update its status to the server, including taking itself out of the pool\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 2, 2, 3],
+          span: [55, 4, 35],
+          leadingComments:
+            " job can send status updates to the server, useful for tracking progress\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 3],
+          span: [64, 0, 74, 1],
+          leadingComments: " from Server to Worker\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 3, 2, 0],
+          span: [67, 4, 40],
+          leadingComments:
+            " server confirms the registration, from this moment on, the worker is considered active\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 3, 2, 1],
+          span: [69, 4, 41],
+          leadingComments:
+            " server asks worker to confirm availability for a job\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 7, 2, 2],
+          span: [113, 2, 21],
+          leadingComments: " string worker_id = 2;\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 7, 2, 3],
+          span: [115, 2, 27],
+          leadingComments: " string name = 4 [deprecated = true];\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 9, 2, 0],
+          span: [127, 2, 30],
+          leadingComments: " string job_id = 1 [deprecated = true];\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 10, 2, 1],
+          span: [135, 2, 20],
+          leadingComments:
+            " True when the job was previously assigned to another worker but has been\n migrated due to different reasons (e.g. worker failure, job migration)\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 12, 2, 1],
+          span: [153, 2, 23],
+          leadingComments:
+            " The worker can indicate the job end by either specifying SUCCESS or FAILED\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 12, 2, 2],
+          span: [156, 2, 19],
+          leadingComments:
+            " metadata shown on the dashboard, useful for debugging\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 13, 2, 1],
+          span: [165, 2, 17],
+          leadingComments: " optional string metadata = 2 [deprecated=true];\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
       ],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }],
-    "service": [],
-    "extension": [],
-    "options": {
-      "javaPackage": "",
-      "javaOuterClassname": "",
-      "javaMultipleFiles": false,
-      "javaGenerateEqualsAndHash": false,
-      "javaStringCheckUtf8": false,
-      "optimizeFor": 1,
-      "goPackage": "github.com/livekit/protocol/livekit",
-      "ccGenericServices": false,
-      "javaGenericServices": false,
-      "pyGenericServices": false,
-      "phpGenericServices": false,
-      "deprecated": false,
-      "ccEnableArenas": true,
-      "objcClassPrefix": "",
-      "csharpNamespace": "LiveKit.Proto",
-      "swiftPrefix": "",
-      "phpClassPrefix": "",
-      "phpNamespace": "",
-      "phpMetadataNamespace": "",
-      "rubyPackage": "LiveKit::Proto",
-      "uninterpretedOption": [],
     },
-    "sourceCodeInfo": {
-      "location": [{
-        "path": [4, 2],
-        "span": [45, 0, 61, 1],
-        "leadingComments": " from Worker to Server\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 0],
-        "span": [48, 4, 39],
-        "leadingComments": " agent workers need to register themselves with the server first\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 1],
-        "span": [50, 4, 42],
-        "leadingComments": " worker confirms to server that it's available for a job, or declines it\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 2],
-        "span": [53, 4, 41],
-        "leadingComments": " worker can update its status to the server, including taking itself out of the pool\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 2, 2, 3],
-        "span": [55, 4, 35],
-        "leadingComments": " job can send status updates to the server, useful for tracking progress\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 3],
-        "span": [64, 0, 74, 1],
-        "leadingComments": " from Server to Worker\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 3, 2, 0],
-        "span": [67, 4, 40],
-        "leadingComments": " server confirms the registration, from this moment on, the worker is considered active\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 3, 2, 1],
-        "span": [69, 4, 41],
-        "leadingComments": " server asks worker to confirm availability for a job\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 7, 2, 2],
-        "span": [113, 2, 21],
-        "leadingComments": " string worker_id = 2;\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 7, 2, 3],
-        "span": [115, 2, 27],
-        "leadingComments": " string name = 4 [deprecated = true];\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 9, 2, 0],
-        "span": [127, 2, 30],
-        "leadingComments": " string job_id = 1 [deprecated = true];\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 10, 2, 1],
-        "span": [135, 2, 20],
-        "leadingComments":
-          " True when the job was previously assigned to another worker but has been\n migrated due to different reasons (e.g. worker failure, job migration)\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 12, 2, 1],
-        "span": [153, 2, 23],
-        "leadingComments": " The worker can indicate the job end by either specifying SUCCESS or FAILED\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 12, 2, 2],
-        "span": [156, 2, 19],
-        "leadingComments": " metadata shown on the dashboard, useful for debugging\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 13, 2, 1],
-        "span": [165, 2, 17],
-        "leadingComments": " optional string metadata = 2 [deprecated=true];\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }],
-    },
-    "syntax": "proto3",
+    syntax: "proto3",
   },
   references: {
     ".livekit.JobType": JobType,
@@ -3445,7 +3978,8 @@ export const protoMetadata = {
     ".livekit.MigrateJobRequest": MigrateJobRequest,
     ".livekit.AvailabilityRequest": AvailabilityRequest,
     ".livekit.AvailabilityResponse": AvailabilityResponse,
-    ".livekit.AvailabilityResponse.ParticipantAttributesEntry": AvailabilityResponse_ParticipantAttributesEntry,
+    ".livekit.AvailabilityResponse.ParticipantAttributesEntry":
+      AvailabilityResponse_ParticipantAttributesEntry,
     ".livekit.UpdateJobStatus": UpdateJobStatus,
     ".livekit.UpdateWorkerStatus": UpdateWorkerStatus,
     ".livekit.JobAssignment": JobAssignment,
@@ -3454,17 +3988,32 @@ export const protoMetadata = {
   dependencies: [protoMetadata1],
 } as const satisfies ProtoMetadata;
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | bigint | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | bigint
+  | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends globalThis.Array<infer U>
+    ? globalThis.Array<DeepPartial<U>>
+    : T extends ReadonlyArray<infer U>
+      ? ReadonlyArray<DeepPartial<U>>
+      : T extends {}
+        ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
+        : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never };
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never;
+    };
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;

@@ -8,6 +8,7 @@
 !LICENSE
 !README.md
 !contrib/
+!eslint.config.mjs
 !examples/
 !jsr.json
 !mise.toml

@@ -1,3 +1,5 @@
+import { ensureError } from "@uplift-ltd/ts-helpers";
+
 import { MessageBus } from "@/bus.ts";
 import { ErrorCode, isLiveKitError } from "@/helpers/errors.ts";
 import { getLogger } from "@/helpers/logger.ts";
@@ -12,7 +14,6 @@ import {
 } from "@/protobufs.ts";
 import { makeRedisStore } from "@/redis-store.ts";
 import { RPCServer } from "@/rpc-server.ts";
-import { ensureError } from "@uplift-ltd/ts-helpers";
 
 import { getValkeyClient } from "./valkey.js";
 

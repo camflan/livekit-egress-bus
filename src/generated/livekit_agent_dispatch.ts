@@ -65,111 +65,142 @@ export interface AgentDispatchState {
 }
 
 function createBaseCreateAgentDispatchRequest(): CreateAgentDispatchRequest {
-  return { $type: "livekit.CreateAgentDispatchRequest", agentName: "", room: "", metadata: "" };
+  return {
+    $type: "livekit.CreateAgentDispatchRequest",
+    agentName: "",
+    room: "",
+    metadata: "",
+  };
 }
 
-export const CreateAgentDispatchRequest: MessageFns<CreateAgentDispatchRequest, "livekit.CreateAgentDispatchRequest"> =
-  {
-    $type: "livekit.CreateAgentDispatchRequest" as const,
+export const CreateAgentDispatchRequest: MessageFns<
+  CreateAgentDispatchRequest,
+  "livekit.CreateAgentDispatchRequest"
+> = {
+  $type: "livekit.CreateAgentDispatchRequest" as const,
 
-    encode(message: CreateAgentDispatchRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-      if (message.agentName !== "") {
-        writer.uint32(10).string(message.agentName);
-      }
-      if (message.room !== "") {
-        writer.uint32(18).string(message.room);
-      }
-      if (message.metadata !== "") {
-        writer.uint32(26).string(message.metadata);
-      }
-      return writer;
-    },
+  encode(
+    message: CreateAgentDispatchRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
+    if (message.agentName !== "") {
+      writer.uint32(10).string(message.agentName);
+    }
+    if (message.room !== "") {
+      writer.uint32(18).string(message.room);
+    }
+    if (message.metadata !== "") {
+      writer.uint32(26).string(message.metadata);
+    }
+    return writer;
+  },
 
-    decode(input: BinaryReader | Uint8Array, length?: number): CreateAgentDispatchRequest {
-      const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-      const end = length === undefined ? reader.len : reader.pos + length;
-      const message = createBaseCreateAgentDispatchRequest();
-      while (reader.pos < end) {
-        const tag = reader.uint32();
-        switch (tag >>> 3) {
-          case 1: {
-            if (tag !== 10) {
-              break;
-            }
-
-            message.agentName = reader.string();
-            continue;
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): CreateAgentDispatchRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
+    const end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCreateAgentDispatchRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
           }
-          case 2: {
-            if (tag !== 18) {
-              break;
-            }
 
-            message.room = reader.string();
-            continue;
-          }
-          case 3: {
-            if (tag !== 26) {
-              break;
-            }
-
-            message.metadata = reader.string();
-            continue;
-          }
+          message.agentName = reader.string();
+          continue;
         }
-        if ((tag & 7) === 4 || tag === 0) {
-          break;
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.room = reader.string();
+          continue;
         }
-        reader.skip(tag & 7);
-      }
-      return message;
-    },
+        case 3: {
+          if (tag !== 26) {
+            break;
+          }
 
-    fromJSON(object: any): CreateAgentDispatchRequest {
-      return {
-        $type: CreateAgentDispatchRequest.$type,
-        agentName: isSet(object.agentName) ? globalThis.String(object.agentName) : "",
-        room: isSet(object.room) ? globalThis.String(object.room) : "",
-        metadata: isSet(object.metadata) ? globalThis.String(object.metadata) : "",
-      };
-    },
-
-    toJSON(message: CreateAgentDispatchRequest): unknown {
-      const obj: any = {};
-      if (message.agentName !== "") {
-        obj.agentName = message.agentName;
+          message.metadata = reader.string();
+          continue;
+        }
       }
-      if (message.room !== "") {
-        obj.room = message.room;
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
       }
-      if (message.metadata !== "") {
-        obj.metadata = message.metadata;
-      }
-      return obj;
-    },
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
 
-    create<I extends Exact<DeepPartial<CreateAgentDispatchRequest>, I>>(base?: I): CreateAgentDispatchRequest {
-      return CreateAgentDispatchRequest.fromPartial(base ?? ({} as any));
-    },
-    fromPartial<I extends Exact<DeepPartial<CreateAgentDispatchRequest>, I>>(object: I): CreateAgentDispatchRequest {
-      const message = createBaseCreateAgentDispatchRequest();
-      message.agentName = object.agentName ?? "";
-      message.room = object.room ?? "";
-      message.metadata = object.metadata ?? "";
-      return message;
-    },
-  };
+  fromJSON(object: any): CreateAgentDispatchRequest {
+    return {
+      $type: CreateAgentDispatchRequest.$type,
+      agentName: isSet(object.agentName)
+        ? globalThis.String(object.agentName)
+        : "",
+      room: isSet(object.room) ? globalThis.String(object.room) : "",
+      metadata: isSet(object.metadata)
+        ? globalThis.String(object.metadata)
+        : "",
+    };
+  },
 
-messageTypeRegistry.set(CreateAgentDispatchRequest.$type, CreateAgentDispatchRequest);
+  toJSON(message: CreateAgentDispatchRequest): unknown {
+    const obj: any = {};
+    if (message.agentName !== "") {
+      obj.agentName = message.agentName;
+    }
+    if (message.room !== "") {
+      obj.room = message.room;
+    }
+    if (message.metadata !== "") {
+      obj.metadata = message.metadata;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CreateAgentDispatchRequest>, I>>(
+    base?: I,
+  ): CreateAgentDispatchRequest {
+    return CreateAgentDispatchRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<CreateAgentDispatchRequest>, I>>(
+    object: I,
+  ): CreateAgentDispatchRequest {
+    const message = createBaseCreateAgentDispatchRequest();
+    message.agentName = object.agentName ?? "";
+    message.room = object.room ?? "";
+    message.metadata = object.metadata ?? "";
+    return message;
+  },
+};
+
+messageTypeRegistry.set(
+  CreateAgentDispatchRequest.$type,
+  CreateAgentDispatchRequest,
+);
 
 function createBaseRoomAgentDispatch(): RoomAgentDispatch {
   return { $type: "livekit.RoomAgentDispatch", agentName: "", metadata: "" };
 }
 
-export const RoomAgentDispatch: MessageFns<RoomAgentDispatch, "livekit.RoomAgentDispatch"> = {
+export const RoomAgentDispatch: MessageFns<
+  RoomAgentDispatch,
+  "livekit.RoomAgentDispatch"
+> = {
   $type: "livekit.RoomAgentDispatch" as const,
 
-  encode(message: RoomAgentDispatch, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: RoomAgentDispatch,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.agentName !== "") {
       writer.uint32(10).string(message.agentName);
     }
@@ -180,7 +211,8 @@ export const RoomAgentDispatch: MessageFns<RoomAgentDispatch, "livekit.RoomAgent
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): RoomAgentDispatch {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRoomAgentDispatch();
     while (reader.pos < end) {
@@ -214,8 +246,12 @@ export const RoomAgentDispatch: MessageFns<RoomAgentDispatch, "livekit.RoomAgent
   fromJSON(object: any): RoomAgentDispatch {
     return {
       $type: RoomAgentDispatch.$type,
-      agentName: isSet(object.agentName) ? globalThis.String(object.agentName) : "",
-      metadata: isSet(object.metadata) ? globalThis.String(object.metadata) : "",
+      agentName: isSet(object.agentName)
+        ? globalThis.String(object.agentName)
+        : "",
+      metadata: isSet(object.metadata)
+        ? globalThis.String(object.metadata)
+        : "",
     };
   },
 
@@ -230,10 +266,14 @@ export const RoomAgentDispatch: MessageFns<RoomAgentDispatch, "livekit.RoomAgent
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<RoomAgentDispatch>, I>>(base?: I): RoomAgentDispatch {
+  create<I extends Exact<DeepPartial<RoomAgentDispatch>, I>>(
+    base?: I,
+  ): RoomAgentDispatch {
     return RoomAgentDispatch.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<RoomAgentDispatch>, I>>(object: I): RoomAgentDispatch {
+  fromPartial<I extends Exact<DeepPartial<RoomAgentDispatch>, I>>(
+    object: I,
+  ): RoomAgentDispatch {
     const message = createBaseRoomAgentDispatch();
     message.agentName = object.agentName ?? "";
     message.metadata = object.metadata ?? "";
@@ -244,95 +284,23 @@ export const RoomAgentDispatch: MessageFns<RoomAgentDispatch, "livekit.RoomAgent
 messageTypeRegistry.set(RoomAgentDispatch.$type, RoomAgentDispatch);
 
 function createBaseDeleteAgentDispatchRequest(): DeleteAgentDispatchRequest {
-  return { $type: "livekit.DeleteAgentDispatchRequest", dispatchId: "", room: "" };
-}
-
-export const DeleteAgentDispatchRequest: MessageFns<DeleteAgentDispatchRequest, "livekit.DeleteAgentDispatchRequest"> =
-  {
-    $type: "livekit.DeleteAgentDispatchRequest" as const,
-
-    encode(message: DeleteAgentDispatchRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-      if (message.dispatchId !== "") {
-        writer.uint32(10).string(message.dispatchId);
-      }
-      if (message.room !== "") {
-        writer.uint32(18).string(message.room);
-      }
-      return writer;
-    },
-
-    decode(input: BinaryReader | Uint8Array, length?: number): DeleteAgentDispatchRequest {
-      const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-      const end = length === undefined ? reader.len : reader.pos + length;
-      const message = createBaseDeleteAgentDispatchRequest();
-      while (reader.pos < end) {
-        const tag = reader.uint32();
-        switch (tag >>> 3) {
-          case 1: {
-            if (tag !== 10) {
-              break;
-            }
-
-            message.dispatchId = reader.string();
-            continue;
-          }
-          case 2: {
-            if (tag !== 18) {
-              break;
-            }
-
-            message.room = reader.string();
-            continue;
-          }
-        }
-        if ((tag & 7) === 4 || tag === 0) {
-          break;
-        }
-        reader.skip(tag & 7);
-      }
-      return message;
-    },
-
-    fromJSON(object: any): DeleteAgentDispatchRequest {
-      return {
-        $type: DeleteAgentDispatchRequest.$type,
-        dispatchId: isSet(object.dispatchId) ? globalThis.String(object.dispatchId) : "",
-        room: isSet(object.room) ? globalThis.String(object.room) : "",
-      };
-    },
-
-    toJSON(message: DeleteAgentDispatchRequest): unknown {
-      const obj: any = {};
-      if (message.dispatchId !== "") {
-        obj.dispatchId = message.dispatchId;
-      }
-      if (message.room !== "") {
-        obj.room = message.room;
-      }
-      return obj;
-    },
-
-    create<I extends Exact<DeepPartial<DeleteAgentDispatchRequest>, I>>(base?: I): DeleteAgentDispatchRequest {
-      return DeleteAgentDispatchRequest.fromPartial(base ?? ({} as any));
-    },
-    fromPartial<I extends Exact<DeepPartial<DeleteAgentDispatchRequest>, I>>(object: I): DeleteAgentDispatchRequest {
-      const message = createBaseDeleteAgentDispatchRequest();
-      message.dispatchId = object.dispatchId ?? "";
-      message.room = object.room ?? "";
-      return message;
-    },
+  return {
+    $type: "livekit.DeleteAgentDispatchRequest",
+    dispatchId: "",
+    room: "",
   };
-
-messageTypeRegistry.set(DeleteAgentDispatchRequest.$type, DeleteAgentDispatchRequest);
-
-function createBaseListAgentDispatchRequest(): ListAgentDispatchRequest {
-  return { $type: "livekit.ListAgentDispatchRequest", dispatchId: "", room: "" };
 }
 
-export const ListAgentDispatchRequest: MessageFns<ListAgentDispatchRequest, "livekit.ListAgentDispatchRequest"> = {
-  $type: "livekit.ListAgentDispatchRequest" as const,
+export const DeleteAgentDispatchRequest: MessageFns<
+  DeleteAgentDispatchRequest,
+  "livekit.DeleteAgentDispatchRequest"
+> = {
+  $type: "livekit.DeleteAgentDispatchRequest" as const,
 
-  encode(message: ListAgentDispatchRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: DeleteAgentDispatchRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.dispatchId !== "") {
       writer.uint32(10).string(message.dispatchId);
     }
@@ -342,8 +310,116 @@ export const ListAgentDispatchRequest: MessageFns<ListAgentDispatchRequest, "liv
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): ListAgentDispatchRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): DeleteAgentDispatchRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
+    const end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteAgentDispatchRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.dispatchId = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.room = reader.string();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DeleteAgentDispatchRequest {
+    return {
+      $type: DeleteAgentDispatchRequest.$type,
+      dispatchId: isSet(object.dispatchId)
+        ? globalThis.String(object.dispatchId)
+        : "",
+      room: isSet(object.room) ? globalThis.String(object.room) : "",
+    };
+  },
+
+  toJSON(message: DeleteAgentDispatchRequest): unknown {
+    const obj: any = {};
+    if (message.dispatchId !== "") {
+      obj.dispatchId = message.dispatchId;
+    }
+    if (message.room !== "") {
+      obj.room = message.room;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<DeleteAgentDispatchRequest>, I>>(
+    base?: I,
+  ): DeleteAgentDispatchRequest {
+    return DeleteAgentDispatchRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<DeleteAgentDispatchRequest>, I>>(
+    object: I,
+  ): DeleteAgentDispatchRequest {
+    const message = createBaseDeleteAgentDispatchRequest();
+    message.dispatchId = object.dispatchId ?? "";
+    message.room = object.room ?? "";
+    return message;
+  },
+};
+
+messageTypeRegistry.set(
+  DeleteAgentDispatchRequest.$type,
+  DeleteAgentDispatchRequest,
+);
+
+function createBaseListAgentDispatchRequest(): ListAgentDispatchRequest {
+  return {
+    $type: "livekit.ListAgentDispatchRequest",
+    dispatchId: "",
+    room: "",
+  };
+}
+
+export const ListAgentDispatchRequest: MessageFns<
+  ListAgentDispatchRequest,
+  "livekit.ListAgentDispatchRequest"
+> = {
+  $type: "livekit.ListAgentDispatchRequest" as const,
+
+  encode(
+    message: ListAgentDispatchRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
+    if (message.dispatchId !== "") {
+      writer.uint32(10).string(message.dispatchId);
+    }
+    if (message.room !== "") {
+      writer.uint32(18).string(message.room);
+    }
+    return writer;
+  },
+
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): ListAgentDispatchRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseListAgentDispatchRequest();
     while (reader.pos < end) {
@@ -377,7 +453,9 @@ export const ListAgentDispatchRequest: MessageFns<ListAgentDispatchRequest, "liv
   fromJSON(object: any): ListAgentDispatchRequest {
     return {
       $type: ListAgentDispatchRequest.$type,
-      dispatchId: isSet(object.dispatchId) ? globalThis.String(object.dispatchId) : "",
+      dispatchId: isSet(object.dispatchId)
+        ? globalThis.String(object.dispatchId)
+        : "",
       room: isSet(object.room) ? globalThis.String(object.room) : "",
     };
   },
@@ -393,10 +471,14 @@ export const ListAgentDispatchRequest: MessageFns<ListAgentDispatchRequest, "liv
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ListAgentDispatchRequest>, I>>(base?: I): ListAgentDispatchRequest {
+  create<I extends Exact<DeepPartial<ListAgentDispatchRequest>, I>>(
+    base?: I,
+  ): ListAgentDispatchRequest {
     return ListAgentDispatchRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ListAgentDispatchRequest>, I>>(object: I): ListAgentDispatchRequest {
+  fromPartial<I extends Exact<DeepPartial<ListAgentDispatchRequest>, I>>(
+    object: I,
+  ): ListAgentDispatchRequest {
     const message = createBaseListAgentDispatchRequest();
     message.dispatchId = object.dispatchId ?? "";
     message.room = object.room ?? "";
@@ -404,24 +486,37 @@ export const ListAgentDispatchRequest: MessageFns<ListAgentDispatchRequest, "liv
   },
 };
 
-messageTypeRegistry.set(ListAgentDispatchRequest.$type, ListAgentDispatchRequest);
+messageTypeRegistry.set(
+  ListAgentDispatchRequest.$type,
+  ListAgentDispatchRequest,
+);
 
 function createBaseListAgentDispatchResponse(): ListAgentDispatchResponse {
   return { $type: "livekit.ListAgentDispatchResponse", agentDispatches: [] };
 }
 
-export const ListAgentDispatchResponse: MessageFns<ListAgentDispatchResponse, "livekit.ListAgentDispatchResponse"> = {
+export const ListAgentDispatchResponse: MessageFns<
+  ListAgentDispatchResponse,
+  "livekit.ListAgentDispatchResponse"
+> = {
   $type: "livekit.ListAgentDispatchResponse" as const,
 
-  encode(message: ListAgentDispatchResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: ListAgentDispatchResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     for (const v of message.agentDispatches) {
       AgentDispatch.encode(v!, writer.uint32(10).fork()).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): ListAgentDispatchResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): ListAgentDispatchResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseListAgentDispatchResponse();
     while (reader.pos < end) {
@@ -432,7 +527,9 @@ export const ListAgentDispatchResponse: MessageFns<ListAgentDispatchResponse, "l
             break;
           }
 
-          message.agentDispatches.push(AgentDispatch.decode(reader, reader.uint32()));
+          message.agentDispatches.push(
+            AgentDispatch.decode(reader, reader.uint32()),
+          );
           continue;
         }
       }
@@ -456,182 +553,237 @@ export const ListAgentDispatchResponse: MessageFns<ListAgentDispatchResponse, "l
   toJSON(message: ListAgentDispatchResponse): unknown {
     const obj: any = {};
     if (message.agentDispatches?.length) {
-      obj.agentDispatches = message.agentDispatches.map((e) => AgentDispatch.toJSON(e));
+      obj.agentDispatches = message.agentDispatches.map((e) =>
+        AgentDispatch.toJSON(e),
+      );
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ListAgentDispatchResponse>, I>>(base?: I): ListAgentDispatchResponse {
+  create<I extends Exact<DeepPartial<ListAgentDispatchResponse>, I>>(
+    base?: I,
+  ): ListAgentDispatchResponse {
     return ListAgentDispatchResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ListAgentDispatchResponse>, I>>(object: I): ListAgentDispatchResponse {
+  fromPartial<I extends Exact<DeepPartial<ListAgentDispatchResponse>, I>>(
+    object: I,
+  ): ListAgentDispatchResponse {
     const message = createBaseListAgentDispatchResponse();
-    message.agentDispatches = object.agentDispatches?.map((e) => AgentDispatch.fromPartial(e)) || [];
+    message.agentDispatches =
+      object.agentDispatches?.map((e) => AgentDispatch.fromPartial(e)) || [];
     return message;
   },
 };
 
-messageTypeRegistry.set(ListAgentDispatchResponse.$type, ListAgentDispatchResponse);
+messageTypeRegistry.set(
+  ListAgentDispatchResponse.$type,
+  ListAgentDispatchResponse,
+);
 
 function createBaseAgentDispatch(): AgentDispatch {
-  return { $type: "livekit.AgentDispatch", id: "", agentName: "", room: "", metadata: "", state: undefined };
+  return {
+    $type: "livekit.AgentDispatch",
+    id: "",
+    agentName: "",
+    room: "",
+    metadata: "",
+    state: undefined,
+  };
 }
 
-export const AgentDispatch: MessageFns<AgentDispatch, "livekit.AgentDispatch"> = {
-  $type: "livekit.AgentDispatch" as const,
+export const AgentDispatch: MessageFns<AgentDispatch, "livekit.AgentDispatch"> =
+  {
+    $type: "livekit.AgentDispatch" as const,
 
-  encode(message: AgentDispatch, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.id !== "") {
-      writer.uint32(10).string(message.id);
-    }
-    if (message.agentName !== "") {
-      writer.uint32(18).string(message.agentName);
-    }
-    if (message.room !== "") {
-      writer.uint32(26).string(message.room);
-    }
-    if (message.metadata !== "") {
-      writer.uint32(34).string(message.metadata);
-    }
-    if (message.state !== undefined) {
-      AgentDispatchState.encode(message.state, writer.uint32(42).fork()).join();
-    }
-    return writer;
-  },
-
-  decode(input: BinaryReader | Uint8Array, length?: number): AgentDispatch {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAgentDispatch();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
-          }
-
-          message.id = reader.string();
-          continue;
-        }
-        case 2: {
-          if (tag !== 18) {
-            break;
-          }
-
-          message.agentName = reader.string();
-          continue;
-        }
-        case 3: {
-          if (tag !== 26) {
-            break;
-          }
-
-          message.room = reader.string();
-          continue;
-        }
-        case 4: {
-          if (tag !== 34) {
-            break;
-          }
-
-          message.metadata = reader.string();
-          continue;
-        }
-        case 5: {
-          if (tag !== 42) {
-            break;
-          }
-
-          message.state = AgentDispatchState.decode(reader, reader.uint32());
-          continue;
-        }
+    encode(
+      message: AgentDispatch,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      if (message.id !== "") {
+        writer.uint32(10).string(message.id);
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      if (message.agentName !== "") {
+        writer.uint32(18).string(message.agentName);
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      if (message.room !== "") {
+        writer.uint32(26).string(message.room);
+      }
+      if (message.metadata !== "") {
+        writer.uint32(34).string(message.metadata);
+      }
+      if (message.state !== undefined) {
+        AgentDispatchState.encode(
+          message.state,
+          writer.uint32(42).fork(),
+        ).join();
+      }
+      return writer;
+    },
 
-  fromJSON(object: any): AgentDispatch {
-    return {
-      $type: AgentDispatch.$type,
-      id: isSet(object.id) ? globalThis.String(object.id) : "",
-      agentName: isSet(object.agentName) ? globalThis.String(object.agentName) : "",
-      room: isSet(object.room) ? globalThis.String(object.room) : "",
-      metadata: isSet(object.metadata) ? globalThis.String(object.metadata) : "",
-      state: isSet(object.state) ? AgentDispatchState.fromJSON(object.state) : undefined,
-    };
-  },
+    decode(input: BinaryReader | Uint8Array, length?: number): AgentDispatch {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseAgentDispatch();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
 
-  toJSON(message: AgentDispatch): unknown {
-    const obj: any = {};
-    if (message.id !== "") {
-      obj.id = message.id;
-    }
-    if (message.agentName !== "") {
-      obj.agentName = message.agentName;
-    }
-    if (message.room !== "") {
-      obj.room = message.room;
-    }
-    if (message.metadata !== "") {
-      obj.metadata = message.metadata;
-    }
-    if (message.state !== undefined) {
-      obj.state = AgentDispatchState.toJSON(message.state);
-    }
-    return obj;
-  },
+            message.id = reader.string();
+            continue;
+          }
+          case 2: {
+            if (tag !== 18) {
+              break;
+            }
 
-  create<I extends Exact<DeepPartial<AgentDispatch>, I>>(base?: I): AgentDispatch {
-    return AgentDispatch.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<AgentDispatch>, I>>(object: I): AgentDispatch {
-    const message = createBaseAgentDispatch();
-    message.id = object.id ?? "";
-    message.agentName = object.agentName ?? "";
-    message.room = object.room ?? "";
-    message.metadata = object.metadata ?? "";
-    message.state = (object.state !== undefined && object.state !== null)
-      ? AgentDispatchState.fromPartial(object.state)
-      : undefined;
-    return message;
-  },
-};
+            message.agentName = reader.string();
+            continue;
+          }
+          case 3: {
+            if (tag !== 26) {
+              break;
+            }
+
+            message.room = reader.string();
+            continue;
+          }
+          case 4: {
+            if (tag !== 34) {
+              break;
+            }
+
+            message.metadata = reader.string();
+            continue;
+          }
+          case 5: {
+            if (tag !== 42) {
+              break;
+            }
+
+            message.state = AgentDispatchState.decode(reader, reader.uint32());
+            continue;
+          }
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
+
+    fromJSON(object: any): AgentDispatch {
+      return {
+        $type: AgentDispatch.$type,
+        id: isSet(object.id) ? globalThis.String(object.id) : "",
+        agentName: isSet(object.agentName)
+          ? globalThis.String(object.agentName)
+          : "",
+        room: isSet(object.room) ? globalThis.String(object.room) : "",
+        metadata: isSet(object.metadata)
+          ? globalThis.String(object.metadata)
+          : "",
+        state: isSet(object.state)
+          ? AgentDispatchState.fromJSON(object.state)
+          : undefined,
+      };
+    },
+
+    toJSON(message: AgentDispatch): unknown {
+      const obj: any = {};
+      if (message.id !== "") {
+        obj.id = message.id;
+      }
+      if (message.agentName !== "") {
+        obj.agentName = message.agentName;
+      }
+      if (message.room !== "") {
+        obj.room = message.room;
+      }
+      if (message.metadata !== "") {
+        obj.metadata = message.metadata;
+      }
+      if (message.state !== undefined) {
+        obj.state = AgentDispatchState.toJSON(message.state);
+      }
+      return obj;
+    },
+
+    create<I extends Exact<DeepPartial<AgentDispatch>, I>>(
+      base?: I,
+    ): AgentDispatch {
+      return AgentDispatch.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<AgentDispatch>, I>>(
+      object: I,
+    ): AgentDispatch {
+      const message = createBaseAgentDispatch();
+      message.id = object.id ?? "";
+      message.agentName = object.agentName ?? "";
+      message.room = object.room ?? "";
+      message.metadata = object.metadata ?? "";
+      message.state =
+        object.state !== undefined && object.state !== null
+          ? AgentDispatchState.fromPartial(object.state)
+          : undefined;
+      return message;
+    },
+  };
 
 messageTypeRegistry.set(AgentDispatch.$type, AgentDispatch);
 
 function createBaseAgentDispatchState(): AgentDispatchState {
-  return { $type: "livekit.AgentDispatchState", jobs: [], createdAt: 0n, deletedAt: 0n };
+  return {
+    $type: "livekit.AgentDispatchState",
+    jobs: [],
+    createdAt: 0n,
+    deletedAt: 0n,
+  };
 }
 
-export const AgentDispatchState: MessageFns<AgentDispatchState, "livekit.AgentDispatchState"> = {
+export const AgentDispatchState: MessageFns<
+  AgentDispatchState,
+  "livekit.AgentDispatchState"
+> = {
   $type: "livekit.AgentDispatchState" as const,
 
-  encode(message: AgentDispatchState, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: AgentDispatchState,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     for (const v of message.jobs) {
       Job.encode(v!, writer.uint32(10).fork()).join();
     }
     if (message.createdAt !== 0n) {
       if (BigInt.asIntN(64, message.createdAt) !== message.createdAt) {
-        throw new globalThis.Error("value provided for field message.createdAt of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.createdAt of type int64 too large",
+        );
       }
       writer.uint32(16).int64(message.createdAt);
     }
     if (message.deletedAt !== 0n) {
       if (BigInt.asIntN(64, message.deletedAt) !== message.deletedAt) {
-        throw new globalThis.Error("value provided for field message.deletedAt of type int64 too large");
+        throw new globalThis.Error(
+          "value provided for field message.deletedAt of type int64 too large",
+        );
       }
       writer.uint32(24).int64(message.deletedAt);
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): AgentDispatchState {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): AgentDispatchState {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAgentDispatchState();
     while (reader.pos < end) {
@@ -673,7 +825,9 @@ export const AgentDispatchState: MessageFns<AgentDispatchState, "livekit.AgentDi
   fromJSON(object: any): AgentDispatchState {
     return {
       $type: AgentDispatchState.$type,
-      jobs: globalThis.Array.isArray(object?.jobs) ? object.jobs.map((e: any) => Job.fromJSON(e)) : [],
+      jobs: globalThis.Array.isArray(object?.jobs)
+        ? object.jobs.map((e: any) => Job.fromJSON(e))
+        : [],
       createdAt: isSet(object.createdAt) ? BigInt(object.createdAt) : 0n,
       deletedAt: isSet(object.deletedAt) ? BigInt(object.deletedAt) : 0n,
     };
@@ -693,10 +847,14 @@ export const AgentDispatchState: MessageFns<AgentDispatchState, "livekit.AgentDi
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<AgentDispatchState>, I>>(base?: I): AgentDispatchState {
+  create<I extends Exact<DeepPartial<AgentDispatchState>, I>>(
+    base?: I,
+  ): AgentDispatchState {
     return AgentDispatchState.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<AgentDispatchState>, I>>(object: I): AgentDispatchState {
+  fromPartial<I extends Exact<DeepPartial<AgentDispatchState>, I>>(
+    object: I,
+  ): AgentDispatchState {
     const message = createBaseAgentDispatchState();
     message.jobs = object.jobs?.map((e) => Job.fromPartial(e)) || [];
     message.createdAt = object.createdAt ?? 0n;
@@ -721,388 +879,441 @@ export interface ProtoMetadata {
   options?: {
     options?: { [key: string]: any };
     services?: {
-      [key: string]: { options?: { [key: string]: any }; methods?: { [key: string]: { [key: string]: any } } };
+      [key: string]: {
+        options?: { [key: string]: any };
+        methods?: { [key: string]: { [key: string]: any } };
+      };
     };
     messages?: { [key: string]: ProtoMetaMessageOptions };
-    enums?: { [key: string]: { options?: { [key: string]: any }; values?: { [key: string]: { [key: string]: any } } } };
+    enums?: {
+      [key: string]: {
+        options?: { [key: string]: any };
+        values?: { [key: string]: { [key: string]: any } };
+      };
+    };
   };
 }
 
 export const protoMetadata = {
   fileDescriptor: {
-    "name": "livekit_agent_dispatch.proto",
-    "package": "livekit",
-    "dependency": ["livekit_agent.proto"],
-    "publicDependency": [],
-    "weakDependency": [],
-    "messageType": [{
-      "name": "CreateAgentDispatchRequest",
-      "field": [{
-        "name": "agent_name",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "agentName",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "room",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "metadata",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "metadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "RoomAgentDispatch",
-      "field": [{
-        "name": "agent_name",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "agentName",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "metadata",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "metadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "DeleteAgentDispatchRequest",
-      "field": [{
-        "name": "dispatch_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "dispatchId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "room",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "ListAgentDispatchRequest",
-      "field": [{
-        "name": "dispatch_id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "dispatchId",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "room",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "ListAgentDispatchResponse",
-      "field": [{
-        "name": "agent_dispatches",
-        "number": 1,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.AgentDispatch",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "agentDispatches",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "AgentDispatch",
-      "field": [{
-        "name": "id",
-        "number": 1,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "id",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "agent_name",
-        "number": 2,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "agentName",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "room",
-        "number": 3,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "room",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "metadata",
-        "number": 4,
-        "label": 1,
-        "type": 9,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "metadata",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "state",
-        "number": 5,
-        "label": 1,
-        "type": 11,
-        "typeName": ".livekit.AgentDispatchState",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "state",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }, {
-      "name": "AgentDispatchState",
-      "field": [{
-        "name": "jobs",
-        "number": 1,
-        "label": 3,
-        "type": 11,
-        "typeName": ".livekit.Job",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "jobs",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "created_at",
-        "number": 2,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "createdAt",
-        "options": undefined,
-        "proto3Optional": false,
-      }, {
-        "name": "deleted_at",
-        "number": 3,
-        "label": 1,
-        "type": 3,
-        "typeName": "",
-        "extendee": "",
-        "defaultValue": "",
-        "oneofIndex": 0,
-        "jsonName": "deletedAt",
-        "options": undefined,
-        "proto3Optional": false,
-      }],
-      "extension": [],
-      "nestedType": [],
-      "enumType": [],
-      "extensionRange": [],
-      "oneofDecl": [],
-      "options": undefined,
-      "reservedRange": [],
-      "reservedName": [],
-    }],
-    "enumType": [],
-    "service": [{
-      "name": "AgentDispatchService",
-      "method": [{
-        "name": "CreateDispatch",
-        "inputType": ".livekit.CreateAgentDispatchRequest",
-        "outputType": ".livekit.AgentDispatch",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "DeleteDispatch",
-        "inputType": ".livekit.DeleteAgentDispatchRequest",
-        "outputType": ".livekit.AgentDispatch",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }, {
-        "name": "ListDispatch",
-        "inputType": ".livekit.ListAgentDispatchRequest",
-        "outputType": ".livekit.ListAgentDispatchResponse",
-        "options": undefined,
-        "clientStreaming": false,
-        "serverStreaming": false,
-      }],
-      "options": undefined,
-    }],
-    "extension": [],
-    "options": {
-      "javaPackage": "",
-      "javaOuterClassname": "",
-      "javaMultipleFiles": false,
-      "javaGenerateEqualsAndHash": false,
-      "javaStringCheckUtf8": false,
-      "optimizeFor": 1,
-      "goPackage": "github.com/livekit/protocol/livekit",
-      "ccGenericServices": false,
-      "javaGenericServices": false,
-      "pyGenericServices": false,
-      "phpGenericServices": false,
-      "deprecated": false,
-      "ccEnableArenas": true,
-      "objcClassPrefix": "",
-      "csharpNamespace": "LiveKit.Proto",
-      "swiftPrefix": "",
-      "phpClassPrefix": "",
-      "phpNamespace": "",
-      "phpMetadataNamespace": "",
-      "rubyPackage": "LiveKit::Proto",
-      "uninterpretedOption": [],
+    name: "livekit_agent_dispatch.proto",
+    package: "livekit",
+    dependency: ["livekit_agent.proto"],
+    publicDependency: [],
+    weakDependency: [],
+    messageType: [
+      {
+        name: "CreateAgentDispatchRequest",
+        field: [
+          {
+            name: "agent_name",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "agentName",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "room",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "metadata",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "metadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "RoomAgentDispatch",
+        field: [
+          {
+            name: "agent_name",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "agentName",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "metadata",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "metadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "DeleteAgentDispatchRequest",
+        field: [
+          {
+            name: "dispatch_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "dispatchId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "room",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "ListAgentDispatchRequest",
+        field: [
+          {
+            name: "dispatch_id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "dispatchId",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "room",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "ListAgentDispatchResponse",
+        field: [
+          {
+            name: "agent_dispatches",
+            number: 1,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.AgentDispatch",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "agentDispatches",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "AgentDispatch",
+        field: [
+          {
+            name: "id",
+            number: 1,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "id",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "agent_name",
+            number: 2,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "agentName",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "room",
+            number: 3,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "room",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "metadata",
+            number: 4,
+            label: 1,
+            type: 9,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "metadata",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "state",
+            number: 5,
+            label: 1,
+            type: 11,
+            typeName: ".livekit.AgentDispatchState",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "state",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+      {
+        name: "AgentDispatchState",
+        field: [
+          {
+            name: "jobs",
+            number: 1,
+            label: 3,
+            type: 11,
+            typeName: ".livekit.Job",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "jobs",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "created_at",
+            number: 2,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "createdAt",
+            options: undefined,
+            proto3Optional: false,
+          },
+          {
+            name: "deleted_at",
+            number: 3,
+            label: 1,
+            type: 3,
+            typeName: "",
+            extendee: "",
+            defaultValue: "",
+            oneofIndex: 0,
+            jsonName: "deletedAt",
+            options: undefined,
+            proto3Optional: false,
+          },
+        ],
+        extension: [],
+        nestedType: [],
+        enumType: [],
+        extensionRange: [],
+        oneofDecl: [],
+        options: undefined,
+        reservedRange: [],
+        reservedName: [],
+      },
+    ],
+    enumType: [],
+    service: [
+      {
+        name: "AgentDispatchService",
+        method: [
+          {
+            name: "CreateDispatch",
+            inputType: ".livekit.CreateAgentDispatchRequest",
+            outputType: ".livekit.AgentDispatch",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "DeleteDispatch",
+            inputType: ".livekit.DeleteAgentDispatchRequest",
+            outputType: ".livekit.AgentDispatch",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+          {
+            name: "ListDispatch",
+            inputType: ".livekit.ListAgentDispatchRequest",
+            outputType: ".livekit.ListAgentDispatchResponse",
+            options: undefined,
+            clientStreaming: false,
+            serverStreaming: false,
+          },
+        ],
+        options: undefined,
+      },
+    ],
+    extension: [],
+    options: {
+      javaPackage: "",
+      javaOuterClassname: "",
+      javaMultipleFiles: false,
+      javaGenerateEqualsAndHash: false,
+      javaStringCheckUtf8: false,
+      optimizeFor: 1,
+      goPackage: "github.com/livekit/protocol/livekit",
+      ccGenericServices: false,
+      javaGenericServices: false,
+      pyGenericServices: false,
+      phpGenericServices: false,
+      deprecated: false,
+      ccEnableArenas: true,
+      objcClassPrefix: "",
+      csharpNamespace: "LiveKit.Proto",
+      swiftPrefix: "",
+      phpClassPrefix: "",
+      phpNamespace: "",
+      phpMetadataNamespace: "",
+      rubyPackage: "LiveKit::Proto",
+      uninterpretedOption: [],
     },
-    "sourceCodeInfo": {
-      "location": [{
-        "path": [4, 3, 2, 0],
-        "span": [46, 2, 25],
-        "leadingComments": "",
-        "trailingComments": " if set, only the dispatch whose id is given will be returned\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 3, 2, 1],
-        "span": [47, 2, 18],
-        "leadingComments": "",
-        "trailingComments": " name of the room to list agents for. Must be set.\n",
-        "leadingDetachedComments": [],
-      }, {
-        "path": [4, 6, 2, 0],
-        "span": [65, 2, 24],
-        "leadingComments":
-          " For dispatches of tyoe JT_ROOM, there will be at most 1 job. \n For dispatches of type JT_PUBLISHER, there will be 1 per publisher.\n",
-        "trailingComments": "",
-        "leadingDetachedComments": [],
-      }],
+    sourceCodeInfo: {
+      location: [
+        {
+          path: [4, 3, 2, 0],
+          span: [46, 2, 25],
+          leadingComments: "",
+          trailingComments:
+            " if set, only the dispatch whose id is given will be returned\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 3, 2, 1],
+          span: [47, 2, 18],
+          leadingComments: "",
+          trailingComments:
+            " name of the room to list agents for. Must be set.\n",
+          leadingDetachedComments: [],
+        },
+        {
+          path: [4, 6, 2, 0],
+          span: [65, 2, 24],
+          leadingComments:
+            " For dispatches of tyoe JT_ROOM, there will be at most 1 job. \n For dispatches of type JT_PUBLISHER, there will be 1 per publisher.\n",
+          trailingComments: "",
+          leadingDetachedComments: [],
+        },
+      ],
     },
-    "syntax": "proto3",
+    syntax: "proto3",
   },
   references: {
     ".livekit.CreateAgentDispatchRequest": CreateAgentDispatchRequest,
@@ -1116,17 +1327,32 @@ export const protoMetadata = {
   dependencies: [protoMetadata1],
 } as const satisfies ProtoMetadata;
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | bigint | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | bigint
+  | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends globalThis.Array<infer U>
+    ? globalThis.Array<DeepPartial<U>>
+    : T extends ReadonlyArray<infer U>
+      ? ReadonlyArray<DeepPartial<U>>
+      : T extends {}
+        ? { [K in Exclude<keyof T, "$type">]?: DeepPartial<T[K]> }
+        : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never };
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P> | "$type">]: never;
+    };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
