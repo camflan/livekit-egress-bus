@@ -3,16 +3,17 @@
 .DS_Store
 
 # -- include these files -----------------------------------------------
-!.gitignore
 !.github/
+!.gitignore
 !LICENSE
 !README.md
-!compile-protobufs.sh
 !contrib/
 !examples/
 !jsr.json
+!mise.toml
 !mod.ts
 !package-lock.json
 !package.json
+!scripts/
 !src/
 !tsconfig.json

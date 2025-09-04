@@ -1,0 +1,9 @@
+# "$schema" = "https://mise.jdx.dev/schema/mise.json"
+
+[tools]
+protoc = "latest"
+
+[tasks]
+[tasks.compile-protobufs]
+description = "Compiles protobufs from definitions"
+run = "./scripts/compile-protobufs.sh"
