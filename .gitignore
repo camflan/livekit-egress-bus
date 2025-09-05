@@ -8,6 +8,7 @@
 !LICENSE
 !README.md
 !contrib/
+!docker-compose.yml
 !eslint.config.mjs
 !examples/
 !jsr.json

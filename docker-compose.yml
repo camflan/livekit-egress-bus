@@ -1,0 +1,61 @@
+---
+services:
+  egress:
+    image: livekit/egress:v1.10
+    platform: linux/amd64
+
+    cpus: 4
+
+    ports:
+      - 0.0.0.0:81:80
+      - 0.0.0.0:8200:8200
+      - 0.0.0.0:9001:9000
+
+    environment:
+      EGRESS_CONFIG_BODY: >-
+        {
+          "api_key": "devkey",
+          "api_secret": "secret",
+          "health_port": 80,
+          "logging":{
+            "level": "debug"
+          },
+          "redis": {
+            "address": "valkey:6379"
+          },
+          "prometheus_port": 9000,
+          "ws_url": "ws://fake_livekit:7880",
+          "web": {
+            "insecure_skip_verify": true,
+            "chrome_flags": [
+              "--ignore-certificate-errors",
+              "--allow-insecure-localhost",
+              "--disable-web-security",
+              "--no-sandbox",
+              "--disable-setuid-sandbox",
+              "--ignore-certificate-errors-spki-list",
+              "--ignore-ssl-errors",
+              "--allow-running-insecure-content"
+            ],
+            "chrome_path": "/usr/bin/chromium-browser",
+            "timeout": 30000
+          }
+        }
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  valkey:
+    image: valkey/valkey:7
+    ports:
+      - ${VALKEY_PORT:-6379}:6379
+    volumes:
+      - valkey_data:/bitnami/valkey/data
+
+volumes:
+  valkey_data:
+    driver: local
+
+networks:
+  default:
+
