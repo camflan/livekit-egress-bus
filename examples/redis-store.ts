@@ -2,9 +2,9 @@
 import { ensureError } from "@uplift-ltd/ts-helpers";
 import Redis from "iovalkey";
 
-import { EgressNotFoundError } from "./helpers/errors";
-import { getLogger } from "./helpers/logger.ts";
-import { EgressInfo, EgressStatus } from "./protobufs.ts";
+import { EgressNotFoundError } from "@/helpers/errors";
+import { getLogger } from "@/helpers/logger.ts";
+import { EgressInfo, EgressStatus } from "@/protobufs.ts";
 
 const logger = getLogger("redis-store");
 

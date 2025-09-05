@@ -1,3 +1,5 @@
+import { ensureError } from "@uplift-ltd/ts-helpers";
+
 import { MessageBus } from "@/bus.ts";
 import { formatID } from "@/helpers/ids.ts";
 import { getLogger } from "@/helpers/logger.ts";
@@ -8,7 +10,6 @@ import {
   StartEgressRequest,
 } from "@/protobufs.ts";
 import { RPCClient } from "@/rpc-client.ts";
-import { ensureError } from "@uplift-ltd/ts-helpers";
 
 import { getValkeyClient } from "./valkey.js";
 

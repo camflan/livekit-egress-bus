@@ -21,8 +21,6 @@ export type StartEgressOptions = {
 
 export function makeEgressClient() {
   const valkey = getValkeyClient({
-    host: "127.0.0.1",
-    port: 6379,
     lazyConnect: false,
   });
   valkey.ping();

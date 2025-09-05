@@ -1,3 +1,5 @@
+import { ensureError } from "@uplift-ltd/ts-helpers";
+
 import { MessageBus } from "@/bus.ts";
 import { ErrorCode, isLiveKitError } from "@/helpers/errors.ts";
 import { getLogger } from "@/helpers/logger.ts";
@@ -10,10 +12,9 @@ import {
   GetEgressRequest,
   UpdateMetricsRequest,
 } from "@/protobufs.ts";
-import { makeRedisStore } from "@/redis-store.ts";
 import { RPCServer } from "@/rpc-server.ts";
-import { ensureError } from "@uplift-ltd/ts-helpers";
 
+import { makeRedisStore } from "./redis-store.ts";
 import { getValkeyClient } from "./valkey.js";
 
 const logger = getLogger("server");
@@ -47,8 +48,6 @@ main();
 function main() {
   try {
     const valkey = getValkeyClient({
-      host: "127.0.0.1",
-      port: 6379,
       lazyConnect: false,
     });
     const bus = new MessageBus(valkey);

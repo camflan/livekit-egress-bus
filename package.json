@@ -3,37 +3,39 @@
   "version": "2025.7.2",
   "main": "src/server.ts",
   "scripts": {
-    "format": "prettier --write mod.ts ./src/**/*.ts",
+    "format": "prettier --write eslint.config.mjs mod.ts ./src/**/*.ts",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "proto:generate": "./compile-protobufs.sh",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit",
+    "upgrade-interactive": "npx npm-check-updates -i"
   },
   "type": "module",
   "author": "Camron Flanders <me@camronflanders.com>",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@bufbuild/protobuf": "^2.2.3",
+    "@bufbuild/protobuf": "^2.7.0",
     "@uplift-ltd/strings": "^4.0.0",
     "@uplift-ltd/ts-helpers": "^3.0.0",
-    "chalk": "^5.4.1",
+    "chalk": "^5.6.0",
     "loglevel": "^1.9.2",
     "loglevel-plugin-prefix": "^0.8.4",
     "ts-chan": "^0.6.0",
-    "ts-proto": "^2.6.1",
+    "ts-proto": "^2.7.7",
     "ts-proto-descriptors": "^2.0.0"
   },
   "devDependencies": {
-    "@bufbuild/protoc-gen-es": "^2.2.3",
-    "@eslint/js": "^9.23.0",
+    "@bufbuild/protoc-gen-es": "^2.7.0",
+    "@eslint/js": "^9.34.0",
     "@types/node": "^22.13.9",
-    "eslint": "^9.23.0",
-    "eslint-plugin-perfectionist": "^4.11.0",
-    "iovalkey": "^0.3.1",
-    "prettier": "^3.5.3",
-    "tsx": "^4.19.3",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.29.0"
+    "eslint": "^9.34.0",
+    "eslint-plugin-perfectionist": "^4.15.0",
+    "iovalkey": "^0.3.3",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.42.0"
   }
 }
