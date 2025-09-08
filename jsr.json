@@ -1,6 +1,6 @@
 {
   "name": "@camflan/livekit-egress-bus",
-  "version": "2025.9.5",
+  "version": "2025.9.6",
   "publish": {
     "exclude": [
       ".github",
