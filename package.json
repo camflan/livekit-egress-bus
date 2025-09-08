@@ -1,6 +1,6 @@
 {
   "name": "livekit-egress-bus",
-  "version": "2025.9.4",
+  "version": "2025.9.5",
   "scripts": {
     "format": "prettier --write eslint.config.mjs mod.ts ./src/**/*.ts",
     "lint": "eslint",
