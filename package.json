@@ -14,6 +14,9 @@
   "type": "module",
   "author": "Camron Flanders <me@camronflanders.com>",
   "license": "ISC",
+  "exports": {
+    ".": "./mod.ts"
+  },
   "description": "",
   "dependencies": {
     "@bufbuild/protobuf": "^2.7.0",
