@@ -1,15 +1,17 @@
 {
   "name": "@camflan/livekit-egress-bus",
   "version": "2025.9.5",
-  "exclude": [
-    ".github",
-    "compile-protobufs.sh",
-    "docker-compose.yml",
-    "eslint.config.mjs",
-    "examples",
-    "mise.toml",
-    "scripts"
-  ],
+  "publish": {
+    "exclude": [
+      ".github",
+      "compile-protobufs.sh",
+      "docker-compose.yml",
+      "eslint.config.mjs",
+      "examples",
+      "mise.toml",
+      "scripts"
+    ]
+  },
   "exports": {
     ".": "./mod.ts"
   }
