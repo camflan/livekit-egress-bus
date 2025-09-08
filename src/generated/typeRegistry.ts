@@ -4,7 +4,7 @@
 //   protoc               v6.32.0
 
 /* eslint-disable */
-import type { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
+import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 export interface MessageType<Message extends UnknownMessage = UnknownMessage> {
   $type: Message["$type"];
