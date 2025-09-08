@@ -6,7 +6,7 @@
 
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
-import type { FileDescriptorProto as FileDescriptorProto1 } from "ts-proto-descriptors";
+import { FileDescriptorProto as FileDescriptorProto1 } from "ts-proto-descriptors";
 import { Duration, protoMetadata as protoMetadata6 } from "../google/protobuf/duration";
 import { protoMetadata as protoMetadata5 } from "../google/protobuf/empty";
 import { EgressInfo, protoMetadata as protoMetadata1 } from "../livekit_egress";

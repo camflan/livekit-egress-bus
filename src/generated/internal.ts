@@ -6,7 +6,7 @@
 
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
-import type { FileDescriptorProto } from "ts-proto-descriptors";
+import { FileDescriptorProto } from "ts-proto-descriptors";
 import { Any, protoMetadata as protoMetadata1 } from "./google/protobuf/any";
 import { messageTypeRegistry } from "./typeRegistry";
 
