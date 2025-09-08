@@ -67,4 +67,4 @@ jobs:
       - run: npm ci --include=dev
 
       - name: Publish package
-        run: npx jsr publish --allow-slow-types
+        run: npx jsr publish
