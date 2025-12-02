@@ -229,7 +229,7 @@ export class MessageBus {
       return;
     }
 
-    subList.subs.filter((sub) => sub.id !== id);
+    subList.subs = subList.subs.filter((sub) => sub.id !== id);
 
     if (subList.subs.length < 1) {
       await this.#subscriber.unsubscribe(topic);
