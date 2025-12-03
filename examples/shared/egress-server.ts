@@ -1,5 +1,6 @@
 import { ensureError } from "@uplift-ltd/ts-helpers";
 
+import { telemetry } from "@/telemetry.ts";
 import { MessageBus } from "@/bus.ts";
 import { ErrorCode, isLiveKitError } from "@/helpers/errors.ts";
 import { getLogger } from "@/helpers/logger.ts";
@@ -15,60 +16,21 @@ import {
 import { RPCServer } from "@/rpc-server.ts";
 
 import { makeRedisStore } from "./redis-store.ts";
-import { getValkeyClient } from "./valkey.js";
+import { getValkeyClient } from "./valkey.ts";
 
-const logger = getLogger("server");
-logger.enableAll();
+const logger = getLogger("egress-server");
 
-let stopServer: (() => void) | undefined = undefined;
-
-function exit(err?: string | Error) {
-  stopServer?.();
-
-  const error = err ? ensureError(err) : null;
-  let exitCode = 0;
-
-  if (error) {
-    exitCode = 1;
-    if (err !== "SIGINT") {
-      logger.error(error);
-    }
-  }
-
-  process.exit(exitCode);
-}
-
-process.once("SIGINT", function () {
-  logger.debug("SIGINT received…");
-  exit("SIGINT");
-});
-
-main();
-
-function main() {
-  try {
-    const valkey = getValkeyClient({
-      lazyConnect: false,
-    });
-    const bus = new MessageBus(valkey);
-
-    const server = createServer({ bus });
-
-    logger.info("Starting server…");
-    server.start(() => logger.info("Server running"));
-  } catch (err) {
-    exit(ensureError(err));
-  }
-}
-
-export function createServer({ bus }: { bus: MessageBus }) {
+export function createEgressServer({ bus }: { bus: MessageBus }) {
   const server = new RPCServer({ bus });
-  stopServer = server.stop;
-
   registerIOHandlers(server);
-
   return server;
 }
+
+telemetry.on("bus.message:received", trace("bus.message:received"));
+telemetry.on("bus.message:dispatched", trace("bus.message:dispatched"));
+telemetry.on("bus.subscriber:added", trace("bus.subscriber:added"));
+telemetry.on("bus.subscriber:removed", trace("bus.subscriber:removed"));
+telemetry.on("bus.queue:skip", trace("bus.queue:skip"));
 
 function registerIOHandlers(server: RPCServer) {
   const { loadEgress, updateEgress, listEgress, storeEgress } =
@@ -93,7 +55,6 @@ function registerIOHandlers(server: RPCServer) {
       }
 
       await storeEgress(egressInfo);
-      // TODO: telemetry?
 
       return Empty;
     },
@@ -117,8 +78,6 @@ function registerIOHandlers(server: RPCServer) {
           egressInfo.error,
         );
       }
-
-      // TODO: report telemetry?
 
       return Empty;
     },
@@ -175,4 +134,8 @@ function registerIOHandlers(server: RPCServer) {
       return Empty;
     },
   });
+}
+
+function trace(tag: string) {
+  return logger.info.bind(logger, tag);
 }

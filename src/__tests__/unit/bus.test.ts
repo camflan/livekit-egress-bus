@@ -2,9 +2,9 @@ import Redis from "iovalkey";
 import { describe, it, expect, beforeEach } from "vitest";
 
 import { MessageBus } from "@/bus.js";
+import { sleep } from "@/helpers/sleep";
 import { Empty } from "@/protobufs.js";
 
-import { sleep } from "../../../sleep.js";
 import { MockRedis } from "../fixtures/redis-mock.js";
 import { collectFromChannel } from "../fixtures/test-helpers.js";
 

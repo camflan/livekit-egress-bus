@@ -31,7 +31,7 @@ prefix.apply(logger, {
 });
 
 const defaultLogLevel: keyof typeof log.levels = "ERROR";
-const envLogLevel = process.env.EGRESS_BUS_LOG_LEVEL;
+const envLogLevel = process.env.EGRESS_BUS_LOG_LEVEL?.toUpperCase();
 
 if (!envLogLevel) {
   logger.disableAll();

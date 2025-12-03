@@ -1,4 +1,3 @@
-/** adapted from the ideas of LK redis store */
 import { ensureError } from "@uplift-ltd/ts-helpers";
 import Redis from "iovalkey";
 
@@ -8,37 +7,9 @@ import { EgressInfo, EgressStatus } from "@/protobufs.ts";
 
 const logger = getLogger("redis-store");
 
-// keeping these until we know we don't need them
-/* eslint-disable @typescript-eslint/no-unused-vars */
-const VersionKey = "livekit_version";
-
-// RoomsKey is hash of room_name => Room proto
-const RoomsKey = "rooms";
-const RoomInternalKey = "room_internal";
-
-// EgressKey is a hash of egressID => egress info
 const EgressKey = "egress";
 const EndedEgressKey = "ended_egress";
 const RoomEgressPrefix = "egress:room:";
-
-// IngressKey is a hash of ingressID => ingress info
-const IngressKey = "ingress";
-const StreamKeyKey = "{ingress}_stream_key";
-const IngressStatePrefix = "{ingress}_state:";
-const RoomIngressPrefix = "room_{ingress}:";
-
-// RoomParticipantsPrefix is hash of participant_name => ParticipantInfo
-const RoomParticipantsPrefix = "room_participants:";
-
-// RoomLockPrefix is a simple key containing a provided lock uid
-const RoomLockPrefix = "room_lock:";
-
-// Agents
-const AgentDispatchPrefix = "agent_dispatch:";
-const AgentJobPrefix = "agent_job:";
-
-const maxRetries = 5;
-/* eslint-enable @typescript-eslint/no-unused-vars */
 
 export async function storeEgress(client: Redis, info: EgressInfo) {
   try {
@@ -116,7 +87,6 @@ export async function updateEgress(client: Redis, info: EgressInfo) {
     const pipeline = client.pipeline();
     pipeline.hset(EgressKey, info.egressId, data);
 
-    // Store egress ended data so we can clean it up later
     if (info.endedAt > 0) {
       pipeline.hset(
         EndedEgressKey,
@@ -141,7 +111,7 @@ export function makeRedisStore(valkey: Redis) {
   return {
     listEgress: listEgress.bind(undefined, valkey),
     loadEgress: loadEgress.bind(undefined, valkey),
-    storeEgress: updateEgress.bind(undefined, valkey),
+    storeEgress: storeEgress.bind(undefined, valkey),
     updateEgress: updateEgress.bind(undefined, valkey),
   } as const;
 }
