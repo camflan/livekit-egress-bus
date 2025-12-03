@@ -11,8 +11,8 @@ import { RPCClient } from "@/rpc-client.ts";
 
 import { getValkeyClient } from "./valkey.js";
 
-const DEFAULT_EXPIRY_MS = 500;
-const logger = getLogger("shared");
+const DEFAULT_TIMEOUT_MS = 500;
+const logger = getLogger("egress-client");
 
 export type StartEgressOptions = {
   destinationUrls: string[];
@@ -30,7 +30,7 @@ export function makeEgressClient() {
     bus,
   });
 
-  logger.info("Client");
+  logger.info("Client initialized");
 
   return {
     async startEgress({ sourceUrl, destinationUrls }: StartEgressOptions) {
@@ -46,7 +46,7 @@ export function makeEgressClient() {
               ? undefined
               : [
                   {
-                    filepath: "/dev/null",
+                    filepath: "/data/test.mp4",
                   },
                 ],
             streamOutputs: destinationUrls.length
@@ -59,15 +59,15 @@ export function makeEgressClient() {
             url: sourceUrl,
           },
         }),
-        // TODO: remove this duplicate requirement. Either take from msg or make msg JSON
         requestMessageFns: StartEgressRequest,
         responseMessageFns: EgressInfo,
         service: "EgressInternal",
         rpc: "StartEgress",
         options: {
-          timeoutMs: DEFAULT_EXPIRY_MS,
+          timeoutMs: DEFAULT_TIMEOUT_MS,
         },
       });
+      console.log("🪵 response:", response);
 
       return response;
     },
@@ -75,23 +75,22 @@ export function makeEgressClient() {
     async stopEgress(egressId: string) {
       logger.debug(`Requesting StopEgress: ${egressId}`);
 
-      return await client.requestSingle({
+      const response = await client.requestSingle({
         msg: StopEgressRequest.create({
           egressId,
         }),
         requestMessageFns: StopEgressRequest,
         responseMessageFns: EgressInfo,
         options: {
-          selectionOptions: {
-            affinityTimeout: DEFAULT_EXPIRY_MS * 10,
-            acceptFirstAvailable: true,
-          },
-          timeoutMs: DEFAULT_EXPIRY_MS * 10,
+          timeoutMs: DEFAULT_TIMEOUT_MS * 3,
         },
         rpc: "StopEgress",
         service: "EgressHandler",
         topic: [egressId],
       });
+      console.log("🪵 response:", response);
+
+      return response;
     },
   };
 }

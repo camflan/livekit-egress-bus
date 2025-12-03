@@ -10,7 +10,7 @@ export function getValkeyClient(options?: GetValkeyClientOptions) {
 function getValkeyClientConfig({
   db = 0,
   host = process.env.VALKEY_HOST ?? "127.0.0.1",
-  port = process.env.VALKEY_PORT ? Number(process.env.VALKEY_PORT) : 6380,
+  port = process.env.VALKEY_PORT ? Number(process.env.VALKEY_PORT) : 6379,
   ...options
 }: GetValkeyClientOptions = {}) {
   return {

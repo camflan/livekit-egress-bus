@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
 
-import { sleep } from "../../../sleep.js";
+import { sleep } from "@/helpers/sleep";
 
 type ListenerFn = (ch: Buffer, msg: Buffer) => void;
 
