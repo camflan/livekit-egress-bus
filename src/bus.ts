@@ -10,6 +10,7 @@ import {
   messageTypeRegistry,
   UnknownMessage,
 } from "./protobufs.ts";
+import { telemetry } from "./telemetry.js";
 
 const logger = getLogger("bus");
 
@@ -81,6 +82,12 @@ export class MessageBus {
 
     subList.subs.forEach((sub) => {
       sub.msgChannel.trySend(data);
+      telemetry.emit("bus.message:dispatched", {
+        channel: sub.channel,
+        subscriberId: sub.id,
+        queue: sub.queue,
+        timestamp: Date.now(),
+      });
     });
   }
 
@@ -103,13 +110,29 @@ export class MessageBus {
     subList.next = next + 1;
     if (sub) {
       sub.msgChannel.trySend(data);
+      telemetry.emit("bus.message:dispatched", {
+        channel: sub.channel,
+        subscriberId: sub.id,
+        queue: sub.queue,
+        timestamp: Date.now(),
+      });
     } else {
       logger.warn("No sub?");
+      telemetry.emit("bus.queue:skip", {
+        channel: "(unknown)",
+        reason: "No subscriber available",
+        timestamp: Date.now(),
+      });
     }
   }
 
   async #handleMessageBuffer(channelBuffer: Buffer, messageBuffer: Buffer) {
     const channel = channelBuffer.toString("utf-8");
+
+    telemetry.emit("bus.message:received", {
+      channel,
+      timestamp: Date.now(),
+    });
 
     const decodedMsg = Msg.decode(messageBuffer);
     logger.trace("#handleMessageBuffer:DECODED MSG", channel, decodedMsg);
@@ -216,6 +239,15 @@ export class MessageBus {
     }
 
     subList.subs.push(newSubscription);
+
+    telemetry.emit("bus.subscriber:added", {
+      channel,
+      subscriberId: id,
+      queue,
+      totalSubscribers: subList.subs.length,
+      timestamp: Date.now(),
+    });
+
     return newSubscription;
   }
 
@@ -230,6 +262,14 @@ export class MessageBus {
     }
 
     subList.subs = subList.subs.filter((sub) => sub.id !== id);
+
+    telemetry.emit("bus.subscriber:removed", {
+      channel: topic,
+      subscriberId: id,
+      queue,
+      remainingSubscribers: subList.subs.length,
+      timestamp: Date.now(),
+    });
 
     if (subList.subs.length < 1) {
       await this.#subscriber.unsubscribe(topic);
