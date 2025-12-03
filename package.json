@@ -13,9 +13,7 @@
     "typecheck": "tsc --noEmit",
     "upgrade-interactive": "npx npm-check-updates -i",
     "example:simple:server": "tsx examples/simple/server.ts",
-    "example:simple:client": "tsx examples/simple/client.ts",
-    "example:cluster:server": "tsx examples/cluster/server.ts",
-    "example:cluster:client": "tsx examples/cluster/client.ts"
+    "example:simple:client": "tsx examples/simple/client.ts"
   },
   "type": "module",
   "author": "Camron Flanders <me@camronflanders.com>",
@@ -48,3 +46,4 @@
     "vitest": "^4.0.15"
   }
 }
+
